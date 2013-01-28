@@ -52,7 +52,8 @@ function bbcode($str = '', $max_images = 0)
 	"'\[size=medium\](.*?)\[/size\]'is",
 	"'\[size=big\](.*?)\[/size\]'is",
 	"'\[quote\](.*?)\[/quote\]'is",
-	"'\[code\](.*?)\[/code\]'is"	
+	"'\[code\](.*?)\[/code\]'is",
+	"'\[color\=(.*?)\](.*?)\[\/color\]'is"
 	);
 	
 	$replace = array(
@@ -71,7 +72,8 @@ function bbcode($str = '', $max_images = 0)
 	'<span style="font-size:1.2em;">\\1</span>',
 	'<span style="font-size:1.4em;">\\1</span>',
 	'</p><blockquote>\\1</blockquote><p>',	
-	'<pre><code>\\1</pre></code>'				
+	'<pre><code>\\1</pre></code>',
+	'<span style="color: \\1;">\\2</span>'			
 	);
 	
 	
