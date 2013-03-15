@@ -40,13 +40,3 @@ MODULES
 We hope you'll find the built-in modules everything you'll need for your sites, however you are free to build your own modules by
 just building mini-applications (see the CodeIgniter and HMVC documentation) and dropping them in to the Modules folder inside the
 Application. You can then access the modules by going to yoursite.com/module.
-
-
-
-YOUR LEGAL OBLIGATION
-------------------------------
-
-By using Halogy you agree to be bound by the license terms and conditions stated on our website: 
-
-http://www.halogy.com/license
-
