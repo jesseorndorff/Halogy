@@ -16,20 +16,20 @@ $(function(){
 });
 </script>
 
-<div id="tpl-2col">
+<div class="row">
 	
-	<div class="col1">
+	<div class="large-8 columns">
 
 		<h1><strong><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s</strong> Dashboard</h1>
 		
 		<?php if ($errors = validation_errors()): ?>
-			<div class="error">
+			<div data-alert class="alert-box alert">
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
 
 		<?php if ($message): ?>
-			<div class="message">
+			<div data-alert class="alert-box success">
 				<?php echo $message; ?>
 			</div>
 		<?php endif; ?>
@@ -41,7 +41,7 @@ $(function(){
 			<li><a href="<?php echo site_url('/admin/tracking'); ?>">Most Recent Visits</a></li>
 		</ul>
 
-		<div id="placeholder"></div>
+		<div class="hide-for-touch" id="placeholder"></div>
 		
 		<div id="activity" class="loader">
 			<?php echo $activity; ?>
@@ -146,94 +146,46 @@ $(function(){
 	
 	</div>
 	
-	<div class="col2">
+	<div class="large-4 columns">
 
 		<h3>Site Info</h3>
-		
-		<table class="default">
-			<tr>
-				<th class="narrow">Site name:</th>
-				<td><?php echo $this->site->config['siteName']; ?></td>
-			</tr>
-			<tr>
-				<th class="narrow">Site URL:</th>
-				<td><small><a href="<?php echo $this->site->config['siteURL']; ?>"><?php echo $this->site->config['siteURL']; ?></a></small></td>
-			</tr>
-			<tr>
-				<th class="narrow">Site email:</th>
-				<td><small><a href="mailto:<?php echo $this->site->config['siteEmail']; ?>"><?php echo $this->site->config['siteEmail']; ?></a></small></td>
-			</tr>
-		</table>
-
+		<ul>
+			<li>Site name: <?php echo $this->site->config['siteName']; ?></li>
+			<li>Site URL: <a href="<?php echo $this->site->config['siteURL']; ?>"><?php echo $this->site->config['siteURL']; ?></a></li>
+			<li>Site email: <a href="mailto:<?php echo $this->site->config['siteEmail']; ?>"><?php echo $this->site->config['siteEmail']; ?></a></li>
+		</ul>
 		<h3>Site Stats</h3>
-		
-		<table class="default">
-			<tr>
-				<th class="narrow">Disk space used:</th>
-				<td><?php echo number_format($quota); ?> <small>KB</small></td>
-			</tr>
-			<tr>
-				<th class="narrow">Total page views:</th>
-				<td><?php echo number_format($numPageViews); ?> <small>views</small></td>
-			</tr>
-			<tr>
-				<th class="narrow">Pages:</th>
-				<td><?php echo $numPages; ?> <small>page<?php echo ($numPages != 1) ? 's' : ''; ?></small></td>
-			</tr>
+		<ul>
+			<li>Disk space used: <?php echo number_format($quota); ?> KB</li>
+			<li>Total page views: <?php echo number_format($numPageViews); ?> Views</li>
+			<li>Pages: <?php echo $numPages; ?> page<?php echo ($numPages != 1) ? 's' : ''; ?></li>
 			<?php if (@in_array('blog', $this->permission->permissions)): ?>
-				<tr>
-					<th class="narrow">Blog posts:</th>
-					<td><?php echo $numBlogPosts ?> <small>post<?php echo ($numBlogPosts != 1) ? 's' : ''; ?></small></td>
-				</tr>
+				<li>Blog posts: <?php echo $numBlogPosts ?> post<?php echo ($numBlogPosts != 1) ? 's' : ''; ?></li>
 			<?php endif; ?>
-		</table>
-
+		</ul>
 		<h3>User Stats</h3>
-		
-		<table class="default">
-			<tr>
-				<th class="narrow">Total users:</th>
-				<td colspan="2"><?php echo number_format($numUsers); ?> <small>user<?php echo ($numUsers != 1) ? 's' : ''; ?></small></td>
-			</tr>
-			<tr>
-				<th class="narrow">New today:</th>
-				<td>			
-					<?php echo number_format($numUsersToday); ?> <small>user<?php echo ($numUsersToday != 1) ? 's' : ''; ?></small>
-				</td>
-				<td>
-					<?php
-						$difference = @round(100 / $numUsersYesterday * ($numUsersToday - $numUsersYesterday), 2);
-						$polarity = ($difference < 0) ? '' : '+';
-					?>						
-					<?php if ($difference != 0): ?>
-						<small>(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</small>
-					<?php endif; ?>
-				</td>
-			</tr>
-			<tr>
-				<th class="narrow">New yesterday:</th>
-				<td colspan="2"><?php echo number_format($numUsersYesterday); ?> <small>user<?php echo ($numUsersYesterday != 1) ? 's' : ''; ?></small></td>
-			</tr>
-			<tr>
-				<th class="narrow">New this week:</th>
-				<td>
-					<?php echo number_format($numUsersWeek); ?> <small>user<?php echo ($numUsersWeek != 1) ? 's' : ''; ?></small>
-				</td>
-				<td>
+		<ul>
+			<li>Total users: <?php echo number_format($numUsers); ?> user<?php echo ($numUsers != 1) ? 's' : ''; ?></li>
+			<li>New today: <?php echo number_format($numUsersToday); ?> user<?php echo ($numUsersToday != 1) ? 's' : ''; ?>
+				<?php
+					$difference = @round(100 / $numUsersYesterday * ($numUsersToday - $numUsersYesterday), 2);
+					$polarity = ($difference < 0) ? '' : '+';
+				?>						
+				<?php if ($difference != 0): ?>
+					(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
+				<?php endif; ?>
+
+			<li>New yesterday: <?php echo number_format($numUsersYesterday); ?> user<?php echo ($numUsersYesterday != 1) ? 's' : ''; ?></li>
+			<li>New this week: <?php echo number_format($numUsersWeek); ?> user<?php echo ($numUsersWeek != 1) ? 's' : ''; ?>
 					<?php
 						$difference = @round(100 / $numUsersLastWeek * ($numUsersWeek - $numUsersLastWeek), 2);
 						$polarity = ($difference < 0) ? '' : '+';
 					?>				
 					<?php if ($difference != 0): ?>
-						<small>(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</small>
+						(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
 					<?php endif; ?>
-				</td>
-			</tr>
-			<tr>
-				<th class="narrow">New last week:</th>
-				<td colspan="2"><?php echo number_format($numUsersLastWeek); ?> <small>user<?php echo ($numUsersLastWeek != 1) ? 's' : ''; ?></small></td>
-			</tr>
-		</table>	
+
+			<li>New last week: <?php echo number_format($numUsersLastWeek); ?> user<?php echo ($numUsersLastWeek != 1) ? 's' : ''; ?></li>
 
 		<h3>Most popular pages</h3>
 
@@ -244,10 +196,9 @@ $(function(){
 				<?php endforeach; ?>
 			</ol>
 		<?php else: ?>
-			<p><small>We don't have this information yet.</small></p>
+			<p>We don't have this information yet.</p>
 		<?php endif; ?>
 
-		<br />
 		
 <?php if (@in_array('blog', $this->permission->sitePermissions)): ?>
 
@@ -260,7 +211,7 @@ $(function(){
 				<?php endforeach; ?>
 			</ol>
 		<?php else: ?>
-			<p><small>We don't have this information yet.</small></p>
+			<p>We don't have this information yet.</p>
 		<?php endif; ?>
 
 		<br />
@@ -278,7 +229,7 @@ $(function(){
 				<?php endforeach; ?>
 			</ol>
 		<?php else: ?>
-			<p><small>We don't have this information yet.</small></p>
+			<p>We don't have this information yet.</p>
 		<?php endif; ?>
 
 <?php endif; ?>
@@ -287,4 +238,4 @@ $(function(){
 	
 	<br class="clear" />
 
-</div>
+</div> <!-- / row -->

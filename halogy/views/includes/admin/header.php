@@ -6,33 +6,20 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
 	<link rel="icon" href="<?php echo $this->config->item('staticPath'); ?>/images/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/admin.css" media="all" />
+	<!--<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/admin.css" media="all" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/lightbox.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/datepicker.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/datepicker.css" media="screen" /> -->
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/normalize.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/app.css" media="screen" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
+	
+	
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.lightbox.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/default.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/admin.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/custom.modernizr.js"></script>
-
-<!--	<script language="JavaScript">			
-		$(function(){
-			$('ul#menubar li').hover(
-				function() { $('ul', this).css('display', 'block').parent().addClass('hover'); },
-				function() { $('ul', this).css('display', 'none').parent().removeClass('hover'); }
-			);			
-		});		
-	</script> -->
-	
-	<!-- Check for Zepto support, load jQuery if necessary -->
-	<script>
-	  document.write('<script src=<?php echo $this->config->item('staticPath'); ?>/js/vendor/'
-	    + ('__proto__' in {} ? 'zepto' : 'jquery')
-	    + '.js><\/script>');
-	</script>
 	
 	<title><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin - Halogy</title>
 	
@@ -42,7 +29,7 @@
 	<nav class="top-bar">
 		<ul class="title-area">
 			<li class="name">
-				<h1><a href="#">Top Bar Title </a></h1>
+				<h1><a href="#">Halogy - <?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?></a></h1>
 			</li>
 			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
 		</ul>
@@ -213,16 +200,9 @@
 			</ul> <!-- / left -->
 		</section>
 	</nav>	
-
-
-<div class="bg">
 	
-	<div class="container">
-	
-		<div id="header">
-
-			<div id="logo">
-			
+	<div class="row">
+		<div class="large-8 columns">
 				<?php
 					// set logo
 					if ($this->config->item('logoPath')) $logo = $this->config->item('logoPath');
@@ -232,11 +212,13 @@
 
 				<h1><a href="<?php echo site_url('/admin'); ?>"><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin</a></h1>
 				<a href="<?php echo site_url('/admin'); ?>"><img src="<?php echo $logo; ?>" alt="Logo" /></a>
-
-			</div>
-
-			<div id="siteinfo">
-				<ul id="toolbar">
+				
+				<?php if ($this->session->userdata('session_admin')): ?>	
+					<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
+				<?php endif; ?>
+		</div>
+		<div class="large-4 columns">	
+				<ul class="side-nav">
 					<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>				
 					<?php if ($this->session->userdata('session_admin')): ?>				
 						<li><a href="<?php echo site_url('/admin/dashboard'); ?>">Dashboard</a></li>
@@ -254,16 +236,5 @@
 						<li class="last"><a href="<?php echo site_url('/admin'); ?>">Login</a></li>
 					<?php endif; ?>
 				</ul>
-
-				<?php if ($this->session->userdata('session_admin')): ?>	
-					<h2 class="clear"><strong><?php echo $this->site->config['siteName']; ?> Admin</strong></h2>
-					<h3>Logged in as: <strong><?php echo $this->session->userdata('username'); ?></strong></h3>
-				<?php endif; ?>	
-			</div>
-
 		</div>
-		
-
-		
-		<div id="content" class="content">
-	
+	</div>

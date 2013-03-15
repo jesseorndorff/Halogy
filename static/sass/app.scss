@@ -44,3 +44,10 @@
 // @import "foundation/components/tooltips";
 // @import "foundation/components/dropdown";
 
+ul.dashboardnav { margin: 0 5px 2px 0; text-align: right; }
+ul.dashboardnav li { display: inline; }
+ul.dashboardnav li a { background: #ccc; color: #fff; padding: 4px; font-size: 10px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+ul.dashboardnav li.active a { background: #29c4f0; }
+
+div#placeholder { width:660px;height:180px; margin-bottom: 10px; }
+div#activity { border: 1px solid #ccc; padding: 10px; overflow: auto; height: 180px; margin: 0 0 10px; }

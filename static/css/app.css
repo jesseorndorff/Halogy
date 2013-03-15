@@ -19,7 +19,7 @@ body {
   color: #222222;
   padding: 0;
   margin: 0;
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   line-height: 1;
@@ -1481,8 +1481,8 @@ p aside {
 /* Default header styles */
 /* line 174, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-  font-weight: bold;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: 600;
   font-style: normal;
   color: #222222;
   text-rendering: optimizeLegibility;
@@ -1499,27 +1499,27 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
 
 /* line 191, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
 h1 {
-  font-size: 2.125em;
+  font-size: 1.875em;
 }
 
 /* line 192, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
 h2 {
-  font-size: 1.6875em;
+  font-size: 1.4375em;
 }
 
 /* line 193, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
 h3 {
-  font-size: 1.375em;
+  font-size: 1.125em;
 }
 
 /* line 194, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
 h4 {
-  font-size: 1.125em;
+  font-size: 0.875em;
 }
 
 /* line 195, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
 h5 {
-  font-size: 1.125em;
+  font-size: 0.9375em;
 }
 
 /* line 196, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
@@ -1711,22 +1711,22 @@ blockquote p {
 
   /* line 356, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
   h1 {
-    font-size: 2.75em;
+    font-size: 2.5em;
   }
 
   /* line 357, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
   h2 {
-    font-size: 2.3125em;
+    font-size: 2.0625em;
   }
 
   /* line 358, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
   h3 {
-    font-size: 1.6875em;
+    font-size: 1.4375em;
   }
 
   /* line 359, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_type.scss */
   h4 {
-    font-size: 1.4375em;
+    font-size: 1.1875em;
   }
 }
 /*
@@ -5482,7 +5482,7 @@ body {
   color: #222222;
   padding: 0;
   margin: 0;
-  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-weight: normal;
   font-style: normal;
   line-height: 1;
@@ -5577,4 +5577,47 @@ textarea {
 /* line 70, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.7/scss/foundation/components/_global.scss */
 select {
   width: 100%;
+}
+
+/* line 47, ../sass/app.scss */
+ul.dashboardnav {
+  margin: 0 5px 2px 0;
+  text-align: right;
+}
+
+/* line 48, ../sass/app.scss */
+ul.dashboardnav li {
+  display: inline;
+}
+
+/* line 49, ../sass/app.scss */
+ul.dashboardnav li a {
+  background: #ccc;
+  color: #fff;
+  padding: 4px;
+  font-size: 10px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+}
+
+/* line 50, ../sass/app.scss */
+ul.dashboardnav li.active a {
+  background: #29c4f0;
+}
+
+/* line 52, ../sass/app.scss */
+div#placeholder {
+  width: 660px;
+  height: 180px;
+  margin-bottom: 10px;
+}
+
+/* line 53, ../sass/app.scss */
+div#activity {
+  border: 1px solid #ccc;
+  padding: 10px;
+  overflow: auto;
+  height: 180px;
+  margin: 0 0 10px;
 }
