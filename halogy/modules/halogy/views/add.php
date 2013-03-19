@@ -60,7 +60,7 @@ $(function(){
 	});
 	$('form').submit(function(){
 		$('div.permissions input').each(function(){
-			if($(this).attr('checked') == true){
+			if($(this).attr('checked') != true){
 				$(this).closest('form').submit();
 			};
 		});
