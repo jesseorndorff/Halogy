@@ -27,7 +27,7 @@
 		<td class="tiny">
 			<?php echo anchor('/admin/users/edit_group/'.$group['groupID'], 'Edit'); ?>
 		</td>
-		<td class="tiny"
+		<td class="tiny">
 			<?php echo anchor('/admin/users/delete_group/'.$group['groupID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
 		</td>
 	</tr>
