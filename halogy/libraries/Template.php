@@ -56,6 +56,7 @@ class Template {
 			'community_view_profile_private',
 			'events',		
 			'events_single',
+			'events_featured',
 			'events_search',
 			'forums',
 			'forums_delete',
@@ -761,8 +762,8 @@ class Template {
 							$imageHTML = display_image($imageData['src'], $imageData['imageName']);
 							$imageHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/images/'.$imageData['imageRef'].strtolower($imageData['ext'])).'"', $imageHTML);
 							
-							$thumbTML = display_image($imageData['src'], $imageData['imageName']);
-							$thumbHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/thumbs/'.$imageData['imageRef'].strtolower($imageData['ext'])).'"', $imageHTML);									
+							$thumbHTML = display_image($imageData['src'], $imageData['imageName']);
+							$thumbHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/thumbs/'.$imageData['imageRef'].strtolower($imageData['ext'])).'" width="120px"', $imageHTML);									
 							
 							$template[$headlineID][$i] = array(
 								'galleryimage:link' => site_url('images/'.$imageData['imageRef'].$imageData['ext']),
