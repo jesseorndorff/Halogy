@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/normalize.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/app.css" media="screen" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="<?php echo $this->config->item('staticPath'); ?>/webfonts/ss-pika.css" />
 	
 	
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.js"></script>
@@ -196,14 +197,38 @@
 						</ul>
 					</li>
 				<?php endif; ?>
+				<!-- Admin -->
+				<li class="divider"></li>
+				<li class="has-dropdown"><a href="#">Admin</a>
+					<ul class="dropdown">
+						<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>
+						<?php if ($this->session->userdata('session_admin')): ?>
+							<li><a href="<?php echo site_url('/admin/dashboard'); ?>">Dashboard</a></li>
+							<li><a href="<?php echo site_url('/admin/users/edit/'.$this->session->userdata('userID')); ?>">My Account</a></li>
+							<?php if ($this->session->userdata('groupID') == $this->site->config['groupID'] || $this->session->userdata('groupID') < 0): ?>
+								<li><a href="<?php echo site_url('/admin/site/'); ?>">My Site</a></li>
+							<?php endif; ?>
+							<?php if ($this->session->userdata('groupID') < 0 && @file_exists(APPPATH.'modules/halogy/controllers/halogy.php')): ?>
+								<li><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
+								<li><a href="<?php echo site_url('/halogy/sites'); ?>">Sites</a></li>
+							<?php else: ?>
+								<li class="last"><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
+							<?php endif; ?>	
+						<?php else: ?>
+							<li class="last"><a href="<?php echo site_url('/admin'); ?>">Login</a></li>
+						<?php endif; ?>
+					</ul>
+				</li>
 				</li>
 			</ul> <!-- / left -->
 		</section>
 	</nav>	
 	
 	<div class="row">
-		<div class="large-8 columns">
-				<?php
+		<div class="large-12 columns">
+
+		
+				<!--<?php
 					// set logo
 					if ($this->config->item('logoPath')) $logo = $this->config->item('logoPath');
 					elseif ($image = $this->uploads->load_image('admin-logo')) $logo = $image['src'];
@@ -211,30 +236,7 @@
 				?>
 
 				<h1><a href="<?php echo site_url('/admin'); ?>"><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin</a></h1>
-				<a href="<?php echo site_url('/admin'); ?>"><img src="<?php echo $logo; ?>" alt="Logo" /></a>
-				
-				<?php if ($this->session->userdata('session_admin')): ?>	
-					<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
-				<?php endif; ?>
+				<!--<a href="<?php echo site_url('/admin'); ?>"><img src="<?php echo $logo; ?>" alt="Logo" /></a>-->
 		</div>
-		<div class="large-4 columns">	
-				<ul class="side-nav">
-					<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>				
-					<?php if ($this->session->userdata('session_admin')): ?>				
-						<li><a href="<?php echo site_url('/admin/dashboard'); ?>">Dashboard</a></li>
-						<li><a href="<?php echo site_url('/admin/users/edit/'.$this->session->userdata('userID')); ?>">My Account</a></li>
-						<?php if ($this->session->userdata('groupID') == $this->site->config['groupID'] || $this->session->userdata('groupID') < 0): ?>
-							<li><a href="<?php echo site_url('/admin/site/'); ?>">My Site</a></li>
-						<?php endif; ?>
-						<?php if ($this->session->userdata('groupID') < 0 && @file_exists(APPPATH.'modules/halogy/controllers/halogy.php')): ?>
-							<li class="noborder"><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
-							<li class="superuser"><a href="<?php echo site_url('/halogy/sites'); ?>">Sites</a></li>
-						<?php else: ?>
-							<li class="last"><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
-						<?php endif; ?>						
-					<?php else: ?>
-						<li class="last"><a href="<?php echo site_url('/admin'); ?>">Login</a></li>
-					<?php endif; ?>
-				</ul>
-		</div>
+
 	</div>

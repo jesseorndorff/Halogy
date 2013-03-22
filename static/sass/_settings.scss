@@ -28,17 +28,31 @@ $body-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial,
 // $text-direction: ltr;
 
 // We use these as default colors throughout
-// $primary-color: #2ba6cb;
-// $secondary-color: #e9e9e9;
+// $primary-color: #567af0;
+// $secondary-color: #9e719d;
+// $third-color: #f29f46;
 // $alert-color: #c60f13;
 // $success-color: #5da423;
 
+// $light-color: #FFFFFF;
+// $dark-color: #000000;
+
+// $text-shadow:darken( ,5%);
+
+// Set Oppacity by White(0.15) or Back(0.15)
+//@function white($opacity){
+//    @return rgba(0,0,0,$opacity)
+//}
+//@function black($opacity){
+//    @return rgba(255,255,255,$opacity)
+//}
+
 // We use these to make sure border radius matches unless we want it different.
-// $global-radius: 3px;
-// $global-rounded: 1000px;
+$global-radius: 3px;
+$global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
-// $shiny-edge-size: 0 1px 0;
+$shiny-edge-size: 0;
 // $shiny-edge-color: rgba(#fff, .5);
 // $shiny-edge-active-color: rgba(#000, .2);
 
@@ -953,7 +967,7 @@ $h6-font-size: 1em;
 //
 
 // Background color for the top bar
-// $topbar-bg: #111;
+// $topbar-bg: #567af0;
 
 // Height and margin
 // $topbar-height: 45px;

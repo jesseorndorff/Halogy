@@ -17,19 +17,113 @@ $(function(){
 </script>
 
 <div class="row">
+	<div class="large-2 columns">
+		<?php if (@in_array('pages', $this->permission->permissions)): ?>
+
+			<div class="touch-box">
+			
+				<a href="<?php echo site_url('/admin/pages'); ?>"></a>
+				<p>Manage Pages</p>
+				<i class="ss-icon">list</i>
+				
+			</div>
+
+		<?php endif; ?>
+	</div>
+	<div class="large-2 columns">
+		<?php if (@in_array('pages_templates', $this->permission->permissions)): ?>
+
+			<div class="touch-box">
+			
+				<p>Build Templates</p>
+				<i class="ss-icon">layout</i>
+				
+				<a href="<?php echo site_url('/admin/pages/templates'); ?>"></a>
+				
+			</div>
+			
+		<?php endif; ?>
+	</div>
+	<div class="large-2 columns">
+		<?php if (@in_array('images', $this->permission->permissions)): ?>
+
+			<div class="touch-box">
+			
+				<p>Upload Images</p>
+				<i class="ss-icon">images</i>
+				
+				<a href="<?php echo site_url('/admin/images'); ?>"></a>
+				
+			</div>
+			
+		<?php endif; ?>
+		
+	</div>
+	<div class="large-2 columns">
+				<?php if (@in_array('users', $this->permission->permissions)): ?>
+		
+			<div class="touch-box">
+			
+				<p>Manage Users</p>
+				<i class="ss-icon">users</i>
+				
+				<a href="<?php echo site_url('/admin/users'); ?>"></a>
+				
+			</div>
+
+		<?php endif; ?>
+
+	</div>
+	<div class="large-2 columns">
+		<?php if (@in_array('blog', $this->permission->permissions)): ?>
+
+			<div class="touch-box">
+			
+				<p>Blog</p>
+				<i class="ss-icon">compose</i>
+				
+				<a href="<?php echo site_url('/admin/blog'); ?>"></a>
+				
+			</div>
+			
+		<?php endif; ?>
+		
+	</div>
+	<div class="large-2 columns">
+		<?php if (@in_array('shop', $this->permission->permissions)): ?>
+			<div class="touch-box">
+			
+				<p>Shop</p>
+				<i class="ss-icon">cart	</i>
+						
+				<a href="<?php echo site_url('/admin/shop'); ?>"></a>
+				
+			</div>
+		<?php endif; ?>
+		
+	</div>
+</div>
+
+<div class="row">
+	<div class="large-12 columns">
+
+	</div>
+</div>
+
+<div class="row">
 	
 	<div class="large-8 columns">
 
-		<h1><strong><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s</strong> Dashboard</h1>
+		<div class="admin-header"><h3><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h3></div>
 		
 		<?php if ($errors = validation_errors()): ?>
-			<div data-alert class="alert-box alert">
+			<div class="error">
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
 
 		<?php if ($message): ?>
-			<div data-alert class="alert-box success">
+			<div class="message">
 				<?php echo $message; ?>
 			</div>
 		<?php endif; ?>
@@ -46,89 +140,6 @@ $(function(){
 		<div id="activity" class="loader">
 			<?php echo $activity; ?>
 		</div>
-
-		<?php if (@in_array('pages', $this->permission->permissions)): ?>
-
-			<div class="module">
-			
-				<h2><strong>Manage Your Pages</strong></h2>
-			
-				<p>You can set up a new page or edit other pages on your website easily.</p>
-			
-				<p><a href="<?php echo site_url('/admin/pages'); ?>" class="button">Manage Pages</a></p>
-				
-			</div>
-
-		<?php endif; ?>
-
-		
-		<?php if (@in_array('pages_templates', $this->permission->permissions)): ?>
-
-			<div class="module last">
-			
-				<h2><strong>Build Templates</strong></h2>
-			
-				<p>Gain full control over templates for pages and modules (such as the Blog).</p>
-	
-				<p><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Manage Templates</a></p>
-				
-			</div>
-			
-		<?php endif; ?>
-		
-		<?php if (@in_array('images', $this->permission->permissions)): ?>
-
-			<div class="module">
-			
-				<h2><strong>Upload Images</strong></h2>
-			
-				<p>Upload images to your website, either individually or with a ZIP file.</p>
-	
-				<p><a href="<?php echo site_url('/admin/images'); ?>" class="button">Manage Images</a></p>
-				
-			</div>
-			
-		<?php endif; ?>
-		
-		<?php if (@in_array('users', $this->permission->permissions)): ?>
-		
-			<div class="module last">
-			
-				<h2><strong>Manage Your Users</strong></h2>
-			
-				<p>See who's using your site or add administrators to help you run it.</p>
-	
-				<p><a href="<?php echo site_url('/admin/users'); ?>" class="button">Manage Users</a></p>
-				
-			</div>
-
-		<?php endif; ?>
-
-		<?php if (@in_array('blog', $this->permission->permissions)): ?>
-
-			<div class="module">
-			
-				<h2><strong>Get Using the Blog</strong></h2>
-			
-				<p>Add posts to your blog and view comments made by others.</p>
-	
-				<p><a href="<?php echo site_url('/admin/blog'); ?>" class="button">Manage Blog</a></p>
-				
-			</div>
-			
-		<?php endif; ?>
-
-		<?php if (@in_array('shop', $this->permission->permissions)): ?>
-			<div class="module last">
-			
-				<h2><strong>Build Your Shop</strong></h2>
-			
-				<p>Set up categories, add products and sell online through the shop.</p>
-			
-				<p><a href="<?php echo site_url('/admin/shop'); ?>" class="button">Manage Shop</a></p>
-				
-			</div>
-		<?php endif; ?>
 
 		<br class="clear" /><br />
 
@@ -147,6 +158,13 @@ $(function(){
 	</div>
 	
 	<div class="large-4 columns">
+	
+		<div class="welcome">
+			<?php if ($this->session->userdata('session_admin')): ?>	
+				<h4>Welcome back <?php echo $this->session->userdata('username'); ?>!</h4>
+				<p>Here's a few things that have been happening on your website.</p>
+			<?php endif; ?>
+		</div>
 
 		<h3>Site Info</h3>
 		<ul>

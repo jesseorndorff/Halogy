@@ -1,3 +1,59 @@
+// Halogy Color Settings
+
+$primary-color: #567af0;
+$secondary-color: #9e719d;
+$third-color: #f29f46;
+$fourth-color: #9e719d;
+$alert-color: #d01011;
+$success-color: #6ea820;
+
+$light-color: #FFFFFF;
+$dark-color: #000000;
+
+// Background color for the top bar
+$topbar-bg: $primary-color;
+
+// Height and margin
+// $topbar-height: 45px;
+// $topbar-margin-bottom: emCalc(30px);
+
+// Control Input height for top bar
+// $topbar-input-height: 2.45em;
+
+// Controlling the styles for the title in the top bar
+$topbar-title-weight: 600;
+// $topbar-title-font-size: emCalc(17px);
+
+// Set the link colors and styles for top-level nav
+$topbar-link-color: $light-color;
+$topbar-link-weight: 600;
+// $topbar-link-font-size: emCalc(13px);
+
+// Style the top bar dropdown elements
+$topbar-dropdown-bg: $primary-color;
+$topbar-dropdown-link-color: $light-color;
+$topbar-dropdown-toggle-size: 5px;
+$topbar-dropdown-toggle-color: #fff;
+$topbar-dropdown-toggle-alpha: 0.5;
+$dropdown-label-color: $primary-color;
+
+// Top menu icon styles
+// $topbar-menu-link-transform: uppercase;
+// $topbar-menu-link-font-size: emCalc(13px);
+// $topbar-menu-link-weight: bold;
+// $topbar-menu-link-color: #fff;
+// $topbar-menu-icon-color: #fff;
+// $topbar-menu-link-color-toggled: #888;
+// $topbar-menu-icon-color-toggled: #888;
+
+// Set Oppacity by White(0.15) or Back(0.15)
+@function white($opacity){
+    @return rgba(0,0,0,$opacity)
+}
+@function black($opacity){
+    @return rgba(255,255,255,$opacity)
+}
+
 // Global Foundation Settings
 @import "settings";
 
@@ -7,8 +63,8 @@
 // Import specific parts of Foundation by commenting the import "foundation"
 // and uncommenting what you want below. You must uncomment the following if customizing
 
-@import "foundation/foundation-global"; // *always required
-@import "foundation/components/global"; // *always required
+//@import "foundation/foundation-global"; // *always required
+//@import "foundation/components/global"; // *always required
 // @import "foundation/components/grid";
 // @import "foundation/components/visibility";
 // @import "foundation/components/block-grid";
@@ -44,10 +100,64 @@
 // @import "foundation/components/tooltips";
 // @import "foundation/components/dropdown";
 
+// Alerts
+
+.error {   
+  @include alert-base;
+  @include alert-style($alert-color);
+  @include radius($global-radius);
+}
+
+.error p {
+	margin: 0;
+}
+.message {   
+  @include alert-base;
+  @include alert-style($success-color);
+  @include radius($global-radius); 
+}
+
+// Dashboard
+
+.touch-box {
+	background: $fourth-color;
+	color: $light-color;
+	margin: 0 0 25px 0;
+	text-align: center;
+	@include radius($global-radius);
+}
+
+.touch-box i{
+	font-size: 5em;
+}
+
+.admin-header {
+	background: $primary-color;
+	color: $light-color;
+	margin: 0 0 20px 0;
+	padding: 5px 10px 6px 10px;
+}
+
+.admin-header h3{
+	color: $light-color;
+	margin: 0;
+	text-shadow: 0 2px $anchor-font-color-hover;
+}
+
+.welcome {
+	background: $third-color;
+	color: $light-color;
+	padding: 5px 10px 1px 10px;
+}
+
+.welcome h4 {
+	color: $light-color;
+}
+
 ul.dashboardnav { margin: 0 5px 2px 0; text-align: right; }
 ul.dashboardnav li { display: inline; }
 ul.dashboardnav li a { background: #ccc; color: #fff; padding: 4px; font-size: 10px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
 ul.dashboardnav li.active a { background: #29c4f0; }
 
 div#placeholder { width:660px;height:180px; margin-bottom: 10px; }
-div#activity { border: 1px solid #ccc; padding: 10px; overflow: auto; height: 180px; margin: 0 0 10px; }
+div#activity { border: 1px solid #ccc; padding: 10px; overflow: auto; margin: 0 0 10px; }

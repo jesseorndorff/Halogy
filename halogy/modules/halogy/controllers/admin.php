@@ -103,7 +103,7 @@ class Admin extends MX_Controller {
 			$user = $this->core->lookup_user($this->session->userdata('userID'));
 			if ($user['password'] == 'f35364bc808b079853de5a1e343e7159')
 			{
-				$this->form_validation->set_error('You are still using the default Superuser password. Click on My Account to change your password.');
+				$this->form_validation->set_error('Woah! It looks like you are still using the default Superuser password. Go to Admin > My Account to change your password.');
 			}
 		}
 
