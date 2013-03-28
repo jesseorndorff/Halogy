@@ -38,7 +38,7 @@
 		<section class="top-bar-section">
 			<ul class="left">
 				<!-- Pages -->
-				<li class="divider"></li>
+				
 				<?php if($this->session->userdata('session_admin')): ?>
 					<?php if (in_array('pages', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Pages</a>
@@ -51,7 +51,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Templates -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('pages_templates', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Templates</a>
 						<ul class="dropdown">
@@ -63,7 +63,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Uploads -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('images', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Uploads</a>
 						<ul class="dropdown">
@@ -81,7 +81,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Webforms -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('webforms', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Web Forms</a>
 						<ul class="dropdown">
@@ -94,7 +94,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Blog -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('blog', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Blog</a>
 						<ul class="dropdown">
@@ -112,7 +112,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Shop -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('shop', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Shop</a>
 						<ul class="dropdown">
@@ -144,7 +144,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Events -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('events', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Events</a>
 						<ul class="dropdown">
@@ -156,7 +156,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Forums -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('forums', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Forums</a>
 						<ul class="dropdown">
@@ -168,7 +168,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Wiki -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('wiki', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Wiki</a>
 						<ul class="dropdown">
@@ -183,7 +183,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Users -->
-				<li class="divider"></li>
+				
 				<?php if (in_array('users', $this->permission->permissions)): ?>
 					<li class="has-dropdown"><a href="#">Users</a>
 						<ul class="dropdown">
@@ -198,7 +198,7 @@
 					</li>
 				<?php endif; ?>
 				<!-- Admin -->
-				<li class="divider"></li>
+				
 				<li class="has-dropdown"><a href="#">Admin</a>
 					<ul class="dropdown">
 						<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>

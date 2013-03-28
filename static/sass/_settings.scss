@@ -15,7 +15,7 @@
 $em-base: 16px;
 
 // We use these to control various global styles
-// $body-bg: #fff;
+//$body-bg: #fff;
 // $body-font-color: #222;
 $body-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
@@ -94,11 +94,11 @@ $header-font-weight: 600;
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-$h1-font-size: emCalc(40px);
-$h2-font-size: emCalc(33px);
-$h3-font-size: emCalc(23px);
-$h4-font-size: emCalc(19px);
-$h5-font-size: emCalc(15px);
+$h1-font-size: emCalc(33px);
+$h2-font-size: emCalc(28px);
+$h3-font-size: emCalc(18px);
+$h4-font-size: emCalc(15px);
+$h5-font-size: emCalc(14px);
 $h6-font-size: 1em;
 
 // These control how subheaders are styled.
@@ -115,7 +115,7 @@ $h6-font-size: 1em;
 // We use these to style paragraphs
 // $paragraph-font-family: inherit;
 // $paragraph-font-weight: normal;
-// $paragraph-font-size: 1em;
+$paragraph-font-size: .95em;
 // $paragraph-line-height: 1.6;
 // $paragraph-margin-bottom: emCalc(20px);
 // $paragraph-aside-font-size: emCalc(14px);

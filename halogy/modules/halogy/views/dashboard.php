@@ -114,7 +114,14 @@ $(function(){
 	
 	<div class="large-8 columns">
 
-		<div class="admin-header"><h3><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h3></div>
+		<div class="admin-header"><h2><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h2></div>
+		
+		<div class="welcome">
+			<?php if ($this->session->userdata('session_admin')): ?>	
+				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
+				<p>Here's a few things that have been happening on your website.</p>
+			<?php endif; ?>
+		</div>
 		
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
@@ -157,54 +164,58 @@ $(function(){
 	
 	</div>
 	
-	<div class="large-4 columns">
-	
-		<div class="welcome">
-			<?php if ($this->session->userdata('session_admin')): ?>	
-				<h4>Welcome back <?php echo $this->session->userdata('username'); ?>!</h4>
-				<p>Here's a few things that have been happening on your website.</p>
-			<?php endif; ?>
+	<div class="large-4 columns sidebar">
+		
+		<div class="panel">
+			<h3>Site Info</h3>
+			<ul>
+				<li>Site name: <?php echo $this->site->config['siteName']; ?></li>
+				<li>Site URL: <a href="<?php echo $this->site->config['siteURL']; ?>"><?php echo $this->site->config['siteURL']; ?></a></li>
+				<li>Site email: <a href="mailto:<?php echo $this->site->config['siteEmail']; ?>"><?php echo $this->site->config['siteEmail']; ?></a></li>
+				</ul>
+		</div>
+		
+		<div class="panel">
+			<h3>Site Stats</h3>
+			<ul>
+				<li>Disk space used: <?php echo number_format($quota); ?> KB</li>
+				<li>Total page views: <?php echo number_format($numPageViews); ?> Views</li>
+				<li>Pages: <?php echo $numPages; ?> page<?php echo ($numPages != 1) ? 's' : ''; ?></li>
+				<?php if (@in_array('blog', $this->permission->permissions)): ?>
+					<li>Blog posts: <?php echo $numBlogPosts ?> post<?php echo ($numBlogPosts != 1) ? 's' : ''; ?></li>
+					<?php endif; ?>
+			</ul>
 		</div>
 
-		<h3>Site Info</h3>
-		<ul>
-			<li>Site name: <?php echo $this->site->config['siteName']; ?></li>
-			<li>Site URL: <a href="<?php echo $this->site->config['siteURL']; ?>"><?php echo $this->site->config['siteURL']; ?></a></li>
-			<li>Site email: <a href="mailto:<?php echo $this->site->config['siteEmail']; ?>"><?php echo $this->site->config['siteEmail']; ?></a></li>
-		</ul>
-		<h3>Site Stats</h3>
-		<ul>
-			<li>Disk space used: <?php echo number_format($quota); ?> KB</li>
-			<li>Total page views: <?php echo number_format($numPageViews); ?> Views</li>
-			<li>Pages: <?php echo $numPages; ?> page<?php echo ($numPages != 1) ? 's' : ''; ?></li>
-			<?php if (@in_array('blog', $this->permission->permissions)): ?>
-				<li>Blog posts: <?php echo $numBlogPosts ?> post<?php echo ($numBlogPosts != 1) ? 's' : ''; ?></li>
-			<?php endif; ?>
-		</ul>
-		<h3>User Stats</h3>
-		<ul>
-			<li>Total users: <?php echo number_format($numUsers); ?> user<?php echo ($numUsers != 1) ? 's' : ''; ?></li>
-			<li>New today: <?php echo number_format($numUsersToday); ?> user<?php echo ($numUsersToday != 1) ? 's' : ''; ?>
-				<?php
-					$difference = @round(100 / $numUsersYesterday * ($numUsersToday - $numUsersYesterday), 2);
-					$polarity = ($difference < 0) ? '' : '+';
-				?>						
-				<?php if ($difference != 0): ?>
-					(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
-				<?php endif; ?>
-
-			<li>New yesterday: <?php echo number_format($numUsersYesterday); ?> user<?php echo ($numUsersYesterday != 1) ? 's' : ''; ?></li>
-			<li>New this week: <?php echo number_format($numUsersWeek); ?> user<?php echo ($numUsersWeek != 1) ? 's' : ''; ?>
+		<div class="panel">
+			<h3>User Stats</h3>
+			<ul>
+				<li>Total users: <?php echo number_format($numUsers); ?> user<?php echo ($numUsers != 1) ? 's' : ''; ?></li>
+				<li>New today: <?php echo number_format($numUsersToday); ?> user<?php echo ($numUsersToday != 1) ? 's' : ''; ?>
 					<?php
-						$difference = @round(100 / $numUsersLastWeek * ($numUsersWeek - $numUsersLastWeek), 2);
+						$difference = @round(100 / $numUsersYesterday * ($numUsersToday - $numUsersYesterday), 2);
 						$polarity = ($difference < 0) ? '' : '+';
-					?>				
-					<?php if ($difference != 0): ?>
+						?>						
+						<?php if ($difference != 0): ?>
 						(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
-					<?php endif; ?>
+						<?php endif; ?>
+				
+					<li>New yesterday: <?php echo number_format($numUsersYesterday); ?> user<?php echo ($numUsersYesterday != 1) ? 's' : ''; ?></li>
+					<li>New this week: <?php echo number_format($numUsersWeek); ?> user<?php echo ($numUsersWeek != 1) ? 's' : ''; ?>
+						<?php
+							$difference = @round(100 / $numUsersLastWeek * ($numUsersWeek - $numUsersLastWeek), 2);
+							$polarity = ($difference < 0) ? '' : '+';
+							?>				
+							<?php if ($difference != 0): ?>
+							(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
+							<?php endif; ?>
 
-			<li>New last week: <?php echo number_format($numUsersLastWeek); ?> user<?php echo ($numUsersLastWeek != 1) ? 's' : ''; ?></li>
+					<li>New last week: <?php echo number_format($numUsersLastWeek); ?> user<?php echo ($numUsersLastWeek != 1) ? 's' : ''; ?></li>
 
+			</ul>
+		</div>
+		
+		<div class="panel">
 		<h3>Most popular pages</h3>
 
 		<?php if ($popularPages): ?>
@@ -216,9 +227,8 @@ $(function(){
 		<?php else: ?>
 			<p>We don't have this information yet.</p>
 		<?php endif; ?>
-
-		
-<?php if (@in_array('blog', $this->permission->sitePermissions)): ?>
+				
+		<?php if (@in_array('blog', $this->permission->sitePermissions)): ?>
 
 		<h3>Most popular blog posts</h3>
 
@@ -231,12 +241,10 @@ $(function(){
 		<?php else: ?>
 			<p>We don't have this information yet.</p>
 		<?php endif; ?>
-
-		<br />
 		
-<?php endif; ?>
+		<?php endif; ?>
 
-<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>		
+		<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>		
 
 		<h3>Most popular shop products</h3>
 
@@ -249,6 +257,8 @@ $(function(){
 		<?php else: ?>
 			<p>We don't have this information yet.</p>
 		<?php endif; ?>
+
+		</div>
 
 <?php endif; ?>
 		

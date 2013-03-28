@@ -4,7 +4,7 @@ $primary-color: #567af0;
 $secondary-color: #9e719d;
 $third-color: #f29f46;
 $fourth-color: #9e719d;
-$alert-color: #d01011;
+$alert-color: #c63c3d;
 $success-color: #6ea820;
 
 $light-color: #FFFFFF;
@@ -100,6 +100,16 @@ $dropdown-label-color: $primary-color;
 // @import "foundation/components/tooltips";
 // @import "foundation/components/dropdown";
 
+// Global
+
+ul, ol, dl {
+	font-size: $paragraph-font-size;
+	line-height: 1.6;
+	margin-bottom: 1.25em;
+	list-style-position: inside;
+	font-family: inherit;
+}
+
 // Alerts
 
 .error {   
@@ -133,31 +143,63 @@ $dropdown-label-color: $primary-color;
 
 .admin-header {
 	background: $primary-color;
+	border-radius: $global-radius;
 	color: $light-color;
 	margin: 0 0 20px 0;
 	padding: 5px 10px 6px 10px;
 }
 
-.admin-header h3{
+.admin-header h2{
 	color: $light-color;
 	margin: 0;
 	text-shadow: 0 2px $anchor-font-color-hover;
 }
 
-.welcome {
-	background: $third-color;
-	color: $light-color;
-	padding: 5px 10px 1px 10px;
+#activity { 
+	background: #F1F1F1;
+	border: 1px solid #999;
+	border-radius: $global-radius;
+	padding: 10px; 
+	margin: 0 0 10px;
 }
 
-.welcome h4 {
+#activity ul{
+	list-style-type: none;
+}
+
+// Sidebar
+
+.sidebar {
+
+	border-radius: $global-radius;
+}
+
+.sidebar ul{
+	list-style-type: none;
+}
+
+.sidebar-module {
+
+}
+
+.welcome {
+	background: $third-color;
+	border: 1px solid #c17018;
+	border-radius: $global-radius;
+	color: $light-color;
+	padding: 5px 10px 1px 10px;
+	margin: 0 0 20px 0;
+	text-shadow: 0 1px #c17018;
+}
+
+.welcome h3 {
 	color: $light-color;
 }
 
 ul.dashboardnav { margin: 0 5px 2px 0; text-align: right; }
 ul.dashboardnav li { display: inline; }
-ul.dashboardnav li a { background: #ccc; color: #fff; padding: 4px; font-size: 10px; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
-ul.dashboardnav li.active a { background: #29c4f0; }
+ul.dashboardnav li a { background: #ccc; color: #fff; padding: 4px; font-size: 10px; border-radius: $global-radius; }
+ul.dashboardnav li.active a { background: $primary-color; }
 
-div#placeholder { width:660px;height:180px; margin-bottom: 10px; }
-div#activity { border: 1px solid #ccc; padding: 10px; overflow: auto; margin: 0 0 10px; }
+div#placeholder { height:180px; margin-bottom: 10px; }
+
