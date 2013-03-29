@@ -15,17 +15,19 @@
 	<link rel="stylesheet" href="<?php echo $this->config->item('staticPath'); ?>/webfonts/ss-pika.css" />
 	
 	
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.lightbox.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/default.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/admin.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.js"></script>
+	
+	<!--<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.lightbox.js"></script> -->
+	<!-- <script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/default.js"></script> -->
+	<!-- <script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/admin.js"></script> -->
+	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/custom.modernizr.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.js"></script>
 	
 	<title><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin - Halogy</title>
 	
 </head>
 <body>
+
 	<!-- Start Nav -->
 	<nav class="top-bar">
 		<ul class="title-area">
@@ -223,20 +225,4 @@
 			</ul> <!-- / left -->
 		</section>
 	</nav>	
-	
-	<div class="row">
-		<div class="large-12 columns">
 
-		
-				<!--<?php
-					// set logo
-					if ($this->config->item('logoPath')) $logo = $this->config->item('logoPath');
-					elseif ($image = $this->uploads->load_image('admin-logo')) $logo = $image['src'];
-					else $logo = $this->config->item('staticPath').'/images/halogy_logo.jpg';
-				?>
-
-				<h1><a href="<?php echo site_url('/admin'); ?>"><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin</a></h1>
-				<!--<a href="<?php echo site_url('/admin'); ?>"><img src="<?php echo $logo; ?>" alt="Logo" /></a>-->
-		</div>
-
-	</div>

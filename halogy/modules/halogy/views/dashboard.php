@@ -16,99 +16,6 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-2 columns">
-		<?php if (@in_array('pages', $this->permission->permissions)): ?>
-
-			<div class="touch-box">
-			
-				<a href="<?php echo site_url('/admin/pages'); ?>"></a>
-				<p>Manage Pages</p>
-				<i class="ss-icon">list</i>
-				
-			</div>
-
-		<?php endif; ?>
-	</div>
-	<div class="large-2 columns">
-		<?php if (@in_array('pages_templates', $this->permission->permissions)): ?>
-
-			<div class="touch-box">
-			
-				<p>Build Templates</p>
-				<i class="ss-icon">layout</i>
-				
-				<a href="<?php echo site_url('/admin/pages/templates'); ?>"></a>
-				
-			</div>
-			
-		<?php endif; ?>
-	</div>
-	<div class="large-2 columns">
-		<?php if (@in_array('images', $this->permission->permissions)): ?>
-
-			<div class="touch-box">
-			
-				<p>Upload Images</p>
-				<i class="ss-icon">images</i>
-				
-				<a href="<?php echo site_url('/admin/images'); ?>"></a>
-				
-			</div>
-			
-		<?php endif; ?>
-		
-	</div>
-	<div class="large-2 columns">
-				<?php if (@in_array('users', $this->permission->permissions)): ?>
-		
-			<div class="touch-box">
-			
-				<p>Manage Users</p>
-				<i class="ss-icon">users</i>
-				
-				<a href="<?php echo site_url('/admin/users'); ?>"></a>
-				
-			</div>
-
-		<?php endif; ?>
-
-	</div>
-	<div class="large-2 columns">
-		<?php if (@in_array('blog', $this->permission->permissions)): ?>
-
-			<div class="touch-box">
-			
-				<p>Blog</p>
-				<i class="ss-icon">compose</i>
-				
-				<a href="<?php echo site_url('/admin/blog'); ?>"></a>
-				
-			</div>
-			
-		<?php endif; ?>
-		
-	</div>
-	<div class="large-2 columns">
-		<?php if (@in_array('shop', $this->permission->permissions)): ?>
-			<div class="touch-box">
-			
-				<p>Shop</p>
-				<i class="ss-icon">cart	</i>
-						
-				<a href="<?php echo site_url('/admin/shop'); ?>"></a>
-				
-			</div>
-		<?php endif; ?>
-		
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns">
-
-	</div>
-</div>
 
 <div class="row">
 	
@@ -116,16 +23,10 @@ $(function(){
 
 		<div class="admin-header"><h2><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h2></div>
 		
-		<div class="welcome">
-			<?php if ($this->session->userdata('session_admin')): ?>	
-				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
-				<p>Here's a few things that have been happening on your website.</p>
-			<?php endif; ?>
-		</div>
-		
 		<?php if ($errors = validation_errors()): ?>
-			<div class="error">
+			<div data-alert class="error">
 				<?php echo $errors; ?>
+				<a href="#" class="close">&times;</a>
 			</div>
 		<?php endif; ?>
 
@@ -134,18 +35,17 @@ $(function(){
 				<?php echo $message; ?>
 			</div>
 		<?php endif; ?>
-
-		<ul class="dashboardnav">
-			<li class="<?php echo ($days == 30) ? 'active' : ''; ?>"><a href="<?php echo site_url('/admin'); ?>">Last 30 Days</a></li>
-			<li class="<?php echo ($days == 60) ? 'active' : ''; ?>"><a href="<?php echo site_url('/admin/dashboard/60'); ?>">Last 60 Days</a></li>
-			<li class="<?php echo ($days == 90) ? 'active' : ''; ?>"><a href="<?php echo site_url('/admin/dashboard/90'); ?>">3 Months</a></li>
-			<li><a href="<?php echo site_url('/admin/tracking'); ?>">Most Recent Visits</a></li>
-		</ul>
-
-		<div class="hide-for-touch" id="placeholder"></div>
 		
-		<div id="activity" class="loader">
-			<?php echo $activity; ?>
+		<div class="activity" class="loader">
+			<ul class="dashboardnav">
+				<li class="<?php echo ($days == 30) ? 'active' : ''; ?>"><a href="<?php echo site_url('/admin'); ?>">Last 30 Days</a></li>
+				<li class="<?php echo ($days == 60) ? 'active' : ''; ?>"><a href="<?php echo site_url('/admin/dashboard/60'); ?>">Last 60 Days</a></li>
+				<li class="<?php echo ($days == 90) ? 'active' : ''; ?>"><a href="<?php echo site_url('/admin/dashboard/90'); ?>">3 Months</a></li>
+				<li><a href="<?php echo site_url('/admin/tracking'); ?>">Most Recent Visits</a></li>
+			</ul>
+
+			<div class="hide-for-touch" id="placeholder"></div>
+				<?php echo $activity; ?>
 		</div>
 
 		<br class="clear" /><br />
@@ -160,14 +60,97 @@ $(function(){
 
 		<?php endif; ?>
 
-		<br />
-	
+
+		<div class="large-4 columns">
+			<?php if (@in_array('pages', $this->permission->permissions)): ?>
+		
+				<a class="touch-box" href="<?php echo site_url('/admin/pages'); ?>">
+					<p>Manage Pages</p>
+					<i class="ss-icon">list</i>
+				</a>
+
+			<?php endif; ?>
+		</div>
+		<div class="large-4 columns">
+			<?php if (@in_array('pages_templates', $this->permission->permissions)): ?>
+			
+				<a class="touch-box" href="<?php echo site_url('/admin/pages/templates'); ?>">
+			
+					<p>Build Templates</p>
+					<i class="ss-icon">layout</i>
+				
+				</a>
+			
+			<?php endif; ?>
+		</div>
+		<div class="large-4 columns">
+			<?php if (@in_array('images', $this->permission->permissions)): ?>
+			
+				<a class="touch-box" href="<?php echo site_url('/admin/images'); ?>">
+			
+					<p>Upload Images</p>
+					<i class="ss-icon">images</i>
+				
+				</a>
+			
+			<?php endif; ?>
+		
+		</div>
+		<div class="large-4 columns">
+			<?php if (@in_array('users', $this->permission->permissions)): ?>
+		
+				<a class="touch-box" href="<?php echo site_url('/admin/users'); ?>">
+			
+					<p>Manage Users</p>
+					<i class="ss-icon">users</i>
+					
+				</a>
+
+
+			<?php endif; ?>
+
+		</div>
+		<div class="large-4 columns">
+			<?php if (@in_array('blog', $this->permission->permissions)): ?>
+			
+				<a class="touch-box" href="<?php echo site_url('/admin/blog'); ?>">
+			
+					<p>Create Blog Post</p>
+					<i class="ss-icon">compose</i>
+				
+				</a>
+
+			
+			<?php endif; ?>
+		
+		</div>
+		<div class="large-4 columns">
+			<?php if (@in_array('shop', $this->permission->permissions)): ?>
+				
+				<a class="touch-box" href="<?php echo site_url('/admin/shop'); ?>">
+				
+					<p>Manage Shop</p>
+					<i class="ss-icon">cart	</i>
+						
+				</a>
+
+			<?php endif; ?>
+		
+		</div>
+
 	</div>
 	
 	<div class="large-4 columns sidebar">
+	
+		<div class="welcome">
+			<?php if ($this->session->userdata('session_admin')): ?>	
+				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
+				<p>Here's a few things that have been happening on your website.</p>
+			<?php endif; ?>
+		</div>
 		
-		<div class="panel">
-			<h3>Site Info</h3>
+		<div class="sidebar-module">
+			<h3><i class="ss-icon">info</i> Site Info</h3>
 			<ul>
 				<li>Site name: <?php echo $this->site->config['siteName']; ?></li>
 				<li>Site URL: <a href="<?php echo $this->site->config['siteURL']; ?>"><?php echo $this->site->config['siteURL']; ?></a></li>
@@ -175,8 +158,8 @@ $(function(){
 				</ul>
 		</div>
 		
-		<div class="panel">
-			<h3>Site Stats</h3>
+		<div class="sidebar-module">
+			<h3><i class="ss-icon">analytics</i> Site Stats</h3>
 			<ul>
 				<li>Disk space used: <?php echo number_format($quota); ?> KB</li>
 				<li>Total page views: <?php echo number_format($numPageViews); ?> Views</li>
@@ -187,8 +170,8 @@ $(function(){
 			</ul>
 		</div>
 
-		<div class="panel">
-			<h3>User Stats</h3>
+		<div class="sidebar-module">
+			<h3><i class="ss-icon">users</i> User Stats</h3>
 			<ul>
 				<li>Total users: <?php echo number_format($numUsers); ?> user<?php echo ($numUsers != 1) ? 's' : ''; ?></li>
 				<li>New today: <?php echo number_format($numUsersToday); ?> user<?php echo ($numUsersToday != 1) ? 's' : ''; ?>
@@ -215,7 +198,7 @@ $(function(){
 			</ul>
 		</div>
 		
-		<div class="panel">
+		<div class="sidebar-module">
 		<h3>Most popular pages</h3>
 
 		<?php if ($popularPages): ?>

@@ -1850,7 +1850,7 @@ blockquote p {
 /* line 161, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_buttons.scss */
 button, .button {
   border-style: solid;
-  border-width: 1px;
+  border-width: 0;
   cursor: pointer;
   font-family: inherit;
   font-weight: bold;
@@ -5536,7 +5536,13 @@ table tfoot tr td {
   max-width: 800px;
 }
 
-/* line 105, ../sass/app.scss */
+/* This controls padding around the buttons. Use a variable or em value */
+/* This controls button color. Set to one of our variables or a custom hex value */
+/* This controls button radius. Set to a variable, true/false, or custom px value */
+/* This whether button is full-width. Set to true or false */
+/* This controls whether disabled styles are used. Set to true or false */
+/* This controls padding for inputs, they are a little different */
+/* line 84, ../sass/app.scss */
 ul, ol, dl {
   font-size: 0.95em;
   line-height: 1.6;
@@ -5545,7 +5551,7 @@ ul, ol, dl {
   font-family: inherit;
 }
 
-/* line 115, ../sass/app.scss */
+/* line 96, ../sass/app.scss */
 .error {
   border-style: solid;
   border-width: 1px;
@@ -5561,13 +5567,28 @@ ul, ol, dl {
   -webkit-border-radius: 3px;
   border-radius: 3px;
 }
+/* line 100, ../sass/app.scss */
+.error .close {
+  font-size: 1.375em;
+  padding: 5px 4px 4px;
+  line-height: 0;
+  position: absolute;
+  top: 0.4375em;
+  right: 0.3125em;
+  color: #333333;
+  opacity: 0.3;
+}
+/* line 80, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_alert-boxes.scss */
+.error .close:hover, .error .close:focus {
+  opacity: 0.5;
+}
 
-/* line 121, ../sass/app.scss */
+/* line 103, ../sass/app.scss */
 .error p {
   margin: 0;
 }
 
-/* line 124, ../sass/app.scss */
+/* line 106, ../sass/app.scss */
 .message {
   border-style: solid;
   border-width: 1px;
@@ -5584,22 +5605,49 @@ ul, ol, dl {
   border-radius: 3px;
 }
 
-/* line 132, ../sass/app.scss */
+/* line 114, ../sass/app.scss */
 .touch-box {
-  background: #9e719d;
+  border-style: solid;
+  border-width: 0;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: bold;
+  line-height: 1;
+  margin: 0 0 1.25em;
+  position: relative;
+  text-decoration: none;
+  text-align: center;
+  display: inline-block;
+  padding-top: 0.75em;
+  padding-right: 1.5em;
+  padding-bottom: 0.8125em;
+  padding-left: 1.5em;
+  font-size: 1em;
+  background-color: #9e719d;
+  border-color: #835982;
   color: white;
-  margin: 0 0 25px 0;
+  border: 1px solid #835982;
+  color: white;
   text-align: center;
   -webkit-border-radius: 3px;
   border-radius: 3px;
+  box-shadow: 0 2px 0 #835982;
+}
+/* line 114, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_buttons.scss */
+.touch-box:hover, .touch-box:focus {
+  background-color: #835982;
+}
+/* line 125, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_buttons.scss */
+.touch-box:hover, .touch-box:focus {
+  color: white;
 }
 
-/* line 140, ../sass/app.scss */
+/* line 123, ../sass/app.scss */
 .touch-box i {
   font-size: 5em;
 }
 
-/* line 144, ../sass/app.scss */
+/* line 129, ../sass/app.scss */
 .admin-header {
   background: #567af0;
   border-radius: 3px;
@@ -5608,65 +5656,79 @@ ul, ol, dl {
   padding: 5px 10px 6px 10px;
 }
 
-/* line 152, ../sass/app.scss */
+/* line 137, ../sass/app.scss */
 .admin-header h2 {
   color: white;
   margin: 0;
   text-shadow: 0 2px #3f68ee;
 }
 
-/* line 158, ../sass/app.scss */
-#activity {
-  background: #F1F1F1;
-  border: 1px solid #999;
+/* line 143, ../sass/app.scss */
+.activity {
+  background: #f2f2f2;
+  border: 1px solid #bfbfbf;
   border-radius: 3px;
-  padding: 10px;
+  padding: 1.25em 1.25em 0.625em 1.25em;
   margin: 0 0 10px;
+  box-shadow: 0 2px 0 #bfbfbf;
 }
 
-/* line 166, ../sass/app.scss */
-#activity ul {
+/* line 152, ../sass/app.scss */
+.activity ul {
   list-style-type: none;
 }
 
-/* line 172, ../sass/app.scss */
+/* line 158, ../sass/app.scss */
 .sidebar {
+  background: #f2f2f2;
+  border: 1px solid #bfbfbf;
   border-radius: 3px;
+  padding: 1.25em 1.25em 0.625em 1.25em;
 }
 
-/* line 177, ../sass/app.scss */
+/* line 166, ../sass/app.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 185, ../sass/app.scss */
+/* line 170, ../sass/app.scss */
+.sidebar-module {
+  background: #FFF;
+  border: 1px solid #bfbfbf;
+  border-radius: 3px;
+  padding: 1.25em 1.25em 0.625em 1.25em;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 0 #bfbfbf;
+}
+
+/* line 179, ../sass/app.scss */
 .welcome {
   background: #f29f46;
   border: 1px solid #c17018;
   border-radius: 3px;
   color: white;
-  padding: 5px 10px 1px 10px;
+  padding: 1.25em 1.25em 0.625em 1.25em;
   margin: 0 0 20px 0;
   text-shadow: 0 1px #c17018;
 }
 
-/* line 195, ../sass/app.scss */
+/* line 189, ../sass/app.scss */
 .welcome h3 {
   color: white;
 }
 
-/* line 199, ../sass/app.scss */
+/* line 193, ../sass/app.scss */
 ul.dashboardnav {
   margin: 0 5px 2px 0;
   text-align: right;
 }
 
-/* line 200, ../sass/app.scss */
+/* line 194, ../sass/app.scss */
 ul.dashboardnav li {
   display: inline;
 }
 
-/* line 201, ../sass/app.scss */
+/* line 195, ../sass/app.scss */
 ul.dashboardnav li a {
   background: #ccc;
   color: #fff;
@@ -5675,12 +5737,12 @@ ul.dashboardnav li a {
   border-radius: 3px;
 }
 
-/* line 202, ../sass/app.scss */
+/* line 196, ../sass/app.scss */
 ul.dashboardnav li.active a {
   background: #567af0;
 }
 
-/* line 204, ../sass/app.scss */
+/* line 198, ../sass/app.scss */
 div#placeholder {
   height: 180px;
   margin-bottom: 10px;

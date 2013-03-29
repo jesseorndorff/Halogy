@@ -258,12 +258,12 @@ $paragraph-font-size: .95em;
 // $button-function-factor: 10%;
 
 // We use these to control button border styles.
-// $button-border-width: 1px;
+$button-border-width: 0;
 // $button-border-style: solid;
 // $button-border-color: darken($primary-color, $button-function-factor);
 
 // We use this to set the default radius used throughout the core.
-// $button-radius: $global-radius;
+$button-radius: $global-radius;
 
 // We use this to set default opacity for disabled buttons.
 // $button-disabled-opacity: 0.6;
@@ -669,9 +669,9 @@ $paragraph-font-size: .95em;
 //
 
 // We use these to control the background and border styles
-// $panel-bg: darken(#fff, 5%);
+// $panel-bg: #FFF;
 // $panel-border-style: solid;
-// $panel-border-size: 1px;
+// $panel-border-size: 1px;	
 
 // We use this % to control how much we darken things on hover
 // $panel-function-factor: 10%;

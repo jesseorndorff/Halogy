@@ -60,45 +60,24 @@ $dropdown-label-color: $primary-color;
 // Comment out this import if you are customizing you imports below
 @import "foundation";
 
-// Import specific parts of Foundation by commenting the import "foundation"
-// and uncommenting what you want below. You must uncomment the following if customizing
+/* This controls padding around the buttons. Use a variable or em value */
+$padding: $button-med;	
 
-//@import "foundation/foundation-global"; // *always required
-//@import "foundation/components/global"; // *always required
-// @import "foundation/components/grid";
-// @import "foundation/components/visibility";
-// @import "foundation/components/block-grid";
-// @import "foundation/components/type";
-// @import "foundation/components/buttons";
-// @import "foundation/components/forms"; // *requires components/buttons
-// @import "foundation/components/custom-forms"; // *requires components/buttons, components/forms
-// @import "foundation/components/button-groups"; // *requires components/buttons
-// @import "foundation/components/dropdown-buttons"; // *requires components/buttons
-// @import "foundation/components/split-buttons"; // *requires components/buttons
-// @import "foundation/components/flex-video";
-// @import "foundation/components/section";
-// @import "foundation/components/top-bar";  // *requires components/grid
-// @import "foundation/components/orbit";
-// @import "foundation/components/reveal";
-// @import "foundation/components/joyride";
-// @import "foundation/components/clearing";
-// @import "foundation/components/alert-boxes";
-// @import "foundation/components/breadcrumbs";
-// @import "foundation/components/keystrokes";
-// @import "foundation/components/labels";
-// @import "foundation/components/inline-lists";
-// @import "foundation/components/pagination";
-// @import "foundation/components/panels";
-// @import "foundation/components/pricing-tables";
-// @import "foundation/components/progress-bars";
-// @import "foundation/components/side-nav";
-// @import "foundation/components/sub-nav";
-// @import "foundation/components/switch";
-// @import "foundation/components/magellan";
-// @import "foundation/components/tables";
-// @import "foundation/components/thumbs";
-// @import "foundation/components/tooltips";
-// @import "foundation/components/dropdown";
+/* This controls button color. Set to one of our variables or a custom hex value */
+$bg: $fourth-color;
+
+/* This controls button radius. Set to a variable, true/false, or custom px value */
+$radius: false;
+
+/* This whether button is full-width. Set to true or false */
+$full-width: false;
+
+/* This controls whether disabled styles are used. Set to true or false */
+$disabled: false;
+
+/* This controls padding for inputs, they are a little different */
+$is-input: false;
+
 
 // Global
 
@@ -110,12 +89,15 @@ ul, ol, dl {
 	font-family: inherit;
 }
 
+$global-padding: emCalc(20px) emCalc(20px) emCalc(10px) emCalc(20px);
+
 // Alerts
 
 .error {   
   @include alert-base;
   @include alert-style($alert-color);
   @include radius($global-radius);
+  .close {@include alert-close;}
 }
 
 .error p {
@@ -130,16 +112,19 @@ ul, ol, dl {
 // Dashboard
 
 .touch-box {
-	background: $fourth-color;
+	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
+	border: 1px solid darken($fourth-color, 10%);
 	color: $light-color;
-	margin: 0 0 25px 0;
 	text-align: center;
 	@include radius($global-radius);
+	box-shadow: 0 2px 0 darken($fourth-color, 10%)
 }
 
 .touch-box i{
 	font-size: 5em;
 }
+
+
 
 .admin-header {
 	background: $primary-color;
@@ -155,31 +140,40 @@ ul, ol, dl {
 	text-shadow: 0 2px $anchor-font-color-hover;
 }
 
-#activity { 
-	background: #F1F1F1;
-	border: 1px solid #999;
+.activity { 
+	background: darken(#FFF, 5%);
+	border: 1px solid darken(#FFF, 25%);
 	border-radius: $global-radius;
-	padding: 10px; 
+	padding: $global-padding; 
 	margin: 0 0 10px;
+	box-shadow: 0 2px 0 darken(#FFF, 25%);
 }
 
-#activity ul{
+.activity ul{
 	list-style-type: none;
 }
 
 // Sidebar
 
-.sidebar {
-
+.sidebar { 
+	background: darken(#FFF, 5%);
+	border: 1px solid darken(#FFF, 25%);
 	border-radius: $global-radius;
+	padding: $global-padding;
 }
+
 
 .sidebar ul{
 	list-style-type: none;
 }
 
 .sidebar-module {
-
+	background: #FFF;
+	border: 1px solid darken(#FFF, 25%);
+	border-radius: $global-radius;
+	padding: $global-padding;
+	margin-bottom: 20px;
+	box-shadow: 0 2px 0 darken(#FFF, 25%);
 }
 
 .welcome {
@@ -187,7 +181,7 @@ ul, ol, dl {
 	border: 1px solid #c17018;
 	border-radius: $global-radius;
 	color: $light-color;
-	padding: 5px 10px 1px 10px;
+	padding: $global-padding;
 	margin: 0 0 20px 0;
 	text-shadow: 0 1px #c17018;
 }

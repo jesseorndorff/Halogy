@@ -21,6 +21,9 @@
 	    + ('__proto__' in {} ? 'zepto' : 'jquery')
 	    + '.js><\/script>');
 	</script>
-	
+	<script>
+		$(document).foundation('topbar')
+  	</script>
+
 </body>
 </html>
