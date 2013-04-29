@@ -1,14 +1,8 @@
-<<<<<<< HEAD
-HALOGY 1.2 INSTALLATION GUIDE
-=============================
-
-=======
 HALOGY 1.3 INSTALLATION GUIDE
 =============================
 
 New! We've included an installer script to help with the installation process. The script will check your server configurations and make sure everything is ok with your site. 
 
->>>>>>> updated readme.txt to .md
 Thank you for downloading Halogy. This guide provides the basic steps needed in order to get Halogy running on your server. 
 
 
@@ -17,13 +11,8 @@ QUICK START GUIDE
 
 1. Download the latest repository from https://github.com/jesseorndorff/Halogy
 2. Extract the contents in to your Web Root folder (including the '/static' folder, 'index.php' and the '.htaccess' files).
-<<<<<<< HEAD
-3. Run the provided SQL dump in your MySQL database.
-4. Configure your database settings in the '/halogy/config/database.php' file.
-=======
 3. Load the install script at: http://www.yourserver.com/install
 4. Follow the instructions for setting up your Halogy site.
->>>>>>> updated readme.txt to .md
 
 -- NOTE: At this point Halogy should run on your domain, but for security reasons we suggest you continue --
 
@@ -42,27 +31,19 @@ You should now be good to go.
 FURTHER CONFIGURATIONS
 ------------------------------
 
-Because Halogy is built upon the amazing CodeIgniter framework (http://codeigniter.com), you can easily extend and modify Halogy to
-your hearts content. There are also configurations you can make to Halogy using the standard CodeIgniter configuration files, for
-example the database.php (in /halogy/config), the config.php (for character encoding and compression settings), etc.
+Because Halogy is built upon the amazing CodeIgniter framework (http://codeigniter.com), you can easily extend and modify Halogy to your hearts content. There are also configurations you can make to Halogy using the standard CodeIgniter configuration files, for example the database.php (in /halogy/config), the config.php (for character encoding and compression settings), etc.
 
 
 MODULES
 ------------------------------
 
-We hope you'll find the built-in modules everything you'll need for your sites, however you are free to build your own modules by
-just building mini-applications (see the CodeIgniter and HMVC documentation) and dropping them in to the Modules folder inside the
-Application. You can then access the modules by going to yoursite.com/module.
-<<<<<<< HEAD
-=======
+We hope you'll find the built-in modules everything you'll need for your sites, however you are free to build your own modules by just building mini-applications (see the CodeIgniter and HMVC documentation) and dropping them in to the Modules folder inside the Application. You can then access the modules by going to yoursite.com/module.
 
 
 
 YOUR LEGAL OBLIGATION
 ------------------------------
 
-By using Halogy you agree to be bound by the license terms and conditions stated on our website: 
+By using Halogy you agree to be bound by the license terms and conditions stated on our website:
 
 http://www.halogy.com/license
-
->>>>>>> updated readme.txt to .md
