@@ -1,6 +1,14 @@
 # HALOGY CHANGE LOG
 --------------------
 
+## Version 1.3.0
+- Added installer to help setup Halogy when installing.
+- Added Headline hooks for Wiki Pages
+- Updated groups.php to fix missing '>' in line 30.
+- Updated add.php to fix bug where users couldn't add a new site.
+- Updated template.php to fix typos
+- Updated readme text.
+
 ## Version 1.2.0
 
 - Updated CodeIgniter to version 2.1

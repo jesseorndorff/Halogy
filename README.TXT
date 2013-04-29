@@ -1,5 +1,7 @@
-HALOGY 1.2 INSTALLATION GUIDE
+HALOGY 1.3 INSTALLATION GUIDE
 =============================
+
+New! We've included an installer script to help with the installation process. The script will check your server configurations and make sure everything is ok with your site. 
 
 Thank you for downloading Halogy. This guide provides the basic steps needed in order to get Halogy running on your server. 
 
@@ -7,10 +9,10 @@ Thank you for downloading Halogy. This guide provides the basic steps needed in 
 QUICK START GUIDE
 ------------------------------
 
-1. Download the latest repository from https://github.com/haloweb/Halogy
+1. Download the latest repository from https://github.com/jesseorndorff/Halogy
 2. Extract the contents in to your Web Root folder (including the '/static' folder, 'index.php' and the '.htaccess' files).
-3. Run the provided SQL dump in your MySQL database.
-4. Configure your database settings in the '/halogy/config/database.php' file.
+3. Load the install script at: http://www.yourserver.com/install
+4. Follow the instructions for setting up your Halogy site.
 
 -- NOTE: At this point Halogy should run on your domain, but for security reasons we suggest you continue --
 
