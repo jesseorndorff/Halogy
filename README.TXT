@@ -1,9 +1,9 @@
 HALOGY 1.3 INSTALLATION GUIDE
 =============================
 
-New! We've included an installer script to help with the installation process. The script will check your server configurations and make sure everything is ok with your site. 
+New! We've included an installer script to help with the installation process. The script will check your server configurations and make sure everything is ok with your site.
 
-Thank you for downloading Halogy. This guide provides the basic steps needed in order to get Halogy running on your server. 
+Thank you for downloading Halogy. This guide provides the basic steps needed in order to get Halogy running on your server.
 
 
 QUICK START GUIDE
@@ -48,7 +48,6 @@ Application. You can then access the modules by going to yoursite.com/module.
 YOUR LEGAL OBLIGATION
 ------------------------------
 
-By using Halogy you agree to be bound by the license terms and conditions stated on our website: 
+By using Halogy you agree to be bound by the license terms and conditions stated on our website:
 
 http://www.halogy.com/license
-
