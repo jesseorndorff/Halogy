@@ -89,7 +89,7 @@ ul, ol, dl {
 	font-family: inherit;
 }
 
-$global-padding: emCalc(20px) emCalc(20px) emCalc(10px) emCalc(20px);
+$global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 // Alerts
 
@@ -97,6 +97,7 @@ $global-padding: emCalc(20px) emCalc(20px) emCalc(10px) emCalc(20px);
   @include alert-base;
   @include alert-style($alert-color);
   @include radius($global-radius);
+  border: none;
   .close {@include alert-close;}
 }
 
@@ -113,11 +114,9 @@ $global-padding: emCalc(20px) emCalc(20px) emCalc(10px) emCalc(20px);
 
 .touch-box {
 	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
-	border: 1px solid darken($fourth-color, 10%);
 	color: $light-color;
 	text-align: center;
 	@include radius($global-radius);
-	box-shadow: 0 2px 0 darken($fourth-color, 10%)
 }
 
 .touch-box i{
@@ -131,35 +130,101 @@ $global-padding: emCalc(20px) emCalc(20px) emCalc(10px) emCalc(20px);
 	border-radius: $global-radius;
 	color: $light-color;
 	margin: 0 0 20px 0;
-	padding: 5px 10px 6px 10px;
+	padding: 10px 10px 10px 15px;
 }
 
-.admin-header h2{
+.admin-header h3{
 	color: $light-color;
 	margin: 0;
 	text-shadow: 0 2px $anchor-font-color-hover;
 }
 
 .activity { 
-	background: darken(#FFF, 5%);
-	border: 1px solid darken(#FFF, 25%);
+	background: #FFF;
 	border-radius: $global-radius;
 	padding: $global-padding; 
 	margin: 0 0 10px;
-	box-shadow: 0 2px 0 darken(#FFF, 25%);
+	box-shadow: 0 1px 2px darken(#FFF, 15%);
 }
 
 .activity ul{
 	list-style-type: none;
 }
 
+// Dashboard
+
+.dash-users {
+	background: #25bca7;
+	border-radius: $global-radius;
+	color: $light-color;
+	margin-bottom: 25px;
+	padding: $global-padding;
+}
+
+.dash-users i {
+	font-size: 5em;
+}
+
+.dash-users p {
+	margin-bottom: 0;
+} 
+
+.dash-users .dash-number {
+	float: right;
+	font-size: 3em;
+}
+
+.dash-sales {
+	background: $secondary-color;
+	border-radius: $global-radius;
+	color: $light-color;
+	margin-bottom: 25px;
+	padding: $global-padding;
+}
+
+.dash-sales i {
+	font-size: 5em;
+}
+
+.dash-sales p {
+	margin-bottom: 0;
+}
+
+.dash-sales .dash-number {
+	float: right;
+	font-size: 3em;
+}
+
+.dash-sales .dash-number-money {
+	float: right;
+	font-size: 2em;
+}
+
+.dash-tickets {
+	background: $primary-color;
+	border-radius: $global-radius;
+	color: $light-color;
+	margin-bottom: 25px;
+	padding: $global-padding;
+}
+
+.dash-tickets i {
+	font-size: 5em;
+}
+
+.dash-tickets p {
+	margin-bottom: 0;
+}
+
+.dash-tickets .dash-number {
+	float: right;
+	font-size: 3em;
+}
+
+
 // Sidebar
 
-.sidebar { 
-	background: darken(#FFF, 5%);
-	border: 1px solid darken(#FFF, 25%);
-	border-radius: $global-radius;
-	padding: $global-padding;
+.sidebar h3{ 
 }
 
 
@@ -167,23 +232,42 @@ $global-padding: emCalc(20px) emCalc(20px) emCalc(10px) emCalc(20px);
 	list-style-type: none;
 }
 
+.sidebar-module-header h3{
+	color: $light-color;
+	margin: 0;
+}
+
+
+.sidebar-module-header {
+	background: $primary-color;
+	border-top-left-radius: $global-radius;
+	border-top-right-radius: $global-radius;
+	padding: 10px 0;
+	text-align: center;
+}
+
 .sidebar-module {
 	background: #FFF;
-	border: 1px solid darken(#FFF, 25%);
-	border-radius: $global-radius;
+	color: darken(#FFF, 65%);
+	border-bottom-left-radius: $global-radius;
+	border-bottom-right-radius: $global-radius;
 	padding: $global-padding;
 	margin-bottom: 20px;
-	box-shadow: 0 2px 0 darken(#FFF, 25%);
+	box-shadow: 0 1px 2px darken(#FFF, 15%);
+}
+
+.sidebar-module ul{
+	line-height: 1.8em;
 }
 
 .welcome {
 	background: $third-color;
-	border: 1px solid #c17018;
 	border-radius: $global-radius;
 	color: $light-color;
 	padding: $global-padding;
 	margin: 0 0 20px 0;
 	text-shadow: 0 1px #c17018;
+	.close { @include alert-close; }
 }
 
 .welcome h3 {
@@ -192,8 +276,14 @@ $global-padding: emCalc(20px) emCalc(20px) emCalc(10px) emCalc(20px);
 
 ul.dashboardnav { margin: 0 5px 2px 0; text-align: right; }
 ul.dashboardnav li { display: inline; }
-ul.dashboardnav li a { background: #ccc; color: #fff; padding: 4px; font-size: 10px; border-radius: $global-radius; }
+ul.dashboardnav li a { background: #ccc; color: #fff; padding: 8px; font-size: 12px; border-radius: $global-radius; }
 ul.dashboardnav li.active a { background: $primary-color; }
 
-div#placeholder { height:180px; margin-bottom: 10px; }
+div#placeholder { height:180px; margin-bottom: 10px; margin-top: 15px;}
+
+footer {
+	background: $light-color;
+	min-height: 75px;
+	padding: $global-padding;
+}
 

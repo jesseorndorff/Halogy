@@ -15,7 +15,7 @@
 $em-base: 16px;
 
 // We use these to control various global styles
-//$body-bg: #fff;
+ $body-bg: #e7eaf2;
 // $body-font-color: #222;
 $body-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
@@ -48,7 +48,7 @@ $body-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial,
 //}
 
 // We use these to make sure border radius matches unless we want it different.
-$global-radius: 3px;
+$global-radius: 2px;
 $global-rounded: 1000px;
 
 // We use these to control inset shadow shiny edges and depressions.
@@ -87,7 +87,7 @@ $shiny-edge-size: 0;
 $header-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $header-font-weight: 600;
 // $header-font-style: normal;
-// $header-font-color: #222;
+$header-font-color: #333;
 // $header-line-height: 1.4;
 // $header-top-margin: .2em;
 // $header-bottom-margin: .5em;

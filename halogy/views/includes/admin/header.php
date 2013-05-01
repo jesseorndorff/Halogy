@@ -22,6 +22,16 @@
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/custom.modernizr.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.topbar.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.alerts.js"></script>
+	
+<script>
+  $(function(){
+    $(document)
+    .foundation()
+    .foundation('topbar alerts');
+  })
+</script>
 	
 	<title><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin - Halogy</title>
 	
@@ -32,7 +42,7 @@
 	<nav class="top-bar">
 		<ul class="title-area">
 			<li class="name">
-				<h1><a href="#">Halogy - <?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?></a></h1>
+				<h1><a href="#">Halogy</a></h1>
 			</li>
 			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
 		</ul>

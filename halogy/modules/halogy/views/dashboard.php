@@ -21,7 +21,7 @@ $(function(){
 	
 	<div class="large-8 columns">
 
-		<div class="admin-header"><h2><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h2></div>
+		<div class="admin-header"><h3><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> - <?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h3></div>
 		
 		<?php if ($errors = validation_errors()): ?>
 			<div data-alert class="error">
@@ -31,8 +31,9 @@ $(function(){
 		<?php endif; ?>
 
 		<?php if ($message): ?>
-			<div class="message">
+			<div data-alert class="message">
 				<?php echo $message; ?>
+				<a href="#" class="close">&times;</a>
 			</div>
 		<?php endif; ?>
 		
@@ -59,98 +60,69 @@ $(function(){
 			<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
 
 		<?php endif; ?>
-
-
-		<div class="large-4 columns">
-			<?php if (@in_array('pages', $this->permission->permissions)): ?>
+		<div class="large-6 columns">
+			<div class="dash-sales">
+				<i class="ss-icon">basket</i>
+				<p class="dash-number">25</p>
+				<p>Monthly Total Sales</p>
+			</div>
+		</div>
 		
-				<a class="touch-box" href="<?php echo site_url('/admin/pages'); ?>">
-					<p>Manage Pages</p>
-					<i class="ss-icon">list</i>
-				</a>
-
-			<?php endif; ?>
+		<div class="large-6 columns">
+			<div class="dash-sales">
+				<i class="ss-icon">cash</i>
+				<p class="dash-number-money">$24,000.00</p>
+				<p>Monthly Sales Volume</p>
+			</div>
 		</div>
-		<div class="large-4 columns">
-			<?php if (@in_array('pages_templates', $this->permission->permissions)): ?>
-			
-				<a class="touch-box" href="<?php echo site_url('/admin/pages/templates'); ?>">
-			
-					<p>Build Templates</p>
-					<i class="ss-icon">layout</i>
-				
-				</a>
-			
-			<?php endif; ?>
-		</div>
-		<div class="large-4 columns">
-			<?php if (@in_array('images', $this->permission->permissions)): ?>
-			
-				<a class="touch-box" href="<?php echo site_url('/admin/images'); ?>">
-			
-					<p>Upload Images</p>
-					<i class="ss-icon">images</i>
-				
-				</a>
-			
-			<?php endif; ?>
 		
+		<div class="large-6 columns">
+			<div class="dash-tickets">
+				<i class="ss-icon">headset</i>
+				<p class="dash-number">0</p>
+				<p>Unopened Tickets</p>
+			</div>
 		</div>
-		<div class="large-4 columns">
-			<?php if (@in_array('users', $this->permission->permissions)): ?>
 		
-				<a class="touch-box" href="<?php echo site_url('/admin/users'); ?>">
-			
-					<p>Manage Users</p>
-					<i class="ss-icon">users</i>
-					
-				</a>
-
-
-			<?php endif; ?>
-
+		<div class="large-6 columns">
+			<div class="dash-tickets">
+				<i class="ss-icon">headset</i>
+				<p class="dash-number">35</p>
+				<p>Active Tickets</p>
+			</div>
 		</div>
-		<div class="large-4 columns">
-			<?php if (@in_array('blog', $this->permission->permissions)): ?>
-			
-				<a class="touch-box" href="<?php echo site_url('/admin/blog'); ?>">
-			
-					<p>Create Blog Post</p>
-					<i class="ss-icon">compose</i>
-				
-				</a>
-
-			
-			<?php endif; ?>
 		
+		<div class="large-6 columns">
+			<div class="dash-users">
+				<i class="ss-icon">users</i>
+				<p class="dash-number"><?php echo number_format($numUsersWeek); ?></p>
+				<p>New Users This Week</p>
+			</div>
 		</div>
-		<div class="large-4 columns">
-			<?php if (@in_array('shop', $this->permission->permissions)): ?>
-				
-				<a class="touch-box" href="<?php echo site_url('/admin/shop'); ?>">
-				
-					<p>Manage Shop</p>
-					<i class="ss-icon">cart	</i>
-						
-				</a>
-
-			<?php endif; ?>
 		
+		<div class="large-6 columns">
+			<div class="dash-users">
+				<i class="ss-icon">usergroup</i>
+				<p class="dash-number"><?php echo number_format($numUsers); ?></p>
+				<p>Total Users</p>
+			</div>
 		</div>
 
-	</div>
+	</div> 
 	
 	<div class="large-4 columns sidebar">
-	
-		<div class="welcome">
-			<?php if ($this->session->userdata('session_admin')): ?>	
+		<?php if ($this->session->userdata('session_admin')): ?>
+		<div data-alert class="welcome">
 				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
 				<p>Here's a few things that have been happening on your website.</p>
-			<?php endif; ?>
+		</div>
+		<?php endif; ?>
+		
+		<div class="sidebar-module-header">
+			<h3>Site Information</h3>
 		</div>
 		
 		<div class="sidebar-module">
-			<h3><i class="ss-icon">info</i> Site Info</h3>
 			<ul>
 				<li>Site name: <?php echo $this->site->config['siteName']; ?></li>
 				<li>Site URL: <a href="<?php echo $this->site->config['siteURL']; ?>"><?php echo $this->site->config['siteURL']; ?></a></li>
@@ -158,8 +130,10 @@ $(function(){
 				</ul>
 		</div>
 		
+		<div class="sidebar-module-header">
+			<h3>Site Statistics</h3>
+		</div>
 		<div class="sidebar-module">
-			<h3><i class="ss-icon">analytics</i> Site Stats</h3>
 			<ul>
 				<li>Disk space used: <?php echo number_format($quota); ?> KB</li>
 				<li>Total page views: <?php echo number_format($numPageViews); ?> Views</li>
@@ -169,9 +143,12 @@ $(function(){
 					<?php endif; ?>
 			</ul>
 		</div>
-
+		
+		<div class="sidebar-module-header">
+			<h3>User Statistics</h3>
+		</div>
 		<div class="sidebar-module">
-			<h3><i class="ss-icon">users</i> User Stats</h3>
+			
 			<ul>
 				<li>Total users: <?php echo number_format($numUsers); ?> user<?php echo ($numUsers != 1) ? 's' : ''; ?></li>
 				<li>New today: <?php echo number_format($numUsersToday); ?> user<?php echo ($numUsersToday != 1) ? 's' : ''; ?>
@@ -198,8 +175,11 @@ $(function(){
 			</ul>
 		</div>
 		
+		<div class="sidebar-module-header">
+			<h3>Most Popular</h3>
+		</div>
+		
 		<div class="sidebar-module">
-		<h3>Most popular pages</h3>
 
 		<?php if ($popularPages): ?>
 			<ol>		

@@ -15,7 +15,7 @@ body {
 
 /* line 12, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_global.scss */
 body {
-  background: white;
+  background: #e7eaf2;
   color: #222222;
   padding: 0;
   margin: 0;
@@ -1425,7 +1425,7 @@ p.lead {
 /* line 111, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_type.scss */
 .subheader {
   line-height: 1.4;
-  color: #6f6f6f;
+  color: gray;
   font-weight: 300;
   margin-top: 0.2em;
   margin-bottom: 0.5em;
@@ -1496,7 +1496,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Open Sans", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
   font-weight: 600;
   font-style: normal;
-  color: #222222;
+  color: #333333;
   text-rendering: optimizeLegibility;
   margin-top: 0.2em;
   margin-bottom: 0.5em;
@@ -1505,7 +1505,7 @@ h1, h2, h3, h4, h5, h6 {
 /* line 186, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_type.scss */
 h1 small, h2 small, h3 small, h4 small, h5 small, h6 small {
   font-size: 60%;
-  color: #6f6f6f;
+  color: gray;
   line-height: 0;
 }
 
@@ -1664,7 +1664,7 @@ blockquote {
 blockquote cite {
   display: block;
   font-size: 0.8125em;
-  color: #555555;
+  color: #666666;
 }
 /* line 310, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_type.scss */
 blockquote cite:before {
@@ -1673,14 +1673,14 @@ blockquote cite:before {
 /* line 315, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_type.scss */
 blockquote cite a,
 blockquote cite a:visited {
-  color: #555555;
+  color: #666666;
 }
 
 /* line 321, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_type.scss */
 blockquote,
 blockquote p {
   line-height: 1.6;
-  color: #6f6f6f;
+  color: gray;
 }
 
 /* Microformats */
@@ -2091,8 +2091,8 @@ button.button.large {
   }
   /* line 205, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_buttons.scss */
   .button.radius {
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
   }
   /* line 206, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_buttons.scss */
   .button.round {
@@ -2202,24 +2202,24 @@ label.inline {
 .prefix.button.radius {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-bottomleft: 3px;
-  -moz-border-radius-topleft: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -webkit-border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
+  -moz-border-radius-bottomleft: 2px;
+  -moz-border-radius-topleft: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -webkit-border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
 }
 
 /* line 266, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_forms.scss */
 .postfix.button.radius {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 /* line 267, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_forms.scss */
@@ -2258,12 +2258,12 @@ span.prefix {
 span.prefix.radius {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-bottomleft: 3px;
-  -moz-border-radius-topleft: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -webkit-border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
+  -moz-border-radius-bottomleft: 2px;
+  -moz-border-radius-topleft: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -webkit-border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
 }
 
 /* line 274, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_forms.scss */
@@ -2277,12 +2277,12 @@ span.postfix {
 span.postfix.radius {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 
 /* Input groups will automatically style first and last elements of the group */
@@ -2290,23 +2290,23 @@ span.postfix.radius {
 .input-group.radius > *:first-child, .input-group.radius > *:first-child * {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-bottomleft: 3px;
-  -moz-border-radius-topleft: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -webkit-border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
+  -moz-border-radius-bottomleft: 2px;
+  -moz-border-radius-topleft: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -webkit-border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
 }
 /* line 284, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_forms.scss */
 .input-group.radius > *:last-child, .input-group.radius > *:last-child * {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 /* line 289, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_forms.scss */
 .input-group.round > *:first-child, .input-group.round > *:first-child * {
@@ -2724,23 +2724,23 @@ form.custom .custom.disabled {
 .button-group.radius > *:first-child, .button-group.radius > *:first-child > a, .button-group.radius > *:first-child > button {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-bottomleft: 3px;
-  -moz-border-radius-topleft: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -webkit-border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-left-radius: 3px;
+  -moz-border-radius-bottomleft: 2px;
+  -moz-border-radius-topleft: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -webkit-border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
 }
 /* line 42, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_button-groups.scss */
 .button-group.radius > *:last-child, .button-group.radius > *:last-child > a, .button-group.radius > *:last-child > button {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 /* line 41, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_button-groups.scss */
 .button-group.round > *:first-child, .button-group.round > *:first-child > a, .button-group.round > *:first-child > button {
@@ -3031,12 +3031,12 @@ form.custom .custom.disabled {
 .split.button.radius span {
   -webkit-border-radius: 0;
   border-radius: 0;
-  -moz-border-radius-topright: 3px;
-  -moz-border-radius-bottomright: 3px;
-  -webkit-border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  -moz-border-radius-topright: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -webkit-border-top-right-radius: 2px;
+  -webkit-border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
 }
 /* line 156, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_split-buttons.scss */
 .split.button.round span {
@@ -4519,8 +4519,8 @@ form.custom .custom.disabled {
 }
 /* line 98, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_alert-boxes.scss */
 .alert-box.radius {
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 /* line 99, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_alert-boxes.scss */
 .alert-box.round {
@@ -4558,8 +4558,8 @@ form.custom .custom.disabled {
   border-width: 1px;
   background-color: #a880a7;
   border-color: #926491;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 /* line 112, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_breadcrumbs.scss */
 .breadcrumbs li {
@@ -4628,8 +4628,8 @@ kbd {
   font-family: "Consolas", "Menlo", "Courier", monospace;
   font-size: 0.9375em;
   padding: 0.125em 0.25em 0em;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 
 /* Labels */
@@ -4649,8 +4649,8 @@ kbd {
 }
 /* line 74, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_labels.scss */
 .label.radius {
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 /* line 75, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_labels.scss */
 .label.round {
@@ -4816,8 +4816,8 @@ kbd {
 }
 /* line 69, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_panels.scss */
 .panel.radius {
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 
 /* Pricing Tables */
@@ -4913,13 +4913,13 @@ kbd {
 }
 /* line 60, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_progress-bars.scss */
 .progress.radius {
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 /* line 61, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_progress-bars.scss */
 .progress.radius .meter {
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
+  -webkit-border-radius: 1px;
+  border-radius: 1px;
 }
 /* line 64, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_progress-bars.scss */
 .progress.round {
@@ -5315,8 +5315,8 @@ table tfoot tr td {
 }
 /* line 40, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_thumbs.scss */
 .th.radius {
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 
 /* Tooltips */
@@ -5351,8 +5351,8 @@ table tfoot tr td {
   width: 100%;
   color: white;
   background: black;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 /* line 58, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_tooltips.scss */
 .tooltip > .nub {
@@ -5564,10 +5564,11 @@ ul, ol, dl {
   background-color: #c63c3d;
   border-color: #a02f30;
   color: white;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  border: none;
 }
-/* line 100, ../sass/app.scss */
+/* line 101, ../sass/app.scss */
 .error .close {
   font-size: 1.375em;
   padding: 5px 4px 4px;
@@ -5583,12 +5584,12 @@ ul, ol, dl {
   opacity: 0.5;
 }
 
-/* line 103, ../sass/app.scss */
+/* line 104, ../sass/app.scss */
 .error p {
   margin: 0;
 }
 
-/* line 106, ../sass/app.scss */
+/* line 107, ../sass/app.scss */
 .message {
   border-style: solid;
   border-width: 1px;
@@ -5601,11 +5602,11 @@ ul, ol, dl {
   background-color: #6ea820;
   border-color: #527d18;
   color: white;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 
-/* line 114, ../sass/app.scss */
+/* line 115, ../sass/app.scss */
 .touch-box {
   border-style: solid;
   border-width: 0;
@@ -5626,12 +5627,10 @@ ul, ol, dl {
   background-color: #9e719d;
   border-color: #835982;
   color: white;
-  border: 1px solid #835982;
   color: white;
   text-align: center;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
-  box-shadow: 0 2px 0 #835982;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
 }
 /* line 114, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_buttons.scss */
 .touch-box:hover, .touch-box:focus {
@@ -5642,108 +5641,223 @@ ul, ol, dl {
   color: white;
 }
 
-/* line 123, ../sass/app.scss */
+/* line 122, ../sass/app.scss */
 .touch-box i {
   font-size: 5em;
 }
 
-/* line 129, ../sass/app.scss */
+/* line 128, ../sass/app.scss */
 .admin-header {
   background: #567af0;
-  border-radius: 3px;
+  border-radius: 2px;
   color: white;
   margin: 0 0 20px 0;
-  padding: 5px 10px 6px 10px;
+  padding: 10px 10px 10px 15px;
 }
 
-/* line 137, ../sass/app.scss */
-.admin-header h2 {
+/* line 136, ../sass/app.scss */
+.admin-header h3 {
   color: white;
   margin: 0;
   text-shadow: 0 2px #3f68ee;
 }
 
-/* line 143, ../sass/app.scss */
+/* line 142, ../sass/app.scss */
 .activity {
-  background: #f2f2f2;
-  border: 1px solid #bfbfbf;
-  border-radius: 3px;
-  padding: 1.25em 1.25em 0.625em 1.25em;
+  background: #FFF;
+  border-radius: 2px;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
   margin: 0 0 10px;
-  box-shadow: 0 2px 0 #bfbfbf;
+  box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 152, ../sass/app.scss */
+/* line 150, ../sass/app.scss */
 .activity ul {
   list-style-type: none;
 }
 
-/* line 158, ../sass/app.scss */
-.sidebar {
-  background: #f2f2f2;
-  border: 1px solid #bfbfbf;
-  border-radius: 3px;
-  padding: 1.25em 1.25em 0.625em 1.25em;
+/* line 156, ../sass/app.scss */
+.dash-users {
+  background: #25bca7;
+  border-radius: 2px;
+  color: white;
+  margin-bottom: 25px;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 166, ../sass/app.scss */
+/* line 164, ../sass/app.scss */
+.dash-users i {
+  font-size: 5em;
+}
+
+/* line 168, ../sass/app.scss */
+.dash-users p {
+  margin-bottom: 0;
+}
+
+/* line 172, ../sass/app.scss */
+.dash-users .dash-number {
+  float: right;
+  font-size: 3em;
+}
+
+/* line 177, ../sass/app.scss */
+.dash-sales {
+  background: #9e719d;
+  border-radius: 2px;
+  color: white;
+  margin-bottom: 25px;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
+}
+
+/* line 185, ../sass/app.scss */
+.dash-sales i {
+  font-size: 5em;
+}
+
+/* line 189, ../sass/app.scss */
+.dash-sales p {
+  margin-bottom: 0;
+}
+
+/* line 193, ../sass/app.scss */
+.dash-sales .dash-number {
+  float: right;
+  font-size: 3em;
+}
+
+/* line 198, ../sass/app.scss */
+.dash-sales .dash-number-money {
+  float: right;
+  font-size: 2em;
+}
+
+/* line 203, ../sass/app.scss */
+.dash-tickets {
+  background: #567af0;
+  border-radius: 2px;
+  color: white;
+  margin-bottom: 25px;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
+}
+
+/* line 211, ../sass/app.scss */
+.dash-tickets i {
+  font-size: 5em;
+}
+
+/* line 215, ../sass/app.scss */
+.dash-tickets p {
+  margin-bottom: 0;
+}
+
+/* line 219, ../sass/app.scss */
+.dash-tickets .dash-number {
+  float: right;
+  font-size: 3em;
+}
+
+/* line 231, ../sass/app.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 170, ../sass/app.scss */
-.sidebar-module {
-  background: #FFF;
-  border: 1px solid #bfbfbf;
-  border-radius: 3px;
-  padding: 1.25em 1.25em 0.625em 1.25em;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 0 #bfbfbf;
+/* line 235, ../sass/app.scss */
+.sidebar-module-header h3 {
+  color: white;
+  margin: 0;
 }
 
-/* line 179, ../sass/app.scss */
+/* line 241, ../sass/app.scss */
+.sidebar-module-header {
+  background: #567af0;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 10px 0;
+  text-align: center;
+}
+
+/* line 249, ../sass/app.scss */
+.sidebar-module {
+  background: #FFF;
+  color: #595959;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 2px #d9d9d9;
+}
+
+/* line 259, ../sass/app.scss */
+.sidebar-module ul {
+  line-height: 1.8em;
+}
+
+/* line 263, ../sass/app.scss */
 .welcome {
   background: #f29f46;
-  border: 1px solid #c17018;
-  border-radius: 3px;
+  border-radius: 2px;
   color: white;
-  padding: 1.25em 1.25em 0.625em 1.25em;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
   margin: 0 0 20px 0;
   text-shadow: 0 1px #c17018;
 }
+/* line 270, ../sass/app.scss */
+.welcome .close {
+  font-size: 1.375em;
+  padding: 5px 4px 4px;
+  line-height: 0;
+  position: absolute;
+  top: 0.4375em;
+  right: 0.3125em;
+  color: #333333;
+  opacity: 0.3;
+}
+/* line 80, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_alert-boxes.scss */
+.welcome .close:hover, .welcome .close:focus {
+  opacity: 0.5;
+}
 
-/* line 189, ../sass/app.scss */
+/* line 273, ../sass/app.scss */
 .welcome h3 {
   color: white;
 }
 
-/* line 193, ../sass/app.scss */
+/* line 277, ../sass/app.scss */
 ul.dashboardnav {
   margin: 0 5px 2px 0;
   text-align: right;
 }
 
-/* line 194, ../sass/app.scss */
+/* line 278, ../sass/app.scss */
 ul.dashboardnav li {
   display: inline;
 }
 
-/* line 195, ../sass/app.scss */
+/* line 279, ../sass/app.scss */
 ul.dashboardnav li a {
   background: #ccc;
   color: #fff;
-  padding: 4px;
-  font-size: 10px;
-  border-radius: 3px;
+  padding: 8px;
+  font-size: 12px;
+  border-radius: 2px;
 }
 
-/* line 196, ../sass/app.scss */
+/* line 280, ../sass/app.scss */
 ul.dashboardnav li.active a {
   background: #567af0;
 }
 
-/* line 198, ../sass/app.scss */
+/* line 282, ../sass/app.scss */
 div#placeholder {
   height: 180px;
   margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+/* line 284, ../sass/app.scss */
+footer {
+  background: white;
+  min-height: 75px;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
