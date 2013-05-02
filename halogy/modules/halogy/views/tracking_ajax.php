@@ -1,12 +1,14 @@
 <?php if ($tracking): ?>
-	<table class="default">
-		<tr>
-			<th width="120">Date</th>
-			<th>Name</th>
-			<th>Referer</th>
-			<th>Last Page</th>
-			<th>Hits</th>			
-		</tr>
+	<table class="tracking">
+		<thead>
+			<tr>
+				<th width="120">Date</th>
+				<th>Name</th>
+				<th>Referer</th>
+				<th>Last Page</th>
+				<th>Hits</th>			
+			</tr>
+		</thead>
 		<?php
 			$i=0;
 			foreach($tracking as $visit):
@@ -18,8 +20,9 @@
 			// get userdata
 			$userdata = @unserialize($visit['userdata']);
 		?>
+		<tbody>
 			<tr class="<?php echo $class; ?>" style="<?php echo $style; ?>">
-				<td><small><?php echo dateFmt($visit['date'], '', '', TRUE); ?></small></td>
+				<td><?php echo dateFmt($visit['date'], '', '', TRUE); ?></td>
 				<td>
 					<?php if ($visit['userdata']): ?>
 						<?php echo anchor('/admin/users/edit/'.$userdata['userID'], $userdata['firstName'].' '.$userdata['lastName']); ?>
@@ -31,7 +34,9 @@
 				<td><?php echo $visit['lastPage']; ?></td>
 				<td><?php echo $visit['views']+1; ?></td>
 			</tr>
+		</tbody>
 		<?php endforeach; ?>
+	</table>
 <?php else: ?>
 
 	<p>Nothing has happened yet!</p>

@@ -184,7 +184,7 @@ $paragraph-font-size: .95em;
 //
 
 // We use this to set the base for lots of form spacing and positioning styles
-// $form-spacing: emCalc(16px);
+$form-spacing: emCalc(20px);
 
 // We use these to style the labels in different ways
 // $label-pointer: pointer;
@@ -197,9 +197,9 @@ $paragraph-font-size: .95em;
 // $input-font-size: emCalc(14px);
 // $input-bg-color: #fff;
 // $input-focus-bg-color: darken(#fff, 2%);
-// $input-border-color: darken(#fff, 20%);
-// $input-focus-border-color: darken(#fff, 40%);
-// $input-border-style: solid;
+$input-border-color: darken(#fff, 15%);
+$input-focus-border-color: darken(#fff, 40%);
+$input-border-style: solid;
 // $input-border-width: 1px;
 // $input-disabled-bg: #ddd;
 // $input-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
@@ -343,14 +343,14 @@ $button-radius: $global-radius;
 //
 
 // We use this to control alert padding.
-// $alert-padding-top: emCalc(11px);
+$alert-padding-top: emCalc(14px);
 // $alert-padding-left: $alert-padding-top;
 // $alert-padding-right: $alert-padding-top + emCalc(10px);
 // $alert-padding-bottom: $alert-padding-top + emCalc(1px);
 
 // We use these to control text style.
-// $alert-font-weight: bold;
-// $alert-font-size: emCalc(14px);
+$alert-font-weight: normal;
+$alert-font-size: emCalc(13px);
 // $alert-font-color: #fff;
 // $alert-font-color-alt: darken($secondary-color, 60%);
 
@@ -359,7 +359,7 @@ $button-radius: $global-radius;
 
 // We use these to control border styles.
 // $alert-border-style: solid;
-// $alert-border-width: 1px;
+$alert-border-width: 0px;
 // $alert-border-color: darken($primary-color, $alert-function-factor);
 // $alert-bottom-margin: emCalc(20px);
 
@@ -437,7 +437,7 @@ $button-radius: $global-radius;
 //
 
 // We use these to control the basic form styles input styles
-// $custom-form-border-color: #ccc;
+// $custom-form-border-color: #F1F1F1;
 // $custom-form-bg: #fff;
 // $custom-form-bg-disabled: #ddd;
 // $custom-form-check-color: #222;
@@ -448,7 +448,7 @@ $button-radius: $global-radius;
 // $custom-select-border-color: #ddd;
 // $custom-select-triangle-color: #aaa;
 // $custom-select-triangle-color-open: #222;
-// $custom-select-height: emCalc(13px) + ($form-spacing * 1.5);
+// $custom-select-height: emCalc(16px) + ($form-spacing * 1.8);
 // $custom-select-margin-bottom: emCalc(20px);
 // $custom-select-font-color-selected: #141414;
 // $custom-select-disabled-color: #888;
@@ -903,16 +903,16 @@ $button-radius: $global-radius;
 // $table-even-row-bg: #f9f9f9;
 
 // These control the table cell border style
-// $table-border-style: solid;
-// $table-border-size: 1px;
-// $table-border-color: #ddd;
+$table-border-style: solid;
+$table-border-size: 0px;
+//$table-border-color: #ddd;
 
 // These control the table head styles
-// $table-head-bg: #f5f5f5;
-// $table-head-font-size: emCalc(14px);
-// $table-head-font-color: #222;
+$table-head-bg: $primary-color;
+$table-head-font-size: emCalc(16px);
+$table-head-font-color: #FFF;
 // $table-head-font-weight: bold;
-// $table-head-padding: emCalc(8px) emCalc(10px) emCalc(10px);
+$table-head-padding: emCalc(9px) emCalc(10px) emCalc(10px);
 
 // These control the row padding and font styles
 // $table-row-padding: emCalc(9px) emCalc(10px);

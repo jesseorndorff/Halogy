@@ -9,8 +9,18 @@ $(function(){
 });
 </script>
 
-<h1>Most Recent Visits <small>(<a href="<?php echo site_url('/admin'); ?>">Back to Dashboard</a>)</small></h1>
+<div class="row">
 
-<br />
+	<div class="large-12 columns admin-page-header">
 
-<div class="loader"></div>
+		<h1>Most Recent Visits</h1> 
+		
+		<a class="button" href="<?php echo site_url('/admin'); ?>">Back to Dashboard</a>
+	</div>
+</div>
+
+<div class="row">
+	<div class="large-12 columns">
+		<div class="loader"></div>
+	</div>
+</div>
