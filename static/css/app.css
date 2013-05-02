@@ -3086,14 +3086,14 @@ form.custom .custom.disabled {
   width: 100%;
   display: block;
   margin-bottom: 1.25em;
-  border: 1px solid #cccccc;
+  border: 0 solid #cccccc;
   border-top: none;
 }
 /* line 210, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
 .section-container section,
 .section-container .section, .section-container.auto section,
 .section-container.auto .section {
-  border-top: 1px solid #cccccc;
+  border-top: 0 solid #cccccc;
   position: relative;
 }
 /* line 74, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
@@ -3178,7 +3178,7 @@ form.custom .custom.disabled {
 .section-container.tabs section .title,
 .section-container.tabs .section .title {
   width: auto;
-  border: 1px solid #cccccc;
+  border: 0 solid #cccccc;
   border-right: 0;
   border-bottom: 0;
   position: absolute;
@@ -3192,12 +3192,12 @@ form.custom .custom.disabled {
 /* line 127, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
 .section-container.tabs section:last-child .title,
 .section-container.tabs .section:last-child .title {
-  border-right: 1px solid #cccccc;
+  border-right: 0 solid #cccccc;
 }
 /* line 129, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
 .section-container.tabs section .content,
 .section-container.tabs .section .content {
-  border: 1px solid #cccccc;
+  border: 0 solid #cccccc;
   position: absolute;
   z-index: 10;
   top: -1px;
@@ -3232,7 +3232,7 @@ form.custom .custom.disabled {
   .section-container.auto section .title,
   .section-container.auto .section .title {
     width: auto;
-    border: 1px solid #cccccc;
+    border: 0 solid #cccccc;
     border-right: 0;
     border-bottom: 0;
     position: absolute;
@@ -3246,12 +3246,12 @@ form.custom .custom.disabled {
   /* line 127, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
   .section-container.auto section:last-child .title,
   .section-container.auto .section:last-child .title {
-    border-right: 1px solid #cccccc;
+    border-right: 0 solid #cccccc;
   }
   /* line 129, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
   .section-container.auto section .content,
   .section-container.auto .section .content {
-    border: 1px solid #cccccc;
+    border: 0 solid #cccccc;
     position: absolute;
     z-index: 10;
     top: -1px;
@@ -3276,7 +3276,7 @@ form.custom .custom.disabled {
 
   /* line 234, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
   .section-container.vertical-nav {
-    border: 1px solid #cccccc;
+    border: 0 solid #cccccc;
     border-top: none;
   }
   /* line 238, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
@@ -3304,14 +3304,14 @@ form.custom .custom.disabled {
     top: -1px;
     z-index: 999;
     min-width: 12.5em;
-    border: 1px solid #cccccc;
+    border: 0 solid #cccccc;
   }
 
   /* line 241, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
   .section-container.horizontal-nav {
     position: relative;
     background: #efefef;
-    border: 1px solid #cccccc;
+    border: 0 solid #cccccc;
   }
   /* line 245, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.0.9/scss/foundation/components/_section.scss */
   .section-container.horizontal-nav section,
@@ -3324,7 +3324,7 @@ form.custom .custom.disabled {
   .section-container.horizontal-nav section .title,
   .section-container.horizontal-nav .section .title {
     width: auto;
-    border: 1px solid #cccccc;
+    border: 0 solid #cccccc;
     border-left: 0;
     top: -1px;
     position: absolute;
@@ -3349,7 +3349,7 @@ form.custom .custom.disabled {
     left: 0;
     top: -2px;
     min-width: 12.5em;
-    border: 1px solid #cccccc;
+    border: 0 solid #cccccc;
   }
 }
 /* Wrapped around .top-bar to contain to grid width */
@@ -5542,7 +5542,7 @@ table tfoot tr td {
 /* This whether button is full-width. Set to true or false */
 /* This controls whether disabled styles are used. Set to true or false */
 /* This controls padding for inputs, they are a little different */
-/* line 84, ../sass/app.scss */
+/* line 87, ../sass/app.scss */
 ul, ol, dl {
   font-size: 0.95em;
   line-height: 1.6;
@@ -5551,12 +5551,12 @@ ul, ol, dl {
   font-family: inherit;
 }
 
-/* line 92, ../sass/app.scss */
+/* line 95, ../sass/app.scss */
 input {
   border-radius: 2px;
 }
 
-/* line 96, ../sass/app.scss */
+/* line 99, ../sass/app.scss */
 .tip {
   border-style: solid;
   border-width: 0px;
@@ -5572,27 +5572,49 @@ input {
   border-radius: 2px;
 }
 
-/* line 101, ../sass/app.scss */
+/* line 104, ../sass/app.scss */
 .select {
   margin-top: 16px;
 }
 
-/* line 105, ../sass/app.scss */
+/* line 108, ../sass/app.scss */
 textarea {
   height: 125px;
 }
 
-/* line 111, ../sass/app.scss */
+/* line 112, ../sass/app.scss */
+.section-container {
+  -webkit-box-shadow: 0 1px 2px #d9d9d9;
+  -moz-box-shadow: 0 1px 2px #d9d9d9;
+  box-shadow: 0 1px 2px #d9d9d9;
+}
+
+/* line 118, ../sass/app.scss */
+.admin-page-header {
+  background: white;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 2px #d9d9d9;
+  -moz-box-shadow: 0 1px 2px #d9d9d9;
+  box-shadow: 0 1px 2px #d9d9d9;
+  margin: 0 0 25px 0;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
+}
+
+/* line 126, ../sass/app.scss */
 .admin-page-header h1 {
   float: left;
 }
 
-/* line 115, ../sass/app.scss */
+/* line 130, ../sass/app.scss */
 .admin-page-header .button {
   float: right;
 }
 
-/* line 121, ../sass/app.scss */
+/* line 136, ../sass/app.scss */
 .error {
   border-style: solid;
   border-width: 0px;
@@ -5609,7 +5631,7 @@ textarea {
   border-radius: 2px;
   border: none;
 }
-/* line 126, ../sass/app.scss */
+/* line 141, ../sass/app.scss */
 .error .close {
   font-size: 1.375em;
   padding: 5px 4px 4px;
@@ -5625,12 +5647,12 @@ textarea {
   opacity: 0.5;
 }
 
-/* line 129, ../sass/app.scss */
+/* line 144, ../sass/app.scss */
 .error p {
   margin: 0;
 }
 
-/* line 132, ../sass/app.scss */
+/* line 147, ../sass/app.scss */
 .message {
   border-style: solid;
   border-width: 0px;
@@ -5647,12 +5669,12 @@ textarea {
   border-radius: 2px;
 }
 
-/* line 138, ../sass/app.scss */
+/* line 153, ../sass/app.scss */
 .message p {
   margin: 0;
 }
 
-/* line 144, ../sass/app.scss */
+/* line 159, ../sass/app.scss */
 .touch-box {
   border-style: solid;
   border-width: 0;
@@ -5689,12 +5711,12 @@ textarea {
   color: white;
 }
 
-/* line 151, ../sass/app.scss */
+/* line 166, ../sass/app.scss */
 .touch-box i {
   font-size: 5em;
 }
 
-/* line 157, ../sass/app.scss */
+/* line 170, ../sass/app.scss */
 .admin-header {
   background: #567af0;
   border-radius: 2px;
@@ -5703,28 +5725,30 @@ textarea {
   padding: 10px 10px 10px 15px;
 }
 
-/* line 165, ../sass/app.scss */
+/* line 178, ../sass/app.scss */
 .admin-header h3 {
   color: white;
   margin: 0;
   text-shadow: 0 2px #3f68ee;
 }
 
-/* line 171, ../sass/app.scss */
+/* line 184, ../sass/app.scss */
 .activity {
   background: #FFF;
   border-radius: 2px;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
   margin: 0 0 10px;
+  -webkit-box-shadow: 0 1px 2px #d9d9d9;
+  -moz-box-shadow: 0 1px 2px #d9d9d9;
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 179, ../sass/app.scss */
+/* line 192, ../sass/app.scss */
 .activity ul {
   list-style-type: none;
 }
 
-/* line 185, ../sass/app.scss */
+/* line 198, ../sass/app.scss */
 .dash-users {
   background: #25bca7;
   border-radius: 2px;
@@ -5733,23 +5757,23 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 193, ../sass/app.scss */
+/* line 206, ../sass/app.scss */
 .dash-users i {
   font-size: 5em;
 }
 
-/* line 197, ../sass/app.scss */
+/* line 210, ../sass/app.scss */
 .dash-users p {
   margin-bottom: 0;
 }
 
-/* line 201, ../sass/app.scss */
+/* line 214, ../sass/app.scss */
 .dash-users .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 206, ../sass/app.scss */
+/* line 219, ../sass/app.scss */
 .dash-sales {
   background: #9e719d;
   border-radius: 2px;
@@ -5758,29 +5782,29 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 214, ../sass/app.scss */
+/* line 227, ../sass/app.scss */
 .dash-sales i {
   font-size: 5em;
 }
 
-/* line 218, ../sass/app.scss */
+/* line 231, ../sass/app.scss */
 .dash-sales p {
   margin-bottom: 0;
 }
 
-/* line 222, ../sass/app.scss */
+/* line 235, ../sass/app.scss */
 .dash-sales .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 227, ../sass/app.scss */
+/* line 240, ../sass/app.scss */
 .dash-sales .dash-number-money {
   float: right;
   font-size: 2em;
 }
 
-/* line 232, ../sass/app.scss */
+/* line 245, ../sass/app.scss */
 .dash-tickets {
   background: #567af0;
   border-radius: 2px;
@@ -5789,34 +5813,34 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 240, ../sass/app.scss */
+/* line 253, ../sass/app.scss */
 .dash-tickets i {
   font-size: 5em;
 }
 
-/* line 244, ../sass/app.scss */
+/* line 257, ../sass/app.scss */
 .dash-tickets p {
   margin-bottom: 0;
 }
 
-/* line 248, ../sass/app.scss */
+/* line 261, ../sass/app.scss */
 .dash-tickets .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 256, ../sass/app.scss */
+/* line 269, ../sass/app.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 260, ../sass/app.scss */
+/* line 273, ../sass/app.scss */
 .sidebar-module-header h3 {
   color: white;
   margin: 0;
 }
 
-/* line 266, ../sass/app.scss */
+/* line 279, ../sass/app.scss */
 .sidebar-module-header {
   background: #567af0;
   border-top-left-radius: 2px;
@@ -5825,7 +5849,7 @@ textarea {
   text-align: center;
 }
 
-/* line 274, ../sass/app.scss */
+/* line 287, ../sass/app.scss */
 .sidebar-module {
   background: #FFF;
   color: #595959;
@@ -5833,15 +5857,17 @@ textarea {
   border-bottom-right-radius: 2px;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
   margin-bottom: 20px;
+  -webkit-box-shadow: 0 1px 2px #d9d9d9;
+  -moz-box-shadow: 0 1px 2px #d9d9d9;
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 284, ../sass/app.scss */
+/* line 297, ../sass/app.scss */
 .sidebar-module ul {
   line-height: 1.8em;
 }
 
-/* line 288, ../sass/app.scss */
+/* line 301, ../sass/app.scss */
 .welcome {
   background: #f29f46;
   border-radius: 2px;
@@ -5850,7 +5876,7 @@ textarea {
   margin: 0 0 20px 0;
   text-shadow: 0 1px #c17018;
 }
-/* line 295, ../sass/app.scss */
+/* line 308, ../sass/app.scss */
 .welcome .close {
   font-size: 1.375em;
   padding: 5px 4px 4px;
@@ -5866,23 +5892,23 @@ textarea {
   opacity: 0.5;
 }
 
-/* line 298, ../sass/app.scss */
+/* line 311, ../sass/app.scss */
 .welcome h3 {
   color: white;
 }
 
-/* line 302, ../sass/app.scss */
+/* line 315, ../sass/app.scss */
 ul.dashboardnav {
   margin: 0 5px 2px 0;
   text-align: right;
 }
 
-/* line 303, ../sass/app.scss */
+/* line 316, ../sass/app.scss */
 ul.dashboardnav li {
   display: inline;
 }
 
-/* line 304, ../sass/app.scss */
+/* line 317, ../sass/app.scss */
 ul.dashboardnav li a {
   background: #ccc;
   color: #fff;
@@ -5891,33 +5917,36 @@ ul.dashboardnav li a {
   border-radius: 2px;
 }
 
-/* line 305, ../sass/app.scss */
+/* line 318, ../sass/app.scss */
 ul.dashboardnav li.active a {
   background: #567af0;
 }
 
-/* line 307, ../sass/app.scss */
+/* line 320, ../sass/app.scss */
 div#placeholder {
   height: 180px;
   margin-bottom: 10px;
   margin-top: 15px;
 }
 
-/* line 311, ../sass/app.scss */
+/* line 324, ../sass/app.scss */
 .tracking {
   border-radius: 2px;
   width: 100%;
 }
 
-/* line 316, ../sass/app.scss */
+/* line 329, ../sass/app.scss */
 .tracking > thead {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
 
-/* line 321, ../sass/app.scss */
+/* line 334, ../sass/app.scss */
 footer {
   background: white;
+  -webkit-box-shadow: 0px 0px 5px #d9d9d9;
+  -moz-box-shadow: 0px 0px 5px #d9d9d9;
+  box-shadow: 0px 0px 5px #d9d9d9;
   min-height: 75px;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }

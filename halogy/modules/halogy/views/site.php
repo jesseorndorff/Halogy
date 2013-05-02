@@ -1,36 +1,3 @@
-<!-- <script type="text/javascript">
-function hidetax(){
-	if ($('#shopTax').val() == 0){
-		$('.hidetax, .hidetaxstate').hide();
-	} else if ($('#shopTax').val() == 1 || $('#shopTax').val() == 2){
-		$('.hidetax').show();
-		if ($('#shopTax').val() == 2){
-			$('.hidetaxstate').show();
-		} else {
-			$('.hidetaxstate').hide();
-		}
-	}
-}
-$(function(){
-	$('a.showtab').click(function(event){
-		event.preventDefault();
-		var div = $(this).attr('href'); 
-		$('div.tab').hide();
-		$(div).show();
-	});
-	$('ul.innernav a').click(function(event){
-		event.preventDefault();
-		$(this).parent().siblings('li').removeClass('selected'); 
-		$(this).parent().addClass('selected');
-	});
-	$('div.tab:not(:first)').hide();
-	$('#shopTax').change(function(){
-		hidetax();
-	});
-	hidetax();
-});
-</script> -->
-
 <div class="row">
 
 	<div class="large-12 columns admin-page-header">
@@ -58,16 +25,7 @@ $(function(){
 	</div>
 </div>
 
-<!-- <ul class="innernav clear">
-	<li class="selected"><a href="#siteconfig" class="showtab">Site</a></li>
-	<li><a href="#emailsconfig" class="showtab">Emails</a></li>
-<?php if (@in_array('shop', $this->permission->permissions)): ?>	
-	<li><a href="#shopconfig" class="showtab">Shop</a></li>
-<?php endif; ?>
-<?php if (@in_array('community', $this->permission->permissions)): ?>	
-	<li><a href="#ceconfig" class="showtab">Community</a></li>
-<?php endif; ?>
-</ul> -->
+
 <div class="row">
 	<div class="large-12 columns">
 
@@ -423,7 +381,7 @@ $(function(){
 	<?php endif; ?>
 	</div> <!-- / tabs -->
 
-		<p class="clear" style="text-align: right;"><a href="#" class="button">Back to top</a></p>
+		<p style="text-align: right;"><a href="#" class="button">Back to top</a></p>
 
 	</div>
 </div>
