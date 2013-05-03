@@ -1,6 +1,6 @@
 <div class="row">
 
-	<div class="large-12 columns admin-page-header">
+	<div class="large-12 columns header">
 		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 		<h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?></h1>
 
@@ -27,7 +27,7 @@
 
 
 <div class="row">
-	<div class="large-12 columns">
+	<div class="large-12 columns body">
 
 
 <div class="section-container auto" data-section>
@@ -35,11 +35,12 @@
 		<p class="title" data-section-title><a href="#">Site Preferences</a></p>
 		<div class="content" data-section-content>
 			<h2>Site Preferences</h2>
+			<p>Set the details of your website, including the name, URL, email and telephone.</p>
+			<hr>
 			<div class="row">
 				<div class="large-6 columns">
 					<label for="siteName">Name of site:</label>
 					<?php echo @form_input('siteName', set_value('siteName', $data['siteName']), 'id="siteName" class="formelement"'); ?>
-					<span class="tip">Set the details of your website, including the name, URL, email and telephone.</span>
 			
 					<label for="siteURL">URL:</label>
 					<?php echo @form_input('siteURL', set_value('siteURL', $data['siteURL']), 'id="siteURL" class="formelement"'); ?>
@@ -69,14 +70,18 @@
 					<?php endif; ?>
 			
 				</div>
-			
-				<div class="large-6 columns">
+			</div>
+			<hr>
+			<div class="row">
+				<div class="large-6 columns dropdown">
 					<label for="headlines">Time Zone:</label>
 					
 					<?php echo timezone_menu($data['timezone'], 'formelement', 'timezone'); ?>
-					
 					<hr>
-			
+				</div>
+			</div> 
+			<div class="row">
+				<div class="large-6 columns"
 					<label for="dateOrder">Date Format:</label>
 					<?php
 						$values = '';
@@ -86,10 +91,14 @@
 						);
 					?>
 					<?php echo @form_dropdown('dateOrder', $values, set_value('dateOrder', $data['dateOrder']), 'id="dateOrder" class="formelement"'); ?>
-					
+				</div>
+				<div class="large-6 columns">	
 					<span class="tip select">Select how you prefer dates to show.</span>
-					
-					<hr>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="large-6 columns">
 			
 					<label for="paging">Results per Page:</label>
 					<?php
@@ -103,11 +112,13 @@
 						);
 					?>
 					<?php echo @form_dropdown('paging', $values, set_value('paging', $data['paging'], 20), 'id="paging" class="formelement"'); ?>
-					
+				</div>
+				<div class="large-6 columns">
 					<span class="tip select">Select how many results you want to show in result pages.</span>
-					
-					<hr>
-			
+				</div>
+			</div>
+			<div class="row">
+				<div class="large-6 columns">			
 					<label for="headlines">Headlines:</label>
 					<?php
 						$values = '';
@@ -126,6 +137,8 @@
 						);
 					?>
 					<?php echo @form_dropdown('headlines', $values, set_value('headlines', $data['headlines'], 20), 'id="headlines" class="formelement"'); ?>
+				</div>
+				<div class="large-6 columns">
 					<span class="tip select">Select how many headlines you want to show for modules such as blog.</span>
 				</div>
 			</div>
@@ -135,14 +148,15 @@
 		<p class="title" data-section-title><a href="#">Email Settings</a></p>
 		<div class="content" data-section-content>
 			<h2>Email Settings</h2>
-			
+			<p>Change how Halogy should handle system wide emails including auto-responders, headers, and footers.</p>
+			<hr>
 			<div class="row">
 				<div class="large-6 columns">
 					<label for="emailHeader">Email Header:</label>
 					<?php echo @form_textarea('emailHeader', set_value('emailHeader', $data['emailHeader']), 'id="emailHeader" class="formelement small"'); ?>
 				</div>
 				<div class="large-6 columns">
-					<span class="tip nolabel">Customize the beginning of the emails that are sent out. You can personalise the email by using {name} and {email}.</span>
+					<span class="tip nolabel">Customize the beginning of the emails that are sent out. You can personalize the email by using {name} and {email}.</span>
 				</div>
 			</div>
 			<hr>
@@ -239,124 +253,163 @@
 		<p class="title" data-section-title><a href="#">Shop Preferences</a></p>
 		<div class="content" data-section-content>
 			<h2>Shop Preferences</h2>
-	
-			<label for="currency">Currency:</label>
-			<?php echo @form_dropdown('currency', currencies(), set_value('currency', $data['currency']), 'id="currency" class="formelement"'); ?>
-			<br class="clear" />
-		
-			<label for="shopGateway">Payment Gateway:</label>
-			<?php
-				$values = '';
-				$values = array(
-					'paypal' => 'PayPal',
-					'paypalpro' => 'PayPal Pro',
-					'authorize' => 'Authorize.net',
-					'rbsworldpay' => 'RBS Worldpay',
-					'sagepay' => 'SagePay'
-				);
-			?>
-			<?php echo @form_dropdown('shopGateway', $values, set_value('shopGateway', $data['shopGateway']), 'id="shopGateway" class="formelement"'); ?>
-			<br class="clear" />
+			<p>Set the preferences for your storefront including payment gateways, taxes, shipping, and currency.</p>
+			<hr>
+			<div class="row">
+				<div class="large-6 columns">
+					<label for="currency">Currency:</label>
+					<?php echo @form_dropdown('currency', currencies(), set_value('currency', $data['currency']), 'id="currency" class="formelement"'); ?>
+				</div>
+				<div class="large-6 columns">
+				
+					<label for="shopGateway">Payment Gateway:</label>
+					<?php
+						$values = '';
+						$values = array(
+							'paypal' => 'PayPal',
+							'paypalpro' => 'PayPal Pro',
+							'authorize' => 'Authorize.net',
+							'rbsworldpay' => 'RBS Worldpay',
+							'sagepay' => 'SagePay'
+						);
+					?>
+					<?php echo @form_dropdown('shopGateway', $values, set_value('shopGateway', $data['shopGateway']), 'id="shopGateway" class="formelement"'); ?>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="large-6 columns">
+					<label for="shopEmail">PayPal Email:</label>
+					<?php echo @form_input('shopEmail', set_value('shopEmail', $data['shopEmail']), 'id="shopEmail" class="formelement"'); ?>
+				</div>
+				<div class="large-6 columns">
+					<span class="tip">The PayPal email you have configured for taking payments.</span>
+				</div>
+			</div>
 			
-			<label for="shopEmail">PayPal Email:</label>
-			<?php echo @form_input('shopEmail', set_value('shopEmail', $data['shopEmail']), 'id="shopEmail" class="formelement"'); ?>
-			<span class="tip">The PayPal email you have configured for taking payments.</span>
-			<br class="clear" />
+			<div class="row">
+				<div class="large-6 columns">
+				
+					<label for="shopItemsPerPage">Items per Page:</label>
+					<?php echo @form_input('shopItemsPerPage', set_value('shopItemsPerPage', $data['shopItemsPerPage']), 'id="shopItemsPerPage" class="formelement"'); ?>
+					
+					<label for="shopItemsPerRow">Items per Row:</label>
+					<?php echo @form_input('shopItemsPerRow', set_value('shopItemsPerRow', $data['shopItemsPerRow']), 'id="shopItemsPerRow" class="formelement"'); ?>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="large-6 columns dropdown">
+					
+					<label for="shopFreePostage">Free Shipping?:</label>
+					<?php
+						$values = '';
+						$values = array(
+							0 => 'No',
+							1 => 'Yes'
+						);
+					?>
+					<?php echo @form_dropdown('shopFreePostage', $values, set_value('shopFreePostage', $data['shopFreePostage']), 'id="shopFreePostage" class="formelement"'); ?>
+					<hr>
+				</div>
+			</div>
 			
-			<label for="shopItemsPerPage">Items per Page:</label>
-			<?php echo @form_input('shopItemsPerPage', set_value('shopItemsPerPage', $data['shopItemsPerPage']), 'id="shopItemsPerPage" class="formelement"'); ?>
-			<br class="clear" />
+			<div class="row">
+				<div class="large-6 columns">	
+					<label for="shopFreePostageRate">Free Shipping Rate:</label>
+					<?php echo @form_input('shopFreePostageRate', set_value('shopFreePostageRate', $data['shopFreePostageRate']), 'id="shopFreePostageRate" class="formelement"'); ?>
+				</div>
+				<div class="large-6 columns">
+					<span class="tip">The rate at which free postage is triggered.</span>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="large-6 columns">
 			
-			<label for="shopItemsPerRow">Items per Row:</label>
-			<?php echo @form_input('shopItemsPerRow', set_value('shopItemsPerRow', $data['shopItemsPerRow']), 'id="shopItemsPerRow" class="formelement"'); ?>
-			<br class="clear" />
+					<label for="shopStockControl">Stock Control:</label>
+					<?php
+						$values = '';
+						$values = array(
+							0 => 'No, don\'t use stock control',
+							1 => 'Yes, purchases affect stock'
+						);
+					?>
+					<?php echo @form_dropdown('shopStockControl', $values, set_value('shopStockControl', $data['shopStockControl']), 'id="shopStockControl" class="formelement"'); ?>
+				</div>
+			</div>
 			
-			<label for="shopFreePostage">Free Shipping?:</label>
-			<?php
-				$values = '';
-				$values = array(
-					0 => 'No',
-					1 => 'Yes'
-				);
-			?>
-			<?php echo @form_dropdown('shopFreePostage', $values, set_value('shopFreePostage', $data['shopFreePostage']), 'id="shopFreePostage" class="formelement"'); ?>
-			<br class="clear" />
+			<hr>
 			
-			<label for="shopFreePostageRate">Free Shipping Rate:</label>
-			<?php echo @form_input('shopFreePostageRate', set_value('shopFreePostageRate', $data['shopFreePostageRate']), 'id="shopFreePostageRate" class="formelement"'); ?>
-			<span class="tip">The rate at which free postage is triggered.</span>
-			<br class="clear" />
+			<div class="row">
+				<div class="large-6 columns dropdown">
+					<label for="shopTax">Apply Tax?</label>
+					<?php
+						$values = '';
+						$values = array(
+							0 => 'No, don\'t apply tax',
+							1 => 'Yes, always apply tax',
+							2 => 'Yes, but apply by state'
+						);
+					?>
+					<?php echo @form_dropdown('shopTax', $values, set_value('shopTax', $data['shopTax']), 'id="shopTax" class="formelement"'); ?>
+					<hr>
+					<label for="shopTaxRate">Tax Rate:</label>
+					<div class="row collapse">
+						<div class="small-9 columns">
+							<?php echo @form_input('shopTaxRate',set_value('shopTaxRate', $data['shopTaxRate']), 'id="shopTaxRate" class="formelement small"'); ?>
+						</div>
+						<div class="small-3 columns">
+							<span class="postfix radius">%</span>
+						</div>	
+					</div> <!-- / collapse for percent -->
+				</div> 
+			</div>
 			
-			<label for="shopStockControl">Stock Control:</label>
-			<?php
-				$values = '';
-				$values = array(
-					0 => 'No, don\'t use stock control',
-					1 => 'Yes, purchases affect stock'
-				);
-			?>
-			<?php echo @form_dropdown('shopStockControl', $values, set_value('shopStockControl', $data['shopStockControl']), 'id="shopStockControl" class="formelement"'); ?>
-			<br class="clear" />
-			
-			<label for="shopTax">Apply Tax?</label>
-			<?php
-				$values = '';
-				$values = array(
-					0 => 'No, don\'t apply tax',
-					1 => 'Yes, always apply tax',
-					2 => 'Yes, but apply by state'
-				);
-			?>
-			<?php echo @form_dropdown('shopTax', $values, set_value('shopTax', $data['shopTax']), 'id="shopTax" class="formelement"'); ?>
-			<br class="clear" />
-			
-			<div class="hidetax">
-			
-				<label for="shopTaxRate">Tax Rate:</label>
-				<?php echo @form_input('shopTaxRate',set_value('shopTaxRate', $data['shopTaxRate']), 'id="shopTaxRate" class="formelement small"'); ?>
-				<span class="price">%</span>
-				<br class="clear" />
-			
-				<div class="hidetaxstate">
+			<div class="row">	
+				<div class="large-6 columns hidetaxstate">
 					
 					<label for="shopTaxState">Tax by State:</label>
 					<?php echo display_states('shopTaxState', $data['shopTaxState'], 'id="shopTaxState" class="formelement"'); ?>
-					<br class="clear" />
-				
 				</div>
 				
 			</div>
+			<hr>
 			
-			<label for="shopVariation1">Variation 1:</label>
-			<?php echo @form_input('shopVariation1', set_value('shopVariation1', $data['shopVariation1']), 'id="shopVariation1" class="formelement"'); ?>
-			<br class="clear" />	
-		
-			<label for="shopVariation2">Variation 2:</label>
-			<?php echo @form_input('shopVariation2', set_value('shopVariation2', $data['shopVariation2']), 'id="shopVariation2" class="formelement"'); ?>
-			<br class="clear" />	
-		
-			<label for="shopVariation3">Variation 3:</label>
-			<?php echo @form_input('shopVariation3', set_value('shopVariation3', $data['shopVariation3']), 'id="shopVariation3" class="formelement"'); ?>
-			<br class="clear" /><br />
+			<div class="row">
+				<div class="large-6 columns">
 			
-			<h3>Shop API Setup:</h3>
+					<label for="shopVariation1">Variation 1:</label>
+					<?php echo @form_input('shopVariation1', set_value('shopVariation1', $data['shopVariation1']), 'id="shopVariation1" class="formelement"'); ?>
+					<br class="clear" />	
+				
+					<label for="shopVariation2">Variation 2:</label>
+					<?php echo @form_input('shopVariation2', set_value('shopVariation2', $data['shopVariation2']), 'id="shopVariation2" class="formelement"'); ?>
+					<br class="clear" />	
+				
+					<label for="shopVariation3">Variation 3:</label>
+					<?php echo @form_input('shopVariation3', set_value('shopVariation3', $data['shopVariation3']), 'id="shopVariation3" class="formelement"'); ?>
+				</div>
+			</div>
+			<hr>
 			
-			<label for="shopAPIKey">API Key:</label>
-			<?php echo @form_input('shopAPIKey', set_value('shopAPIKey', $data['shopAPIKey']), 'id="shopAPIKey" class="formelement"'); ?>
-			<br class="clear" />
-		
-			<label for="shopAPIUser">User / ID:</label>
-			<?php echo @form_input('shopAPIUser', set_value('shopAPIUser', $data['shopAPIUser']), 'id="shopAPIUser" class="formelement"'); ?>
-			<br class="clear" />
-		
-			<label for="shopAPIPass">Password:</label>
-			<?php echo @form_input('shopAPIPass', set_value('shopAPIPass', $data['shopAPIPass']), 'id="shopAPIPass" class="formelement"'); ?>
-			<br class="clear" />
-		
-			<label for="shopVendor">Vendor:</label>
-			<?php echo @form_input('shopVendor', set_value('shopVendor', $data['shopVendor']), 'id="shopVendor" class="formelement"'); ?>
-			<br class="clear" />
-			
+			<div class="row">
+				<div class="large-6 columns">			
+					<h3>Shop API Setup:</h3>
+					
+					<label for="shopAPIKey">API Key:</label>
+					<?php echo @form_input('shopAPIKey', set_value('shopAPIKey', $data['shopAPIKey']), 'id="shopAPIKey" class="formelement"'); ?>
+				
+					<label for="shopAPIUser">User / ID:</label>
+					<?php echo @form_input('shopAPIUser', set_value('shopAPIUser', $data['shopAPIUser']), 'id="shopAPIUser" class="formelement"'); ?>
+				
+					<label for="shopAPIPass">Password:</label>
+					<?php echo @form_input('shopAPIPass', set_value('shopAPIPass', $data['shopAPIPass']), 'id="shopAPIPass" class="formelement"'); ?>
+				
+					<label for="shopVendor">Vendor:</label>
+					<?php echo @form_input('shopVendor', set_value('shopVendor', $data['shopVendor']), 'id="shopVendor" class="formelement"'); ?>
+				</div>
+			</div>
 		</div>
 	</section>
 	<?php endif; ?>
@@ -365,21 +418,27 @@
 		<p class="title" data-section-title><a href="#">Community Preferences</a></p>
 		<div class="content" data-section-content>
 			<h2>Community Preferences</h2>
-
-			<label for="activation">Manual Activation:</label>
-			<?php
-				$values = '';
-				$values = array(
-					0 => 'No',
-					1 => 'Yes'
-				);
-			?>
-			<?php echo @form_dropdown('activation', $values, set_value('activation', $data['activation']), 'id="activation" class="formelement"'); ?>
-			<span class="tip">Do users require manual activation?</span>
+			<hr>
+			<div class="row">
+				<div class="large-6 columns">
+					<label for="activation">Manual Activation:</label>
+					<?php
+						$values = '';
+						$values = array(
+							0 => 'No',
+							1 => 'Yes'
+						);
+					?>
+					<?php echo @form_dropdown('activation', $values, set_value('activation', $data['activation']), 'id="activation" class="formelement"'); ?>
+				</div>
+				<div class="large-6 columns">
+					<span class="tip">Do users require manual activation?</span>
+				</div>
+			</div>
 		</div>
 	</section>
 	<?php endif; ?>
-	</div> <!-- / tabs -->
+</div> <!-- / tabs -->
 
 		<p style="text-align: right;"><a href="#" class="button">Back to top</a></p>
 

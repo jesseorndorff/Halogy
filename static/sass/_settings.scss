@@ -263,7 +263,7 @@ $button-border-width: 0;
 // $button-border-color: darken($primary-color, $button-function-factor);
 
 // We use this to set the default radius used throughout the core.
-$button-radius: $global-radius;
+$button-radius: 2px;
 
 // We use this to set default opacity for disabled buttons.
 // $button-disabled-opacity: 0.6;
@@ -802,7 +802,7 @@ $alert-border-width: 0px;
 // $section-title-bg-active-tabs: #fff;
 
 // Want to control border size, here ya go!
-$section-border-size: 0;
+$section-border-size: 1px;
 // $section-border-style: solid;
 // $section-border-color: #ccc;
 

@@ -70,7 +70,7 @@ $padding: $button-med;
 $bg: $fourth-color;
 
 /* This controls button radius. Set to a variable, true/false, or custom px value */
-$radius: true;
+$radius: $global-radius;
 
 /* This whether button is full-width. Set to true or false */
 $full-width: false;
@@ -97,11 +97,8 @@ input {
 }
 
 .tip {
-	@include alert;
+	@include alert(#00bda6);
 	border-radius: $global-radius;
-}
-
-.select {
 	margin-top: 16px;
 }
 
@@ -109,26 +106,39 @@ textarea {
 	height: 125px;
 }
 
-.section-container{
-	@include box-shadow (0 1px 2px darken(#FFF, 15%));
+.button {
+	@include radius;
+}
+
+.dropdown hr {
+	border: 0;
 }
 
 $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
-.admin-page-header {
-	background: $light-color;
-	@include border-radius($global-radius);
-	@include box-shadow (0 1px 2px darken(#FFF, 15%));
+@mixin white-card {
+	background: #FFFFFF;
 	margin: 0 0 25px 0;
 	padding: $global-padding;
+	@include border-radius($global-radius);
+	@include box-shadow (0 1px 2px darken(#FFF, 15%));
 }
 
-.admin-page-header h1{
+.header {
+	@include white-card;
+}
+
+.header h1{
 	float: left;
 }
 
-.admin-page-header .button {
+.header .button {
 	float: right;
+	margin: 10px 0;
+}
+
+.body {
+	@include white-card;
 }
 
 // Alerts

@@ -11,7 +11,7 @@ $(function(){
 
 <div class="row">
 
-	<div class="large-12 columns admin-page-header">
+	<div class="large-12 columns header">
 
 		<h1>Most Recent Visits</h1> 
 		
@@ -20,7 +20,7 @@ $(function(){
 </div>
 
 <div class="row">
-	<div class="large-12 columns">
+	<div class="large-12 columns body">
 		<div class="loader"></div>
 	</div>
 </div>
