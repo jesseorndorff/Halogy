@@ -438,7 +438,7 @@
 			<?php endif; ?>
 		</div> <!-- / tabs -->
 
-		<p><a href="#" class="button">Back to top</a></p>
+		<a href="#" class="button btt">Back to top</a>
 
 	</div> <!-- / body -->
 </div> <!-- / row -->

@@ -110,6 +110,10 @@ textarea {
 	@include radius;
 }
 
+.button btt {
+	margin: 0;
+}
+
 .dropdown hr {
 	border: 0;
 }
@@ -118,7 +122,6 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 @mixin white-card {
 	background: #FFFFFF;
-	margin: 0 0 25px 0;
 	padding: $global-padding;
 	@include border-radius($global-radius);
 	@include box-shadow (0 1px 2px darken(#FFF, 15%));
@@ -139,6 +142,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .body {
 	@include white-card;
+	margin-bottom: 50px;
 }
 
 // Alerts
