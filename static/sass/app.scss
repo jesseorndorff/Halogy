@@ -334,16 +334,20 @@ ul.dashboardnav li.active a { background: $primary-color; }
 
 div#placeholder { height:180px; margin-bottom: 10px; margin-top: 15px;}
 
-// Tracking
+// Default Table
 
-.tracking {
+.default {
 	border-radius: $global-radius;
 	width: 100%;
 }
 
-.tracking > thead {
+.default > thead {
 	border-top-left-radius: $global-radius;
 	border-top-right-radius: $global-radius;
+	color: $light-color;
+}
+.default > thead a{
+	color: $light-color;
 }
 
 footer {

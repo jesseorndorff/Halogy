@@ -6528,18 +6528,24 @@ div#placeholder {
 }
 
 /* line 339, ../sass/app.scss */
-.tracking {
+.default {
   border-radius: 2px;
   width: 100%;
 }
 
 /* line 344, ../sass/app.scss */
-.tracking > thead {
+.default > thead {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
+  color: white;
 }
 
 /* line 349, ../sass/app.scss */
+.default > thead a {
+  color: white;
+}
+
+/* line 353, ../sass/app.scss */
 footer {
   background: white;
   -webkit-box-shadow: 0px 0px 5px #d9d9d9;

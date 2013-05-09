@@ -1,5 +1,5 @@
 <?php if ($tracking): ?>
-	<table class="tracking">
+	<table class="default">
 		<thead>
 			<tr>
 				<th width="120">Date</th>
