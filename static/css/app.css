@@ -6316,36 +6316,37 @@ textarea {
 /* line 184, ../sass/app.scss */
 .admin-header {
   background: #567af0;
-  border-radius: 2px;
-  color: white;
-  margin: 0 0 20px 0;
-  padding: 10px 10px 10px 15px;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 10px 10px;
+  text-align: left;
 }
 
 /* line 192, ../sass/app.scss */
 .admin-header h3 {
   color: white;
   margin: 0;
-  text-shadow: 0 2px #3f68ee;
 }
 
-/* line 198, ../sass/app.scss */
+/* line 197, ../sass/app.scss */
 .activity {
   background: #FFF;
-  border-radius: 2px;
+  color: #595959;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
-  margin: 0 0 10px;
+  margin-bottom: 20px;
   -webkit-box-shadow: 0 1px 2px #d9d9d9;
   -moz-box-shadow: 0 1px 2px #d9d9d9;
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 206, ../sass/app.scss */
+/* line 207, ../sass/app.scss */
 .activity ul {
   list-style-type: none;
 }
 
-/* line 212, ../sass/app.scss */
+/* line 213, ../sass/app.scss */
 .dash-users {
   background: #25bca7;
   border-radius: 2px;
@@ -6354,23 +6355,23 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 220, ../sass/app.scss */
+/* line 221, ../sass/app.scss */
 .dash-users i {
   font-size: 5em;
 }
 
-/* line 224, ../sass/app.scss */
+/* line 225, ../sass/app.scss */
 .dash-users p {
   margin-bottom: 0;
 }
 
-/* line 228, ../sass/app.scss */
+/* line 229, ../sass/app.scss */
 .dash-users .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 233, ../sass/app.scss */
+/* line 234, ../sass/app.scss */
 .dash-sales {
   background: #9e719d;
   border-radius: 2px;
@@ -6379,29 +6380,29 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 241, ../sass/app.scss */
+/* line 242, ../sass/app.scss */
 .dash-sales i {
   font-size: 5em;
 }
 
-/* line 245, ../sass/app.scss */
+/* line 246, ../sass/app.scss */
 .dash-sales p {
   margin-bottom: 0;
 }
 
-/* line 249, ../sass/app.scss */
+/* line 250, ../sass/app.scss */
 .dash-sales .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 254, ../sass/app.scss */
+/* line 255, ../sass/app.scss */
 .dash-sales .dash-number-money {
   float: right;
   font-size: 2em;
 }
 
-/* line 259, ../sass/app.scss */
+/* line 260, ../sass/app.scss */
 .dash-tickets {
   background: #567af0;
   border-radius: 2px;
@@ -6410,34 +6411,34 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 267, ../sass/app.scss */
+/* line 268, ../sass/app.scss */
 .dash-tickets i {
   font-size: 5em;
 }
 
-/* line 271, ../sass/app.scss */
+/* line 272, ../sass/app.scss */
 .dash-tickets p {
   margin-bottom: 0;
 }
 
-/* line 275, ../sass/app.scss */
+/* line 276, ../sass/app.scss */
 .dash-tickets .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 283, ../sass/app.scss */
+/* line 284, ../sass/app.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 287, ../sass/app.scss */
+/* line 288, ../sass/app.scss */
 .sidebar-module-header h3 {
   color: white;
   margin: 0;
 }
 
-/* line 293, ../sass/app.scss */
+/* line 294, ../sass/app.scss */
 .sidebar-module-header {
   background: #567af0;
   border-top-left-radius: 2px;
@@ -6446,7 +6447,7 @@ textarea {
   text-align: center;
 }
 
-/* line 301, ../sass/app.scss */
+/* line 302, ../sass/app.scss */
 .sidebar-module {
   background: #FFF;
   color: #595959;
@@ -6459,12 +6460,12 @@ textarea {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 311, ../sass/app.scss */
+/* line 312, ../sass/app.scss */
 .sidebar-module ul {
   line-height: 1.8em;
 }
 
-/* line 315, ../sass/app.scss */
+/* line 316, ../sass/app.scss */
 .welcome {
   background: #f29f46;
   border-radius: 2px;
@@ -6473,7 +6474,7 @@ textarea {
   margin: 0 0 20px 0;
   text-shadow: 0 1px #c17018;
 }
-/* line 322, ../sass/app.scss */
+/* line 323, ../sass/app.scss */
 .welcome .close {
   font-size: 1.375em;
   padding: 5px 4px 4px;
@@ -6489,23 +6490,23 @@ textarea {
   opacity: 0.5;
 }
 
-/* line 325, ../sass/app.scss */
+/* line 326, ../sass/app.scss */
 .welcome h3 {
   color: white;
 }
 
-/* line 329, ../sass/app.scss */
+/* line 330, ../sass/app.scss */
 ul.dashboardnav {
   margin: 0 5px 2px 0;
   text-align: right;
 }
 
-/* line 330, ../sass/app.scss */
+/* line 331, ../sass/app.scss */
 ul.dashboardnav li {
   display: inline;
 }
 
-/* line 331, ../sass/app.scss */
+/* line 332, ../sass/app.scss */
 ul.dashboardnav li a {
   background: #ccc;
   color: #fff;
@@ -6514,31 +6515,31 @@ ul.dashboardnav li a {
   border-radius: 2px;
 }
 
-/* line 332, ../sass/app.scss */
+/* line 333, ../sass/app.scss */
 ul.dashboardnav li.active a {
   background: #567af0;
 }
 
-/* line 334, ../sass/app.scss */
+/* line 335, ../sass/app.scss */
 div#placeholder {
   height: 180px;
   margin-bottom: 10px;
   margin-top: 15px;
 }
 
-/* line 338, ../sass/app.scss */
+/* line 339, ../sass/app.scss */
 .tracking {
   border-radius: 2px;
   width: 100%;
 }
 
-/* line 343, ../sass/app.scss */
+/* line 344, ../sass/app.scss */
 .tracking > thead {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
 }
 
-/* line 348, ../sass/app.scss */
+/* line 349, ../sass/app.scss */
 footer {
   background: white;
   -webkit-box-shadow: 0px 0px 5px #d9d9d9;

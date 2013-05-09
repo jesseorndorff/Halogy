@@ -20,8 +20,6 @@ $(function(){
 <div class="row">
 	
 	<div class="large-8 columns">
-
-		<div class="admin-header"><h3><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> - <?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h3></div>
 		
 		<?php if ($errors = validation_errors()): ?>
 			<div data-alert class="error">
@@ -36,6 +34,8 @@ $(function(){
 				<a href="#" class="close">&times;</a>
 			</div>
 		<?php endif; ?>
+
+		<div class="admin-header"><h3><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> - <?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h3></div>
 		
 		<div class="activity" class="loader">
 			<ul class="dashboardnav">
@@ -58,6 +58,7 @@ $(function(){
 			<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
 
 		<?php endif; ?>
+
 		<div class="large-6 columns">
 			<div class="dash-sales">
 				<i class="ss-icon">basket</i>
@@ -180,6 +181,7 @@ $(function(){
 		<div class="sidebar-module">
 
 			<?php if ($popularPages): ?>
+				<h3>Most popular pages</h3>
 				<ol>		
 					<?php foreach ($popularPages as $page): ?>
 						<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName']); ?></li>

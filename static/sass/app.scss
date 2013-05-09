@@ -183,23 +183,24 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .admin-header {
 	background: $primary-color;
-	border-radius: $global-radius;
-	color: $light-color;
-	margin: 0 0 20px 0;
-	padding: 10px 10px 10px 15px;
+	border-top-left-radius: $global-radius;
+	border-top-right-radius: $global-radius;
+	padding: 10px 10px;
+	text-align: left;
 }
 
 .admin-header h3{
 	color: $light-color;
 	margin: 0;
-	text-shadow: 0 2px $anchor-font-color-hover;
 }
 
 .activity { 
 	background: #FFF;
-	border-radius: $global-radius;
-	padding: $global-padding; 
-	margin: 0 0 10px;
+	color: darken(#FFF, 65%);
+	border-bottom-left-radius: $global-radius;
+	border-bottom-right-radius: $global-radius;
+	padding: $global-padding;
+	margin-bottom: 20px;
 	@include box-shadow (0 1px 2px darken(#FFF, 15%));
 }
 
