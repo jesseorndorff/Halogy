@@ -49,8 +49,6 @@ $(function(){
 				<?php echo $activity; ?>
 		</div>
 
-		<br class="clear" /><br />
-
 		<?php if ($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6): ?>		
 
 			<div class="quota">
@@ -112,10 +110,10 @@ $(function(){
 	
 	<div class="large-4 columns sidebar">
 		<?php if ($this->session->userdata('session_admin')): ?>
-		<div data-alert class="welcome">
+			<div data-alert class="welcome">
 				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
 				<p>Here's a few things that have been happening on your website.</p>
-		</div>
+			</div>
 		<?php endif; ?>
 		
 		<div class="sidebar-module-header">
@@ -127,7 +125,7 @@ $(function(){
 				<li>Site name: <?php echo $this->site->config['siteName']; ?></li>
 				<li>Site URL: <a href="<?php echo $this->site->config['siteURL']; ?>"><?php echo $this->site->config['siteURL']; ?></a></li>
 				<li>Site email: <a href="mailto:<?php echo $this->site->config['siteEmail']; ?>"><?php echo $this->site->config['siteEmail']; ?></a></li>
-				</ul>
+			</ul>
 		</div>
 		
 		<div class="sidebar-module-header">
@@ -140,7 +138,7 @@ $(function(){
 				<li>Pages: <?php echo $numPages; ?> page<?php echo ($numPages != 1) ? 's' : ''; ?></li>
 				<?php if (@in_array('blog', $this->permission->permissions)): ?>
 					<li>Blog posts: <?php echo $numBlogPosts ?> post<?php echo ($numBlogPosts != 1) ? 's' : ''; ?></li>
-					<?php endif; ?>
+				<?php endif; ?>
 			</ul>
 		</div>
 		
@@ -157,20 +155,20 @@ $(function(){
 						$polarity = ($difference < 0) ? '' : '+';
 						?>						
 						<?php if ($difference != 0): ?>
-						(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
+							(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
 						<?php endif; ?>
 				
-					<li>New yesterday: <?php echo number_format($numUsersYesterday); ?> user<?php echo ($numUsersYesterday != 1) ? 's' : ''; ?></li>
-					<li>New this week: <?php echo number_format($numUsersWeek); ?> user<?php echo ($numUsersWeek != 1) ? 's' : ''; ?>
+				<li>New yesterday: <?php echo number_format($numUsersYesterday); ?> user<?php echo ($numUsersYesterday != 1) ? 's' : ''; ?></li>
+				<li>New this week: <?php echo number_format($numUsersWeek); ?> user<?php echo ($numUsersWeek != 1) ? 's' : ''; ?>
 						<?php
 							$difference = @round(100 / $numUsersLastWeek * ($numUsersWeek - $numUsersLastWeek), 2);
 							$polarity = ($difference < 0) ? '' : '+';
 							?>				
 							<?php if ($difference != 0): ?>
-							(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
+								(<span style="color:<?php echo ($polarity == '+') ? 'green' : 'red'; ?>"><?php echo $polarity.$difference; ?>%</span>)</li>
 							<?php endif; ?>
 
-					<li>New last week: <?php echo number_format($numUsersLastWeek); ?> user<?php echo ($numUsersLastWeek != 1) ? 's' : ''; ?></li>
+				<li>New last week: <?php echo number_format($numUsersLastWeek); ?> user<?php echo ($numUsersLastWeek != 1) ? 's' : ''; ?></li>
 
 			</ul>
 		</div>
@@ -181,52 +179,48 @@ $(function(){
 		
 		<div class="sidebar-module">
 
-		<?php if ($popularPages): ?>
-			<ol>		
-				<?php foreach ($popularPages as $page): ?>
-					<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName']); ?></li>
-				<?php endforeach; ?>
-			</ol>
-		<?php else: ?>
-			<p>We don't have this information yet.</p>
-		<?php endif; ?>
+			<?php if ($popularPages): ?>
+				<ol>		
+					<?php foreach ($popularPages as $page): ?>
+						<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName']); ?></li>
+					<?php endforeach; ?>
+				</ol>
+			<?php else: ?>
+				<p>We don't have this information yet.</p>
+			<?php endif; ?>
 				
-		<?php if (@in_array('blog', $this->permission->sitePermissions)): ?>
+			<?php if (@in_array('blog', $this->permission->sitePermissions)): ?>
 
-		<h3>Most popular blog posts</h3>
+				<h3>Most popular blog posts</h3>
 
-		<?php if ($popularBlogPosts): ?>
-			<ol>		
-				<?php foreach ($popularBlogPosts as $post): ?>
-					<li><?php echo anchor('/admin/blog/edit_post/'.$post['postID'], $post['postTitle']); ?></li>
-				<?php endforeach; ?>
-			</ol>
-		<?php else: ?>
-			<p>We don't have this information yet.</p>
-		<?php endif; ?>
+				<?php if ($popularBlogPosts): ?>
+						<ol>		
+							<?php foreach ($popularBlogPosts as $post): ?>
+								<li><?php echo anchor('/admin/blog/edit_post/'.$post['postID'], $post['postTitle']); ?></li>
+							<?php endforeach; ?>
+						</ol>
+					<?php else: ?>
+					<p>We don't have this information yet.</p>
+				<?php endif; ?>
 		
-		<?php endif; ?>
+			<?php endif; ?>
 
-		<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>		
+			<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>		
 
-		<h3>Most popular shop products</h3>
+				<h3>Most popular shop products</h3>
 
-		<?php if ($popularShopProducts): ?>
-			<ol>		
-				<?php foreach ($popularShopProducts as $product): ?>
-					<li><?php echo anchor('/admin/shop/edit_product/'.$product['productID'], $product['productName']); ?></li>
-				<?php endforeach; ?>
-			</ol>
-		<?php else: ?>
-			<p>We don't have this information yet.</p>
-		<?php endif; ?>
+				<?php if ($popularShopProducts): ?>
+					<ol>		
+						<?php foreach ($popularShopProducts as $product): ?>
+							<li><?php echo anchor('/admin/shop/edit_product/'.$product['productID'], $product['productName']); ?></li>
+						<?php endforeach; ?>
+					</ol>
+					<?php else: ?>
+					<p>We don't have this information yet.</p>
+			<?php endif; ?>
 
 		</div>
 
-<?php endif; ?>
+<?php endif; ?> <!-- not sure about this endif required -->
 		
-	</div>
-	
-	<br class="clear" />
-
 </div> <!-- / row -->
