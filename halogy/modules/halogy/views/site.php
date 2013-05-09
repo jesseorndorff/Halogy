@@ -1,3 +1,36 @@
+<script type="text/javascript">
+function hidetax(){
+	if ($('#shopTax').val() == 0){
+		$('.hidetax, .hidetaxstate').hide();
+	} else if ($('#shopTax').val() == 1 || $('#shopTax').val() == 2){
+		$('.hidetax').show();
+		if ($('#shopTax').val() == 2){
+			$('.hidetaxstate').show();
+		} else {
+			$('.hidetaxstate').hide();
+		}
+	}
+}
+$(function(){
+	$('a.showtab').click(function(event){
+		event.preventDefault();
+		var div = $(this).attr('href'); 
+		$('div.tab').hide();
+		$(div).show();
+	});
+	$('ul.innernav a').click(function(event){
+		event.preventDefault();
+		$(this).parent().siblings('li').removeClass('selected'); 
+		$(this).parent().addClass('selected');
+	});
+	$('div.tab:not(:first)').hide();
+	$('#shopTax').change(function(){
+		hidetax();
+	});
+	hidetax();
+});
+</script>
+
 <div class="row">
 
 	<div class="large-12 columns header">
@@ -352,15 +385,17 @@
 							?>
 							<?php echo @form_dropdown('shopTax', $values, set_value('shopTax', $data['shopTax']), 'id="shopTax" class="formelement"'); ?>
 							<hr>
-							<label for="shopTaxRate">Tax Rate:</label>
-							<div class="row collapse">
-								<div class="small-9 columns">
-									<?php echo @form_input('shopTaxRate',set_value('shopTaxRate', $data['shopTaxRate']), 'id="shopTaxRate" class="formelement small"'); ?>
-								</div>
-								<div class="small-3 columns">
-									<span class="postfix radius">%</span>
-								</div>	
-							</div> <!-- / collapse for percent -->
+							<div class="hidetax">
+								<label for="shopTaxRate">Tax Rate:</label>
+								<div class="row collapse">
+									<div class="small-9 columns">
+										<?php echo @form_input('shopTaxRate',set_value('shopTaxRate', $data['shopTaxRate']), 'id="shopTaxRate" class="formelement small"'); ?>
+									</div>
+									<div class="small-3 columns">
+										<span class="postfix radius">%</span>
+									</div>	
+								</div> <!-- / collapse for percent -->
+							</div>
 						</div> 
 					</div>
 					
