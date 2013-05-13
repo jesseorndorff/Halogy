@@ -1,35 +1,35 @@
-// Halogy Color Settings
+/* Halogy Color Settings */
 
-$primary-color: #567af0;
-$secondary-color: #9e719d;
-$third-color: #f29f46;
-$fourth-color: #9e719d;
+$primary-color: #567af0;  // Halogy Blue
+$secondary-color: #9e719d; // Purple
+$third-color: #f29f46; // Orange 
+$fourth-color: #25bca7; // Green Color
 $alert-color: #c63c3d;
 $success-color: #6ea820;
 
 $light-color: #FFFFFF;
 $dark-color: #000000;
 
-// Background color for the top bar
+/* Background color for the top bar */
 $topbar-bg: $primary-color;
 
-// Height and margin
-// $topbar-height: 45px;
+/* Height and margin */
+$topbar-height: 60px;
 // $topbar-margin-bottom: emCalc(30px);
 
-// Control Input height for top bar
+/* Control Input height for top bar */
 // $topbar-input-height: 2.45em;
 
-// Controlling the styles for the title in the top bar
+/* Controlling the styles for the title in the top bar */
 $topbar-title-weight: 600;
 // $topbar-title-font-size: emCalc(17px);
 
-// Set the link colors and styles for top-level nav
+/* Set the link colors and styles for top-level nav */
 $topbar-link-color: $light-color;
 $topbar-link-weight: 600;
 // $topbar-link-font-size: emCalc(13px);
 
-// Style the top bar dropdown elements
+/* Style the top bar dropdown elements */
 $topbar-dropdown-bg: $primary-color;
 $topbar-dropdown-link-color: $light-color;
 $topbar-dropdown-toggle-size: 5px;
@@ -37,14 +37,19 @@ $topbar-dropdown-toggle-color: #fff;
 $topbar-dropdown-toggle-alpha: 0.5;
 $dropdown-label-color: $primary-color;
 
-// Top menu icon styles
+/* Top menu icon styles */
 // $topbar-menu-link-transform: uppercase;
 // $topbar-menu-link-font-size: emCalc(13px);
 // $topbar-menu-link-weight: bold;
 // $topbar-menu-link-color: #fff;
 // $topbar-menu-icon-color: #fff;
-// $topbar-menu-link-color-toggled: #888;
-// $topbar-menu-icon-color-toggled: #888;
+$topbar-menu-link-color-toggled: #FFF;
+$topbar-menu-icon-color-toggled: #F9F9F9;
+
+/* Transitions and breakpoint styles */
+$topbar-transition-speed: 300ms;
+$topbar-breakpoint: emCalc(940px); /* Change to 9999px for always mobile layout */
+$topbar-media-query: "only screen and (min-width:"#{$topbar-breakpoint}")";
 
 // Set Oppacity by White(0.15) or Back(0.15)
 @function white($opacity){
@@ -80,6 +85,51 @@ $disabled: false;
 
 /* This controls padding for inputs, they are a little different */
 $is-input: false;
+
+/* Available Variables */
+$small-screen: emCalc(768px);
+$medium-screen: emCalc(1280px);
+$large-screen: emCalc(1440px);
+
+$screen: "only screen";
+$small: "only screen and (min-width:"#{$small-screen}")";
+$medium: "only screen and (min-width:"#{$medium-screen}")";
+$large: "only screen and (min-width:"#{$large-screen}")";
+$landscape: "only screen and (orientation: landscape)";
+$portrait: "only screen and (orientation: portrait)";
+
+/* We use this media query to add styles to any device that supports media queries */
+@media #{$screen} { }
+
+/* Used to alter styles for screens at least 768px wide. This is where the grid changes. */
+@media #{$small} { }
+
+/* Used to alter styles for screens at least 1280px wide. */
+@media #{$medium} { 
+	.row {
+		width: 90%;
+		max-width: 90%;
+	}
+}
+
+/* Used to alter styles for screens at least 1440px wide. */
+@media #{$large} { 
+	.row {
+		width: 90%;
+		max-width: 90%;
+	}
+
+}
+
+/* Apply styles to screens in landscape orientation */
+@media #{$landscape} { }
+
+/* Apply styles to screens in portrait orientation */
+@media #{$portrait} { }
+
+/* We also use Modernizr to add a .touch class to the body when applicable */
+/* You can prepend this class to anything and it will style only for touch devices */
+.touch .your-element {}
 
 
 // Global
@@ -129,6 +179,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .header {
 	@include white-card;
+	margin-bottom: 20px;
 }
 
 .header h1{

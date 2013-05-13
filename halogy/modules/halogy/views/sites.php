@@ -33,13 +33,13 @@ $(function(){
 
 <div class="row">
 	<div class="large-12 columns body">
-		<div class="large-6 columns">
+		<div class="large-4 large-offset-8 columns">
 			<div class="row collapse">
 				<form method="post" action="<?php echo site_url('/halogy/sites'); ?>" class="default" id="search">
-				<div class="small-10 columns">
+				<div class="small-9 columns">
 					<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Sites..." />
 				</div>
-				<div class="small-2 columns">
+				<div class="small-3 columns">
 					<input type="submit" class="button prefix" id="searchbutton" />
 				</div>
 				</form>

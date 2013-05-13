@@ -70,7 +70,7 @@ $shiny-edge-size: 0;
 
 //
 // Block Grid Variables
-//
+//	
 
 // We use this to control the maximum number of block grid elements per row
 // $block-grid-elements: 12;
@@ -219,7 +219,7 @@ $input-border-style: solid;
 // We use these to style the prefix and postfix input elements
 // $input-prefix-bg: darken(#fff, 5%);
 // $input-prefix-border-color: darken(#fff, 20%);
-// $input-prefix-border-size: 1px;
+$input-prefix-border-size: 0px;
 // $input-prefix-border-type: solid;
 // $input-prefix-overflow: hidden;
 // $input-prefix-font-color: #333;
