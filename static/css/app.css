@@ -6206,7 +6206,7 @@ textarea {
 
 /* line 180, ../sass/app.scss */
 .header {
-  background: #FFFFFF;
+  background: white;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -6227,12 +6227,12 @@ textarea {
 /* line 189, ../sass/app.scss */
 .header .button {
   float: right;
-  margin: 10px 0;
+  margin: 10px 15px;
 }
 
 /* line 194, ../sass/app.scss */
 .body {
-  background: #FFFFFF;
+  background: white;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -6587,4 +6587,62 @@ footer {
   box-shadow: 0px 0px 5px #d9d9d9;
   min-height: 75px;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
+}
+
+/* line 413, ../sass/app.scss */
+.perm-heading {
+  background: #f9f9f9;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 2px #d9d9d9;
+  -moz-box-shadow: 0 1px 2px #d9d9d9;
+  box-shadow: 0 1px 2px #d9d9d9;
+  height: 70px;
+  margin: 0 0 25px 0;
+  clear: both;
+}
+
+/* line 419, ../sass/app.scss */
+.perm-heading .button {
+  float: right;
+}
+
+/* line 420, ../sass/app.scss */
+.perm-heading .checkbox {
+  float: left;
+}
+
+/* line 421, ../sass/app.scss */
+.perm-heading > label {
+  float: left;
+  font-size: 1.25em;
+  width: 50%;
+}
+
+/* line 426, ../sass/app.scss */
+.permissions {
+  background: #f9f9f9;
+  padding: 0.9375em 0.9375em 0.625em 0.9375em;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -o-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 1px 2px #d9d9d9;
+  -moz-box-shadow: 0 1px 2px #d9d9d9;
+  box-shadow: 0 1px 2px #d9d9d9;
+  display: none;
+  margin-bottom: 25px;
+  clear: both;
+}
+
+/* line 432, ../sass/app.scss */
+.permissions > label {
+  float: left;
+  font-size: 1.125em;
+  width: 50%;
 }

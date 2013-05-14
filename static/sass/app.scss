@@ -170,15 +170,15 @@ textarea {
 
 $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
-@mixin white-card {
-	background: #FFFFFF;
+@mixin card($bg-color) {
+	background: $bg-color;
 	padding: $global-padding;
 	@include border-radius($global-radius);
 	@include box-shadow (0 1px 2px darken(#FFF, 15%));
 }
 
 .header {
-	@include white-card;
+	@include card(#FFF);
 	margin-bottom: 20px;
 }
 
@@ -188,11 +188,11 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .header .button {
 	float: right;
-	margin: 10px 0;
+	margin: 10px 15px;
 }
 
 .body {
-	@include white-card;
+	@include card(#FFF);
 	margin-bottom: 50px;
 }
 
@@ -406,5 +406,32 @@ footer {
 	@include box-shadow (0px 0px 5px darken(#FFF, 15%));
 	min-height: 75px;
 	padding: $global-padding;
+}
+
+// Edit Sites
+
+.perm-heading {
+	@include card(#F9F9F9);
+	height: 70px;
+	margin: 0 0 25px 0;
+	clear: both; 
+}
+.perm-heading .button {float: right;}
+.perm-heading .checkbox {float: left;}
+.perm-heading > label {
+	float: left;
+	font-size: emCalc(20px);
+	width: 50%;
+}
+.permissions {
+	@include card(#F9F9F9);
+	display: none; 
+	margin-bottom: 25px;  
+	clear: both; 
+}
+.permissions > label {
+	float: left;
+	font-size: emCalc(18px);
+	width: 50%;
 }
 

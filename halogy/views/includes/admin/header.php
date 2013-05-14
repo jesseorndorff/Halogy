@@ -25,7 +25,8 @@
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.topbar.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.alerts.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.section.js"></script>
-	
+	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.forms.js"></script>
+
 <script>
   $(function(){
     $(document)
