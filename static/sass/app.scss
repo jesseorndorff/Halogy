@@ -106,18 +106,18 @@ $portrait: "only screen and (orientation: portrait)";
 
 /* Used to alter styles for screens at least 1280px wide. */
 @media #{$medium} { 
-	.row {
+	/*.row {
 		width: 90%;
 		max-width: 90%;
-	}
+	} */
 }
 
 /* Used to alter styles for screens at least 1440px wide. */
 @media #{$large} { 
-	.row {
+	/*.row {
 		width: 90%;
 		max-width: 90%;
-	}
+	} */
 
 }
 
@@ -162,6 +162,26 @@ textarea {
 
 .button btt {
 	margin: 0;
+}
+
+// Button Groups
+
+$radius: $global-radius;
+$even: false;
+$float: left;
+
+.group-button { @include button-group-container;
+	float: right;
+	margin: 10px 0 0;
+  .thebutton { @include button;}
+
+  & > li { @include button-group-style($radius, $even, $float); }
+}
+.success {
+	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
+}
+.green {
+	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
 }
 
 .dropdown hr {

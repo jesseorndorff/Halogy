@@ -60,21 +60,13 @@ $(function(){
 	</div>
 </div>
 
-
-<?php if ($errors = validation_errors()): ?>
-	<div class="error clear">
-		<?php echo $errors; ?>
-	</div>
-<?php endif; ?>
-
-
-<!-- <ul class="innernav clear">
-	<li class="selected"><a href="#tab1" class="showtab">Details</a></li>
-	<li><a href="#tab2" class="showtab">Permissions</a></li>
-</ul> -->
-
 <div class="row">
 	<div class="large-12 columns body">
+		<?php if ($errors = validation_errors()): ?>
+			<div class="error clear">
+				<?php echo $errors; ?>
+			</div>
+		<?php endif; ?>
 		<div class="section-container auto" data-section>
 			<section>
 				<p class="title" data-section-title><a href="#">Site Settings</a></p>

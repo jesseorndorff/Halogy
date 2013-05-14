@@ -32,7 +32,6 @@ $(function(){
 </script>
 
 <div class="row">
-
 	<div class="large-12 columns header">
 		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 		<h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?></h1>
@@ -41,26 +40,19 @@ $(function(){
 	</div>
 </div>
 
-<div class="row">
-	<div class="large-12 columns">
-
-<?php if ($errors = validation_errors()): ?>
-	<div data-alert class="error">
-		<?php echo $errors; ?>
-	</div>
-<?php endif; ?>
-<?php if (isset($message)): ?>
-	<div data-alert class="message">
-		<?php echo $message; ?>
-	</div>
-<?php endif; ?>
-
-	</div>
-</div>
-
 
 <div class="row">
 	<div class="large-12 columns body">
+		<?php if ($errors = validation_errors()): ?>
+			<div data-alert class="error">
+		<?php echo $errors; ?>
+			</div>
+		<?php endif; ?>
+		<?php if (isset($message)): ?>
+			<div data-alert class="message">
+				<?php echo $message; ?>
+			</div>
+		<?php endif; ?>
 		<div class="section-container auto" data-section>
 			<section>
 				<p class="title" data-section-title><a href="#">Site Preferences</a></p>

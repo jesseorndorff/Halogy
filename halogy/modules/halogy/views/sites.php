@@ -27,7 +27,7 @@ $(function(){
 	<div class="large-12 columns header">
 		<h1 class="headingleft">Your Sites</h1>
 
-			<a href="<?php echo site_url('/halogy/add_site'); ?>" class="button primary">Add Site</a>
+			<a href="<?php echo site_url('/halogy/add_site'); ?>" class="button green">Add Site</a>
 	</div>
 </div>
 
