@@ -29,42 +29,38 @@ $(function(){
 	initOrder('ol.order, ol.order ol');
 });
 </script>
-
-<h1 class="headingleft">Pages</h1>
-
-<div class="headingright">
-
-	<label for="collapse">
-		Collapse
-	</label> 
-
-	<select id="collapse">
-		<option value="all">Show all</option>		
-		<option value="hidden">Hide hidden pages</option>
-		<option value="collapse">Hide sub-pages</option>		
-		<option value="drafts">Hide drafts</option>		
-	</select>
-	
-	<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
-		<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button">Add Page</a>
-	<?php endif; ?>
+<div class="row">
+	<div class="large-12 columns header">
+		<h1 class="headingleft">Pages</h1>
+		<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
+			<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green">Add Page</a>
+		<?php endif; ?>
+	</div>
 </div>
 
-<div class="clear"></div>
+		<label for="collapse">Collapse</label> 
+
+		<select id="collapse">
+			<option value="all">Show all</option>		
+			<option value="hidden">Hide hidden pages</option>
+			<option value="collapse">Hide sub-pages</option>		
+			<option value="drafts">Hide drafts</option>		
+		</select>
 
 <?php if ($parents): ?>
 
-	<hr />
+<div class="row">
+	<div class="large-12 columns body">
 
 	<ol class="order">
 		<?php foreach ($parents as $page): ?>
+		<div class="row">
 		<li id="pages-<?php echo $page['pageID']; ?>" class="<?php echo (!$page['navigation']) ? 'hiddenpage' : ''; ?><?php echo (!$page['active']) ? ' draft' : ''; ?><?php echo (@$children[$page['pageID']]) ? ' haschildren' : ''; ?><?php echo ($page['active'] && $page['datePublished'] > 0 && ($page['newBlocks'] > 0 || $page['newVersions'] > 0)) ? ' draft' : ''; ?>">
-		
-			<div class="col1">
+			<div class="large-5 columns">
 				<strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName'], 'class="pagelink"') : $page['pageName']; ?></strong><br />
-				<small>/<?php echo $page['uri']; ?></small>
+				<p>Path: <?php echo $page['uri']; ?></p>
 			</div>
-			<div class="col2">	
+			<div class="large-5 columns">	
 				<?php if ($page['active']): ?>
 					<span style="color:green">
 						<?php if ($page['redirect']): ?>
@@ -84,13 +80,13 @@ $(function(){
 				<?php endif; ?>
 				<br />
 				<?php if ($page['active'] && (!$page['newBlocks'] && !$page['newVersions'])): ?>
-					<small>Published: <strong><?php echo dateFmt($page['datePublished'], '', '', TRUE); ?></strong> 
+					<p>Published: <?php echo dateFmt($page['datePublished'], '', '', TRUE); ?>
 				<?php else: ?>
-					<small>Modified: <strong><?php echo dateFmt($page['dateModified'], '', '', TRUE); ?></strong> 
+					<p>Modified: <?php echo dateFmt($page['dateModified'], '', '', TRUE); ?>
 				<?php endif; ?>
-				<em>by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></em></small>
+				<em>by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></em></p>
 			</div>
-			<div class="buttons">
+			<div class="large-2 columns buttons">
 				<?php echo anchor($page['uri'], '<img src="'.$this->config->item('staticPath').'/images/btn_view.png" alt="View" title="View" />'); ?>
 				<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 					<?php echo anchor('/admin/pages/edit/'.$page['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" title="Edit" />'); ?>
@@ -106,11 +102,11 @@ $(function(){
 				<ol class="subpage">
 					<?php foreach ($children[$page['pageID']] as $child): ?>
 					<li id="pages-<?php echo $child['pageID']; ?>" class="<?php echo (!$child['navigation']) ? 'hiddenpage' : ''; ?><?php echo (!$child['active']) ? ' draft' : ''; ?><?php echo ($child['active'] && $child['datePublished'] > 0 && ($child['newBlocks'] > 0 || $child['newVersions'] > 0)) ? ' draft' : ''; ?>">
-						<div class="col1">
+						<div class="large-5 columns">
 							<span class="padded"><img src="<?php echo $this->config->item('staticPath'); ?>/images/arrow_child.gif" alt="Arrow" /></span> <strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$child['pageID'], $child['pageName'], 'class="pagelink"') : $child['pageName']; ?></strong><br />
-							<small>/<?php echo $child['uri']; ?></small>
+							<p>Path: <?php echo $child['uri']; ?></p>
 						</div>
-						<div class="col2">	
+						<div class="large-5 columns">	
 							<?php if ($child['active']): ?>
 								<span style="color:green">
 									<?php if ($child['redirect']): ?>
@@ -125,18 +121,18 @@ $(function(){
 									<?php endif; ?>						
 								</span>
 							<?php else: ?>
-								Draft
+								<strong>Draft</strong>
 								<?php echo (!$child['navigation']) ? ' (hidden)' : ''; ?>
 							<?php endif; ?>
 							<br />
 							<?php if ($child['active'] && (!$child['newBlocks'] && !$child['newVersions'])): ?>
-								<small>Published: <strong><?php echo dateFmt($child['datePublished'], '', '', TRUE); ?></strong> 
+								<p>Published: <strong><?php echo dateFmt($child['datePublished'], '', '', TRUE); ?>
 							<?php else: ?>
-								<small>Modified: <strong><?php echo dateFmt($child['dateModified'], '', '', TRUE); ?></strong> 
+								Modified: <strong><?php echo dateFmt($child['dateModified'], '', '', TRUE); ?>
 							<?php endif; ?>
-							<em>by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></em></small>
+							 by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></p>
 						</div>
-						<div class="buttons">
+						<div class="large-2 columns buttons">
 							<?php echo anchor($child['uri'], '<img src="'.$this->config->item('staticPath').'/images/btn_view.png" alt="View" title="View" />'); ?>
 							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 								<?php echo anchor('/admin/pages/edit/'.$child['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" title="Edit" />'); ?>
@@ -152,11 +148,11 @@ $(function(){
 							<ol class="subpage">
 								<?php foreach ($subchildren[$child['pageID']] as $subchild): ?>
 								<li id="pages-<?php echo $subchild['pageID']; ?>" class="<?php echo (!$subchild['navigation']) ? 'hiddenpage' : ''; ?><?php echo (!$subchild['active']) ? ' draft' : ''; ?><?php echo ($subchild['active'] && $subchild['datePublished'] > 0 && ($subchild['newBlocks'] > 0 || $subchild['newVersions'] > 0)) ? ' draft' : ''; ?>">
-									<div class="col1">
+									<div class="large-5 columns">
 										<span class="padded"><img src="<?php echo $this->config->item('staticPath'); ?>/images/arrow_subchild.gif" alt="Arrow" /></span> <strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$subchild['pageID'], $subchild['pageName'], 'class="pagelink"') : $subchild['pageName']; ?></strong><br />
 									<small>/<?php echo $subchild['uri']; ?></small>
 									</div>
-									<div class="col2">	
+									<div class="large-5 columns">	
 										<?php if ($subchild['active']): ?>
 											<span style="color:green">
 												<?php if ($subchild['redirect']): ?>
@@ -182,7 +178,7 @@ $(function(){
 										<?php endif; ?>
 										<em>by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></em></small>
 									</div>
-									<div class="buttons">
+									<div class="large-2 columns buttons">
 										<?php echo anchor($subchild['uri'], '<img src="'.$this->config->item('staticPath').'/images/btn_view.png" alt="View" title="View" />'); ?>
 										<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 											<?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" title="Edit" />'); ?>
@@ -206,12 +202,11 @@ $(function(){
 			<?php endif; ?>	
 						
 		</li>
+	</div> <!-- / row -->
 		<?php endforeach; ?>
 	</ol>
-	
-	<br />
-	
-	<p style="text-align: right;"><a href="#" class="button grey" id="totop">Back to top</a></p>
+	</div>
+</div>	
 
 <?php else: ?>
 
