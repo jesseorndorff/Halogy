@@ -455,19 +455,21 @@ footer {
 	width: 50%;
 }
 
-// Pages
-
+// Pages - Viewall.php
 
 ul.order, ol.order { list-style-type: none; padding: 0; margin: 0; line-height: 1.5em; }
 ul.order ul, ol.order ol { list-style-type: none; padding: 0; margin: 0; }
 ul.order li, ol.order li { margin: 0; padding: 0; cursor: move; background: #f6f6f6; border-top: 4px solid #fff; clear: both; clear: both; }
 ul.order ul li, ol.order ol li  { margin: 0; }
 ol.order { list-style-position: inside; }
-ol.order .col1 { display: inline; float: left; width: 460px; margin: 0; padding: 5px 10px; }
-ol.order .buttons { display: inline; float: left; width: 90px; padding: 5px 10px; text-align: right; }
+ol.order .buttons { display: inline; float: left; text-align: right; }
 .order img { margin: 0 5px 0 0; padding: 8px 0; vertical-align: middle; }
-.padded { margin: 0 10px 0 0; vertical-align: middle; }
-.padded img { float: left; margin: 2px 10px 2px 0; }
+.order p {margin-bottom: 0;}
+
+.page-order {
+	padding-top:10px;
+	padding-bottom:10px;
+}
 
 ol.order .pagelink { font-size: 1.2em; }
 ol.order .draft { background: #ffffec !important; }
