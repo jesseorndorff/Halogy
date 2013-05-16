@@ -24,8 +24,8 @@ $(function(){
 			$('.hiddenpage, .subpage, .draft').slideDown();
 		}
 	});
-	$('a.showform').live('click', function(event){showForm(this,event);});
-	$('input#cancel').live('click', function(event){hideForm(this,event);});
+	$('a.showform').on('click', function(event){showForm(this,event);});
+	$('input#cancel').on('click', function(event){hideForm(this,event);});
 	initOrder('ol.order, ol.order ol');
 });
 </script>
@@ -126,9 +126,9 @@ $(function(){
 							<?php endif; ?>
 							<br />
 							<?php if ($child['active'] && (!$child['newBlocks'] && !$child['newVersions'])): ?>
-								<p>Published: <strong><?php echo dateFmt($child['datePublished'], '', '', TRUE); ?>
+								<p>Published: <strong><?php echo dateFmt($child['datePublished'], '', '', TRUE); ?></stong>
 							<?php else: ?>
-								Modified: <strong><?php echo dateFmt($child['dateModified'], '', '', TRUE); ?>
+								Modified: <strong><?php echo dateFmt($child['dateModified'], '', '', TRUE); ?></strong>
 							<?php endif; ?>
 							 by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></p>
 						</div>
@@ -193,8 +193,6 @@ $(function(){
 							</ol>
 								
 						<?php endif; ?>	
-
-						
 					</li>
 					<?php endforeach; ?>
 				</ol>
