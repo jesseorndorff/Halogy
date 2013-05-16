@@ -459,7 +459,7 @@ footer {
 
 ul.order, ol.order { list-style-type: none; padding: 0; margin: 0; line-height: 1.5em; }
 ul.order ul, ol.order ol { list-style-type: none; padding: 0; margin: 0; }
-ul.order li, ol.order li { margin: 0; padding: 0; cursor: move; background: #f6f6f6; border-top: 4px solid #fff; clear: both; clear: both; }
+ul.order li, ol.order li { margin: 0; padding: 0; cursor: move; clear: both; clear: both; }
 ul.order ul li, ol.order ol li  { margin: 0; }
 ol.order { list-style-position: inside; }
 ol.order .buttons { display: inline; float: left; text-align: right; }
