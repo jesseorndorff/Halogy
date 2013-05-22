@@ -37,7 +37,7 @@ $(function(){
 		<h1 class="headingleft">Edit User Group</h1>
 		<ul class="group-button">
 			<li><input type="submit" value="Save Changes" class="green"></li>
-			<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="thebutton">Back to Users Groups</a></li>
+			<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="bluebutton">Back to Users Groups</a></li>
 		</ul>
 	</div>
 </div>

@@ -44,7 +44,7 @@ $(function(){
 	<div class="large-12 columns body">
 		<div class="row">
 			<div class="large-8 columns">
-				<h3>Add, edit, delete and sort your pages!</h3>
+				<p></p>
 			</div>
 			<div class="large-4 columns">
 				<label for="collapse">Collapse</label> 

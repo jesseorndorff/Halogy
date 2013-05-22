@@ -31,12 +31,12 @@ $(function(){
 				<li><a href="<?php echo site_url('/admin/users/add'); ?>" class="green">Add User</a></li>
 			<?php endif; ?>
 			<?php if (in_array('users_import', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users/import'); ?>" class="thebutton">Import Users</a></li>
-				<li><a href="<?php echo site_url('/admin/users/export'); ?>" class="thebutton">Export Users</a></li>
+				<li><a href="<?php echo site_url('/admin/users/import'); ?>" class="bluebutton">Import Users</a></li>
+				<li><a href="<?php echo site_url('/admin/users/export'); ?>" class="bluebutton">Export Users</a></li>
 			<?php endif; ?>
 
 			<?php if (in_array('users_groups', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="thebutton">Groups</a></li>
+				<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="bluebutton">Groups</a></li>
 			<?php endif; ?>	
 		</ul>
 	</div>

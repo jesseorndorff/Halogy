@@ -54,8 +54,10 @@ $(function(){
 		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 
 		<h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?> </h1>
-		<input type="submit" value="Save Changes" class="button success" />
-		<a href="<?php echo site_url('/halogy/sites'); ?>" class="button primary">Back to Sites</a>
+		<ul class="group-button">
+			<li><input type="submit" value="Save Changes" class="green" /></li>
+			<li><a href="<?php echo site_url('/halogy/sites'); ?>" class="bluebutton">Back to Sites</a></li>
+		</ul>
 		
 	</div>
 </div>

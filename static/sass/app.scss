@@ -173,15 +173,19 @@ $float: left;
 .group-button { @include button-group-container;
 	float: right;
 	margin: 10px 0 0;
-  .thebutton { @include button;}
+  .bluebutton { @include button;}
 
   & > li { @include button-group-style($radius, $even, $float); }
 }
+
 .success {
 	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
 }
 .green {
 	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
+}
+.orange {
+	@include button($padding, $third-color, $radius, $full-width, $disabled, $is-input);
 }
 
 .dropdown hr {

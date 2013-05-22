@@ -6,7 +6,7 @@
 				<li><a href="<?php echo site_url('/admin/users/add_group'); ?>" class="green">Add Group</a></li>
 			<?php endif; ?>
 			<?php if (in_array('users', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users'); ?>" class="thebutton">Users</a></li>
+				<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Users</a></li>
 			<?php endif; ?>
 		</ul>
 	</div>

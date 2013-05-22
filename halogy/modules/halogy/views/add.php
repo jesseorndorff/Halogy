@@ -85,7 +85,7 @@ $(function(){
 		<h1 class="headingleft">Add Site</h1>
 		<ul class="group-button">
 			<li><input type="submit" value="Add Site" class="green"></li>
-			<li><a href="<?php echo site_url('/halogy/sites'); ?>" class="thebutton">Back to Sites</a></li>
+			<li><a href="<?php echo site_url('/halogy/sites'); ?>" class="bluebutton">Back to Sites</a></li>
 		</ul>
 	</div>
 </div>

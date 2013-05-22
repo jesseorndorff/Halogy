@@ -47,7 +47,7 @@ $(function(){
 		<h1 class="headingleft">Add User</h1>
 		<ul class="group-button">
 			<li><input type="submit" value="Save Changes" class="green"></li>
-			<li><a href="<?php echo site_url('/admin/users'); ?>" class="thebutton">Back to Users</a></li>
+			<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Back to Users</a></li>
 		</ul>
 	</div>
 </div>

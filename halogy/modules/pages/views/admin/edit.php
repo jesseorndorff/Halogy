@@ -126,207 +126,219 @@
 	</script>
 	
 	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default" id="editpage">
-	
-		<input type="hidden" name="target" id="target" value="" />
-	
-		<h1 class="headingleft">Edit Page <small>(<a href="<?php echo site_url('/admin/pages/viewall'); ?>">Back to Pages</a>)</small></h1>
+
+	<div class="row">
+		<div class="large-12 columns header">
+			<h1 class="headingleft">Edit Page</h1>
 		
-		<div class="headingright">
-			<input type="submit" name="view" value="View Page" class="button blue save" />	
-			<input type="submit" id="save" name="save" value="Save Changes" class="button green save" />
-			<input type="submit" name="publish" value="Publish Page" class="button save orange" />
+			<input type="hidden" name="target" id="target" value="" />
+			
+			<ul class="group-button">
+				<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>" class="bluebutton">Back to Pages</a></li>
+				<li><input type="submit" name="view" value="View Page" class="bluebutton save" /></li>
+				<li><input type="submit" id="save" name="save" value="Save Changes" class="green save" /></li>
+				<li><input type="submit" name="publish" value="Publish Page" class="orange save" /></li>
 		</div>
+	</div>
 	
-		<?php if ($errors = validation_errors()): ?>
-			<div class="error clear">
-				<?php echo $errors; ?>
-			</div>
-		<?php endif; ?>
-		<?php if (isset($message)): ?>
-			<div class="message clear">
-				<?php echo $message; ?>
-			</div>
-		<?php endif; ?>
-	
-		<br class="clear" />
-	
-		<ul class="innernav">
-			<li id="tab1" class="selected"><a href="#pane1">Details</a></li>
-			<li id="tab2"><a href="#pane2">Content</a></li>
-			<li id="tab3"><a href="#pane3">Versions</a></li>
-		</ul>
-	
-		<div class="panes">
-			<div class="paneslide" style="width: 5000px;">
-				<div id="pane1" class="pane">
-		
-					<h2 class="underline">Basic Information</h2>
-				
-					<label for="pageName">Page Name:</label>
-					<?php echo @form_input('pageName',$data['pageName'], 'id="pageName" class="formelement"'); ?>
-					<span class="tip">This is the name of the page, for your information only.</span>
-					<br class="clear" />
-	
-					<label for="parentID">Parent:</label>
-					<?php
-						$options = array();
-						$options[0] = 'Top Level';
-						if ($parents):
-							foreach ($parents as $parent):
-								if ($parent['pageID'] != @$data['pageID']):
-									$options[$parent['pageID']] = $parent['pageName'];
-									if (isset($children[$parent['pageID']]) && $children[$parent['pageID']]):
-										foreach ($children[$parent['pageID']] as $child):
-											$options[$child['pageID']] = '-- '.$child['pageName'];
-										endforeach;
-									endif;
+	<div class="row">
+		<div class="large-12 columns body">
+				<?php if ($errors = validation_errors()): ?>
+					<div class="error clear">
+						<?php echo $errors; ?>
+					</div>
+				<?php endif; ?>
+				<?php if (isset($message)): ?>
+					<div class="message clear">
+						<?php echo $message; ?>
+					</div>
+				<?php endif; ?>
+
+				<ul class="innernav">
+					<li id="tab1" class="selected"><a href="#pane1">Details</a></li>
+					<li id="tab2"><a href="#pane2">Content</a></li>
+					<li id="tab3"><a href="#pane3">Versions</a></li>
+				</ul>
+
+			<div class="section-container auto" data-section>
+				<section>
+					<p class="title" data-section-title><a href="#">Details</a></p>
+					<div class="content" data-section-content>
+					<h2>Basic Information</h2>
+					<p>Set the basic details of the page including: name, parent, and template.</p>
+					<hr>
+
+					<div class="row">
+						<div class="large-6 columns">
+							<label for="pageName">Page Name:</label>
+							<?php echo @form_input('pageName',$data['pageName'], 'id="pageName" class="formelement"'); ?>
+							<span class="tip">This is the name of the page, for your information only.</span>
+							<label for="parentID">Parent:</label>
+							<?php
+								$options = array();
+								$options[0] = 'Top Level';
+								if ($parents):
+									foreach ($parents as $parent):
+										if ($parent['pageID'] != @$data['pageID']):
+											$options[$parent['pageID']] = $parent['pageName'];
+											if (isset($children[$parent['pageID']]) && $children[$parent['pageID']]):
+												foreach ($children[$parent['pageID']] as $child):
+													$options[$child['pageID']] = '-- '.$child['pageName'];
+												endforeach;
+											endif;
+										endif;
+									endforeach;
 								endif;
-							endforeach;
-						endif;
-						echo @form_dropdown('parentID',$options,$data['parentID'],'id="parentID" class="formelement"');
-					?>
-					<span class="tip">You can optionally nest this page under other pages.</span>
-					<br class="clear" />
-				
-					<label for="uri">Path:</label>
-					<?php echo @form_input('uri',$data['uri'], 'id="uri" class="formelement"'); ?>
-					<span class="tip">Enter the web path this page can be found at, e.g. `about-us` (no spaces)</span>
-					<br class="clear" />
-					
-					<label for="templateID">Template:</label>
-					<?php
-					if ($templates):
-						$options = array();				
-						foreach ($templates as $template):
-							$options[$template['templateID']] = $template['templateName'];
-						endforeach;
+								echo @form_dropdown('parentID',$options,$data['parentID'],'id="parentID" class="formelement"');
+							?>
+							<span class="tip">You can optionally nest this page under other pages.</span>
+							<br class="clear" />
 						
-						echo @form_dropdown('templateID',$options,$data['templateID'],'id="templateID" class="formelement"');
-					endif;
-					?>
-					<span class="tip">Templates control the layout of your page.</span>
-					<br class="clear" />
-	
-					<label for="redirect">Redirect Path:</label>
-					<?php echo @form_input('redirect',set_value('redirect', $data['redirect']), 'id="redirect" class="formelement"'); ?>
-					<span class="tip">You can optionally use this page as a redirect to another page.</span>
-					<br class="clear" /><br />
-			
-					<h2 class="underline">Meta Data</h2>
-	
-					<label for="title">Page Title:</label>
-					<?php echo @form_input('title',set_value('title', $data['title']), 'id="title" class="formelement"'); ?>
-					<span class="tip">This will display in the title bar of browsers.</span>
-					<br class="clear" />
-					
-					<label for="description">Meta Description:</label>
-					<?php echo @form_input('description',set_value('description', $data['description']), 'id="description" class="formelement"'); ?>
-					<span class="tip">Description of page for search engines.</span>
-					<br class="clear" />
-				
-					<label for="keywords">Meta Keywords:</label>
-					<?php echo @form_input('keywords',set_value('keywords', $data['keywords']), 'id="keywords" class="formelement"'); ?>
-					<span class="tip">Meta tags for search engines.</span>
-					<br class="clear" /><br />
-
-					<h2 class="underline">Visibility and Access</h2>
-	
-					<label for="navigation">Show in Navigation:</label>
-					<?php 
-						$values = array(
-							1 => 'Yes',
-							0 => 'No (hidden page)',
-						);
-						echo @form_dropdown('navigation',$values,$data['navigation'], 'id="navigation" class="formelement"'); 
-					?>
-					<span class="tip">By default your page will appear on the navigation menu.</span>
-					<br class="clear" />				
-				
-					<label for="active">Publish Status:</label>
-					<?php 
-						$values = array(
-							0 => 'Draft (visible only to administrators)',
-							1 => 'Publish',
-						);
-						echo @form_dropdown('active',$values,$data['active'], 'id="active" class="formelement"'); 
-					?>
-					<span class="tip">Remember to set this to 'Publish' if you want to show the page.</span>
-					<br class="clear" />
-	
-					<label for="groupID">Edit Group:</label>
-					<?php 
-						$values = array(
-							0 => 'Administrators only',
-						);
-						if ($groups)
-						{
-							foreach($groups as $group)
-							{
-								$values[$group['groupID']] = $group['groupName'];
-							}
-						}					
-						echo @form_dropdown('groupID',$values,$data['groupID'], 'id="groupID" class="formelement"'); 
-					?>
-					<span class="tip">Who is able to edit this page?</span>
-					<br class="clear" /><br />
-	
-				</div>
-
-				<div id="pane2" class="pane">			
-			
-					<iframe name="preview" id="preview" src="about:blank" frameborder="0" marginheight="0" marginwidth="0"></iframe>
-					
-				</div>
-				
-				<div id="pane3" class="pane">
-
-					<?php if ($versions): ?>
-
-						<h2 class="underline">Published Versions</h2>
+							<label for="uri">Path:</label>
+							<?php echo @form_input('uri',$data['uri'], 'id="uri" class="formelement"'); ?>
+							<span class="tip">Enter the web path this page can be found at, e.g. `about-us` (no spaces)</span>
+							<br class="clear" />
 							
-						<ul>
-						<?php foreach($versions as $version): ?>
-							<li>
-								<?php if ($data['versionID'] == $version['versionID']): ?>
-									<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
-								<?php else: ?>
-									<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_version/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
-								<?php endif; ?>
-							</li>
-						<?php endforeach; ?>
-						</ul>
+							<label for="templateID">Template:</label>
+							<?php
+							if ($templates):
+								$options = array();				
+								foreach ($templates as $template):
+									$options[$template['templateID']] = $template['templateName'];
+								endforeach;
+								
+								echo @form_dropdown('templateID',$options,$data['templateID'],'id="templateID" class="formelement"');
+							endif;
+							?>
+							<span class="tip">Templates control the layout of your page.</span>
+							<br class="clear" />
+			
+							<label for="redirect">Redirect Path:</label>
+							<?php echo @form_input('redirect',set_value('redirect', $data['redirect']), 'id="redirect" class="formelement"'); ?>
+							<span class="tip">You can optionally use this page as a redirect to another page.</span>
+							<br class="clear" /><br />
+					
+							<h2 class="underline">Meta Data</h2>
+			
+							<label for="title">Page Title:</label>
+							<?php echo @form_input('title',set_value('title', $data['title']), 'id="title" class="formelement"'); ?>
+							<span class="tip">This will display in the title bar of browsers.</span>
+							<br class="clear" />
+							
+							<label for="description">Meta Description:</label>
+							<?php echo @form_input('description',set_value('description', $data['description']), 'id="description" class="formelement"'); ?>
+							<span class="tip">Description of page for search engines.</span>
+							<br class="clear" />
+						
+							<label for="keywords">Meta Keywords:</label>
+							<?php echo @form_input('keywords',set_value('keywords', $data['keywords']), 'id="keywords" class="formelement"'); ?>
+							<span class="tip">Meta tags for search engines.</span>
+							<br class="clear" /><br />
 
-						<br />
-	
-					<?php endif; ?>				
-	
-					<?php if ($drafts): ?>
-					
-						<h2 class="underline">Drafts</h2>
-					
-						<ul>
-						<?php foreach($drafts as $version): ?>
-							<li>
-								<?php if ($data['draftID'] == $version['versionID']): ?>
-									<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
-								<?php else: ?>
-									<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_draft/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
-								<?php endif; ?>
-							</li>
-						<?php endforeach; ?>
-						</ul>
-					
-					<?php endif; ?>	
-				
-				</div>			
-	
+							<h2 class="underline">Visibility and Access</h2>
+			
+							<label for="navigation">Show in Navigation:</label>
+							<?php 
+								$values = array(
+									1 => 'Yes',
+									0 => 'No (hidden page)',
+								);
+								echo @form_dropdown('navigation',$values,$data['navigation'], 'id="navigation" class="formelement"'); 
+							?>
+							<span class="tip">By default your page will appear on the navigation menu.</span>
+							<br class="clear" />				
+						
+							<label for="active">Publish Status:</label>
+							<?php 
+								$values = array(
+									0 => 'Draft (visible only to administrators)',
+									1 => 'Publish',
+								);
+								echo @form_dropdown('active',$values,$data['active'], 'id="active" class="formelement"'); 
+							?>
+							<span class="tip">Remember to set this to 'Publish' if you want to show the page.</span>
+							<br class="clear" />
+			
+							<label for="groupID">Edit Group:</label>
+							<?php 
+								$values = array(
+									0 => 'Administrators only',
+								);
+								if ($groups)
+								{
+									foreach($groups as $group)
+									{
+										$values[$group['groupID']] = $group['groupName'];
+									}
+								}					
+								echo @form_dropdown('groupID',$values,$data['groupID'], 'id="groupID" class="formelement"'); 
+							?>
+							<span class="tip">Who is able to edit this page?</span>
+						</div>
+				</section>
 			</div>
 		</div>
-	
-		<p style="text-align: right;">
-			<a href="#" class="button grey" id="totop">Back to top</a>
-		</p>
-	
+	</div>
+
+					<!--	<div id="pane2" class="pane">			
+					
+							<iframe name="preview" id="preview" src="about:blank" frameborder="0" marginheight="0" marginwidth="0"></iframe>
+							
+						</div> -->
+
+
+						
+						<div id="pane3" class="pane">
+
+							<?php if ($versions): ?>
+
+								<h2 class="underline">Published Versions</h2>
+									
+								<ul>
+								<?php foreach($versions as $version): ?>
+									<li>
+										<?php if ($data['versionID'] == $version['versionID']): ?>
+											<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
+										<?php else: ?>
+											<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_version/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
+										<?php endif; ?>
+									</li>
+								<?php endforeach; ?>
+								</ul>
+
+								<br />
+			
+							<?php endif; ?>				
+			
+							<?php if ($drafts): ?>
+							
+								<h2 class="underline">Drafts</h2>
+							
+								<ul>
+								<?php foreach($drafts as $version): ?>
+									<li>
+										<?php if ($data['draftID'] == $version['versionID']): ?>
+											<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
+										<?php else: ?>
+											<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_draft/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
+										<?php endif; ?>
+									</li>
+								<?php endforeach; ?>
+								</ul>
+							
+							<?php endif; ?>	
+						
+						</div>			
+			
+					</div>
+				</div>
+			
+				<p style="text-align: right;">
+					<a href="#" class="button grey" id="totop">Back to top</a>
+				</p>
+			</div>
+		</div>
+			
 	</form>
 
 <?php endif; ?>
