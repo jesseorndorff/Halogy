@@ -1,60 +1,67 @@
-
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
+<div class="row">
+	<div class="large-12 columns header">
+		<h1 class="headingleft">Add 
+			<?php echo ($type == 'css' || $type == 'js') ? 'File' : 'Include'; ?>
+			<?php
+				if ($type == 'C') $typeLink = 'css';
+				elseif ($type == 'J') $typeLink = 'js';
+				else $typeLink = '';
+			?>
+		</h1>
 
-	<h1 class="headingleft">Add 
-		<?php echo ($type == 'css' || $type == 'js') ? 'File' : 'Include'; ?>
-		<?php
-			if ($type == 'C') $typeLink = 'css';
-			elseif ($type == 'J') $typeLink = 'js';
-			else $typeLink = '';
-		?>
-		<small>(<a href="<?php echo site_url('/admin/pages/includes/'.$typeLink); ?>">Back to Includes</a>)</small>
-	</h1>
-
-	<div class="headingright">
-		<input type="submit" value="Save Changes" class="button" />
+		<ul class="group-button">
+			<li><a href="<?php echo site_url('/admin/pages/includes/'.$typeLink); ?>" class="bluebutton">Back to Includes</a></li>
+			<li><input type="submit" value="Save Changes" class="green" /></li>
+		</ul>
 	</div>
+</div>
+
 	
-	<div class="clear"></div>	
+<div class="row">
+	<div class="large-12 columns body">
 
-	<?php if ($errors = validation_errors()): ?>
-		<div class="error">
-			<?php echo $errors; ?>
-		</div>
-	<?php endif; ?>
+		<?php if ($errors = validation_errors()): ?>
+			<div class="error">
+				<?php echo $errors; ?>
+			</div>
+		<?php endif; ?>
 
-<?php if ($type == 'css'): ?>
+		<div class="large-6 columns">
 
-	<label for="includeRef">Filename:</label>
-	<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-	<span class="tip">Your file will be found at &ldquo;/css/filename.css&rdquo; (make sure you use the '.css' extension).</span><br class="clear" />
+			<?php if ($type == 'css'): ?>
 
-	<?php echo @form_hidden('type', 'C'); ?>
+				<label for="includeRef">Filename:</label>
+				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
+				<span class="tip">Your file will be found at &ldquo;/css/filename.css&rdquo; (make sure you use the '.css' extension).</span><br class="clear" />
 
-<?php elseif ($type == 'js'): ?>
+				<?php echo @form_hidden('type', 'C'); ?>
 
-	<label for="includeRef">Filename:</label>
-	<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-	<span class="tip">Your file will be found at &ldquo;/js/filename.js&rdquo; (make sure you use the '.js' extension).</span><br class="clear" />
+			<?php elseif ($type == 'js'): ?>
 
-	<?php echo @form_hidden('type', 'J'); ?>
+				<label for="includeRef">Filename:</label>
+				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
+				<span class="tip">Your file will be found at &ldquo;/js/filename.js&rdquo; (make sure you use the '.js' extension).</span><br class="clear" />
 
-<?php else: ?>
+				<?php echo @form_hidden('type', 'J'); ?>
 
-	<label for="includeRef">Reference:</label>
-	<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-	<span class="tip">To access this include just use {include:REFERENCE} in your template.</span><br class="clear" />
+			<?php else: ?>
 
-	<?php echo @form_hidden('type', 'H'); ?>
+				<label for="includeRef">Reference:</label>
+				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
+				<span class="tip">To access this include just use {include:REFERENCE} in your template.</span><br class="clear" />
 
-<?php endif; ?>
+				<?php echo @form_hidden('type', 'H'); ?>
 
-	<div class="autosave">
-		<label for="body">Markup:</label>	
-		<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
-		<br class="clear" />
+			<?php endif; ?>
+
+				<div class="autosave">
+					<label for="body">Markup:</label>	
+					<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
+					<br class="clear" />
+				</div>
+			</div>
 	</div>
-		
-	<p class="clear" style="text-align: right;"><a href="#" class="button grey" id="totop">Back to top</a></p>
+</div>
 	
 </form>
