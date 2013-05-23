@@ -270,14 +270,14 @@
 							<span class="tip">Who is able to edit this page?</span>
 						</div>
 				</section>
-			<?php if ($versions): ?>
-					<section>
+				<section>
 						<p class="title" data-section-title><a href="#">Version History</a></p>
 						<div class="content" data-section-content>
+
 						<h2>Published Versions</h2>
 							<p>Here is the history for this page, you can revert your page back to any previous state.</p>
 							<hr>
-
+							<?php if ($versions): ?>
 							<div class="row">
 								<div class="large-6 columns">
 									<ul>
@@ -313,10 +313,10 @@
 									</ul>
 								</div>
 							</div>
+							<?php endif; ?>	
 					</section>
 				</div>
-				</div>
-			<?php endif; ?>	
+			</div>
 		</div>
 	</div>
 
