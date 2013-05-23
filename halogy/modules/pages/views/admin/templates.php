@@ -27,7 +27,7 @@ $(function(){
 		<h1 class="headingleft">Page Templates</h1>
 		<ul class="group-button">
 			<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="bluebutton">Includes</a></li>
-			<li><a href="#" class="bluebutton toggle-zip" data-reveal-id="myModal">Import Theme</a></li>
+			<li><a href="#" class="bluebutton toggle-zip">Import Theme</a></li>
 			<li><a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="green">Add Template</a></li>
 		</ul>
 	</div>
@@ -55,19 +55,7 @@ $(function(){
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
-		<div id="myModal" class="reveal-modal">
-			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
-				<h2>Import Your Theme</h2>
-				<p>Importing your custom theme is simple. Just zip up your HTML, CSS, JS files and upload the zip here!</p>
-				<label for="image">ZIP File:</label>
-				<div class="uploadfile">
-					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
-				</div>
-				<input type="submit" value="Import Theme" name="upload_zip" class="green" id="submit" />
-				<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button cancel grey">Cancel</a>
-				<a class="close-reveal-modal">&#215;</a>
-			</form>
-		</div>
+
 
 		<?php if ($templates): ?>
 
@@ -117,5 +105,18 @@ $(function(){
 	</div>
 </div>
 
+		<div id="myModal" class="reveal-modal">
+			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
+				<h2>Import Your Theme</h2>
+				<p>Importing your custom theme is simple. Just zip up your HTML, CSS, JS files and upload the zip here!</p>
+				<label for="image">ZIP File:</label>
+				<div class="uploadfile">
+					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
+				</div>
+				<input type="submit" value="Import Theme" name="upload_zip" class="green" id="submit" />
+				<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button cancel grey">Cancel</a>
+				<a class="close-reveal-modal">&#215;</a>
+			</form>
+		</div>
 
 
