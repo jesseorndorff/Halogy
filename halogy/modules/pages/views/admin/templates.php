@@ -64,7 +64,7 @@ $(function(){
 					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
 				</div>
 				<input type="submit" value="Import Theme" name="upload_zip" class="green" id="submit" />
-				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>
+				<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button cancel grey">Cancel</a>
 				<a class="close-reveal-modal">&#215;</a>
 			</form>
 		</div>

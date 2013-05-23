@@ -6889,7 +6889,30 @@ ol.order .haschildren {
   border-bottom: none !important;
 }
 
+/* line 476, ../sass/app.scss */
+span.autosave-saving {
+  display: none;
+  background: #567af0;
+  color: white;
+  padding: 5px;
+  border-radius: 2px;
+}
+
+/* line 477, ../sass/app.scss */
+span.autosave-complete {
+  display: none;
+  background: #567af0;
+  color: white;
+  padding: 5px;
+  border-radius: 2px;
+}
+
 /* line 478, ../sass/app.scss */
+.markup {
+  margin-top: 15px;
+}
+
+/* line 482, ../sass/app.scss */
 footer {
   background: white;
   bottom: 0;
