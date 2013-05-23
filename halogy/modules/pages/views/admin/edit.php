@@ -154,12 +154,6 @@
 					</div>
 				<?php endif; ?>
 
-				<ul class="innernav">
-					<li id="tab1" class="selected"><a href="#pane1">Details</a></li>
-					<li id="tab2"><a href="#pane2">Content</a></li>
-					<li id="tab3"><a href="#pane3">Versions</a></li>
-				</ul>
-
 			<div class="section-container auto" data-section>
 				<section>
 					<p class="title" data-section-title><a href="#">Details</a></p>
@@ -276,69 +270,56 @@
 							<span class="tip">Who is able to edit this page?</span>
 						</div>
 				</section>
-			</div>
+			<?php if ($versions): ?>
+					<section>
+						<p class="title" data-section-title><a href="#">Version History</a></p>
+						<div class="content" data-section-content>
+						<h2>Published Versions</h2>
+							<p>Here is the history for this page, you can revert your page back to any previous state.</p>
+							<hr>
+
+							<div class="row">
+								<div class="large-6 columns">
+									<ul>
+									<?php foreach($versions as $version): ?>
+										<li>
+											<?php if ($data['versionID'] == $version['versionID']): ?>
+												<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
+											<?php else: ?>
+												<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_version/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
+											<?php endif; ?>
+										</li>
+									<?php endforeach; ?>
+									</ul>
+
+									<br />
+				
+								<?php endif; ?>				
+				
+								<?php if ($drafts): ?>
+								
+									<h2 class="underline">Drafts</h2>
+								
+									<ul>
+									<?php foreach($drafts as $version): ?>
+										<li>
+											<?php if ($data['draftID'] == $version['versionID']): ?>
+												<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
+											<?php else: ?>
+												<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_draft/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
+											<?php endif; ?>
+										</li>
+									<?php endforeach; ?>
+									</ul>
+								</div>
+							</div>
+					</section>
+				</div>
+				</div>
+			<?php endif; ?>	
 		</div>
 	</div>
 
-					<!--	<div id="pane2" class="pane">			
-					
-							<iframe name="preview" id="preview" src="about:blank" frameborder="0" marginheight="0" marginwidth="0"></iframe>
-							
-						</div> -->
-
-
-						
-						<div id="pane3" class="pane">
-
-							<?php if ($versions): ?>
-
-								<h2 class="underline">Published Versions</h2>
-									
-								<ul>
-								<?php foreach($versions as $version): ?>
-									<li>
-										<?php if ($data['versionID'] == $version['versionID']): ?>
-											<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
-										<?php else: ?>
-											<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_version/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
-										<?php endif; ?>
-									</li>
-								<?php endforeach; ?>
-								</ul>
-
-								<br />
-			
-							<?php endif; ?>				
-			
-							<?php if ($drafts): ?>
-							
-								<h2 class="underline">Drafts</h2>
-							
-								<ul>
-								<?php foreach($drafts as $version): ?>
-									<li>
-										<?php if ($data['draftID'] == $version['versionID']): ?>
-											<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
-										<?php else: ?>
-											<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_draft/'.$data['pageID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
-										<?php endif; ?>
-									</li>
-								<?php endforeach; ?>
-								</ul>
-							
-							<?php endif; ?>	
-						
-						</div>			
-			
-					</div>
-				</div>
-			
-				<p style="text-align: right;">
-					<a href="#" class="button grey" id="totop">Back to top</a>
-				</p>
-			</div>
-		</div>
-			
 	</form>
 
 <?php endif; ?>
