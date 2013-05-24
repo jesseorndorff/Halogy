@@ -477,6 +477,22 @@ span.autosave-saving { display: none; background:$primary-color; color: $light-c
 span.autosave-complete { display: none; background:$primary-color; color: $light-color; padding: 5px; border-radius: $global-radius;}
 .markup {margin-top: 15px;}
 
+// Image Uploads
+
+	//The grid for large view
+[class*="block-grid-"] {
+
+}
+.large-block-grid-4 > li {
+
+	text-align: center;
+	padding: 25px;
+}
+
+.edit-image{
+	text-align:center;
+}
+
 // Footer
 
 footer {

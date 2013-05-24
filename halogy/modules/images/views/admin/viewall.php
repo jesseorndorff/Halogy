@@ -55,15 +55,19 @@ $(function(){
 	<div class="large-12 columns header">
 		<h1 class="headingleft">Images</h1>
 
-		<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="default" id="search">
-			<input type="text" name="searchbox" id="searchbox" class="formelement inactive" title="Search Images..." />
-			<input type="image" src="<?php echo $this->config->item('staticPath'); ?>/images/btn_search.gif" id="searchbutton" />
-		</form>
+		<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
+			<ul class="group-button">
+				<li><a href="#" class="bluebutton" data-reveal-id="upload-zip">Upload Zip</a></li>
+				<li><a href="#" class="green" data-reveal-id="upload-image">Upload Image</a></li>
+			</ul>
+
+		<?php endif; ?>
 	</div>
 </div>
 
 <div class="row">
 	<div class="large-12 columns body">
+		<div class="large-4 columns">
 			<label for="folderID">
 				Folder
 			</label> 
@@ -82,13 +86,19 @@ $(function(){
 				endif;
 				echo form_dropdown('folderID', $options, $folderID, 'id="folderID"');
 			?>
-
-			<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
-
-				<a href="#" class="button blue toggle-zip">Upload Zip</a>
-				<a href="#" class="button toggle-image blue">Upload Image</a>
-
-			<?php endif; ?>
+		</div>
+		<div class="large-4 large-offset-4 columns">
+			<div class="row collapse">
+				<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="default" id="search">
+					<div class="small-9 columns">
+						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Images..." />
+					</div>
+					<div class="small-3 columns">
+						<input type="submit" class="button prefix" id="searchbutton" />
+					</div>
+				</form>
+			</div>
+		</div>
 
 
 		<?php if ($errors = validation_errors()): ?>
@@ -121,19 +131,76 @@ $(function(){
 
 		<?php endif; ?>
 
-		<div id="upload-image" class="hidden clear">
+		<hr>
+
+		<ul class="small-block-grid-2 large-block-grid-4">
+		<?php if ($images): ?>
+
+			<?php echo $this->pagination->create_links(); ?>
+
+				<?php
+					$numItems = sizeof($images);
+					$itemsPerRow = 4;
+					$i = 0;
+								
+					foreach ($images as $image)
+					{
+						if (($i % $itemsPerRow) == 0 && $i > 1)
+						{
+							echo '</tr><tr>'."\n";
+							$i = 0;
+						}
+						echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">';
+
+						$imageData = $this->uploads->load_image($image['imageRef']);
+						$imagePath = $imageData['src'];
+						$imageData = $this->uploads->load_image($image['imageRef'], true);				
+						$imageThumbPath = $imageData['src'];
+				?>
+		
+
+						
+							<li><a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
+							<p><strong><?php echo $image['imageRef']; ?></strong></p>
+							<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), 'Edit', array('class' => 'button small')); ?>				
+							<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()),'Delete', array('class' => 'button alert small'), 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?></li>
+						
+				<?php
+						echo '</td>'."\n";
+						$i++;
+					}
+				
+					for($x = 0; $x < ($itemsPerRow - $i); $x++)
+					{
+						echo '<td width="'.floor((1 / $itemsPerRow) * 100).'%">&nbsp;</td>';
+					}
+				?>
+
+			
+			<?php echo $this->pagination->create_links(); ?>
+		</ul>
+		<?php else: ?>
+
+		<p class="clear">You have not yet uploaded any images.</p>
+
+		<?php endif; ?>
+	</div>
+</div>
+
+		<div id="upload-image" class="hidden clear reveal-modal">
 			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
 			
+				<h2>Upload an Image</h2>
+				<p>Upload any image file you want to use on your site. Want to add some folders before you start? <a href="<?php echo site_url('/admin/images/folders'); ?>">Add them now.</a></p>
 				<label for="image">Image:</label>
 				<div class="uploadfile">
 					<?php echo @form_upload('image', '', 'size="16" id="image"'); ?>
 				</div>
-				<br class="clear" />
 				
 				<label for="imageName">Description (alt tag):</label>
 				<?php echo @form_input('imageName', $images['imageName'], 'class="formelement" id="imageName"'); ?>
-				<br class="clear" />
 
+				<p class="tip">Note: You will want to add image folders before uploading your images.</p>
 				<label for="imageFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
 				<?php
 					$options = '';		
@@ -146,16 +213,17 @@ $(function(){
 						
 					echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="imageFolderID" class="formelement"');
 				?>	
-				<br class="clear" /><br />	
 
 				<input type="submit" value="Save Changes" class="button nolabel" id="submit" />
-				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>		
-				
+				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>			
 			</form>
+			<a class="close-reveal-modal">&#215;</a>
 		</div>
 
-		<div id="upload-zip" class="hidden clear">
+		<div id="upload-zip" class="hidden clear reveal-modal">
 			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
+				<h2>Upload a Zip File</h2>
+				<p>If you have a lot of images to upload, add them all to a zip folder and upload them here!</p>
 			
 				<label for="image">ZIP File:</label>
 				<div class="uploadfile">
@@ -178,66 +246,7 @@ $(function(){
 
 				<input type="submit" value="Upload Zip" name="upload_zip" class="button nolabel" />
 				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>
-					
 			</form>
+			<a class="close-reveal-modal">&#215;</a>
 		</div>
-
-		<div id="loader" class="hidden clear"></div>
-
-		<?php if ($images): ?>
-
-			<?php echo $this->pagination->create_links(); ?>
-			
-			<table class="images clear">	
-				<tr>
-				<?php
-					$numItems = sizeof($images);
-					$itemsPerRow = 5;
-					$i = 0;
-								
-					foreach ($images as $image)
-					{
-						if (($i % $itemsPerRow) == 0 && $i > 1)
-						{
-							echo '</tr><tr>'."\n";
-							$i = 0;
-						}
-						echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">';
-
-						$imageData = $this->uploads->load_image($image['imageRef']);
-						$imagePath = $imageData['src'];
-						$imageData = $this->uploads->load_image($image['imageRef'], true);				
-						$imageThumbPath = $imageData['src'];
-				?>
-						<div class="buttons">
-							<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" />', 'class="edit"'); ?>				
-							<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), '<img src="'.$this->config->item('staticPath').'/images/btn_delete.png" alt="Delete" />', 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?>
-						</div>					
-
-						<a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
-
-						<p><strong><?php echo $image['imageRef']; ?></strong></p>
-						
-				<?php
-						echo '</td>'."\n";
-						$i++;
-					}
-				
-					for($x = 0; $x < ($itemsPerRow - $i); $x++)
-					{
-						echo '<td width="'.floor((1 / $itemsPerRow) * 100).'%">&nbsp;</td>';
-					}
-				?>
-				</tr>
-			</table>
-			
-			<?php echo $this->pagination->create_links(); ?>
-
-		<?php else: ?>
-
-		<p class="clear">You have not yet uploaded any images.</p>
-
-		<?php endif; ?>
-	</div>
-</div>
 

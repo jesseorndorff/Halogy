@@ -6912,7 +6912,18 @@ span.autosave-complete {
   margin-top: 15px;
 }
 
-/* line 482, ../sass/app.scss */
+/* line 486, ../sass/app.scss */
+.large-block-grid-4 > li {
+  text-align: center;
+  padding: 25px;
+}
+
+/* line 492, ../sass/app.scss */
+.edit-image {
+  text-align: center;
+}
+
+/* line 498, ../sass/app.scss */
 footer {
   background: white;
   bottom: 0;
