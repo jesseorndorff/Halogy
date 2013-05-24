@@ -241,6 +241,17 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	margin: 0;
 }
 
+.important-message{
+	@include alert-base;
+	@include alert-style($third-color);
+	@include radius($global-radius); 
+}
+
+.important-message > a{
+	color: $light-color;
+	text-decoration: underline;
+}
+
 // Dashboard
 
 .touch-box {
@@ -489,6 +500,13 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 
 .edit-image{
 	text-align:center;
+}
+
+// Blog
+
+.preview-container {
+	background: #f1f1f1;
+	$border-radius: $global-radius;
 }
 
 // Footer

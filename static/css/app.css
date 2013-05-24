@@ -6476,7 +6476,30 @@ textarea {
   margin: 0;
 }
 
-/* line 246, ../sass/app.scss */
+/* line 244, ../sass/app.scss */
+.important-message {
+  border-style: solid;
+  border-width: 0px;
+  display: block;
+  font-weight: normal;
+  margin-bottom: 1.25em;
+  position: relative;
+  padding: 0.875em 1.5em 0.9375em 0.875em;
+  font-size: 0.8125em;
+  background-color: #f29f46;
+  border-color: #ef8616;
+  color: white;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+}
+
+/* line 250, ../sass/app.scss */
+.important-message > a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* line 257, ../sass/app.scss */
 .touch-box {
   border-style: solid;
   border-width: 0;
@@ -6513,12 +6536,12 @@ textarea {
   color: white;
 }
 
-/* line 253, ../sass/app.scss */
+/* line 264, ../sass/app.scss */
 .touch-box i {
   font-size: 5em;
 }
 
-/* line 257, ../sass/app.scss */
+/* line 268, ../sass/app.scss */
 .admin-header {
   background: #567af0;
   border-top-left-radius: 2px;
@@ -6527,13 +6550,13 @@ textarea {
   text-align: left;
 }
 
-/* line 265, ../sass/app.scss */
+/* line 276, ../sass/app.scss */
 .admin-header h3 {
   color: white;
   margin: 0;
 }
 
-/* line 270, ../sass/app.scss */
+/* line 281, ../sass/app.scss */
 .activity {
   background: #FFF;
   color: #595959;
@@ -6546,12 +6569,12 @@ textarea {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 280, ../sass/app.scss */
+/* line 291, ../sass/app.scss */
 .activity ul {
   list-style-type: none;
 }
 
-/* line 286, ../sass/app.scss */
+/* line 297, ../sass/app.scss */
 .dash-users {
   background: #25bca7;
   border-radius: 2px;
@@ -6560,23 +6583,23 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 294, ../sass/app.scss */
+/* line 305, ../sass/app.scss */
 .dash-users i {
   font-size: 5em;
 }
 
-/* line 298, ../sass/app.scss */
+/* line 309, ../sass/app.scss */
 .dash-users p {
   margin-bottom: 0;
 }
 
-/* line 302, ../sass/app.scss */
+/* line 313, ../sass/app.scss */
 .dash-users .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 307, ../sass/app.scss */
+/* line 318, ../sass/app.scss */
 .dash-sales {
   background: #9e719d;
   border-radius: 2px;
@@ -6585,29 +6608,29 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 315, ../sass/app.scss */
+/* line 326, ../sass/app.scss */
 .dash-sales i {
   font-size: 5em;
 }
 
-/* line 319, ../sass/app.scss */
+/* line 330, ../sass/app.scss */
 .dash-sales p {
   margin-bottom: 0;
 }
 
-/* line 323, ../sass/app.scss */
+/* line 334, ../sass/app.scss */
 .dash-sales .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 328, ../sass/app.scss */
+/* line 339, ../sass/app.scss */
 .dash-sales .dash-number-money {
   float: right;
   font-size: 2em;
 }
 
-/* line 333, ../sass/app.scss */
+/* line 344, ../sass/app.scss */
 .dash-tickets {
   background: #567af0;
   border-radius: 2px;
@@ -6616,34 +6639,34 @@ textarea {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 341, ../sass/app.scss */
+/* line 352, ../sass/app.scss */
 .dash-tickets i {
   font-size: 5em;
 }
 
-/* line 345, ../sass/app.scss */
+/* line 356, ../sass/app.scss */
 .dash-tickets p {
   margin-bottom: 0;
 }
 
-/* line 349, ../sass/app.scss */
+/* line 360, ../sass/app.scss */
 .dash-tickets .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 357, ../sass/app.scss */
+/* line 368, ../sass/app.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 361, ../sass/app.scss */
+/* line 372, ../sass/app.scss */
 .sidebar-module-header h3 {
   color: white;
   margin: 0;
 }
 
-/* line 367, ../sass/app.scss */
+/* line 378, ../sass/app.scss */
 .sidebar-module-header {
   background: #567af0;
   border-top-left-radius: 2px;
@@ -6652,7 +6675,7 @@ textarea {
   text-align: center;
 }
 
-/* line 375, ../sass/app.scss */
+/* line 386, ../sass/app.scss */
 .sidebar-module {
   background: #FFF;
   color: #595959;
@@ -6665,12 +6688,12 @@ textarea {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 385, ../sass/app.scss */
+/* line 396, ../sass/app.scss */
 .sidebar-module ul {
   line-height: 1.8em;
 }
 
-/* line 389, ../sass/app.scss */
+/* line 400, ../sass/app.scss */
 .welcome {
   background: #f29f46;
   border-radius: 2px;
@@ -6679,7 +6702,7 @@ textarea {
   margin: 0 0 20px 0;
   text-shadow: 0 1px #c17018;
 }
-/* line 396, ../sass/app.scss */
+/* line 407, ../sass/app.scss */
 .welcome .close {
   font-size: 1.375em;
   padding: 5px 4px 4px;
@@ -6695,23 +6718,23 @@ textarea {
   opacity: 0.5;
 }
 
-/* line 399, ../sass/app.scss */
+/* line 410, ../sass/app.scss */
 .welcome h3 {
   color: white;
 }
 
-/* line 403, ../sass/app.scss */
+/* line 414, ../sass/app.scss */
 ul.dashboardnav {
   margin: 0 5px 2px 0;
   text-align: right;
 }
 
-/* line 404, ../sass/app.scss */
+/* line 415, ../sass/app.scss */
 ul.dashboardnav li {
   display: inline;
 }
 
-/* line 405, ../sass/app.scss */
+/* line 416, ../sass/app.scss */
 ul.dashboardnav li a {
   background: #ccc;
   color: #fff;
@@ -6720,37 +6743,37 @@ ul.dashboardnav li a {
   border-radius: 2px;
 }
 
-/* line 406, ../sass/app.scss */
+/* line 417, ../sass/app.scss */
 ul.dashboardnav li.active a {
   background: #567af0;
 }
 
-/* line 408, ../sass/app.scss */
+/* line 419, ../sass/app.scss */
 div#placeholder {
   height: 180px;
   margin-bottom: 10px;
   margin-top: 15px;
 }
 
-/* line 412, ../sass/app.scss */
+/* line 423, ../sass/app.scss */
 .default {
   border-radius: 2px;
   width: 100%;
 }
 
-/* line 417, ../sass/app.scss */
+/* line 428, ../sass/app.scss */
 .default > thead {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   color: white;
 }
 
-/* line 422, ../sass/app.scss */
+/* line 433, ../sass/app.scss */
 .default > thead a {
   color: white;
 }
 
-/* line 428, ../sass/app.scss */
+/* line 439, ../sass/app.scss */
 .perm-heading {
   background: #f9f9f9;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -6767,24 +6790,24 @@ div#placeholder {
   clear: both;
 }
 
-/* line 434, ../sass/app.scss */
+/* line 445, ../sass/app.scss */
 .perm-heading .button {
   float: right;
 }
 
-/* line 435, ../sass/app.scss */
+/* line 446, ../sass/app.scss */
 .perm-heading .checkbox {
   float: left;
 }
 
-/* line 436, ../sass/app.scss */
+/* line 447, ../sass/app.scss */
 .perm-heading > label {
   float: left;
   font-size: 1.25em;
   width: 50%;
 }
 
-/* line 441, ../sass/app.scss */
+/* line 452, ../sass/app.scss */
 .permissions {
   background: #f9f9f9;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -6801,14 +6824,14 @@ div#placeholder {
   clear: both;
 }
 
-/* line 447, ../sass/app.scss */
+/* line 458, ../sass/app.scss */
 .permissions > label {
   float: left;
   font-size: 1.125em;
   width: 50%;
 }
 
-/* line 455, ../sass/app.scss */
+/* line 466, ../sass/app.scss */
 ul.order, ol.order {
   list-style-type: none;
   padding: 0;
@@ -6816,14 +6839,14 @@ ul.order, ol.order {
   line-height: 1.5em;
 }
 
-/* line 456, ../sass/app.scss */
+/* line 467, ../sass/app.scss */
 ul.order ul, ol.order ol {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-/* line 457, ../sass/app.scss */
+/* line 468, ../sass/app.scss */
 ul.order li, ol.order li {
   margin: 0;
   padding: 0;
@@ -6832,63 +6855,63 @@ ul.order li, ol.order li {
   clear: both;
 }
 
-/* line 458, ../sass/app.scss */
+/* line 469, ../sass/app.scss */
 ul.order ul li, ol.order ol li {
   margin: 0;
 }
 
-/* line 459, ../sass/app.scss */
+/* line 470, ../sass/app.scss */
 ol.order {
   list-style-position: inside;
 }
 
-/* line 460, ../sass/app.scss */
+/* line 471, ../sass/app.scss */
 ol.order .buttons {
   display: inline;
   float: left;
   text-align: right;
 }
 
-/* line 461, ../sass/app.scss */
+/* line 472, ../sass/app.scss */
 .order img {
   margin: 0 5px 0 0;
   padding: 8px 0;
   vertical-align: middle;
 }
 
-/* line 462, ../sass/app.scss */
+/* line 473, ../sass/app.scss */
 .order p {
   margin-bottom: 0;
 }
 
-/* line 464, ../sass/app.scss */
+/* line 475, ../sass/app.scss */
 .page-order {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-/* line 469, ../sass/app.scss */
+/* line 480, ../sass/app.scss */
 ol.order .pagelink {
   font-size: 1.2em;
 }
 
-/* line 470, ../sass/app.scss */
+/* line 481, ../sass/app.scss */
 ol.order .draft {
   background: #ffffec !important;
 }
 
-/* line 471, ../sass/app.scss */
+/* line 482, ../sass/app.scss */
 ol.order .hiddenpage {
   background: #e9e9e9;
 }
 
-/* line 472, ../sass/app.scss */
+/* line 483, ../sass/app.scss */
 ol.order .haschildren {
   margin: 8px 0;
   border-bottom: none !important;
 }
 
-/* line 474, ../sass/app.scss */
+/* line 485, ../sass/app.scss */
 span.autosave-saving {
   display: none;
   background: #567af0;
@@ -6897,7 +6920,7 @@ span.autosave-saving {
   border-radius: 2px;
 }
 
-/* line 475, ../sass/app.scss */
+/* line 486, ../sass/app.scss */
 span.autosave-complete {
   display: none;
   background: #567af0;
@@ -6906,23 +6929,28 @@ span.autosave-complete {
   border-radius: 2px;
 }
 
-/* line 476, ../sass/app.scss */
+/* line 487, ../sass/app.scss */
 .markup {
   margin-top: 15px;
 }
 
-/* line 484, ../sass/app.scss */
+/* line 495, ../sass/app.scss */
 .large-block-grid-4 > li {
   text-align: center;
   padding: 25px;
 }
 
-/* line 490, ../sass/app.scss */
+/* line 501, ../sass/app.scss */
 .edit-image {
   text-align: center;
 }
 
-/* line 496, ../sass/app.scss */
+/* line 507, ../sass/app.scss */
+.preview-container {
+  background: #f1f1f1;
+}
+
+/* line 514, ../sass/app.scss */
 footer {
   background: white;
   bottom: 0;
