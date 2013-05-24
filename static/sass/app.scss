@@ -48,8 +48,6 @@ $topbar-menu-icon-color-toggled: #F9F9F9;
 
 /* Transitions and breakpoint styles */
 $topbar-transition-speed: 300ms;
-$topbar-breakpoint: emCalc(940px); /* Change to 9999px for always mobile layout */
-$topbar-media-query: "only screen and (min-width:"#{$topbar-breakpoint}")";
 
 // Set Oppacity by White(0.15) or Back(0.15)
 @function white($opacity){
