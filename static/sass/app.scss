@@ -140,10 +140,6 @@ ul, ol, dl {
 	font-family: inherit;
 }
 
-input {
-	border-radius: $global-radius;
-}
-
 .tip {
 	@include alert(#00bda6);
 	border-radius: $global-radius;
@@ -160,6 +156,42 @@ textarea {
 
 .button btt {
 	margin: 0;
+}
+
+.item {
+	padding-top: 30px;
+	padding-bottom: 30px;
+	border-bottom: 1px solid #f1f1f1;
+}
+
+.item > p {
+	color: #999	;
+}
+
+.item * p {
+	color: #999	;
+}
+
+.checkbox-cat {
+	margin-bottom: 5px;
+}
+
+placeholder {
+	color: #000;
+}
+
+input {
+	color: #000;
+	font-weight: normal;
+	border-radius: $global-radius;
+}
+
+label {
+	font-weight: bold;
+	font-size: 18px;
+}
+
+.side-bar {
 }
 
 // Button Groups
@@ -231,6 +263,11 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .error p {
 	margin: 0;
 }
+
+.error a {
+	color: #FFF;
+	text-decoration: underline;
+}
 .message {   
   @include alert-base;
   @include alert-style($success-color);
@@ -250,6 +287,23 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .important-message > a{
 	color: $light-color;
 	text-decoration: underline;
+}
+
+.headingleft {
+	float: left;
+}
+
+.hidden {
+	display: none;
+}
+
+.col1 > input {
+	display: none;
+}
+
+.cat-name {
+	color: #4d4d4d;
+	font-size: 18px;
 }
 
 // Dashboard
@@ -520,3 +574,61 @@ footer {
 	width: 100%;
 }
 
+/* iCheck plugin Flat skin, blue
+----------------------------------- */
+.icheckbox_flat-blue,
+.iradio_flat-blue {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background: url(../images/blue.png) no-repeat;
+    border: none;
+    cursor: pointer;
+}
+
+.icheckbox_flat-blue {
+    background-position: 0 0;
+}
+    .icheckbox_flat-blue.checked {
+        background-position: -22px 0;
+    }
+    .icheckbox_flat-blue.disabled {
+        background-position: -44px 0;
+        cursor: default;
+    }
+    .icheckbox_flat-blue.checked.disabled {
+        background-position: -66px 0;
+    }
+
+.iradio_flat-blue {
+    background-position: -88px 0;
+}
+    .iradio_flat-blue.checked {
+        background-position: -110px 0;
+    }
+    .iradio_flat-blue.disabled {
+        background-position: -132px 0;
+        cursor: default;
+    }
+    .iradio_flat-blue.checked.disabled {
+        background-position: -154px 0;
+    }
+
+/* Retina support */
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+       only screen and (-moz-min-device-pixel-ratio: 1.5),
+       only screen and (-o-min-device-pixel-ratio: 3/2),
+       only screen and (min-device-pixel-ratio: 1.5) {
+    .icheckbox_flat-blue,
+    .iradio_flat-blue {
+        background-image: url(../images/blue@2x.png);
+        -webkit-background-size: 176px 22px;
+        background-size: 176px 22px;
+    }
+}
+
+.hide {
+	display: none;
+}

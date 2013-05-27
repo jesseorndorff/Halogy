@@ -1,18 +1,9 @@
 <div class="row">
-	<div class="large-12 columns header">
-
-		<h1 class="headingleft">Blog Posts</h1>
-
-		<ul class="group-button">
-			<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>" class="green">Add Post</a></li>
-			<?php endif; ?>
-		</div>
-	</div>
-</div>
-
-<div class="row">
 	<div class="large-12 columns body">
+		<h1 class="headingleft">Blog Posts</h1>
+				<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
+			<a href="<?php echo site_url('/admin/blog/add_post'); ?>" class="green right">Add Post</a>
+		<?php endif; ?>
 
 		<?php if ($blog_posts): ?>
 
