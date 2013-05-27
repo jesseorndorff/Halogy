@@ -451,7 +451,7 @@ class Blog extends MX_Controller {
 		$output = $this->partials;	
 
 		// set tags
-		$query = ($query) ? $query : $this->input->post('query');
+		$query = ($query) ? $query : strip_tags($this->input->post('query', TRUE));
 
 		// get result from tags
 		$objectIDs = $this->tags->search('blog_posts', $query);
