@@ -52,7 +52,7 @@ $(function(){
 });
 </script>
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<h1 class="headingleft">Images</h1>
 
 		<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
@@ -62,11 +62,8 @@ $(function(){
 			</ul>
 
 		<?php endif; ?>
-	</div>
-</div>
+		<hr>
 
-<div class="row">
-	<div class="large-12 columns body">
 		<div class="large-4 columns">
 			<label for="folderID">
 				Folder

@@ -50,7 +50,7 @@ $(function(){
 </script>
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
 		<h1 class="headingleft">Files</h1>
 
@@ -61,13 +61,7 @@ $(function(){
 
 		<?php endif; ?>
 		</ul>
-	</div>
-</div>
-
-<div class="headingright">
-
-<div class="row">
-	<div class="large-12 columns body">
+		<hr>
 		<div class="large-4 columns">
 			<label for="folderID">
 				Folder
@@ -178,7 +172,6 @@ $(function(){
 			
 			<?php echo $this->pagination->create_links(); ?>
 
-			<p style="text-align: right;"><a href="#" class="button grey" id="totop">Back to top</a></p>
 
 		<?php else: ?>
 

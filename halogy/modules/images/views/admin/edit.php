@@ -5,7 +5,7 @@
 	$imageThumbPath = $thumb['src'];
 ?>	
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<h1>Edit Image: <?php if ($image): ?> <?php echo $image['imageRef']; ?> <? endif; ?></h1>
 
 		<?php if ($errors = validation_errors()): ?>
@@ -13,11 +13,8 @@
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
-	</div>
-</div>
 
-<div class="row">
-	<div class="large-12 columns body">
+		<hr>
 
 		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
 			<div class="large-6 columns">
