@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
 		<h1 class="headingleft">Web Forms</h1>
 
@@ -7,11 +7,6 @@
 			<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>" class="bluebutton">Tickets</a></li>
 			<li><a href="<?php echo site_url('/admin/webforms/add_form'); ?>" class="green">Add Form</a></li>
 		</ul>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns body">
 
 		<?php if ($web_forms): ?>
 

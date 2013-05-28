@@ -8,7 +8,7 @@ $(function(){
 </script>
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
 		<h1 class="headingleft">Tickets <?php if ($status) echo ' - ('.$status.')'?> </h1>
 
@@ -16,11 +16,7 @@ $(function(){
 			<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="bluebutton">Web Forms</a></li>
 		</ul>
 
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns body">
+		<hr> 
 		<div class="large-4 large-offset-8 columns">
 			<label for="filter">
 				Filter

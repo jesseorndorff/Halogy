@@ -17,19 +17,15 @@ $(function(){
 <form name="form" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 	
 		<h1 class="headingleft">Add Web Form</h1>
 	
 		<ul class="group-button">
 			<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="bluebutton">Back to Web Forms</a></li>
 			<li><input type="submit" value="Save Changes" class="green" /></li>
-	</div>
-</div>
+		</ul>
 
-<div class="row">
-	<div class="large-12 columns body">
-		
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">
 					<?php echo $errors; ?>
@@ -40,11 +36,19 @@ $(function(){
 					<?php echo $message; ?>
 				</div>
 			<?php endif; ?>
-			<div class="large-6 columns">
-				<label for="formName">Form Name:</label>
-				<?php echo @form_input('formName', set_value('formName', $data['formName']), 'id="formName" class="formelement"'); ?>
-				
-				<label for="fieldSet">Type of Form:</label>
+
+			<hr>
+
+		<div class="large-6 small-12 large-centered columns">
+
+			<div class="item">
+				<label for="formName">Form Name</label>
+				<p>Give your form a name.</p>
+				<?php echo @form_input('formName', set_value('formName', $data['formName']), 'id="formName" class="formelement" placeholder="Form name here.."'); ?>
+			</div>
+			<div class="item">
+				<label for="fieldSet">Type of Form</label>
+				<p>What type of form would you like to create? Select 'Custom' to populate with your own fields.</p>
 				<?php 
 					$values = array(
 						1 => 'Enquiry Form',
@@ -53,9 +57,10 @@ $(function(){
 					);
 					echo @form_dropdown('fieldSet',$values,set_value('fieldSet', $data['fieldSet']), 'id="fieldSet" class="formelement"'); 
 				?>
-				<span class="tip">Automatically populate your form with fields based on the type, or select 'Custom' to not populate with fields.</span>
-				
+			</div>
+			<div class="item">
 				<label for="fileTypes">Allow Files?</label>
+				<p>You can allow users to upload files such as images and documents if you wish. Form must have the correct enctype.</p>
 				<?php 
 					$values = array(
 						'' => 'Don\'t allow files',
@@ -66,13 +71,11 @@ $(function(){
 					);
 					echo @form_dropdown('fileTypes',$values,set_value('fileTypes', $data['fileTypes']), 'id="fileTypes" class="formelement"'); 
 				?>
-				<span class="tip">You can allow users to upload files such as images and documents if you wish. Form must have the correct enctype.</span>
 
-				<br />
-
-				<h2 class="underline">Outcomes <small>(optional)</small></h2>	
-
+			</div>
+			<div class="item">
 				<label for="account">Create User Account?</label>
+				<p>This is optional. This will create a user account for anyone who fills out your form.</p>
 				<?php 
 					$values = array(
 						0 => 'No',
@@ -80,10 +83,12 @@ $(function(){
 					);
 					echo @form_dropdown('account',$values,set_value('account', $data['account']), 'id="account" class="formelement"'); 
 				?>
-				<span class="tip">Optionally create user account.</span>
+			</div>
 
+			<div class="item">
 				<div class="showGroup">
 					<label for="groupID">Move to Group:</label>
+					<p>You can assign a user to a specific group. You can even give them admin rights.</p>
 					<?php 
 						$values = array(
 							0 => 'None'
@@ -97,22 +102,24 @@ $(function(){
 						}
 						echo @form_dropdown('groupID',$values,set_value('groupID', $data['groupID']), 'id="groupIDs" class="formelement"'); 
 					?>
-					<span class="tip">You can only move the user to a group without admin permissions.</span>
 				</div>	
 
-				<label for="outcomeEmails">Emails to CC:</label>
+			</div>
+			<div class="item">
+				<label for="outcomeEmails">Emails to CC</label>
+				<p>This will override the default email that the ticket is CCed to. Separate emails with a comma.</p>
 				<?php echo @form_input('outcomeEmails', set_value('outcomeEmails', $data['outcomeEmails']), 'id="outcomeEmails" class="formelement"'); ?>
-				<span class="tip">This will override the default email that the ticket is CCed to. Separate emails with a comma.</span>
-
-				<label for="outcomeRedirect">Redirect:</label>
+			</div>
+			<div class="item">
+				<label for="outcomeRedirect">Redirect</label>
+				<p>Here you can redirect the user to a URL on your website if you wish (e.g. form/success).</p>
 				<?php echo @form_input('outcomeRedirect', set_value('outcomeRedirect', $data['outcomeRedirect']), 'id="outcomeRedirect" class="formelement"'); ?>
-				<span class="tip">Here you can redirect the user to a URL on your website if you wish (e.g. form/success).</span>
-
-				<label for="outcomeMessage">Message:</label>
+			</div>
+			<div class="item">
+				<label for="outcomeMessage">Message</label>
+				<p>Here you can display a custom message after the user submits the form.</p>
 				<?php echo @form_textarea('outcomeMessage', set_value('outcomeMessage', $data['outcomeMessage']), 'id="outcomeMessage" class="formelement small"'); ?>
-				<span class="tip nolabel">Here you can display a custom message after the user submits the form.</span>
-
-
+			</div>
 		</div>
 	</div>
 </div>
