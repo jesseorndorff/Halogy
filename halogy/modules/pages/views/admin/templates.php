@@ -23,18 +23,14 @@ $(function(){
 </script>
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<h1 class="headingleft">Page Templates</h1>
 		<ul class="group-button">
 			<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="bluebutton">Includes</a></li>
 			<li><a href="#" class="bluebutton toggle-zip">Import Theme</a></li>
 			<li><a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="green">Add Template</a></li>
 		</ul>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns body">
+		<hr>
 		<div class="large-4 large-offset-8 columns">
 			<label for="filter">
 				Filter

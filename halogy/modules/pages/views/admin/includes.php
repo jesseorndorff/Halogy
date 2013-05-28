@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
 		<h1 class="headingleft">Includes</h1>
 
@@ -9,11 +9,7 @@
 			<li><a href="<?php echo site_url('/admin/pages/includes/js'); ?>" class="bluebutton">Javascript</a></li>	
 			<li><a href="<?php echo site_url('/admin/pages/add_include'); ?>" class="green">Add Include</a></li>
 		</ul>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns body">
+		<hr>
 		<?php if ($includes): ?>
 
 		<?php echo $this->pagination->create_links(); ?>

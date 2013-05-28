@@ -17,7 +17,7 @@ $(function(){
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
 		<h1 class="headingleft">Edit 
 			<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>
@@ -32,11 +32,9 @@ $(function(){
 			<li><a href="<?php echo site_url('/admin/pages/includes'); ?>/<?php echo $typeLink; ?>" class="bluebutton">Back to Includes</a></li>
 			<li><input type="submit" value="Save Changes" id="submit" class="green" /></li>
 		</ul>
-	</div>
-</div>
-	
-<div class="row">
-	<div class="large-12 columns body">	
+
+		<hr>
+
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>

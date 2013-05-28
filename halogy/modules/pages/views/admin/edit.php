@@ -127,8 +127,8 @@
 	
 	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default" id="editpage">
 
-	<div class="row">
-		<div class="large-12 columns header">
+<div class="row">
+	<div class="large-12 columns body">
 			<h1 class="headingleft">Edit Page</h1>
 		
 			<input type="hidden" name="target" id="target" value="" />
@@ -138,11 +138,10 @@
 				<li><input type="submit" name="view" value="View Page" class="bluebutton save" /></li>
 				<li><input type="submit" id="save" name="save" value="Save Changes" class="green save" /></li>
 				<li><input type="submit" name="publish" value="Publish Page" class="orange save" /></li>
-		</div>
-	</div>
-	
-	<div class="row">
-		<div class="large-12 columns body">
+			</ul>
+
+			<hr>
+
 				<?php if ($errors = validation_errors()): ?>
 					<div class="error clear">
 						<?php echo $errors; ?>

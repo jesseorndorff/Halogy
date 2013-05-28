@@ -30,18 +30,16 @@ $(function(){
 });
 </script>
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<h1 class="headingleft">Pages</h1>
 		<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
 			<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green">Add Page</a>
 		<?php endif; ?>
-	</div>
-</div>
+		<hr>
 
 <?php if ($parents): ?>
 
-<div class="row">
-	<div class="large-12 columns body">
+
 		<div class="row">
 			<div class="large-8 columns">
 				<p></p>

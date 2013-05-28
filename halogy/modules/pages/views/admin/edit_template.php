@@ -18,7 +18,7 @@ $(function(){
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" id="templateform" class="default">
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
 		<h1 class="headingleft">Edit Template</h1>
 
@@ -27,12 +27,7 @@ $(function(){
 			<li><input type="button" id="default" value="Reset to Default" class="bluebutton" /></li>
 			<li><input type="submit" id="submit" value="Save Changes" class="green" /></li>
 		</ul>
-
-	</div>
-</div>
-	
-<div class="row">
-	<div class="large-12 columns body">		
+		<hr>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>

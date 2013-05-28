@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<h1 class="headingleft">Javascript Files</h1>
 
 		<ul class="group-button">
@@ -8,12 +8,7 @@
 			<li><a href="<?php echo site_url('/admin/pages/includes/css'); ?>" class="bluebutton">CSS</a></li>
 			<li><a href="<?php echo site_url('/admin/pages/add_include/js'); ?>" class="green">Add Javascript</a></li>
 		</ul>
-	</div>
-</div>
-
-
-<div class="row">
-	<div class="large-12 columns body">
+		<hr>
 
 		<?php if ($includes): ?>
 
