@@ -563,6 +563,29 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 	$border-radius: $global-radius;
 }
 
+.ui-datepicker {
+	@include card(#FFF);
+	@include box-shadow (0px 0px 10px 5px darken(#FFF, 15%));
+}
+
+.ui-datepicker-prev {
+	@include button;
+	@include button-size($button-sml);
+	@include radius;
+}
+
+.ui-datepicker-next {
+	@include button;
+	@include button-size($button-sml);
+	@include radius;
+	float: right;
+}
+
+.ui-datepicker-title {
+	margin: 5px 0;
+	text-align: center;
+}
+
 // Footer
 
 footer {
