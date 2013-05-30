@@ -1,4 +1,4 @@
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 <div class="row">
 	<div class="large-12 columns body">
 		<h1 class="headingleft">Edit File</h1>

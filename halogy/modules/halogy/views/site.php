@@ -32,17 +32,14 @@ $(function(){
 </script>
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 		<h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?></h1>
+		<ul class="group-button">
+			<li><input type="submit" value="Save Changes" class="green" /></li>
+		</ul>
+		<hr>
 
-		<input type="submit" value="Save Changes" class="button" />
-	</div>
-</div>
-
-
-<div class="row">
-	<div class="large-12 columns body">
 		<?php if ($errors = validation_errors()): ?>
 			<div data-alert class="error">
 		<?php echo $errors; ?>
@@ -464,8 +461,6 @@ $(function(){
 			</section>
 			<?php endif; ?>
 		</div> <!-- / tabs -->
-
-		<a href="#" class="button btt">Back to top</a>
 
 	</div> <!-- / body -->
 </div> <!-- / row -->

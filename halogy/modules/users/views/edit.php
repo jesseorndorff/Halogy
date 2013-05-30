@@ -40,21 +40,17 @@ $(function(){
 });
 </script>
 
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
-
-<div class="row">
-	<div class="large-12 columns header">
-
-		<h1 class="headingleft">Edit User</h1>
-		<ul class="group-button">
-			<li><input type="submit" value="Save Changes" class="green"></li>
-			<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Back to Users</a></li>
-		</ul>
-	</div>
-</div>
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 
 <div class="row">
 	<div class="large-12 columns body">
+
+		<h1 class="headingleft">Edit User</h1>
+		<ul class="group-button">
+			<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Back to Users</a></li>
+			<li><input type="submit" value="Save Changes" class="green"></li>
+		</ul>
+		<hr>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>

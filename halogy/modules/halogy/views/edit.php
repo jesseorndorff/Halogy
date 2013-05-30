@@ -49,21 +49,18 @@ $(function(){
 });
 </script>
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
-		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
+		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 
 		<h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?> </h1>
 		<ul class="group-button">
-			<li><input type="submit" value="Save Changes" class="green" /></li>
 			<li><a href="<?php echo site_url('/halogy/sites'); ?>" class="bluebutton">Back to Sites</a></li>
+			<li><input type="submit" value="Save Changes" class="green" /></li>
 		</ul>
-		
-	</div>
-</div>
 
-<div class="row">
-	<div class="large-12 columns body">
+		<hr>
+
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">
 				<?php echo $errors; ?>

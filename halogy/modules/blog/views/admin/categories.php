@@ -39,7 +39,7 @@ $(function(){
 
 		<hr>
 		<div class="hidden item">
-			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
+			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 			
 				<label for="categoryName">Category Name</label>
 				<p>Give your blog category a name</p>
@@ -68,7 +68,6 @@ $(function(){
 						<?php echo @form_input($category['catID'].'[catName]', $category['catName'], 'class="formelement hide" title="Category Name"'); ?><input type="submit" class="button green small hide" value="Save" />
 					</div>
 
-					<div class="clear"></div>
 				</li>
 			<?php endforeach; ?>
 			</ol>

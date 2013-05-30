@@ -1,7 +1,7 @@
-<form action="<?php echo site_url($this->uri->uri_string()); ?>" method="post" class="default">
+<form action="<?php echo site_url($this->uri->uri_string()); ?>" method="post" class="custom">
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 
 		<h1 class="headingleft">View Ticket</h1>
 		
@@ -9,11 +9,9 @@
 			<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>">Back to Tickets</a></li>
 			<li><input type="submit" value="Update Ticket" class="green" /></li>
 		</ul>
-	</div>
-</div>
 
-<div class="row">
-	<div class="large-12 columns body">
+		<hr>
+
 		<div class="message">
 			<p>
 				<strong>Subject:</strong> [#<?php echo $data['ticketID']; ?>]:</strong> <?php echo $data['subject']; ?><br />

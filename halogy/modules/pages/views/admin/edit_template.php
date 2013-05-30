@@ -15,7 +15,7 @@ $(function(){
 	});
 });
 </script>
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" id="templateform" class="default">
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" id="templateform" class="custom">
 
 <div class="row">
 	<div class="large-12 columns body">

@@ -31,20 +31,16 @@ $(function(){
 });
 </script>
 
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
-
-<div class="row">
-	<div class="large-12 columns header">
-		<h1 class="headingleft">Add User Group</h1>
-		<ul class="group-button">
-			<li><input type="submit" value="Save Changes" class="green"></li>
-			<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="thebutton">Back to User Groups</a></li>
-		</ul>
-	</div>
-</div>
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 
 <div class="row">
 	<div class="large-12 columns body">
+		<h1 class="headingleft">Add User Group</h1>
+		<ul class="group-button">
+			<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="bluebutton">Back to User Groups</a></li>
+			<li><input type="submit" value="Save Changes" class="green"></li>
+		</ul>
+		<hr>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>

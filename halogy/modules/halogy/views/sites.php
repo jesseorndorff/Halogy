@@ -1,14 +1,10 @@
-
-<div class="row">
-	<div class="large-12 columns header">
-		<h1 class="headingleft">Your Sites</h1>
-
-			<a href="<?php echo site_url('/halogy/add_site'); ?>" class="button green">Add Site</a>
-	</div>
-</div>
-
 <div class="row">
 	<div class="large-12 columns body">
+		<h1 class="headingleft">Your Sites</h1>
+		<ul class="group-button">
+			<li><a href="<?php echo site_url('/halogy/add_site'); ?>" class="green">Add Site</a></li>
+		</ul>
+		<hr>
 		<div class="large-4 large-offset-8 columns">
 			<div class="row collapse">
 				<form method="post" action="<?php echo site_url('/halogy/sites'); ?>" class="default" id="search">

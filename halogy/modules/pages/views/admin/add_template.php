@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/templates.js" /></script>
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 
  <div class="row">
 	<div class="large-12 columns body">

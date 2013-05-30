@@ -1,12 +1,10 @@
 <div class="row">
-	<div class="large-12 columns header">
-		<h1>Import Users</h1>
-		<a href="/admin/users" class="button">Back to Users</a>
-	</div>
-</div>
-
-<div class="row">
 	<div class="large-12 columns body">
+		<h1 class="headingleft">Import Users</h1>
+		<ul class="group-button">
+			<li><a href="/admin/users" class="button">Back to Users</a></li>
+		</ul>
+		<hr>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">

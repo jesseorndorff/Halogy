@@ -86,7 +86,7 @@ $(function(){
 		</div>
 		<div class="large-4 large-offset-4 columns">
 			<div class="row collapse">
-				<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="default" id="search">
+				<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="custom" id="search">
 					<div class="small-9 columns">
 						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Images..." />
 					</div>
@@ -185,7 +185,7 @@ $(function(){
 </div>
 
 		<div id="upload-image" class="hidden clear reveal-modal">
-			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
+			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 			
 				<h2>Upload an Image</h2>
 				<p>Upload any image file you want to use on your site. Want to add some folders before you start? <a href="<?php echo site_url('/admin/images/folders'); ?>">Add them now.</a></p>
@@ -218,7 +218,7 @@ $(function(){
 		</div>
 
 		<div id="upload-zip" class="hidden clear reveal-modal">
-			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
+			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 				<h2>Upload a Zip File</h2>
 				<p>If you have a lot of images to upload, add them all to a zip folder and upload them here!</p>
 			

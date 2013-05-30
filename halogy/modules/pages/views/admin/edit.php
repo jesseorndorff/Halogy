@@ -125,7 +125,7 @@
 	});
 	</script>
 	
-	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default" id="editpage">
+	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom" id="editpage">
 
 <div class="row">
 	<div class="large-12 columns body">
@@ -157,116 +157,126 @@
 				<section>
 					<p class="title" data-section-title><a href="#">Details</a></p>
 					<div class="content" data-section-content>
-					<h2>Basic Information</h2>
-					<p>Set the basic details of the page including: name, parent, and template.</p>
-					<hr>
-
 					<div class="row">
-						<div class="large-6 columns">
-							<label for="pageName">Page Name:</label>
-							<?php echo @form_input('pageName',$data['pageName'], 'id="pageName" class="formelement"'); ?>
-							<span class="tip">This is the name of the page, for your information only.</span>
-							<label for="parentID">Parent:</label>
-							<?php
-								$options = array();
-								$options[0] = 'Top Level';
-								if ($parents):
-									foreach ($parents as $parent):
-										if ($parent['pageID'] != @$data['pageID']):
-											$options[$parent['pageID']] = $parent['pageName'];
-											if (isset($children[$parent['pageID']]) && $children[$parent['pageID']]):
-												foreach ($children[$parent['pageID']] as $child):
-													$options[$child['pageID']] = '-- '.$child['pageName'];
-												endforeach;
+						<div class="large-6 small-12 large-centered columns">
+							<h2>Basic Information</h2>
+							<p>Set the basic details of the page including: name, parent, and template.</p>
+							<div class="item">
+								<label for="pageName">Page Name</label>
+								<p>This is the name of the page, for your information only.</p>
+								<?php echo @form_input('pageName',$data['pageName'], 'id="pageName" class="formelement"'); ?>
+							</div>
+							<div class="item">
+								<label for="parentID">Parent</label>
+								<p>You can optionally nest this page under other pages.</p>
+								<?php
+									$options = array();
+									$options[0] = 'Top Level';
+									if ($parents):
+										foreach ($parents as $parent):
+											if ($parent['pageID'] != @$data['pageID']):
+												$options[$parent['pageID']] = $parent['pageName'];
+												if (isset($children[$parent['pageID']]) && $children[$parent['pageID']]):
+													foreach ($children[$parent['pageID']] as $child):
+														$options[$child['pageID']] = '-- '.$child['pageName'];
+													endforeach;
+												endif;
 											endif;
-										endif;
-									endforeach;
-								endif;
-								echo @form_dropdown('parentID',$options,$data['parentID'],'id="parentID" class="formelement"');
-							?>
-							<span class="tip">You can optionally nest this page under other pages.</span>
-							<br class="clear" />
-						
-							<label for="uri">Path:</label>
-							<?php echo @form_input('uri',$data['uri'], 'id="uri" class="formelement"'); ?>
-							<span class="tip">Enter the web path this page can be found at, e.g. `about-us` (no spaces)</span>
-							<br class="clear" />
+										endforeach;
+									endif;
+									echo @form_dropdown('parentID',$options,$data['parentID'],'id="parentID" class="formelement"');
+								?>
+							</div>
+							<div class="item">
+								<label for="uri">Path</label>
+								<p>Enter the web path this page can be found at, e.g. `about-us` (no spaces)</p>
+								<?php echo @form_input('uri',$data['uri'], 'id="uri" class="formelement"'); ?>
+							</div>
 							
-							<label for="templateID">Template:</label>
-							<?php
-							if ($templates):
-								$options = array();				
-								foreach ($templates as $template):
-									$options[$template['templateID']] = $template['templateName'];
-								endforeach;
-								
-								echo @form_dropdown('templateID',$options,$data['templateID'],'id="templateID" class="formelement"');
-							endif;
-							?>
-							<span class="tip">Templates control the layout of your page.</span>
-							<br class="clear" />
-			
-							<label for="redirect">Redirect Path:</label>
-							<?php echo @form_input('redirect',set_value('redirect', $data['redirect']), 'id="redirect" class="formelement"'); ?>
-							<span class="tip">You can optionally use this page as a redirect to another page.</span>
-							<br class="clear" /><br />
+							<div class="item">
+								<label for="templateID">Template</label>
+								<p>Templates control the layout of your page.</p>
+								<?php
+								if ($templates):
+									$options = array();				
+									foreach ($templates as $template):
+										$options[$template['templateID']] = $template['templateName'];
+									endforeach;
+									
+									echo @form_dropdown('templateID',$options,$data['templateID'],'id="templateID" class="formelement"');
+								endif;
+								?>
+							</div>
+
+							<div class="item">
+								<label for="redirect">Redirect Path</label>
+								<p>You can optionally use this page as a redirect to another page.</p>
+								<?php echo @form_input('redirect',set_value('redirect', $data['redirect']), 'id="redirect" class="formelement"'); ?>
+							</div>
 					
 							<h2 class="underline">Meta Data</h2>
-			
-							<label for="title">Page Title:</label>
-							<?php echo @form_input('title',set_value('title', $data['title']), 'id="title" class="formelement"'); ?>
-							<span class="tip">This will display in the title bar of browsers.</span>
-							<br class="clear" />
-							
-							<label for="description">Meta Description:</label>
-							<?php echo @form_input('description',set_value('description', $data['description']), 'id="description" class="formelement"'); ?>
-							<span class="tip">Description of page for search engines.</span>
-							<br class="clear" />
+
+							<div class="item">
+								<label for="title">Page Title</label>
+								<p>This will display in the title bar of browsers.</p>
+								<?php echo @form_input('title',set_value('title', $data['title']), 'id="title" class="formelement"'); ?>
+							</div>
+
+							<div class="item">
+								<label for="description">Meta Description</label>
+								<p>Description of page for search engines.</p>
+								<?php echo @form_input('description',set_value('description', $data['description']), 'id="description" class="formelement"'); ?>
+							</div>
 						
-							<label for="keywords">Meta Keywords:</label>
-							<?php echo @form_input('keywords',set_value('keywords', $data['keywords']), 'id="keywords" class="formelement"'); ?>
-							<span class="tip">Meta tags for search engines.</span>
-							<br class="clear" /><br />
+							<div class"item">
+								<label for="keywords">Meta Keywords</label>
+								<p>Meta tags for search engines.</p>
+								<?php echo @form_input('keywords',set_value('keywords', $data['keywords']), 'id="keywords" class="formelement"'); ?>
+							</div>
 
 							<h2 class="underline">Visibility and Access</h2>
 			
-							<label for="navigation">Show in Navigation:</label>
-							<?php 
-								$values = array(
-									1 => 'Yes',
-									0 => 'No (hidden page)',
-								);
-								echo @form_dropdown('navigation',$values,$data['navigation'], 'id="navigation" class="formelement"'); 
-							?>
-							<span class="tip">By default your page will appear on the navigation menu.</span>
-							<br class="clear" />				
+							<div class"item">
+								<label for="navigation">Show in Navigation</label>
+								<p>By default your page will appear on the navigation menu.</p>
+								<?php 
+									$values = array(
+										1 => 'Yes',
+										0 => 'No (hidden page)',
+									);
+									echo @form_dropdown('navigation',$values,$data['navigation'], 'id="navigation" class="formelement"'); 
+								?>
+							</div>	
 						
-							<label for="active">Publish Status:</label>
-							<?php 
-								$values = array(
-									0 => 'Draft (visible only to administrators)',
-									1 => 'Publish',
-								);
-								echo @form_dropdown('active',$values,$data['active'], 'id="active" class="formelement"'); 
-							?>
-							<span class="tip">Remember to set this to 'Publish' if you want to show the page.</span>
-							<br class="clear" />
-			
-							<label for="groupID">Edit Group:</label>
-							<?php 
-								$values = array(
-									0 => 'Administrators only',
-								);
-								if ($groups)
-								{
-									foreach($groups as $group)
+							<div class"item">
+								<label for="active">Publish Status</label>
+								<p>Remember to set this to 'Publish' if you want to show the page.</p>
+								<?php 
+									$values = array(
+										0 => 'Draft (visible only to administrators)',
+										1 => 'Publish',
+									);
+									echo @form_dropdown('active',$values,$data['active'], 'id="active" class="formelement"'); 
+								?>
+							</div>
+							
+							<div class="item">
+								<label for="groupID">Edit Group</label>
+								<p>Who is able to edit this page?</p>
+								<?php 
+									$values = array(
+										0 => 'Administrators only',
+									);
+									if ($groups)
 									{
-										$values[$group['groupID']] = $group['groupName'];
-									}
-								}					
-								echo @form_dropdown('groupID',$values,$data['groupID'], 'id="groupID" class="formelement"'); 
-							?>
-							<span class="tip">Who is able to edit this page?</span>
+										foreach($groups as $group)
+										{
+											$values[$group['groupID']] = $group['groupName'];
+										}
+									}					
+									echo @form_dropdown('groupID',$values,$data['groupID'], 'id="groupID" class="formelement"'); 
+								?>
+							</div>
 						</div>
 				</section>
 				<section>

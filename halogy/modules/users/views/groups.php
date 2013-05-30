@@ -1,23 +1,20 @@
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<h1 class="headingleft">User Groups</h1>
 		<ul class="group-button">
-			<?php if (in_array('users_groups', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users/add_group'); ?>" class="green">Add Group</a></li>
-			<?php endif; ?>
 			<?php if (in_array('users', $this->permission->permissions)): ?>
 				<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Users</a></li>
 			<?php endif; ?>
+			<?php if (in_array('users_groups', $this->permission->permissions)): ?>
+				<li><a href="<?php echo site_url('/admin/users/add_group'); ?>" class="green">Add Group</a></li>
+			<?php endif; ?>
 		</ul>
-	</div>
-</div>
 
+		<hr>
 <?php if ($permission_groups): ?>
 
 <?php echo $this->pagination->create_links(); ?>
 
-<div class="row">
-	<div class="large-12 columns body">
 		<table class="default clear">
 			<thead>
 				<tr>

@@ -260,6 +260,10 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
   .close {@include alert-close;}
 }
 
+.error .close {
+	text-decoration: none;
+}
+
 .error p {
 	margin: 0;
 }
@@ -566,6 +570,7 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 .ui-datepicker {
 	@include card(#FFF);
 	@include box-shadow (0px 0px 10px 5px darken(#FFF, 15%));
+	z-index: 3 !important;
 }
 
 .ui-datepicker-prev {

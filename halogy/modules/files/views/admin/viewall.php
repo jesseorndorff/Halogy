@@ -84,7 +84,7 @@ $(function(){
 		</div>
 		<div class="large-4 large-offset-4 columns">
 			<div class="row collapse">
-				<form method="post" action="<?php echo site_url('/admin/files/viewall'); ?>" class="default" id="search">
+				<form method="post" action="<?php echo site_url('/admin/files/viewall'); ?>" class="custom" id="search">
 					<div class="small-9 columns">
 						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Files..." />
 					</div>
@@ -183,7 +183,7 @@ $(function(){
 </div>
 
 <div id="upload-file" class="hidden clear reveal-modal">
-	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
+	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 		<h2>Upload a File</h2>
 		<p>You can upload any file you might need to reference on your site.</p>
 		<label for="file">File:</label>

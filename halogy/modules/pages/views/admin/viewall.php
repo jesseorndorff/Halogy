@@ -3,7 +3,6 @@ function setOrder(){
 	$.post('<?php echo site_url('/admin/pages/order/page'); ?>',$(this).sortable('serialize'),function(data){ });
 };
 function initOrder(el){
-	$('ol.order').height($('ol.order').height());
 	$(el).sortable({ 
 		axis: 'y',
 	    revert: false, 
@@ -32,9 +31,12 @@ $(function(){
 <div class="row">
 	<div class="large-12 columns body">
 		<h1 class="headingleft">Pages</h1>
+		<ul class="group-button">
 		<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
-			<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green">Add Page</a>
+			<li><a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green">Add Page</a></li>
 		<?php endif; ?>
+		</ul>
+
 		<hr>
 
 <?php if ($parents): ?>
@@ -44,7 +46,7 @@ $(function(){
 			<div class="large-8 columns">
 				<p></p>
 			</div>
-			<div class="large-4 columns">
+			<div class="large-4 columns custom dropdown">
 				<label for="collapse">Collapse</label> 
 
 				<select id="collapse">
@@ -92,12 +94,12 @@ $(function(){
 				<em>by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></em></p>
 			</div>
 			<div class="large-3 columns buttons">
-				<?php echo anchor($page['uri'], '<img src="'.$this->config->item('staticPath').'/images/btn_view.png" alt="View" title="View" />'); ?>
+				<?php echo anchor($page['uri'], 'View', array('class' => 'button orange small')); ?>
 				<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-					<?php echo anchor('/admin/pages/edit/'.$page['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" title="Edit" />'); ?>
+					<?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'button small')); ?>
 				<?php endif; ?>
 				<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-					<?php echo anchor('/admin/pages/delete/'.$page['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_delete.png" alt="Delete" title="Delete" />', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
+					<?php echo anchor('/admin/pages/delete/'.$page['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
 				<?php endif; ?>
 			</div>
 			<div class="clear"></div>
@@ -138,15 +140,14 @@ $(function(){
 							 by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></p>
 						</div>
 						<div class="large-3 columns buttons">
-							<?php echo anchor($child['uri'], '<img src="'.$this->config->item('staticPath').'/images/btn_view.png" alt="View" title="View" />'); ?>
+							<?php echo anchor($child['uri'], 'View', array('class' => 'button orange small')); ?>
 							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-								<?php echo anchor('/admin/pages/edit/'.$child['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" title="Edit" />'); ?>
+								<?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'button small')); ?>
 							<?php endif; ?>
 							<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-								<?php echo anchor('/admin/pages/delete/'.$child['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_delete.png" alt="Delete" title="Delete" />', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
+								<?php echo anchor('/admin/pages/delete/'.$child['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
 							<?php endif; ?>
 						</div>
-						<div class="clear"></div>
 						
 						<?php if (isset($subchildren[$child['pageID']]) && $subchildren[$child['pageID']]): ?>
 						
@@ -177,19 +178,19 @@ $(function(){
 										<?php endif; ?>
 										<br />
 										<?php if ($subchild['active'] && (!$subchild['newBlocks'] && !$subchild['newVersions'])): ?>
-											<small>Published: <strong><?php echo dateFmt($subchild['datePublished'], '', '', TRUE); ?></strong> 
+											Published: <strong><?php echo dateFmt($subchild['datePublished'], '', '', TRUE); ?></strong> 
 										<?php else: ?>
-											<small>Modified: <strong><?php echo dateFmt($subchild['dateModified'], '', '', TRUE); ?></strong> 
+											Modified: <strong><?php echo dateFmt($subchild['dateModified'], '', '', TRUE); ?></strong> 
 										<?php endif; ?>
-										<em>by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></em></small>
+										<em>by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></em>
 									</div>
 									<div class="large-3 columns buttons page-order">
-										<?php echo anchor($subchild['uri'], '<img src="'.$this->config->item('staticPath').'/images/btn_view.png" alt="View" title="View" />'); ?>
+										<?php echo anchor($subchild['uri'], 'View', array('class' => 'button orange small')); ?>
 										<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-											<?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" title="Edit" />'); ?>
+											<?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'button small')); ?>
 										<?php endif; ?>
 										<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-											<?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], '<img src="'.$this->config->item('staticPath').'/images/btn_delete.png" alt="Delete" title="Delete" />', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
+											<?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')	); ?>
 										<?php endif; ?>
 									</div>
 									<div class="clear"></div>

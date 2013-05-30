@@ -18,75 +18,79 @@ $(function(){
 });
 </script>
 
-<h1 class="headingleft">Upsells</h1>
+<div class="row">
+	<div class="large-12 columns body">
 
-<div class="headingright">	
-	<a href="<?php echo site_url('/admin/shop/add_upsell'); ?>" class="showform button blue">Add Upsell</a>
-</div>
+		<h1 class="headingleft">Upsells</h1>
 
-<div class="clear"></div>
-<div class="hidden"></div>
+		<ul class="group-button">	
+			<a href="<?php echo site_url('/admin/shop/add_upsell'); ?>" class="showform button green">Add Upsell</a>
+		</ul>
 
-<?php if ($shop_upsells): ?>
+		<hr>
 
-<hr />
+		<div class="hidden"></div>
 
-<form method="post" action="<?php echo site_url('/admin/shop/edit_upsell'); ?>">
+		<?php if ($shop_upsells): ?>
 
-	<ol class="order">
-	<?php $x=0; foreach ($shop_upsells as $upsell): $x++; ?>
-		<li id="shop_upsells-<?php echo $upsell['upsellID']; ?>">
-			<div class="col1">			
-				<span>
-					<?php echo $x; ?>.
-					If
-					<?php if ($upsell['type'] == 'V'): ?>
-						the <strong>value of the cart</strong>
-						is greater than <strong><?php echo currency_symbol(); ?><?php echo number_format($upsell['value'], 2); ?></strong>:
-					<?php elseif ($upsell['type'] == 'N'): ?>
-						the <strong>number of products in the cart</strong>
-						is greater than <strong><?php echo $upsell['numProducts']; ?></strong>:
-					<?php else: ?>
-						<?php $products = explode(',', $upsell['productIDs']); ?>
-						<?php foreach($products as $product): ?>
-							<?php
-								$productString = '';
-								if ($row = $this->shop->get_product($product)) $productString .= $row['productName'].', ';
-							?>
-							<?php if ($productString): ?>
-								<strong><?php echo substr($productString, 0, -2); ?></strong>
+		<form method="post" action="<?php echo site_url('/admin/shop/edit_upsell'); ?>">
+
+			<ol class="order">
+			<?php $x=0; foreach ($shop_upsells as $upsell): $x++; ?>
+				<li id="shop_upsells-<?php echo $upsell['upsellID']; ?>">
+					<div class="small-buttons large-2 columns">
+						<a href="<?php echo site_url('/admin/shop/edit_upsell/'.$upsell['upsellID']); ?>" class="showform button small">Edit</a>
+						<a href="<?php echo site_url('/admin/shop/delete_upsell/'.$upsell['upsellID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="button alert small">Delete</a>
+					</div>
+					<div class="col1 large-5 columns">			
+						<span>
+							<?php echo $x; ?>.
+							If
+							<?php if ($upsell['type'] == 'V'): ?>
+								the <strong>value of the cart</strong>
+								is greater than <strong><?php echo currency_symbol(); ?><?php echo number_format($upsell['value'], 2); ?></strong>:
+							<?php elseif ($upsell['type'] == 'N'): ?>
+								the <strong>number of products in the cart</strong>
+								is greater than <strong><?php echo $upsell['numProducts']; ?></strong>:
+							<?php else: ?>
+								<?php $products = explode(',', $upsell['productIDs']); ?>
+								<?php foreach($products as $product): ?>
+									<?php
+										$productString = '';
+										if ($row = $this->shop->get_product($product)) $productString .= $row['productName'].', ';
+									?>
+									<?php if ($productString): ?>
+										<strong><?php echo substr($productString, 0, -2); ?></strong>
+									<?php else: ?>
+										<strong>N/A</strong>
+									<?php endif; ?>
+								<?php endforeach; ?>
+								is in the cart:
+							<?php endif; ?>
+						</span>
+					</div>
+					<div class="col2 large-5 columns">
+						Upsell
+							<?php if ($upsellProduct = $this->shop->get_product($upsell['productID'])): ?>
+								<strong><?php echo $upsellProduct['productName']; ?></strong>
 							<?php else: ?>
 								<strong>N/A</strong>
 							<?php endif; ?>
-						<?php endforeach; ?>
-						is in the cart:
-					<?php endif; ?>
-				</span>
-			</div>
-			<div class="col2">
-				Upsell
-					<?php if ($upsellProduct = $this->shop->get_product($upsell['productID'])): ?>
-						<strong><?php echo $upsellProduct['productName']; ?></strong>
-					<?php else: ?>
-						<strong>N/A</strong>
-					<?php endif; ?>
-				<?php if ($upsell['remove']): ?>
-					and <strong>remove original products</strong>
-				<?php endif; ?>
-			</div>
-			<div class="buttons">
-				<a href="<?php echo site_url('/admin/shop/edit_upsell/'.$upsell['upsellID']); ?>" class="showform"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_edit.png" alt="Edit" /></a>
-				<a href="<?php echo site_url('/admin/shop/delete_upsell/'.$upsell['upsellID']); ?>" onclick="return confirm('Are you sure you want to delete this?')"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_delete.png" alt="Delete" /></a>
-			</div>
-			<div class="clear"></div>
-		</li>
-	<?php endforeach; ?>
-	</ol>
+						<?php if ($upsell['remove']): ?>
+							and <strong>remove original products</strong>
+						<?php endif; ?>
+					</div>
 
-</form>
+				</li>
+			<?php endforeach; ?>
+			</ol>
 
-<?php else: ?>
+		</form>
 
-<p>You haven't set up any Upsells yet.</p>
+		<?php else: ?>
 
-<?php endif; ?>
+		<p>You haven't set up any Upsells yet.</p>
+
+		<?php endif; ?>
+	</div>
+</div>

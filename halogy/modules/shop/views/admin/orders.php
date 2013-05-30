@@ -25,80 +25,92 @@ $(function(){
 });
 </script>
 
-<h1 class="headingleft">Orders <?php if ($trackingStatus) echo '('.$statusArray[$trackingStatus].')'?></h1>
+<div class="row">
+	<div class="large-12 columns body">
 
-<div class="headingright">
+		<h1 class="headingleft">Orders <?php if ($trackingStatus) echo '('.$statusArray[$trackingStatus].')'?></h1>
 
-	<form method="post" action="<?php echo site_url('/admin/shop/orders'); ?>" class="default" id="search">
-		<input type="text" name="searchbox" id="searchbox" class="formelement inactive" title="Search Products..." />
-		<input type="image" src="<?php echo $this->config->item('staticPath'); ?>/images/btn_search.gif" id="searchbutton" />
-	</form>
+		<ul class="group-button">
+			<li><a href="<?php echo site_url('/admin/shop/export_orders'); ?>" class="bluebutton">Export Orders as CSV</a></li>
+		</ul>
 
-	<label for="filter">
-		Filter
-	</label> 
+		<hr>
 
-	<?php
-		foreach ($statusArray as $key => $status):
-			$options[$key] = $status;
-		endforeach;
-		
-		echo form_dropdown('filter',$options,$trackingStatus,'id="filter"');
-	?>
-	
-	<a href="<?php echo site_url('/admin/shop/export_orders'); ?>" class="button blue">Export Orders as CSV</a>
+		<div class="large-4 push-8 columns">
 
-</div>
+			<!-- <form method="post" action="<?php echo site_url('/admin/shop/orders'); ?>" class="default" id="search">
+				<input type="text" name="searchbox" id="searchbox" class="formelement inactive" title="Search Products..." />
+				<input type="image" src="<?php echo $this->config->item('staticPath'); ?>/images/btn_search.gif" id="searchbutton" />
+			</form> -->
 
-<div class="clear"></div>
+			<label for="filter">
+				Filter
+			</label> 
 
-<?php if ($orders): ?>
-
-<?php echo $this->pagination->create_links(); ?>
-
-<table class="default">
-	<tr>
-		<th>Order ID</th>
-		<th>Date Ordered</th>
-		<th>Full Name</th>
-		<th>Number of Items</th>
-		<th class="narrow">Total (<?php echo currency_symbol(); ?>)</th>
-		<th>Status</th>
-		<th class="tiny">&nbsp;</th>
-		<th class="tiny">&nbsp;</th>
-	</tr>
-<?php foreach ($orders as $order): 
-	if (!$order['viewed']) $class = 'style="font-weight: bold;"'; else $class='';
-?>
-	<tr <?php echo $class ?>>
-		<td><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], $order['transactionCode']); ?></td>
-		<td><?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?></td>
-		<td><?php echo $order['firstName']; ?> <?php echo $order['lastName']; ?></td>
-		<td><?php echo $order['numItems']; ?></td>
-		<td><?php echo currency_symbol().number_format($order['amount'],2); ?></td>
-		<td>
 			<?php
-				if ($order['trackingStatus'] == 'U' && $order['paid']) echo 'Unprocessed';
-				elseif ($order['trackingStatus'] == 'L') echo 'Allocated';
-				elseif ($order['trackingStatus'] == 'A') echo 'Awaiting Goods';
-				elseif ($order['trackingStatus'] == 'O') echo 'Out of Stock';
-				elseif ($order['trackingStatus'] == 'D') echo 'Dispatched';
-				else echo 'Unpaid Checkout';
+				foreach ($statusArray as $key => $status):
+					$options[$key] = $status;
+				endforeach;
+				
+				echo form_dropdown('filter',$options,$trackingStatus,'id="filter"');
 			?>
-		</td>
-		<td><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], 'View'); ?></td>
-		<td><?php echo anchor('/admin/shop/delete_order/'.$order['transactionID'], 'Delete', 'onclick="return confirm(\'Are you absolutely sure you want to delete this order? There is no undo.\')"'); ?></td>
-	</tr>
-<?php endforeach; ?>
-</table>
 
-<?php echo $this->pagination->create_links(); ?>
+		</div>
 
-<p style="text-align: right;"><a href="#" class="button grey" id="totop">Back to top</a></p>
+		<hr>
 
-<?php else: ?>
+		<?php if ($orders): ?>
 
-<p class="clear">There were no orders found.</p>
+		<?php echo $this->pagination->create_links(); ?>
 
-<?php endif; ?>
+		<table class="default">
+			<thead>
+				<tr>
+					<th>Order ID</th>
+					<th>Date Ordered</th>
+					<th>Full Name</th>
+					<th>Number of Items</th>
+					<th class="narrow">Total (<?php echo currency_symbol(); ?>)</th>
+					<th>Status</th>
+					<th class="tiny">&nbsp;</th>
+					<th class="tiny">&nbsp;</th>
+				</tr>
+			</thead>
+		<?php foreach ($orders as $order): 
+			if (!$order['viewed']) $class = 'style="font-weight: bold;"'; else $class='';
+		?>
+			<tbody>
+				<tr <?php echo $class ?>>
+					<td><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], $order['transactionCode']); ?></td>
+					<td><?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?></td>
+					<td><?php echo $order['firstName']; ?> <?php echo $order['lastName']; ?></td>
+					<td><?php echo $order['numItems']; ?></td>
+					<td><?php echo currency_symbol().number_format($order['amount'],2); ?></td>
+					<td>
+						<?php
+							if ($order['trackingStatus'] == 'U' && $order['paid']) echo 'Unprocessed';
+							elseif ($order['trackingStatus'] == 'L') echo 'Allocated';
+							elseif ($order['trackingStatus'] == 'A') echo 'Awaiting Goods';
+							elseif ($order['trackingStatus'] == 'O') echo 'Out of Stock';
+							elseif ($order['trackingStatus'] == 'D') echo 'Dispatched';
+							else echo 'Unpaid Checkout';
+						?>
+					</td>
+					<td><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], 'View'); ?></td>
+					<td><?php echo anchor('/admin/shop/delete_order/'.$order['transactionID'], 'Delete', 'onclick="return confirm(\'Are you absolutely sure you want to delete this order? There is no undo.\')"'); ?></td>
+				</tr>
+			</tbody>
+		<?php endforeach; ?>
+		</table>
+
+		<?php echo $this->pagination->create_links(); ?>
+
+		<?php else: ?>
+
+		<p class="clear">There were no orders found.</p>
+
+		<?php endif; ?>
+
+	</div>
+</div>
 

@@ -16,7 +16,7 @@
 
 		<hr>
 
-		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
+		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 			<div class="large-6 columns">
 				<label for="image">Image:</label>
 				<div class="uploadfile">

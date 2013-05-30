@@ -43,18 +43,13 @@ $(function(){
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 
 <div class="row">
-	<div class="large-12 columns header">
+	<div class="large-12 columns body">
 		<h1 class="headingleft">Add User</h1>
 		<ul class="group-button">
 			<li><input type="submit" value="Save Changes" class="green"></li>
 			<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Back to Users</a></li>
 		</ul>
-	</div>
-</div>
-
-<div class="row">
-	<div class="large-12 columns body">
-	
+		<hr>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>
