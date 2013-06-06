@@ -62,7 +62,7 @@ $(function(){
 		<div class="large-6 columns">
 			<div class="dash-sales">
 				<i class="ss-icon">basket</i>
-				<p class="dash-number">25</p>
+				<p class="dash-number"><?php echo number_format($monthlyTotalSales); ?></p>
 				<p>Monthly Total Sales</p>
 			</div>
 		</div>
@@ -70,7 +70,7 @@ $(function(){
 		<div class="large-6 columns">
 			<div class="dash-sales">
 				<i class="ss-icon">cash</i>
-				<p class="dash-number-money">$24,000.00</p>
+				<p class="dash-number-money">$<?php echo number_format($monthlyTotalSalesVolume,2); ?></p>
 				<p>Monthly Sales Volume</p>
 			</div>
 		</div>
@@ -78,7 +78,7 @@ $(function(){
 		<div class="large-6 columns">
 			<div class="dash-tickets">
 				<i class="ss-icon">headset</i>
-				<p class="dash-number">0</p>
+				<p class="dash-number"><?php echo number_format($unopenedTickets); ?></p>
 				<p>Unopened Tickets</p>
 			</div>
 		</div>
@@ -86,7 +86,7 @@ $(function(){
 		<div class="large-6 columns">
 			<div class="dash-tickets">
 				<i class="ss-icon">headset</i>
-				<p class="dash-number">35</p>
+				<p class="dash-number"><?php echo number_format($activeTickets); ?></p>
 				<p>Active Tickets</p>
 			</div>
 		</div>
