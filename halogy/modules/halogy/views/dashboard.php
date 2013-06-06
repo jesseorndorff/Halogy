@@ -5,7 +5,9 @@
 <!--[if IE]>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/excanvas.js"></script>
 <![endif]-->
+<script type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.flot.resize.js"></script>
 <script type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.flot.init.js"></script>
+
 <script type="text/javascript">
 function refresh(){
 	$('div.loader').load('<?php echo site_url('/admin/activity_ajax'); ?>');
