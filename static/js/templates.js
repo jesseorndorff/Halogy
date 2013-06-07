@@ -1,7 +1,8 @@
 var selectedModule = '';
 
 function getTemplate(el){
-	selectedModule = $(el).attr('value');
+        
+	selectedModule = $(el).prop('value');
 	
 	if (selectedModule.match('!')){
 		selectedModule = '';
