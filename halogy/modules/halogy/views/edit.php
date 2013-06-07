@@ -1,4 +1,5 @@
 <script type="text/javascript">
+    
 $(function(){
 	$('div.permissions input[type="checkbox"]').each(function(){
 		if ($(this).prop('checked')) {
@@ -6,7 +7,7 @@ $(function(){
 		}
 	});	
 	$('input.selectall').click(function(){
-		$el = $(this).parent('div').next('div').children('input[type="checkbox"]');
+                $el = $(this).parent('div').next('div').children('input[type="checkbox"]');
 		$flag = $(this).prop('checked');
 		if ($flag) {
 			$($el).prop('checked', true);
@@ -42,21 +43,22 @@ $(function(){
 		$('input[type="checkbox"]').prop('checked', false);
 	});
 	$('a.selectall').click(function(event){
-		event.preventDefault();
+                event.preventDefault();
 		$('input[type="checkbox"]').prop('checked', true);
-	});	
+        });	
 
 });
+
 </script>
 <div class="row">
 	<div class="large-12 columns body">
+		
+		<form method="POST" action="<?php echo site_url($this->uri->uri_string()); ?>" class="customDISABLED">
 
-		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
-
-		<h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?> </h1>
+                <h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?> </h1>
 		<ul class="group-button">
 			<li><a href="<?php echo site_url('/halogy/sites'); ?>" class="bluebutton">Back to Sites</a></li>
-			<li><input type="submit" value="Save Changes" class="green" /></li>
+			<li><input type="submit" name="submit" value="Save Changes" class="green" /></li>
 		</ul>
 
 		<hr>
@@ -66,6 +68,7 @@ $(function(){
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
+                	
 		<div class="section-container auto" data-section>
 			<section>
 				<p class="title" data-section-title><a href="#">Site Settings</a></p>
@@ -125,7 +128,7 @@ $(function(){
 				</div>
 			</section>
 			<section>
-				<p class="title" data-section-title><a href="#">Permissions</a></p>
+                            	<p class="title" data-section-title><a href="#">Permissions</a></p>
 				<div class="content" data-section-content>
 					<h2>Permissions</h2>
 					<p>Set the site module permissions.</p>
@@ -147,11 +150,20 @@ $(function(){
 									<div class="permissions">
 
 										<?php foreach ($perms as $perm): ?>
+                                                                                        <?php
+                                                                                        
+                                                                                        $is_check = FALSE;
+                                                                                        
+                                                                                        if (isset($data['perm'.$perm['permissionID']])){
+                                                                                                $data['perm'.$perm['permissionID']];
+                                                                                                $is_check = TRUE;
+                                                                                        }
+                                                                                        ?>
 
 											<label for="<?php echo 'perm_'.$perm['key']; ?>" class="radio"><?php echo $perm['permission']; ?></label>
-											<?php echo @form_checkbox('perm'.$perm['permissionID'], 1, set_value('perm'.$perm['permissionID'], $data['perm'.$perm['permissionID']]), 'id="'.'perm_'.$perm['key'].'" class="checkbox"'); ?>
+											<?php echo @form_checkbox('perm'.$perm['permissionID'], 1, $is_check, 'id="'.'perm_'.$perm['key'].'" class="checkbox"'); ?>
 											<br class="clear" />
-
+                                                                                       
 										<?php endforeach; ?>
 
 									</div>
@@ -165,5 +177,4 @@ $(function(){
 		</div> <!-- /Tabs -->
 	</div> <!-- /body -->
 </div>
-	
 </form>
