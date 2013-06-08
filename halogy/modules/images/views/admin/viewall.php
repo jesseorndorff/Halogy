@@ -32,22 +32,23 @@ $(function(){
 		});
 	});
 	
-    $('#searchbox').fieldreplace();
-	function formatItem(row) {
-		if (row[0].length) return row[1]+'<br /><span class="email">(#'+row[0]+')</span>';
-		else return 'No results';
-	}
-	$('#searchbox').autocomplete("<?php echo site_url('/admin/images/ac_images'); ?>", { delay: "0", selectFirst: false, matchContains: true, formatItem: formatItem, minChars: 2 });
-	$('#searchbox').result(function(event, data, formatted){
-		$(this).parent('form').submit();
-	});
-
+    
 	$('select#folderID').change(function(){
 		var folderID = ($(this).val());
 		window.location.href = '<?php echo site_url('/admin/images/viewall'); ?>/'+folderID;
 	});
 
-	$('a.lightbox').lightBox({imageLoading:'<?php echo $this->config->item('staticPath'); ?>/images/loading.gif',imageBtnClose: '<?php echo $this->config->item('staticPath'); ?>/images/lightbox_close.gif',imageBtnNext:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_next.gif',imageBtnPrev:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_prev.gif'});
+//	$('a.lightbox').lightBox({imageLoading:'<?php echo $this->config->item('staticPath'); ?>/images/loading.gif',imageBtnClose: '<?php echo $this->config->item('staticPath'); ?>/images/lightbox_close.gif',imageBtnNext:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_next.gif',imageBtnPrev:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_prev.gif'});
+
+//  $('#searchbox').fieldreplace();
+//	function formatItem(row) {
+//		if (row[0].length) return row[1]+'<br /><span class="email">(#'+row[0]+')</span>';
+//		else return 'No results';
+//	}
+//	$('#searchbox').autocomplete("<?php echo site_url('/admin/images/ac_images'); ?>", { delay: "0", selectFirst: false, matchContains: true, formatItem: formatItem, minChars: 2 });
+//	$('#searchbox').result(function(event, data, formatted){
+//		$(this).parent('form').submit();
+//	});
 
 });
 </script>

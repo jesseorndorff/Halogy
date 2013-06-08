@@ -109,7 +109,7 @@ class Admin extends CI_Controller {
 						// cycle through the zip
 						while ($zip_entry = zip_read($zip))
 						{
-							if (!preg_match('/(\_)+MACOSX/', zip_entry_name($zip_entry)) && preg_match('/\.(jpg|gif|png)$/i', zip_entry_name($zip_entry)))
+							if (!preg_match('/(\_)+MACOSX/', zip_entry_name($zip_entry)) && preg_match('/\.(jpg|jpeg|gif|png)$/i', zip_entry_name($zip_entry)))
 							{
 								if (zip_entry_filesize($zip_entry) > 300000)
 								{
@@ -190,7 +190,7 @@ class Admin extends CI_Controller {
 			// upload image
 			elseif ($oldFileName = @$_FILES['image']['name'])
 			{
-				$this->uploads->allowedTypes = 'jpg|gif|png';
+				$this->uploads->allowedTypes = 'jpg|jpeg|gif|png';
 				
 				// get image name
 				$imageName = ($this->input->post('imageName')) ? $this->input->post('imageName') : preg_replace('/.([a-z]+)$/i', '', $oldFileName);
@@ -238,7 +238,7 @@ class Admin extends CI_Controller {
 		// search
 		if ($this->input->post('searchbox'))
 		{
-			$output['images'] = $this->images->search_images($this->input->post('searchbox'));
+            $output['images'] = $this->images->search_images($this->input->post('searchbox'));
 		}
 		
 		// get images
