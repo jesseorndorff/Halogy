@@ -89,7 +89,7 @@ $(function(){
 						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Files..." />
 					</div>
 					<div class="small-3 columns">
-						<input type="submit" class="button prefix" id="searchbutton" />
+						<input type="submit" class="button prefix" id="searchbutton" value="Search" />
 					</div>
 				</form>
 			</div>
