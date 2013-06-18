@@ -161,6 +161,7 @@ class Admin extends MX_Controller {
 		
 		if (count($_POST))
 		{
+                                
 			// required
 			$this->core->required = array(
 				'postTitle' => array('label' => 'Title', 'rules' => 'required|trim'),
@@ -193,9 +194,10 @@ class Admin extends MX_Controller {
 			// update
 			if ($this->core->update('blog_posts', $objectID))
 			{
+                                
 				// update categories
 				$this->blog->update_cats($postID, $this->input->post('catsArray'));
-
+                                
 				// update tags
 				$this->tags->update_tags('blog_posts', $postID, $tags);
 							

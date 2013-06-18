@@ -303,8 +303,12 @@ class Blog extends MX_Controller {
 				{
 					$output['post:comments'][$i]['comment:class'] = ($i % 2) ? ' alt ' : '';
 					$output['post:comments'][$i]['comment:id'] = $comment['commentID'];
-					$output['post:comments'][$i]['comment:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($comment['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
-					$output['post:comments'][$i]['comment:author'] = (!empty($comment['website'])) ? anchor(prep_url($comment['website']), $comment['fullName']) : $comment['fullName'];
+					
+                                        $output['post:comments'][$i]['comment:gravatar'] = '/static/uploads/avatars/noavatar.gif';
+					
+                                        //$output['post:comments'][$i]['comment:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($comment['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
+					
+                                        $output['post:comments'][$i]['comment:author'] = (!empty($comment['website'])) ? anchor(prep_url($comment['website']), $comment['fullName']) : $comment['fullName'];
 					$output['post:comments'][$i]['comment:date'] = dateFmt($comment['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y' : 'jS M Y');
 					$output['post:comments'][$i]['comment:body'] = nl2br(auto_link(strip_tags($comment['comment'])));
 					
