@@ -32,22 +32,23 @@ $(function(){
 		});
 	});
 	
-    $('#searchbox').fieldreplace();
-	function formatItem(row) {
-		if (row[0].length) return row[1]+'<br /><span class="email">(#'+row[0]+')</span>';
-		else return 'No results';
-	}
-	$('#searchbox').autocomplete("<?php echo site_url('/admin/images/ac_images'); ?>", { delay: "0", selectFirst: false, matchContains: true, formatItem: formatItem, minChars: 2 });
-	$('#searchbox').result(function(event, data, formatted){
-		$(this).parent('form').submit();
-	});
-
+    
 	$('select#folderID').change(function(){
 		var folderID = ($(this).val());
 		window.location.href = '<?php echo site_url('/admin/images/viewall'); ?>/'+folderID;
 	});
 
-	$('a.lightbox').lightBox({imageLoading:'<?php echo $this->config->item('staticPath'); ?>/images/loading.gif',imageBtnClose: '<?php echo $this->config->item('staticPath'); ?>/images/lightbox_close.gif',imageBtnNext:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_next.gif',imageBtnPrev:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_prev.gif'});
+//	$('a.lightbox').lightBox({imageLoading:'<?php echo $this->config->item('staticPath'); ?>/images/loading.gif',imageBtnClose: '<?php echo $this->config->item('staticPath'); ?>/images/lightbox_close.gif',imageBtnNext:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_next.gif',imageBtnPrev:'<?php echo $this->config->item('staticPath'); ?>/image/lightbox_btn_prev.gif'});
+
+//  $('#searchbox').fieldreplace();
+//	function formatItem(row) {
+//		if (row[0].length) return row[1]+'<br /><span class="email">(#'+row[0]+')</span>';
+//		else return 'No results';
+//	}
+//	$('#searchbox').autocomplete("<?php echo site_url('/admin/images/ac_images'); ?>", { delay: "0", selectFirst: false, matchContains: true, formatItem: formatItem, minChars: 2 });
+//	$('#searchbox').result(function(event, data, formatted){
+//		$(this).parent('form').submit();
+//	});
 
 });
 </script>
@@ -64,6 +65,8 @@ $(function(){
 		<?php endif; ?>
 		<hr>
 
+                <?php echo $this->session->flashdata('error'); ?>
+                
 		<div class="large-4 columns">
 			<label for="folderID">
 				Folder
@@ -91,7 +94,7 @@ $(function(){
 						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Images..." />
 					</div>
 					<div class="small-3 columns">
-						<input type="submit" class="button prefix" id="searchbutton" />
+						<input type="submit" class="button prefix" id="searchbutton" value="Search" />
 					</div>
 				</form>
 			</div>
@@ -185,7 +188,127 @@ $(function(){
 </div>
 
 		<div id="upload-image" class="hidden clear reveal-modal">
-			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
+<style>
+#progressbox,#progressbox2 {
+    border: 1px solid #0099CC;
+    padding: 1px;
+    position:relative;
+    width:400px;
+    border-radius: 3px;
+    margin: 10px;
+    display:none;
+    text-align:left;
+}
+#progressbar,#progressbar2 {
+    height:20px;
+    border-radius: 3px;
+    background-color: #003333;
+    width:1%;
+}
+#statustxt,#statustxt2 {
+    top:3px;
+    left:50%;
+    position:absolute;
+    display:inline-block;
+    color: #000000;
+}
+</style>
+    
+<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.form.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function() {
+        //elements
+        var progressbox     = $('#progressbox');
+        var progressbar     = $('#progressbar');
+        var statustxt       = $('#statustxt');
+        var submitbutton    = $("#submit");
+        var myform          = $("#UploadForm");
+        var output          = $("#output");
+        var completed       = '0%';
+                
+                $(myform).ajaxForm({
+                    beforeSend: function() { //brfore sending form
+                        submitbutton.attr('disabled', ''); // disable upload button
+                        statustxt.empty();
+                        progressbox.slideDown(); //show progressbar
+                        progressbar.width(completed); //initial value 0% of progressbar
+                        statustxt.html(completed); //set status text
+                        statustxt.css('color','#000'); //initial color of status text
+                    },
+                    uploadProgress: function(event, position, total, percentComplete) { //on progress
+                        progressbar.width(percentComplete + '%') //update progressbar percent complete
+                        statustxt.html(percentComplete + '%'); //update status text
+                        if(percentComplete>50)
+                            {
+                                statustxt.css('color','#fff'); //change status text to white after 50%
+                            }
+                        },
+                    complete: function(response) { // on complete
+                        
+                        percentComplete = 100;
+                        progressbar.width(percentComplete + '%') //update progressbar percent complete
+                        statustxt.html(percentComplete + '%'); //update status text
+                        statustxt.css('color','#fff'); //change status text to white after 50%
+                        
+                        output.html(response.responseText); //update element with received data
+                        myform.resetForm();  // reset form
+                        submitbutton.removeAttr('disabled'); //enable submit button
+                        window.location = '/admin/images/viewall';
+                        //progressbox.slideUp(); // hide progressbar
+                    }
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+        //elements
+        var progressbox2     = $('#progressbox2');
+        var progressbar2     = $('#progressbar2');
+        var statustxt2       = $('#statustxt2');
+        var submitbutton2    = $("#submit2");
+        var myform2          = $("#UploadForm2");
+        var output2          = $("#output2");
+        var completed2       = '0%';
+                
+                $(myform2).ajaxForm({
+                    beforeSend: function() { //brfore sending form
+                        submitbutton2.attr('disabled', ''); // disable upload button
+                        statustxt2.empty();
+                        progressbox2.slideDown(); //show progressbar
+                        progressbar2.width(completed2); //initial value 0% of progressbar
+                        statustxt2.html(completed2); //set status text
+                        statustxt2.css('color','#000'); //initial color of status text
+                    },
+                    uploadProgress: function(event, position, total, percentComplete) { //on progress
+                        progressbar2.width(percentComplete + '%') //update progressbar percent complete
+                        statustxt2.html(percentComplete + '%'); //update status text
+                        if(percentComplete>50)
+                            {
+                                statustxt2.css('color','#fff'); //change status text to white after 50%
+                            }
+                        },
+                    complete: function(response) { // on complete
+                        
+                        percentComplete = 100;
+                        progressbar2.width(percentComplete + '%') //update progressbar percent complete
+                        statustxt2.html(percentComplete + '%'); //update status text
+                        statustxt2.css('color','#fff'); //change status text to white after 50%
+                        
+                        output2.html(response.responseText); //update element with received data
+                        myform2.resetForm();  // reset form
+                        submitbutton2.removeAttr('disabled'); //enable submit button
+                        window.location = '/admin/images/viewall';
+                        //progressbox.slideUp(); // hide progressbar
+                    }
+            });
+        });
+
+    </script>
+    
+                    
+			<form id="UploadForm" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 			
 				<h2>Upload an Image</h2>
 				<p>Upload any image file you want to use on your site. Want to add some folders before you start? <a href="<?php echo site_url('/admin/images/folders'); ?>">Add them now.</a></p>
@@ -214,11 +337,12 @@ $(function(){
 				<input type="submit" value="Save Changes" class="button nolabel" id="submit" />
 				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>			
 			</form>
-			<a class="close-reveal-modal">&#215;</a>
+                        <div id="progressbox"><div id="progressbar"></div ><div id="statustxt">0%</div ></div>
+                        <a class="close-reveal-modal">&#215;</a>
 		</div>
 
 		<div id="upload-zip" class="hidden clear reveal-modal">
-			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
+			<form id="UploadForm2" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 				<h2>Upload a Zip File</h2>
 				<p>If you have a lot of images to upload, add them all to a zip folder and upload them here!</p>
 			
@@ -241,9 +365,10 @@ $(function(){
 				?>
 				<br class="clear" /><br />		
 
-				<input type="submit" value="Upload Zip" name="upload_zip" class="button nolabel" />
+				<input type="submit" value="Upload Zip" name="upload_zip" class="button nolabel" id="submit2" />
 				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>
 			</form>
-			<a class="close-reveal-modal">&#215;</a>
+                        <div id="progressbox2"><div id="progressbar2"></div ><div id="statustxt2">0%</div ></div>
+                        <a class="close-reveal-modal">&#215;</a>
 		</div>
 

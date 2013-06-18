@@ -170,7 +170,7 @@ class Halogy extends MX_Controller {
 
 	function edit_site($siteID)
 	{
-		// override core siteID stuff
+                // override core siteID stuff
 		$this->core->adminOverRide = TRUE;
 
 		// load site lib
@@ -195,7 +195,7 @@ class Halogy extends MX_Controller {
 		// handle post
 		if (count($_POST))
 		{		
-			// required
+                        // required
 			$this->core->required = array(
 				'siteDomain' => array('label' => 'Site Domain', 'rules' => 'required|trim|really_unique[sites.siteDomain]'),
 				'siteName' => array('label' => 'Name of Site', 'rules' => 'required|trim'),
@@ -218,7 +218,7 @@ class Halogy extends MX_Controller {
 					$this->core->update('sites', array('siteID' => $siteID));
 				}
 				
-				// add permissions
+                                // add permissions
 				$this->permission->add_permissions($output['data']['groupID'], $siteID);
 							
 				// where to redirect to
@@ -226,8 +226,8 @@ class Halogy extends MX_Controller {
 			}
 		}
 		
-		// templates
-		$this->load->view($this->includes_path.'/header');
+                // templates
+                $this->load->view($this->includes_path.'/header');
 		$this->load->view('edit',$output);
 		$this->load->view($this->includes_path.'/footer');
 	}

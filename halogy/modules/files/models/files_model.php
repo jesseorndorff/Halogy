@@ -42,8 +42,11 @@ class Files_model extends CI_Model {
 				
 		$this->db->order_by('fileRef', 'asc');
 		
-		$query = $this->db->get('files', $limit);
-		
+        if ($limit != '')
+            $query = $this->db->get('files', $limit);
+		else
+            $query = $this->db->get('files');
+		    
 		if ($query->num_rows())
 		{
 			return $query->result_array();

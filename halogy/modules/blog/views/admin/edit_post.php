@@ -75,7 +75,7 @@ $(function(){
 				<div class="categories">
 					<?php if ($categories): ?>
 					<?php foreach($categories as $category): ?>
-						<div class="category<?php echo (isset($data['categories'][$category['catID']])) ? ' hover' : ''; ?>">
+						<div class="DISABLEDcategory<?php echo (isset($data['categories'][$category['catID']])) ? ' hover' : ''; ?>">
 							<?php echo @form_checkbox('catsArray['.$category['catID'].']', $category['catName'], (isset($data['categories'][$category['catID']])) ? 1 : ''); ?><span><?php echo $category['catName']; ?></span>
 						</div>
 					<?php endforeach; ?>

@@ -32,15 +32,15 @@ $(function(){
 		});
 	});
 	
-    $('#searchbox').fieldreplace();
-	function formatItem(row) {
-		if (row[0].length) return row[1]+'<br /><span class="email">(#'+row[0]+')</span>';
-		else return 'No results';
-	}
-	$('#searchbox').autocomplete("<?php echo site_url('/admin/files/ac_files'); ?>", { delay: "0", selectFirst: false, matchContains: true, formatItem: formatItem, minChars: 2 });
-	$('#searchbox').result(function(event, data, formatted){
-		$(this).parent('form').submit();
-	});
+//    $('#searchbox').fieldreplace();
+//	function formatItem(row) {
+//		if (row[0].length) return row[1]+'<br /><span class="email">(#'+row[0]+')</span>';
+//		else return 'No results';
+//	}
+//	$('#searchbox').autocomplete("<?php echo site_url('/admin/files/ac_files'); ?>", { delay: "0", selectFirst: false, matchContains: true, formatItem: formatItem, minChars: 2 });
+//	$('#searchbox').result(function(event, data, formatted){
+//		$(this).parent('form').submit();
+//	});
 	
 	$('select#folderID').change(function(){
 		var folderID = ($(this).val());
@@ -89,7 +89,7 @@ $(function(){
 						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Files..." />
 					</div>
 					<div class="small-3 columns">
-						<input type="submit" class="button prefix" id="searchbutton" />
+						<input type="submit" class="button prefix" id="searchbutton" value="Search" />
 					</div>
 				</form>
 			</div>

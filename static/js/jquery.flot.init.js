@@ -76,4 +76,10 @@ $(function(){
 			}
 		});		
 	});
+        
+        placeholder.resize(function () {
+        $(".message").text("Placeholder is now "
+                           + $(this).width() + "x" + $(this).height()
+                           + " pixels");
+        });
 });

@@ -52,10 +52,10 @@
 				{post:comments}
 				<div class="comment {comment:class}" id="comment{comment:id}">
 
-					<div class="col1">
+                                        <div class="col1">
 						<img src="{comment:gravatar}" width="50" />
 					</div>
-	
+                                        
 					<div class="col2">
 						<p>By <strong>{comment:author}</strong> <small>on {comment:date}</small></p>
 
