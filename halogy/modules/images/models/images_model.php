@@ -42,9 +42,13 @@ class Images_model extends CI_Model {
 				
 		$this->db->order_by('imageRef', 'asc');
 		
-		$query = $this->db->get('images', $limit);
-		
-		if ($query->num_rows())
+        
+        if ($limit != '')
+            $query = $this->db->get('images', $limit);
+		else
+            $query = $this->db->get('images');
+		     
+        if ($query->num_rows())
 		{
 			return $query->result_array();
 		}

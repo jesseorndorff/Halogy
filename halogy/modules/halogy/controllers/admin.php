@@ -127,6 +127,12 @@ class Admin extends MX_Controller {
 		$output['popularPages'] = $this->halogy->get_popular_pages();
 		$output['popularBlogPosts'] = $this->halogy->get_popular_blog_posts();
 		$output['popularShopProducts'] = $this->halogy->get_popular_shop_products();
+                
+                $output['monthlyTotalSales'] = $this->halogy->get_monthly_total_sales();
+                $output['monthlyTotalSalesVolume'] = $this->halogy->get_monthly_total_sales_volume();
+                $output['unopenedTickets'] = $this->halogy->get_unopened_tickets();
+                $output['activeTickets'] = $this->halogy->get_active_tickets();
+                
 				
 		$this->load->view($this->includes_path.'/header');
 		$this->load->view('dashboard', $output);

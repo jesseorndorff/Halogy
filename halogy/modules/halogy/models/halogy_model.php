@@ -324,7 +324,96 @@ class Halogy_model extends CI_Model {
 			return FALSE;
 		}
 	}
-
+        
+        function get_monthly_total_sales()
+        {
+                // default wheres
+                $this->db->where('siteID', $this->siteID);
+                $this->db->where('paid', 1);
+         
+                // when?
+		$this->db->where('dateCreated >=', date("Y-m-01 00:00:00"));
+		$this->db->where('dateCreated <=', date("Y-m-d 59:59:59", strtotime('today')));	
+                $this->db->select('COUNT(*) as numSales');
+                $query = $this->db->get('shop_transactions');
+                
+                if ($query->num_rows() > 0)
+		{
+			$row = $query->row_array();
+			return $row['numSales'];
+		}
+		else
+		{
+			return 0;
+		}
+        }
+        
+        function get_monthly_total_sales_volume()
+        {
+                // default wheres
+                $this->db->where('siteID', $this->siteID);
+                $this->db->where('paid', 1);
+         
+                // when?
+		$this->db->where('dateCreated >=', date("Y-m-01 00:00:00"));
+		$this->db->where('dateCreated <=', date("Y-m-d 59:59:59", strtotime('today')));	
+                $this->db->select('SUM(amount) as numSales');
+                $query = $this->db->get('shop_transactions');
+                
+                if ($query->num_rows() > 0)
+		{
+			$row = $query->row_array();
+			return $row['numSales'];
+		}
+		else
+		{
+			return 0;
+		}
+        }
+        
+        function get_active_tickets()
+        {
+                // default wheres
+                $this->db->where('siteID', $this->siteID);
+                $this->db->where('closed', 0);
+                $this->db->where('deleted', 0);
+                
+         
+                $this->db->select('count(*) as numTickets');
+                $query = $this->db->get('tickets');
+                
+                if ($query->num_rows() > 0)
+		{
+			$row = $query->row_array();
+			return $row['numTickets'];
+		}
+		else
+		{
+			return 0;
+		}
+        }
+        
+        function get_unopened_tickets()
+        {
+                // default wheres
+                $this->db->where('siteID', $this->siteID);
+                $this->db->where('viewed', 0);
+                $this->db->where('deleted', 0);
+         
+                $this->db->select('count(*) as numTickets');
+                $query = $this->db->get('tickets');
+                
+                if ($query->num_rows() > 0)
+		{
+			$row = $query->row_array();
+			return $row['numTickets'];
+		}
+		else
+		{
+			return 0;
+		}
+        }
+        
 	function get_num_users_yesterday()
 	{
 		// default wheres

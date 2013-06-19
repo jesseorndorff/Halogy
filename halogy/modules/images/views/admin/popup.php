@@ -71,7 +71,7 @@
 	<br class="clear" /><br />	
 
 	<input type="submit" value="Save Changes" class="button nolabel" id="submit" />
-	<br class="clear" />
+        <br class="clear" />
 	
 </form>
 

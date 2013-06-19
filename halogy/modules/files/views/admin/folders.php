@@ -21,9 +21,16 @@ $(function(){
 
 	$('a.edit').click(function(event){
 		event.preventDefault();
-		$(this).parent().siblings('.col1').children('input').show();
-		$(this).parent().siblings('.col1').children('span').hide();
-	});
+        
+        if ($(this).parent().siblings('.col1').children('input').is(":hidden"))
+            {
+                $(this).parent().siblings('.col1').children('input').show();
+                $(this).parent().siblings('.col1').children('span').hide();
+            }else{
+                $(this).parent().siblings('.col1').children('input').hide();
+                $(this).parent().siblings('.col1').children('span').show();
+            }
+        });
 
 	initOrder('ol.order');
 });

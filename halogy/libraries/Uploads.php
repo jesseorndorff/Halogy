@@ -22,7 +22,7 @@ class Uploads {
 	var $errors;
 	var $siteID;
 	var $uploadsPath;
-	var $allowedTypes = 'gif|jpg|png|pdf|zip|mp3|mp4|js';
+	var $allowedTypes = 'gif|jpg|jpeg|png|pdf|zip|mp3|mp4|js';
 	var $maxSize = '5000';
 	var $maxWidth = '5000';
 	var $maxHeight = '5000';

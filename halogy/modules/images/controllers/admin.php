@@ -109,11 +109,14 @@ class Admin extends CI_Controller {
 						// cycle through the zip
 						while ($zip_entry = zip_read($zip))
 						{
-							if (!preg_match('/(\_)+MACOSX/', zip_entry_name($zip_entry)) && preg_match('/\.(jpg|gif|png)$/i', zip_entry_name($zip_entry)))
+							if (!preg_match('/(\_)+MACOSX/', zip_entry_name($zip_entry)) && preg_match('/\.(jpg|jpeg|gif|png)$/i', zip_entry_name($zip_entry)))
 							{
 								if (zip_entry_filesize($zip_entry) > 300000)
 								{
+                                                                        $this->session->set_flashdata('error', '<p class="error">Some files were too big to upload. Please only use small gfx files under 300kb.</p>');
+                                                                    
 									$this->form_validation->set_error('<p>Some files were too big to upload. Please only use small gfx files under 300kb.</p>');
+                                                                        
 								}
 								else
 								{
@@ -183,6 +186,8 @@ class Admin extends CI_Controller {
 				}
 				else
 				{
+                                        $this->session->set_flashdata('error', '<p class="error">There was a problem opening the zip file, sorry.</p>');
+                                    
 					$this->form_validation->set_error('<p>There was a problem opening the zip file, sorry.</p>');
 				}				
 			}
@@ -190,7 +195,7 @@ class Admin extends CI_Controller {
 			// upload image
 			elseif ($oldFileName = @$_FILES['image']['name'])
 			{
-				$this->uploads->allowedTypes = 'jpg|gif|png';
+				$this->uploads->allowedTypes = 'jpg|jpeg|gif|png';
 				
 				// get image name
 				$imageName = ($this->input->post('imageName')) ? $this->input->post('imageName') : preg_replace('/.([a-z]+)$/i', '', $oldFileName);
@@ -209,7 +214,10 @@ class Admin extends CI_Controller {
 					// get image errors if there are any
 					if ($this->uploads->errors)
 					{
-						$this->form_validation->set_error($this->uploads->errors);
+						$err = $this->upload->display_errors('<p class="error">', '</p>');
+                                                
+                                                $this->session->set_flashdata('error', $err);
+                                    
 					}
 					else
 					{						
@@ -223,6 +231,8 @@ class Admin extends CI_Controller {
 						// update
 						if ($this->core->update('images'))
 						{
+                                                        //return true;
+                                                        
 							// where to redirect to
 							redirect('/admin/images/viewall/'.(($this->input->post('folderID')) ? $this->input->post('folderID') : ''));
 						}			
@@ -230,15 +240,22 @@ class Admin extends CI_Controller {
 				}
 				else
 				{
+                                    
+                                        $this->session->set_flashdata('error', '<p class="error">The image reference you entered has already been used, please try another.</p>');
+                                    
 					$this->form_validation->set_error('<p>The image reference you entered has already been used, please try another.</p>');
-				}		
-			}			
+				
+                                        //return false;
+                                }		
+			}
+                        
+                        
 		}
 
 		// search
 		if ($this->input->post('searchbox'))
 		{
-			$output['images'] = $this->images->search_images($this->input->post('searchbox'));
+            $output['images'] = $this->images->search_images($this->input->post('searchbox'));
 		}
 		
 		// get images
