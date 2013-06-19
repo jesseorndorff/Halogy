@@ -18,7 +18,24 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+	// define('ENVIRONMENT', 'development');
+
+// Setting Up for Pagoda Box
+// Switch environment based on global var
+if (isset($_SERVER['PLATFORM']))
+{
+    switch ($_SERVER['PLATFORM']) {
+ 
+        case 'PAGODA':
+            define('ENVIRONMENT', 'production');
+        break;
+    // add additional cases for more environments
+    }
+}
+else
+{
+    define('ENVIRONMENT', 'development');
+}
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING

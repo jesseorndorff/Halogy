@@ -1,0 +1,22 @@
+web1: #component type & number
+  name: halogy            #component settings
+  shared_writable_dirs:
+    - static/css
+    - static/fileicons
+    - static/images
+    - static/js
+    - static/sass
+    - static/uploads
+    - static/webfonts
+    - halogy/cashe
+  php_version: 5.3.23
+  php_extensions:
+    - mysql
+     
+db1: #component type & number 
+  name: halogy            #component settings
+  type: mysql
+
+db2: #component type & number 
+  name: halogy-prod            #component settings
+  type: mysql
