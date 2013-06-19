@@ -69,7 +69,7 @@ $db['production']['password'] = "hFbWTODj";
 $db['production']['database'] = "halogy";
 $db['production']['port']     = "3306";
 $db['production']['dbdriver'] = "mysql";
-$db['production']['dbprefix'] = "";
+$db['production']['dbprefix'] = "ha_'";
 $db['production']['pconnect'] = TRUE;
 $db['production']['db_debug'] = TRUE;
 $db['production']['cache_on'] = FALSE;
@@ -79,14 +79,14 @@ $db['production']['dbcollat'] = "utf8_general_ci";
 $db['production']['swap_pre'] = '';
 $db['production']['autoinit'] = TRUE;
 $db['production']['stricton'] = FALSE;
- 
+
 // production
 $db['development']['hostname'] = "tunnel.pagodabox.com:3307";
 $db['development']['username'] = "jacalyn";
 $db['development']['password'] = "vH9LgF5f";
 $db['development']['database'] = "halogy-prod";
 $db['development']['dbdriver'] = "mysql";
-$db['development']['dbprefix'] = "";
+$db['development']['dbprefix'] = "ha_'";
 $db['development']['pconnect'] = TRUE;
 $db['development']['db_debug'] = TRUE;
 $db['development']['cache_on'] = FALSE;
