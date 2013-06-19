@@ -63,9 +63,9 @@ $db['default']['stricton'] = FALSE;
 
 $active_record = TRUE;
  
-$db['production']['hostname'] = "tunnel.pagodabox.com";
-$db['production']['username'] = "";
-$db['production']['password'] = "";
+$db['production']['hostname'] = "tunnel.pagodabox.com:3306";
+$db['production']['username'] = "phyllis";
+$db['production']['password'] = "hFbWTODj";
 $db['production']['database'] = "halogy";
 $db['production']['port']     = "3308";
 $db['production']['dbdriver'] = "mysql";
@@ -81,9 +81,9 @@ $db['production']['autoinit'] = TRUE;
 $db['production']['stricton'] = FALSE;
  
 // production
-$db['development']['hostname'] = "localhost";
-$db['development']['username'] = "deloise";
-$db['development']['password'] = "ltTU2qYo";
+$db['development']['hostname'] = "tunnel.pagodabox.com:3307";
+$db['development']['username'] = "jacalyn";
+$db['development']['password'] = "vH9LgF5f";
 $db['development']['database'] = "halogy-prod";
 $db['development']['dbdriver'] = "mysql";
 $db['development']['dbprefix'] = "";
