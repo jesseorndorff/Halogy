@@ -82,8 +82,8 @@ $db['production']['stricton'] = FALSE;
  
 // production
 $db['development']['hostname'] = "localhost";
-$db['development']['username'] = "root";
-$db['development']['password'] = "";
+$db['development']['username'] = "deloise";
+$db['development']['password'] = "ltTU2qYo";
 $db['development']['database'] = "halogy-prod";
 $db['development']['dbdriver'] = "mysql";
 $db['development']['dbprefix'] = "";
