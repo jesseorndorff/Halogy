@@ -351,9 +351,8 @@ $(function(){
 					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
 				</div>
 				<div class="uploadfile show-for-touch">
-					<input type="file" accept="/* capture="camera">
+					<input type="file" accept="/*" capture="camera">
 				</div>
-				<br class="clear" />
 
 				<label for="zipFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
 				<?php
