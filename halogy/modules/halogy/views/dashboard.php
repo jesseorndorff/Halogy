@@ -40,15 +40,15 @@ $(function(){
 		<div class="admin-header"><h3><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> - <?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h3></div>
 		
 		<div class="activity" class="loader">
-			
-			<ul class="dashboardnav group-button">
+
+			<ul class="dashboardnav group-button hide-for-touch">
 				<li class="<?php echo ($days == 30) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin'); ?>">Last 30 Days</a></li>
 				<li class="<?php echo ($days == 60) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin/dashboard/60'); ?>">Last 60 Days</a></li>
 				<li class="<?php echo ($days == 90) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin/dashboard/90'); ?>">3 Months</a></li>
 				<li><a class="button" href="<?php echo site_url('/admin/tracking'); ?>">Most Recent Visits</a></li>
 			</ul>
 
-			<div id="placeholder"></div>
+			<div id="placeholder" class="hide-for-touch"></div>
 			<?php echo $activity; ?>
 		</div>
 
