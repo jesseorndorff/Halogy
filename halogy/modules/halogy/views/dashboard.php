@@ -48,7 +48,7 @@ $(function(){
 			</ul>
 
 			<div id="placeholder"></div>
-				<?php echo $activity; ?>
+			<?php echo $activity; ?>
 		</div>
 
 		<?php if ($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6): ?>		
