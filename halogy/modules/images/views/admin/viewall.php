@@ -313,7 +313,7 @@ $(function(){
 				<h2>Upload an Image</h2>
 				<p>Upload any image file you want to use on your site. Want to add some folders before you start? <a href="<?php echo site_url('/admin/images/folders'); ?>">Add them now.</a></p>
 				<label for="image">Image:</label>
-				<div class="uploadfile">
+				<div class="uploadfile hide-for-touch">
 					<?php echo @form_upload('image', '', 'size="16" id="image"'); ?>
 				</div>
 
