@@ -175,10 +175,14 @@ $(function(){
 						echo '<td width="'.floor((1 / $itemsPerRow) * 100).'%">&nbsp;</td>';
 					}
 				?>
+
+			
+			<?php echo $this->pagination->create_links(); ?>
 		</ul>
-		<?php echo $this->pagination->create_links(); ?>
-			<?php else: ?>
-				<p>You have not yet uploaded any images.</p>
+		<?php else: ?>
+		</ul>
+		<p>You have not yet uploaded any images.</p>
+
 		<?php endif; ?>
 	</div>
 </div>
