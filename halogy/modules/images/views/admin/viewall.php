@@ -350,6 +350,7 @@ $(function(){
 				<div class="uploadfile hide-for-touch ">
 					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
 				</div>
+				
 				<div class="uploadfile show-for-touch">
 					<input type="file" accept="/*" capture="camera">
 				</div>
