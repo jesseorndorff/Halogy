@@ -347,8 +347,11 @@ $(function(){
 				<p>If you have a lot of images to upload, add them all to a zip folder and upload them here!</p>
 			
 				<label for="image">ZIP File:</label>
-				<div class="uploadfile">
+				<div class="uploadfile hide-for-touch ">
 					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
+				</div>
+				<div class="uploadfile show-for-touch">
+					<input type="file" accept="/* capture="camera">
 				</div>
 				<br class="clear" />
 
