@@ -180,9 +180,9 @@ $(function(){
 			<?php echo $this->pagination->create_links(); ?>
 		</ul>
 		<?php else: ?>
-		</ul>
-		<p>You have not yet uploaded any images.</p>
 		
+		<p>You have not yet uploaded any images.</p>
+
 		<?php endif; ?>
 	</div>
 </div>
