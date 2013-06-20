@@ -316,6 +316,10 @@ $(function(){
 				<div class="uploadfile">
 					<?php echo @form_upload('image', '', 'size="16" id="image"'); ?>
 				</div>
+
+				<div class="uploadfile show-for-touch">
+					<input type="file" accept="/*" capture="camera">
+				</div>
 				
 				<label for="imageName">Description (alt tag):</label>
 				<?php echo @form_input('imageName', $images['imageName'], 'class="formelement" id="imageName"'); ?>
@@ -349,10 +353,6 @@ $(function(){
 				<label for="image">ZIP File:</label>
 				<div class="uploadfile hide-for-touch ">
 					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
-				</div>
-				
-				<div class="uploadfile show-for-touch">
-					<input type="file" accept="/*" capture="camera">
 				</div>
 
 				<label for="zipFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
