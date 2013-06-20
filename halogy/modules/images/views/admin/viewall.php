@@ -318,7 +318,7 @@ $(function(){
 				</div>
 
 				<div class="uploadfile show-for-touch">
-					<input type="file" accept="/*" capture="camera">
+					<input type="file" accept="/*" capture="camera" name="image" id="image">
 				</div>
 				
 				<label for="imageName">Description (alt tag):</label>
