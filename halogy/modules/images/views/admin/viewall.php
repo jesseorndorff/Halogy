@@ -182,7 +182,7 @@ $(function(){
 		<?php else: ?>
 		</ul>
 		<p>You have not yet uploaded any images.</p>
-
+		
 		<?php endif; ?>
 	</div>
 </div>
