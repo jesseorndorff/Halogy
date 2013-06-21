@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="large-12 columns body">
 		<div class="large-6 columns">
-			<img src="<?php echo $this->config->item('staticPath'); ?>/halogy.png">
+			<img src="<?php echo site_url('/static/halogy.png'); ?>">
 			<p>Welcome to your Halogy site! Please enter your login details on the left. If you need access, make sure to email your website administrator.</p>
 		</div>
 		<div class="large-6 columns">
