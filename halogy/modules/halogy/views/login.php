@@ -9,12 +9,8 @@
 	</script>
 
 <div class="row">
-	<div class="large-12 columns body">
-		<div class="large-6 columns">
-			<img src="<?php echo site_url('/static/images/halogy.png'); ?>">
-		</div>
-		<div class="large-6 columns">
-			
+	<div class="large-8 columns body">
+		<img src="<?php echo site_url('/static/images/halogy.png'); ?>">
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">
 					<?php echo $errors; ?>
@@ -45,7 +41,5 @@
 			<?php
 				}
 			?>
-		</div>
-
 	</div>
 </div>
