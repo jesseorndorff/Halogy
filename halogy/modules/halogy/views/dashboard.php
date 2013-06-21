@@ -56,14 +56,14 @@ $(function(){
 
 			<div class="quota">
 				<div class="<?php echo ($quota > $this->site->plans['storage']) ? 'over' : 'used'; ?>" style="width: <?php echo ($quota > 0) ? (floor($quota / $this->site->plans['storage'] * 100)) : 0; ?>%"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
-			</div>
+			</div>			<div class="dash-sales">
+
 			
 			<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
 
 		<?php endif; ?>
 
 		<div class="large-6 columns">
-			<div class="dash-sales">
 				<i class="ss-icon">basket</i>
 				<p class="dash-number"><?php echo number_format($monthlyTotalSales); ?></p>
 				<p>Monthly Total Sales</p>
@@ -74,7 +74,7 @@ $(function(){
 			<div class="dash-sales">
 				<i class="ss-icon">cash</i>
 				<p class="dash-number-money">$<?php echo number_format($monthlyTotalSalesVolume,2); ?></p>
-				<p>Monthly Sales Volume</p>
+				<p>Monthly Sales</p>
 			</div>
 		</div>
 		
