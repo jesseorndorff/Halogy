@@ -21,7 +21,7 @@ $(function(){
 
 <div class="row">
 	
-	<div class="large-8 columns">
+	<div class="large-8 small-12 columns">
 		
 		<?php if ($errors = validation_errors()): ?>
 			<div data-alert class="error">
@@ -113,12 +113,12 @@ $(function(){
 	</div> 
 	
 	<div class="large-4 columns sidebar">
-		<?php if ($this->session->userdata('session_admin')): ?>
-			<div data-alert class="welcome">
+			<div data-alert class="welcome hide-for-small">
+				<?php if ($this->session->userdata('session_admin')): ?>
 				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
 				<p>Here's a few things that have been happening on your website.</p>
+				<?php endif; ?>
 			</div>
-		<?php endif; ?>
 		
 		<div class="sidebar-module-header">
 			<h3>Site Information</h3>
