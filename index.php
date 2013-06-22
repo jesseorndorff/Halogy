@@ -29,6 +29,10 @@ if (isset($_SERVER['PLATFORM']))
         case 'PAGODA':
             define('ENVIRONMENT', 'production');
         break;
+    // setup the dev database enviroment
+        case 'DEV':
+            define('ENVIRONMENT', 'development');
+        break;
     // add additional cases for more environments
     }
 }
