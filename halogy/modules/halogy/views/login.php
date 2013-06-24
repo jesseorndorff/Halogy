@@ -20,10 +20,10 @@
 			<form action="" method="post" class="default">
 							
 				<label for="username">Username:</label>
-				<input type="text" id="username" name="username" class="formelement" />
+				<input type="text" id="username" name="username" class="formelement" placeholder="Username"/>
 			
 				<label for="password">Password:</label>
-				<input type="password" id="password" name="password" class="formelement" />
+				<input type="password" id="password" name="password" class="formelement" placeholder="Password"/>
 
 				<br class="clear" /><br />
 				<input type="submit" id="login" name="login" value="Login" class="button nolabel" />

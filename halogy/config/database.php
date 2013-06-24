@@ -38,7 +38,7 @@
 | the active record class
 */
 
-/*
+
 $active_group = 'default';
 $active_record = TRUE;
 
@@ -57,11 +57,11 @@ $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
 $db['default']['stricton'] = FALSE;
-*/
+
 
 // Setup for Pagoda Box
 
-$active_record = TRUE;
+/* $active_record = TRUE;
  
 $db['production']['hostname'] = "tunnel.pagodabox.com";
 $db['production']['username'] = "phyllis";
@@ -109,6 +109,8 @@ switch (ENVIRONMENT) {
         $active_group = 'development';
     break;
 }
+
+*/
 
 
 /* End of file database.php */

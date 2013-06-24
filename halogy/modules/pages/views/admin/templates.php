@@ -32,9 +32,7 @@ $(function(){
 		</ul>
 		<hr>
 		<div class="large-4 large-offset-8 columns">
-			<label for="filter">
-				Filter
-			</label> 
+			<label for="filter">Filter</label> 
 
 			<?php
 				$options = array(
@@ -46,18 +44,56 @@ $(function(){
 				echo form_dropdown('filter', $options, $type, 'id="filter"');
 			?>
 		</div>
+		<hr>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
 
-
 		<?php if ($templates): ?>
 
 		<?php echo $this->pagination->create_links(); ?>
+		<div class="row table-header hide-for-touch">
+			<div class="large-3 columns">
+				<h3>Templates</h3>
+			</div> 
+			<div class="large-3 columns">
+				<h3>Date Modified</h3>
+			</div>
+			<div class="large-3 columns">
+				<h3>Usage</h3>
+			</div>
+			<div class="large-3 columns">
+				<h3>	</h3>
+			</div> 
+		</div>
+			<?php
+				$i = 0;
+				foreach ($templates as $template): 
+				$class = ($i % 2) ? 'alt' : ''; $i++;
+			?>
+		<div class="row table <?php echo $class;?>">
+				<div class="small-6 large-3 columns">
+					<h4 class="show-for-touch">Template: </h4><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<small>Module</small>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?>
+				</div>
+				<div class="small-6 large-3 columns">
+					<h4 class="show-for-touch">Date Modified: </h4><?php echo dateFmt($template['dateCreated']); ?>
+				</div>
+				<div class="small-6 large-3 columns">
+					<h4 class="show-for-touch">Usage: </h4>
+					<?php if ($this->pages->get_template_count($template['templateID']) > 0): ?>
+						<?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)
+					<?php endif; ?></td>
+				</div>
+				<div class="small-6 large-3 columns buttons">
+					<?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit', array('class' => 'button small')); ?>
+					<?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
+				</div>
+		</div>
+		<?php endforeach; ?>
 
-		<table class="default">
+		<!--<table class="default">
 			<thead>
 				<tr>
 					<th>Templates</th>
@@ -88,7 +124,7 @@ $(function(){
 				</tr>
 			</tbody>
 		<?php endforeach; ?>
-		</table>
+		</table> -->
 
 		<?php echo $this->pagination->create_links(); ?>
 

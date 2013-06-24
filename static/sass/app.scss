@@ -1,11 +1,11 @@
 /* Halogy Color Settings */
 
-$primary-color: #567af0;  // Halogy Blue
-$secondary-color: #9e719d; // Purple
-$third-color: #f29f46; // Orange 
-$fourth-color: #25bca7; // Green Color
-$alert-color: #c63c3d;
-$success-color: #6ea820;
+$primary-color: #567af0;  // Primary Color // Halogy Blue
+$secondary-color: #9e719d; // Secondary Color // Purple
+$third-color: #f29f46; // Third Color // Orange 
+$fourth-color: #25bca7; // Accent Color // Green Color
+$alert-color: #c63c3d;  // Alerts
+$success-color: #6ea820; // Success & Save Alert Color
 
 $light-color: #FFFFFF;
 $dark-color: #000000;
@@ -195,6 +195,37 @@ label {
 	top: 0;
 }
 
+.table-header {
+	background: $primary-color;
+	color: $light-color;
+}
+
+.table-header h1,h2,h3,h4,h5 {
+	color: $light-color;
+}
+
+.table {
+	background: #F1F1F1;
+	border-bottom: 1px solid #DDDDDD;
+	padding: 10px 0 10px;
+}
+
+.alt {
+	background: #f9f9f9;
+}
+
+.table > .columns {
+	line-height: 1.8em;
+}
+
+.table > .buttons {
+	text-align: right;
+}
+
+.table > .columns > .button {
+	margin: 0;
+}
+
 // Button Groups
 
 $radius: $global-radius;
@@ -354,7 +385,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 // Dashboard
 
 .dash-users {
-	background: #25bca7;
+	background: $fourth-color;
 	border-radius: $global-radius;
 	color: $light-color;
 	margin-bottom: 25px;
@@ -462,7 +493,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	color: $light-color;
 	padding: $global-padding;
 	margin: 0 0 20px 0;
-	text-shadow: 0 1px #c17018;
+	text-shadow: 0 1px (darken($third-color, 15%));
 	.close { @include alert-close; }
 }
 
@@ -598,7 +629,8 @@ footer {
 	background: $light-color;
 	bottom: 0;
 	@include box-shadow (0px 0px 5px darken(#FFF, 15%));
-	min-height: 75px;
+	min-height: 150px;
+	margin: 50px 0 0 0;
 	padding: $global-padding;
 	width: 100%;
 }
