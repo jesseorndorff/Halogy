@@ -61,7 +61,6 @@ $db['default']['stricton'] = FALSE;
 
 // Setup for Pagoda Box
 
-$active_group = 'default';
 $active_record = TRUE;
  
 $db['production']['hostname'] = "tunnel.pagodabox.com";
