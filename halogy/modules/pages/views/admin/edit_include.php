@@ -16,90 +16,93 @@ $(function(){
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 
-<div class="row">
+ <div class="row">
 	<div class="large-12 columns body">
-
-		<h1 class="headingleft">Edit 
-			<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>
-			<?php
-				if ($type == 'C') $typeLink = 'css';
-				elseif ($type == 'J') $typeLink = 'js';
-				else $typeLink = '';
-			?>
-		</h1>
-	
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/pages/includes'); ?>/<?php echo $typeLink; ?>" class="bluebutton">Back to Includes</a></li>
-			<li><input type="submit" value="Save Changes" id="submit" class="green" /></li>
-		</ul>
-
+		<div class="row">
+			<div class="large-7 columns">
+				<h1 class="headingleft">Edit 
+					<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>
+					<?php
+						if ($type == 'C') $typeLink = 'css';
+						elseif ($type == 'J') $typeLink = 'js';
+						else $typeLink = '';
+					?>
+				</h1>
+			</div>
+			<div class="large-5 columns">
+				<a href="<?php echo site_url('/admin/pages/includes'); ?>/<?php echo $typeLink; ?>" class="button right">Back to Includes</a>
+			</div>
+		</div> <!-- /row -->
 		<hr>
 
-		<?php if ($errors = validation_errors()): ?>
-			<div class="error">
-				<?php echo $errors; ?>
-			</div>
-		<?php endif; ?>
-		<?php if (isset($message)): ?>
-			<div class="message">
-				<?php echo $message; ?>
-			</div>
-		<?php endif; ?>
+		<div class="large-8 columns">
 
-		<div class="large-6 columns">
+			<?php if ($errors = validation_errors()): ?>
+				<div class="error">
+					<?php echo $errors; ?>
+				</div>
+			<?php endif; ?>
+			<?php if (isset($message)): ?>
+				<div class="message">
+					<?php echo $message; ?>
+				</div>
+			<?php endif; ?>
 
-		<?php if ($type == 'C'): ?>
+			
 
-			<label for="includeRef">Filename:</label>
-			<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-			<span class="tip">Your file will be found at &ldquo;/css/filename.css&rdquo; (make sure you use the '.css' extension).</span><br class="clear" />
+			<?php if ($type == 'C'): ?>
 
-			<?php echo @form_hidden('type', 'C'); ?>
+				<label for="includeRef">Filename:</label>
+				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
+				<span class="tip">Your file will be found at &ldquo;/css/filename.css&rdquo; (make sure you use the '.css' extension).</span><br class="clear" />
 
-		<?php elseif ($type == 'J'): ?>
+				<?php echo @form_hidden('type', 'C'); ?>
 
-			<label for="includeRef">Filename:</label>
-			<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-			<span class="tip">Your file will be found at &ldquo;/js/filename.js&rdquo; (make sure you use the '.js' extension).</span><br class="clear" />
+			<?php elseif ($type == 'J'): ?>
 
-			<?php echo @form_hidden('type', 'J'); ?>
+				<label for="includeRef">Filename:</label>
+				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
+				<span class="tip">Your file will be found at &ldquo;/js/filename.js&rdquo; (make sure you use the '.js' extension).</span><br class="clear" />
 
-		<?php else: ?>
+				<?php echo @form_hidden('type', 'J'); ?>
 
-			<label for="includeRef">Reference:</label>
-			<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-			<span class="tip">To access this include just use {include:REFERENCE} in your template.</span><br class="clear" />
+			<?php else: ?>
 
-			<?php echo @form_hidden('type', 'H'); ?>
+				<label for="includeRef">Reference:</label>
+				<p class="tip">To access this include just use {include:REFERENCE} in your template.</p>
+				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
 
-		<?php endif; ?>
+				<?php echo @form_hidden('type', 'H'); ?>
+
+			<?php endif; ?>
+
+			<label for="body">Markup:</label>	
+			<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
 
 			<div class="autosave">
 				<span class="autosave-saving">Saving...</span>
 				<span class="autosave-complete"></span>
 			</div>
+
+			<input type="submit" value="Save Changes" id="submit" class="button green" />
 		</div>
-		<div class="large-12 columns markup">
-				<label for="body">Markup:</label>	
-				<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
-				<br class="clear" />
+			<div class="large-4 columns">
+				<h2>Versions</h2>	
 
-			<h2>Versions</h2>	
-
-			<ul>
-			<?php if ($versions): ?>
-				<?php foreach($versions as $version): ?>
-					<li>
-						<?php if ($data['versionID'] == $version['versionID']): ?>
-							<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
-						<?php else: ?>
-							<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> - <?php echo anchor('/admin/pages/revert_include/'.$version['objectID'].'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"'); ?>
-						<?php endif; ?>
-					</li>
-				<?php endforeach; ?>	
-			<?php endif; ?>
-			</ul>
-
+				<ul class="versions">
+				<?php if ($versions): ?>
+					<?php foreach($versions as $version): ?>
+						<li>
+							<?php if ($data['versionID'] == $version['versionID']): ?>
+								<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
+							<?php else: ?>
+								<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> <?php echo anchor('/admin/pages/revert_include/'.$version['objectID'].'/'.$version['versionID'], 'Revert', array('class' => 'button small grey right', 'onClick' => 'return confirm(\'You will lose unsaved changes. Continue?\');')); ?>
+							<?php endif; ?>
+						</li>
+					<?php endforeach; ?>	
+				<?php endif; ?>
+				</ul>
+			</div>
 		</div>	
 	</div>
 </div>

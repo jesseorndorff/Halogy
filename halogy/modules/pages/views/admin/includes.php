@@ -1,47 +1,54 @@
 <div class="row">
 	<div class="large-12 columns body">
-
-		<h1 class="headingleft">Includes</h1>
-
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="bluebutton">Templates</a></li>
-			<li><a href="<?php echo site_url('/admin/pages/includes/css'); ?>" class="bluebutton">CSS</a></li>
-			<li><a href="<?php echo site_url('/admin/pages/includes/js'); ?>" class="bluebutton">Javascript</a></li>	
-			<li><a href="<?php echo site_url('/admin/pages/add_include'); ?>" class="green">Add Include</a></li>
-		</ul>
-		<hr>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Includes</h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group even-4">
+					<li><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Templates</a></li>
+					<li><a href="<?php echo site_url('/admin/pages/includes/css'); ?>" class="button">CSS</a></li>
+					<li><a href="<?php echo site_url('/admin/pages/includes/js'); ?>" class="button">Javascript</a></li>	
+					<li><a href="<?php echo site_url('/admin/pages/add_include'); ?>" class="button green">Add Include</a></li>
+				</ul>
+			</div>
+		</div><!-- /row -->
 		<?php if ($includes): ?>
 
 		<?php echo $this->pagination->create_links(); ?>
 
-		<table class="default">
-			<thead>
-				<tr>
-					<th>Reference</th>
-					<th>Date Modified</th>
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>
-				</tr>
-			</thead>
+		<div class="row table-header hide-for-touch">
+			<div class="large-5 columns">
+				<h3>Reference</h3>
+			</div>
+			<div class="large-5 columns">
+				<h3>Date Modified</h3>
+			</div>
+			<div class="large-2 columns">
+			</div>
+		</div>
 		<?php
 			$i = 0;
 			foreach ($includes as $include):
 			$class = ($i % 2) ? ' class="alt"' : ''; $i++;
 		?>
-		<tbody>
-			<tr<?php echo $class;?>>
-				<td><?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], $include['includeRef']); ?></td>	
-				<td><?php echo dateFmt($include['dateCreated']); ?></td>
-				<td>
-					<?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], 'Edit'); ?>
-				</td>
-				<td>			
-					<?php echo anchor('/admin/pages/delete_include/'.$include['includeID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
-				</td>
-			</tr>
-		</tbody>
+
+		<div class="row table <?php echo $class;?>">
+			<div class="large-5 columns">
+				<p><?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], $include['includeRef']); ?></p>
+			</div>
+			<div class="large-5 columns">
+				<p><?php echo dateFmt($include['dateCreated']); ?></p>
+			</div>
+			<div class="large-2 columns">
+				<ul class="button-group even-2">
+					<li><?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], 'Edit', array('class' => 'button small grey')); ?></li>
+					<li><?php echo anchor('/admin/pages/delete_include/'.$include['includeID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+				</ul>
+			</div>
+		</div>
+
 		<?php endforeach; ?>
-		</table>
 
 		<?php echo $this->pagination->create_links(); ?>
 

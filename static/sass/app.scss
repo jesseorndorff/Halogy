@@ -200,22 +200,23 @@ label {
 	color: $light-color;
 }
 
-.table-header h1,h2,h3,h4,h5 {
+.table-header h3,h4,h5 {
 	color: $light-color;
+	padding: 5px 0 3px;
 }
 
 .table {
-	background: #F1F1F1;
-	border-bottom: 1px solid #DDDDDD;
+	background-color: #f1f1f1;
+	// @include filter-gradient(#f1f1f1, #eaeaea, vertical);
+	// @include background-image(linear-gradient(top,  #f1f1f1 0%,#f4f4f4 44%,#eaeaea 100%));
+	border-bottom: 2px solid #DDDDDD;
+	box-shadow: 0 -1px 0 $light-color;
 	padding: 10px 0 10px;
-}
-
-.alt {
-	background: #f9f9f9;
 }
 
 .table > .columns {
 	line-height: 1.8em;
+	margin: 15px 0 0 0;
 }
 
 .table > .buttons {
@@ -226,18 +227,21 @@ label {
 	margin: 0;
 }
 
+.alt {
+background-color: #f9f9f9;
+// @include filter-gradient(#f1f1f1, #eaeaea, vertical);
+// @include background-image(linear-gradient(top,  #f1f1f1 0%,#f4f4f4 44%,#eaeaea 100%));
+}
+
 // Button Groups
 
 $radius: $global-radius;
 $even: false;
 $float: left;
 
-.group-button { @include button-group-container;
-	float: right;
-	margin: 10px 0 0;
-  .bluebutton { @include button;}
-
-  & > li { @include button-group-style($radius, $even, $float); }
+.button-group { @include button-group-container;
+	text-align: right;
+  	& > li { @include button-group-style($radius, $even, $float); }
 }
 
 .success {
@@ -249,7 +253,9 @@ $float: left;
 .orange {
 	@include button($padding, $third-color, $radius, $full-width, $disabled, $is-input);
 }
-
+.grey {
+	@include button($padding, darken($light-color, 25%), $radius, $full-width, $disabled, $is-input);
+}
 .dropdown hr {
 	border: 0;
 }
@@ -261,6 +267,12 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	padding: $global-padding;
 	@include border-radius($global-radius);
 	@include box-shadow (0 1px 2px darken(#FFF, 15%));
+}
+
+.module-tip {
+	@include card(darken($primary-color, 0%));
+	color: $light-color;
+	.close { @include alert-close; }
 }
 
 .header {
@@ -280,6 +292,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .body {
 	@include card(#FFF);
 	margin-bottom: 50px;
+	padding-bottom: 0;
 }
 
 // Alerts
@@ -340,6 +353,16 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .cat-name {
 	color: #4d4d4d;
 	font-size: 18px;
+}
+
+.versions li{
+	list-style-type: none;
+	border-bottom: 1px solid #DDD;
+	padding: 10px 0;
+}
+
+.versions button.small, .button.small {
+	margin: 0;
 }
 
 // Dashboard
@@ -572,6 +595,7 @@ ol.order .draft { background: #ffffec !important; }
 ol.order .hiddenpage { background: #e9e9e9; }
 ol.order .haschildren { margin: 8px 0; border-bottom: none !important; }
 
+.autosave {float:right;}
 span.autosave-saving { display: none; background:$primary-color; color: $light-color; padding:5px; border-radius: $global-radius;}
 span.autosave-complete { display: none; background:$primary-color; color: $light-color; padding: 5px; border-radius: $global-radius;}
 .markup {margin-top: 15px;}

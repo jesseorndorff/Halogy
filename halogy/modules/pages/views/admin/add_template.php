@@ -3,17 +3,20 @@
 
  <div class="row">
 	<div class="large-12 columns body">
-
-		<h1 class="headingleft">Add Template</h1>
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="bluebutton">Back to Templates</a></li>
-			<li><input type="button" id="default" value="Reset to Default" class="bluebutton" /></li>
-			<li><input type="submit" value="Save Changes" class="green" /></li>
-		</ul>
-
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Add Template</h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group even-3">
+					<li><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Templates</a></li>
+					<li><input type="button" id="default" value="Reset to Default" class="button" /></li>
+					<li><input type="submit" value="Save Changes" class="button green" /></li>
+				</ul>
+			</div>
+		</div> <!-- /row -->
 		<hr>
-
-		<div class="large-6 columns">
+		<div class="small-12 large-8 columns">
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">
 					<?php echo $errors; ?>
@@ -26,6 +29,7 @@
 			</div>
 			
 			<label for="moduleSelect">Module:</label>
+			<p class="tip">To make a module template (e.g. for the Blog) select the module here.</p>
 			<?php 
 				$values = array();
 				$values[''] = 'Not a module template';
@@ -91,7 +95,6 @@
 
 				echo @form_dropdown('moduleSelect',$values, (($data['templateName'] == 'custom') ? 'custom' : $data['modulePath']), 'id="moduleSelect" class="formelement" rel="'.site_url('/admin/pages/module').'"'); 
 			?>
-			<span class="tip">To make a module template (e.g. for the Blog) select the module here.</span>
 
 			<div class="showModulePath">
 				<label for="modulePath">Module Reference:</label>
@@ -100,7 +103,13 @@
 
 			<div class="autosave">
 				<label for="body">Markup:</label>
+				<p class="tip">Paste the code from your editor here.</p>
 				<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
+			</div>
+		</div>
+		<div class="large-4 columns">
+			<div data-alert class="module-tip hide-for-small">
+				<p>Adding a template is easy! We recommend working in your own code editor, like Sublime Text, then pasting your final markup in this area.</p>
 			</div>
 		</div>
 	</div>

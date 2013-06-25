@@ -1,21 +1,21 @@
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 <div class="row">
 	<div class="large-12 columns body">
-		<h1 class="headingleft">Add 
-			<?php echo ($type == 'css' || $type == 'js') ? 'File' : 'Include'; ?>
-			<?php
-				if ($type == 'C') $typeLink = 'css';
-				elseif ($type == 'J') $typeLink = 'js';
-				else $typeLink = '';
-			?>
-		</h1>
-
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/pages/includes/'.$typeLink); ?>" class="bluebutton">Back to Includes</a></li>
-			<li><input type="submit" value="Save Changes" class="green" /></li>
-		</ul>
-
-
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Add 
+					<?php echo ($type == 'css' || $type == 'js') ? 'File' : 'Include'; ?>
+					<?php
+						if ($type == 'C') $typeLink = 'css';
+						elseif ($type == 'J') $typeLink = 'js';
+						else $typeLink = '';
+					?>
+				</h1>
+			</div>
+			<div class="large-6 columns">
+				<a href="<?php echo site_url('/admin/pages/includes/'.$typeLink); ?>" class="button right">Back to Includes</a>
+			</div>
+		</div>
 		<hr>
 
 		<?php if ($errors = validation_errors()): ?>
@@ -24,7 +24,7 @@
 			</div>
 		<?php endif; ?>
 
-		<div class="large-6 columns">
+		<div class="large-8 columns">
 
 			<?php if ($type == 'css'): ?>
 
@@ -52,12 +52,19 @@
 
 			<?php endif; ?>
 
-				<div class="autosave">
-					<label for="body">Markup:</label>	
-					<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
-					<br class="clear" />
-				</div>
+			<div class="markup">
+				<label for="body">Markup:</label>	
+				<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
+				<br class="clear" />
 			</div>
+			<input type="submit" value="Save Changes" class="button green" />
+		</div>
+
+		<div class="large-4 columns">
+			<div data-alert class="module-tip hide-for-small">
+				<p>Adding an template is easy! We recommend working in your own code editor, like Sublime Text, then pasting your final markup in this area.</p>
+			</div>
+		</div>
 	</div>
 </div>
 	

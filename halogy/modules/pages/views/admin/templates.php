@@ -24,27 +24,34 @@ $(function(){
 
 <div class="row">
 	<div class="large-12 columns body">
-		<h1 class="headingleft">Page Templates</h1>
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="bluebutton">Includes</a></li>
-			<li><a href="#" class="bluebutton toggle-zip">Import Theme</a></li>
-			<li><a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="green">Add Template</a></li>
-		</ul>
-		<hr>
-		<div class="large-4 large-offset-8 columns">
-			<label for="filter">Filter</label> 
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Page Templates</h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group even-3">
+					<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">View Includes</a></li>
+					<li><a data-reveal-id="zipUpload" href="#" class="button toggle-zip">Import Theme</a></li>
+					<li><a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="button green">Add Template</a></li>
+				</ul>
+			</div>
+		</div> <!-- / row -->
+		<div class="row">
+			<div class="large-4 columns">
+				<label for="filter">Filter</label> 
 
-			<?php
-				$options = array(
-					'' => 'View All',
-					'page' => 'Page Templates',
-					'module' => 'Module Templates'
-				);
-				
-				echo form_dropdown('filter', $options, $type, 'id="filter"');
-			?>
+				<?php
+					$options = array(
+						'' => 'View All',
+						'page' => 'Page Templates',
+						'module' => 'Module Templates'
+					);
+					
+					echo form_dropdown('filter', $options, $type, 'id="filter"');
+				?>
+			</div>
 		</div>
-		<hr>
+
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">
 				<?php echo $errors; ?>
@@ -55,16 +62,16 @@ $(function(){
 
 		<?php echo $this->pagination->create_links(); ?>
 		<div class="row table-header hide-for-touch">
-			<div class="large-3 columns">
+			<div class="large-5 columns">
 				<h3>Templates</h3>
 			</div> 
 			<div class="large-3 columns">
 				<h3>Date Modified</h3>
 			</div>
-			<div class="large-3 columns">
+			<div class="large-2 columns">
 				<h3>Usage</h3>
 			</div>
-			<div class="large-3 columns">
+			<div class="large-2 columns">
 				<h3>	</h3>
 			</div> 
 		</div>
@@ -74,21 +81,25 @@ $(function(){
 				$class = ($i % 2) ? 'alt' : ''; $i++;
 			?>
 		<div class="row table <?php echo $class;?>">
-				<div class="small-6 large-3 columns">
-					<h4 class="show-for-touch">Template: </h4><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<small>Module</small>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?>
+				<div class="small-6 large-5 columns">
+					<h4 class="show-for-touch">Template: </h4>
+					<p><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<strong>Module</strong>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?></p>
 				</div>
 				<div class="small-6 large-3 columns">
-					<h4 class="show-for-touch">Date Modified: </h4><?php echo dateFmt($template['dateCreated']); ?>
+					<h4 class="show-for-touch">Date Modified: </h4>
+					<p><?php echo dateFmt($template['dateCreated']); ?></p>
 				</div>
-				<div class="small-6 large-3 columns">
+				<div class="small-6 large-2 columns">
 					<h4 class="show-for-touch">Usage: </h4>
 					<?php if ($this->pages->get_template_count($template['templateID']) > 0): ?>
-						<?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)
+						<p><?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)</p>
 					<?php endif; ?></td>
 				</div>
-				<div class="small-6 large-3 columns buttons">
-					<?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit', array('class' => 'button small')); ?>
-					<?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
+				<div class="small-12 large-2 columns buttons">
+					<ul class="button-group even-2">
+						<li><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit', array('class' => 'button small grey')); ?></li>
+						<li><?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+					</ul>
 				</div>
 		</div>
 		<?php endforeach; ?>
@@ -137,7 +148,7 @@ $(function(){
 	</div>
 </div>
 
-		<div id="myModal" class="reveal-modal">
+		<div id="zipUpload" class="reveal-modal">
 			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
 				<h2>Import Your Theme</h2>
 				<p>Importing your custom theme is simple. Just zip up your HTML, CSS, JS files and upload the zip here!</p>
