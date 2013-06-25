@@ -258,7 +258,7 @@ $float: left;
 	@include button($padding, $third-color, $radius, $full-width, $disabled, $is-input);
 }
 .grey {
-	@include button($padding, darken($light-color, 25%), $radius, $full-width, $disabled, $is-input);
+	@include button($padding, darken($light-color, 10%), $radius, $full-width, $disabled, $is-input);
 }
 
 // Labels
