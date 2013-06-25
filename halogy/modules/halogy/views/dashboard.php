@@ -41,7 +41,7 @@ $(function(){
 		
 		<div class="activity" class="loader">
 
-			<ul class="dashboardnav group-button hide-for-touch">
+			<ul class="dashboardnav button-group hide-for-touch right">
 				<li class="<?php echo ($days == 30) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin'); ?>">Last 30 Days</a></li>
 				<li class="<?php echo ($days == 60) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin/dashboard/60'); ?>">Last 60 Days</a></li>
 				<li class="<?php echo ($days == 90) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin/dashboard/90'); ?>">3 Months</a></li>

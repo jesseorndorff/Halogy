@@ -30,23 +30,20 @@ $(function(){
 </script>
 <div class="row">
 	<div class="large-12 columns body">
-		<h1 class="headingleft">Pages</h1>
-		<ul class="group-button">
-		<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
-			<li><a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green">Add Page</a></li>
-		<?php endif; ?>
-		</ul>
-
-		<hr>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Pages</h1>
+			</div>
+			<div class="large-6 columns">
+				<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
+					<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green right">Add Page</a>
+				<?php endif; ?>
+			</div>
+		</div>
 
 <?php if ($parents): ?>
-
-
 		<div class="row">
-			<div class="large-8 columns">
-				<p></p>
-			</div>
-			<div class="large-4 columns custom dropdown">
+			<div class="large-4 columns dropdown">
 				<label for="collapse">Collapse</label> 
 
 				<select id="collapse">
@@ -57,63 +54,61 @@ $(function(){
 				</select>
 			</div>
 		</div>
-	<hr>
-	<ol class="order">
+		<hr>
 		<?php foreach ($parents as $page): ?>
-		
-		<li id="pages_<?php echo $page['pageID']; ?>" class="<?php echo (!$page['navigation']) ? 'hiddenpage' : ''; ?><?php echo (!$page['active']) ? ' draft' : ''; ?><?php echo (@$children[$page['pageID']]) ? ' haschildren' : ''; ?><?php echo ($page['active'] && $page['datePublished'] > 0 && ($page['newBlocks'] > 0 || $page['newVersions'] > 0)) ? ' draft' : ''; ?>">
-			<div class="row page-order">
-			<div class="large-4 columns">
-				<strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName'], 'class="pagelink"') : $page['pageName']; ?></strong><br />
-				<p>Path: <?php echo $page['uri']; ?></p>
-			</div>
-			<div class="large-5 columns">	
-				<?php if ($page['active']): ?>
-					<span style="color:green">
-						<?php if ($page['redirect']): ?>
-							<strong>Redirect</strong> (<?php echo $page['redirect']; ?>)
-						<?php else: ?>
-							<?php if ($page['active'] && $page['datePublished'] > 0 && ($page['newBlocks'] > 0 || $page['newVersions'] > 0)): ?>
-								<strong>Published (but modified)</strong>
+			<div class="row">
+				<div class="large-4 columns">
+					<strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName'], 'class="pagelink"') : $page['pageName']; ?></strong>
+					<p>Path: <?php echo $page['uri']; ?></p>				
+				</div>
+				<div class="large-4 columns">
+					<?php if ($page['active']): ?>
+							<?php if ($page['redirect']): ?>
+							<span class="label redirect">
+								Redirect (<?php echo $page['redirect']; ?>)
+							</span>
 							<?php else: ?>
-								<strong>Published</strong>
-							<?php endif; ?>
-							<?php echo (!$page['navigation']) ? ' (hidden)' : ''; ?>
-						<?php endif; ?>						
-					</span>
-				<?php else: ?>
-					Draft
-					<?php echo (!$page['navigation']) ? ' (hidden)' : ''; ?>
-				<?php endif; ?>
-				<br />
-				<?php if ($page['active'] && (!$page['newBlocks'] && !$page['newVersions'])): ?>
-					<p>Published: <?php echo dateFmt($page['datePublished'], '', '', TRUE); ?>
-				<?php else: ?>
-					<p>Modified: <?php echo dateFmt($page['dateModified'], '', '', TRUE); ?>
-				<?php endif; ?>
-				<em>by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></em></p>
+							<span class="label published">
+								<?php if ($page['active'] && $page['datePublished'] > 0 && ($page['newBlocks'] > 0 || $page['newVersions'] > 0)): ?>
+									Published (but modified)
+								<?php else: ?>
+									Published
+								<?php endif; ?>
+							</span>
+								<?php echo (!$page['navigation']) ? ' (hidden)' : ''; ?>
+							<?php endif; ?>						
+	
+					<?php else: ?>
+						Draft
+						<?php echo (!$page['navigation']) ? ' (hidden)' : ''; ?>
+					<?php endif; ?>
+					<?php if ($page['active'] && (!$page['newBlocks'] && !$page['newVersions'])): ?>
+						<p>Published: <?php echo dateFmt($page['datePublished'], '', '', TRUE); ?>
+					<?php else: ?>
+						<p>Modified: <?php echo dateFmt($page['dateModified'], '', '', TRUE); ?>
+					<?php endif; ?>
+					<em>by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></em></p>
+				</div>
+				<div class="large-3 columns">
+					<ul class="button-group">
+						<li><?php echo anchor($page['uri'], 'View', array('class' => 'button small')); ?></li>
+						<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
+							<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'button grey small')); ?></li>
+						<?php endif; ?>
+						<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
+							<li><?php echo anchor('/admin/pages/delete/'.$page['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+						<?php endif; ?>
+					</ul>
+				</div>
 			</div>
-			<div class="large-3 columns buttons">
-				<?php echo anchor($page['uri'], 'View', array('class' => 'button orange small')); ?>
-				<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-					<?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'button small')); ?>
-				<?php endif; ?>
-				<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-					<?php echo anchor('/admin/pages/delete/'.$page['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
-				<?php endif; ?>
-			</div>
-			<div class="clear"></div>
-
-			<?php if (isset($children[$page['pageID']]) && $children[$page['pageID']]): ?>
-			
-				<ol class="subpage">
+				<?php if (isset($children[$page['pageID']]) && $children[$page['pageID']]): ?>
 					<?php foreach ($children[$page['pageID']] as $child): ?>
-					<li id="pages_<?php echo $child['pageID']; ?>" class="<?php echo (!$child['navigation']) ? 'hiddenpage' : ''; ?><?php echo (!$child['active']) ? ' draft' : ''; ?><?php echo ($child['active'] && $child['datePublished'] > 0 && ($child['newBlocks'] > 0 || $child['newVersions'] > 0)) ? ' draft' : ''; ?>">
+					<div class="row subpage">
 						<div class="large-4 columns">
 							<span class="padded"><img src="<?php echo $this->config->item('staticPath'); ?>/images/arrow_child.gif" alt="Arrow" /></span> <strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$child['pageID'], $child['pageName'], 'class="pagelink"') : $child['pageName']; ?></strong><br />
 							<p>Path: <?php echo $child['uri']; ?></p>
 						</div>
-						<div class="large-5 columns">	
+						<div class="large-4 columns">
 							<?php if ($child['active']): ?>
 								<span style="color:green">
 									<?php if ($child['redirect']): ?>
@@ -139,76 +134,68 @@ $(function(){
 							<?php endif; ?>
 							 by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></p>
 						</div>
-						<div class="large-3 columns buttons">
-							<?php echo anchor($child['uri'], 'View', array('class' => 'button orange small')); ?>
-							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-								<?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'button small')); ?>
-							<?php endif; ?>
-							<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-								<?php echo anchor('/admin/pages/delete/'.$child['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
-							<?php endif; ?>
+						<div class="large-3 columns">
+							<ul class="button-group">
+									<li><?php echo anchor($child['uri'], 'View', array('class' => 'button small')); ?></li>
+								<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
+									<li><?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'button grey small')); ?></li>
+								<?php endif; ?>
+								<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
+									<li><?php echo anchor('/admin/pages/delete/'.$child['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+								<?php endif; ?>			
+							</ul>				
 						</div>
-						
-						<?php if (isset($subchildren[$child['pageID']]) && $subchildren[$child['pageID']]): ?>
-						
-							<ol class="subpage">
-								<?php foreach ($subchildren[$child['pageID']] as $subchild): ?>
-								<li id="pages_<?php echo $subchild['pageID']; ?>" class="<?php echo (!$subchild['navigation']) ? 'hiddenpage' : ''; ?><?php echo (!$subchild['active']) ? ' draft' : ''; ?><?php echo ($subchild['active'] && $subchild['datePublished'] > 0 && ($subchild['newBlocks'] > 0 || $subchild['newVersions'] > 0)) ? ' draft' : ''; ?>">
-									<div class="large-4 columns">
-										<span class="padded"><img src="<?php echo $this->config->item('staticPath'); ?>/images/arrow_subchild.gif" alt="Arrow" /></span> <strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$subchild['pageID'], $subchild['pageName'], 'class="pagelink"') : $subchild['pageName']; ?></strong><br />
-									<p>Path: <?php echo $subchild['uri']; ?></p>
-									</div>
-									<div class="large-5 columns">	
-										<?php if ($subchild['active']): ?>
-											<span style="color:green">
-												<?php if ($subchild['redirect']): ?>
-													<strong>Redirect</strong> (<?php echo $subchild['redirect']; ?>)
-												<?php else: ?>
-												<?php if ($subchild['active'] && $subchild['datePublished'] > 0 && ($subchild['newBlocks'] > 0 || $subchild['newVersions'] > 0)): ?>
-													<strong>Published (but modified)</strong>
-												<?php else: ?>
-													<strong>Published</strong>
-												<?php endif; ?>
-													<?php echo (!$subchild['navigation']) ? ' (hidden)' : ''; ?>
-												<?php endif; ?>						
-											</span>
+					</div>
+				<?php endforeach; ?>
+			
+				<?php if (isset($subchildren[$child['pageID']]) && $subchildren[$child['pageID']]): ?>
+					<?php foreach ($subchildren[$child['pageID']] as $subchild): ?>
+						<div class="row">
+							<div class="large-4 columns">
+								<span class="padded"><img src="<?php echo $this->config->item('staticPath'); ?>/images/arrow_subchild.gif" alt="Arrow" /></span> <strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$subchild['pageID'], $subchild['pageName'], 'class="pagelink"') : $subchild['pageName']; ?></strong>
+								<p>Path: <?php echo $subchild['uri']; ?></p>
+							</div>
+							<div class="large-4 columns">
+								<?php if ($subchild['active']): ?>
+									<span style="color:green">
+										<?php if ($subchild['redirect']): ?>
+											<strong>Redirect</strong> (<?php echo $subchild['redirect']; ?>)
 										<?php else: ?>
-											Draft
+										<?php if ($subchild['active'] && $subchild['datePublished'] > 0 && ($subchild['newBlocks'] > 0 || $subchild['newVersions'] > 0)): ?>
+											<strong>Published (but modified)</strong>
+										<?php else: ?>
+											<strong>Published</strong>
+										<?php endif; ?>
 											<?php echo (!$subchild['navigation']) ? ' (hidden)' : ''; ?>
-										<?php endif; ?>
-										<br />
-										<?php if ($subchild['active'] && (!$subchild['newBlocks'] && !$subchild['newVersions'])): ?>
-											Published: <strong><?php echo dateFmt($subchild['datePublished'], '', '', TRUE); ?></strong> 
-										<?php else: ?>
-											Modified: <strong><?php echo dateFmt($subchild['dateModified'], '', '', TRUE); ?></strong> 
-										<?php endif; ?>
-										<em>by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></em>
-									</div>
-									<div class="large-3 columns buttons page-order">
-										<?php echo anchor($subchild['uri'], 'View', array('class' => 'button orange small')); ?>
-										<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-											<?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'button small')); ?>
-										<?php endif; ?>
-										<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-											<?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')	); ?>
-										<?php endif; ?>
-									</div>
-									<div class="clear"></div>
-								</li>
-								<?php endforeach; ?>
-							</ol>
-								
-						<?php endif; ?>	
-					</li>
+										<?php endif; ?>						
+									</span>
+								<?php else: ?>
+									Draft
+									<?php echo (!$subchild['navigation']) ? ' (hidden)' : ''; ?>
+								<?php endif; ?>
+								<br />
+								<?php if ($subchild['active'] && (!$subchild['newBlocks'] && !$subchild['newVersions'])): ?>
+									Published: <strong><?php echo dateFmt($subchild['datePublished'], '', '', TRUE); ?></strong> 
+								<?php else: ?>
+									Modified: <strong><?php echo dateFmt($subchild['dateModified'], '', '', TRUE); ?></strong> 
+								<?php endif; ?>
+								<em>by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></em>
+							</div>
+							<div class="large-3 columns">
+								<ul class="button-group">
+									<li><?php echo anchor($subchild['uri'], 'View', array('class' => 'button small')); ?></li>
+									<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
+										<li><?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'button grey small')); ?></li>
+									<?php endif; ?>
+									<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
+										<li><?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')	); ?></li>
+									<?php endif; ?>
+							</div>
+						</div>
 					<?php endforeach; ?>
-				</ol>
-					
-			<?php endif; ?>	
-		</div> <!-- / row -->				
-		</li>
+				<?php endif; ?>
+			<?php endif; ?>
 		<?php endforeach; ?>
-	</ol>
-	</div>
 </div>	
 
 <?php else: ?>

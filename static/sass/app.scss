@@ -1,11 +1,11 @@
 /* Halogy Color Settings */
 
 $primary-color: #567af0;  // Primary Color // Halogy Blue
-$secondary-color: #9e719d; // Secondary Color // Purple
-$third-color: #f29f46; // Third Color // Orange 
+$secondary-color: #9b59b6; // Secondary Color // Purple
+$third-color: #f39c12; // Third Color // Orange 
 $fourth-color: #25bca7; // Accent Color // Green Color
-$alert-color: #c63c3d;  // Alerts
-$success-color: #6ea820; // Success & Save Alert Color
+$alert-color: #c0392b;  // Alerts
+$success-color: #27ae60; // Success & Save Alert Color
 
 $light-color: #FFFFFF;
 $dark-color: #000000;
@@ -200,7 +200,7 @@ label {
 	color: $light-color;
 }
 
-.table-header h3,h4,h5 {
+.table-header h3 {
 	color: $light-color;
 	padding: 5px 0 3px;
 }
@@ -233,6 +233,10 @@ background-color: #f9f9f9;
 // @include background-image(linear-gradient(top,  #f1f1f1 0%,#f4f4f4 44%,#eaeaea 100%));
 }
 
+.padded {
+	padding: 0 25px;
+}
+
 // Button Groups
 
 $radius: $global-radius;
@@ -256,6 +260,20 @@ $float: left;
 .grey {
 	@include button($padding, darken($light-color, 25%), $radius, $full-width, $disabled, $is-input);
 }
+
+// Labels
+
+/* Using the available options */
+.published  { 
+	@include label;
+	background: $fourth-color;
+}
+
+.redirect  { 
+	@include label;
+	background: $third-color;
+}
+
 .dropdown hr {
 	border: 0;
 }
@@ -363,6 +381,12 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .versions button.small, .button.small {
 	margin: 0;
+}
+
+// Sidebar
+
+.side {
+	background: #34495e;
 }
 
 // Dashboard
@@ -717,3 +741,5 @@ footer {
 .hide {
 	display: none;
 }
+
+.clear {clear:both;}
