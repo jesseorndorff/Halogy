@@ -100,14 +100,13 @@ $portrait: "only screen and (orientation: portrait)";
 @media #{$screen} { }
 
 /* Used to alter styles for screens at least 768px wide. This is where the grid changes. */
-@media #{$small} { }
+@media #{$small} { 
+	.body {min-height: 400px;}
+}
 
 /* Used to alter styles for screens at least 1280px wide. */
 @media #{$medium} { 
-	/*.row {
-		width: 90%;
-		max-width: 90%;
-	} */
+	.body {min-height: 400px;}
 }
 
 /* Used to alter styles for screens at least 1440px wide. */
@@ -206,10 +205,11 @@ label {
 }
 
 .table {
-	background-color: #f1f1f1;
+	background-color: #FFF;
 	// @include filter-gradient(#f1f1f1, #eaeaea, vertical);
 	// @include background-image(linear-gradient(top,  #f1f1f1 0%,#f4f4f4 44%,#eaeaea 100%));
-	border-bottom: 2px solid #DDDDDD;
+	border-top: 1px solid #DDDDDD;
+	border-bottom: 1px solid #DDDDDD;
 	box-shadow: 0 -1px 0 $light-color;
 	padding: 10px 0 10px;
 }
@@ -229,8 +229,6 @@ label {
 
 .alt {
 background-color: #f9f9f9;
-// @include filter-gradient(#f1f1f1, #eaeaea, vertical);
-// @include background-image(linear-gradient(top,  #f1f1f1 0%,#f4f4f4 44%,#eaeaea 100%));
 }
 
 .padded {
@@ -310,7 +308,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .body {
 	@include card(#FFF);
 	margin-bottom: 50px;
-	padding-bottom: 0;
+	min-padding-bottom: 25px;
 }
 
 // Alerts

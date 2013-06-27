@@ -13,7 +13,6 @@
 				</ul>
 			</div>
 		</div>
-		<hr>
 
 		<?php if ($includes): ?>
 
@@ -30,7 +29,7 @@
 				<?php
 					$i = 0;
 					foreach ($includes as $include):
-					$class = ($i % 2) ? ' class="alt"' : ''; $i++;
+					$class = ($i % 2) ? 'alt' : ''; $i++;
 				?>
 
 				<div class="row table <?php echo $class;?>">
