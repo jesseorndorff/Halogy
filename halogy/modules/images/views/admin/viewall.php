@@ -54,18 +54,22 @@ $(function(){
 </script>
 <div class="row">
 	<div class="large-12 columns body">
-		<h1 class="headingleft">Images</h1>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Images</h1>
+			</div>
 
-		<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
-			<ul class="group-button">
-				<li><a href="#" class="bluebutton" data-reveal-id="upload-zip">Upload Zip</a></li>
-				<li><a href="#" class="green" data-reveal-id="upload-image">Upload Image</a></li>
-			</ul>
+			<div class="large-6 columns">
+				<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
+					<ul class="button-group even-2">
+						<li><a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a></li>
+						<li><a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a></li>
+					</ul>
+				<?php endif; ?>
+			</div>
+		</div>
 
-		<?php endif; ?>
-		<hr>
-
-                <?php echo $this->session->flashdata('error'); ?>
+       <?php echo $this->session->flashdata('error'); ?>
                 
 		<div class="large-4 columns">
 			<label for="folderID">
