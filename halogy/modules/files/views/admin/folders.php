@@ -38,13 +38,17 @@ $(function(){
 
 <div class="row">
 	<div class="large-12 columns body">
-
-		<h1 class="headingleft">File Folders</h1>
-
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/files/viewall'); ?>" class="bluebutton">View Files</a></li>
-			<li><a href="#" class="toggle green" data-reveal-id="file-folder-reveal">Add Folder</a></li>
-		</ul>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">File Folders</h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group even-2">
+					<li><a href="<?php echo site_url('/admin/files/viewall'); ?>" class="button">View Files</a></li>
+					<li><a href="#" class="toggle button green" data-reveal-id="file-folder-reveal">Add Folder</a></li>
+				</ul>
+			</div>
+		</div>
 		<hr>
 
 		<?php if ($folders): ?>
