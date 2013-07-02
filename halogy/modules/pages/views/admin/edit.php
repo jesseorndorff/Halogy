@@ -129,18 +129,20 @@
 
 <div class="row">
 	<div class="large-12 columns body">
-			<h1 class="headingleft">Edit Page</h1>
-		
-			<input type="hidden" name="target" id="target" value="" />
-			
-			<ul class="group-button">
-				<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>" class="bluebutton">Back to Pages</a></li>
-				<li><input type="submit" name="view" value="View Page" class="bluebutton save" /></li>
-				<li><input type="submit" id="save" name="save" value="Save Changes" class="green save" /></li>
-				<li><input type="submit" name="publish" value="Publish Page" class="orange save" /></li>
-			</ul>
-
-			<hr>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Edit Page</h1>
+			</div>
+			<div class="large-6 columns">
+				<input type="hidden" name="target" id="target" value="" />
+				<ul class="button-group even-4">
+					<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>" class="button">Back</a></li>
+					<li><input type="submit" name="view" value="View Page" class="button save" /></li>
+					<li><input type="submit" id="save" name="save" value="Save Changes" class="button green save" /></li>
+					<li><input type="submit" name="publish" value="Publish Page" class="button orange save" /></li>
+				</ul>
+			</div>
+		</div> <!-- / row -->
 
 				<?php if ($errors = validation_errors()): ?>
 					<div class="error clear">
@@ -282,13 +284,12 @@
 				<section>
 						<p class="title" data-section-title><a href="#">Version History</a></p>
 						<div class="content" data-section-content>
+						<div class="row">
+							<div class="large-6 small-12 large-centered columns">
+								<h2>Published Versions</h2>
+								<p>Here is the history for this page, you can revert your page back to any previous state.</p>
+								<?php if ($versions): ?>
 
-						<h2>Published Versions</h2>
-							<p>Here is the history for this page, you can revert your page back to any previous state.</p>
-							<hr>
-							<?php if ($versions): ?>
-							<div class="row">
-								<div class="large-6 columns">
 									<ul>
 									<?php foreach($versions as $version): ?>
 										<li>
@@ -300,14 +301,12 @@
 										</li>
 									<?php endforeach; ?>
 									</ul>
-
-									<br />
 				
 								<?php endif; ?>				
 				
 								<?php if ($drafts): ?>
 								
-									<h2 class="underline">Drafts</h2>
+									<h3 class="underline">Drafts</h3>
 								
 									<ul>
 									<?php foreach($drafts as $version): ?>
@@ -320,11 +319,12 @@
 										</li>
 									<?php endforeach; ?>
 									</ul>
-								</div>
+								<?php endif; ?>	
 							</div>
-							<?php endif; ?>	
-					</section>
-				</div>
+						</div>
+						</div>
+				</section>
+				
 			</div>
 		</div>
 	</div>
