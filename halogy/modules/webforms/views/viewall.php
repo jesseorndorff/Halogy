@@ -1,12 +1,16 @@
 <div class="row">
 	<div class="large-12 columns body">
-
-		<h1 class="headingleft">Web Forms</h1>
-
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>" class="bluebutton">Tickets</a></li>
-			<li><a href="<?php echo site_url('/admin/webforms/add_form'); ?>" class="green">Add Form</a></li>
-		</ul>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Web Forms</h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group even-2">
+					<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>" class="button">Tickets</a></li>
+					<li><a href="<?php echo site_url('/admin/webforms/add_form'); ?>" class="button green">Add Form</a></li>
+				</ul>
+			</div>
+		</div>
 
 		<?php if ($web_forms): ?>
 
