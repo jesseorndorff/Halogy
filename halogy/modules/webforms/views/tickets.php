@@ -9,15 +9,17 @@ $(function(){
 
 <div class="row">
 	<div class="large-12 columns body">
-
-		<h1 class="headingleft">Tickets <?php if ($status) echo ' - ('.$status.')'?> </h1>
-
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="bluebutton">Web Forms</a></li>
-		</ul>
-
-		<hr> 
-		<div class="large-4 large-offset-8 columns">
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Tickets <?php if ($status) echo ' - ('.$status.')'?> </h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group right">
+					<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="button">Web Forms</a></li>
+				</ul>
+			</div>
+		</div>
+		<div class="large-4 columns">
 			<label for="filter">
 				Filter
 			</label> 
