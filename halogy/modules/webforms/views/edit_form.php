@@ -18,12 +18,17 @@ $(function(){
 
 <div class="row">
 	<div class="large-12 columns body">
-	
-		<h1 class="headingleft">Edit Web Form</h1>
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="bluebutton">Back to Web Forms</a></li>
-			<li><input type="submit" value="Save Changes" class="green" /></li>
-		</ul>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Edit Web Form</h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group even-2">
+					<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="button">Back to Web Forms</a></li>
+					<li><input type="submit" value="Save Changes" class="button green" /></li>
+				</ul>
+			</div>
+		</div>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
