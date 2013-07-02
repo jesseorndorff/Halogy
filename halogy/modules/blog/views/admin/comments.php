@@ -1,7 +1,13 @@
 <div class="row">
 	<div class="large-12 columns body">
+		<div class="row">
+			<div class="large-6 columns">
+				<h1>Blog comments</h1>
+			</div>
+			<div class="large-6 columns">
 
-		<h1>Blog comments</h1>
+			</div>
+		</div>
 
 		<?php if ($comments): ?>
 

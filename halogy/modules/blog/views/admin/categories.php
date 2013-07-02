@@ -30,13 +30,17 @@ $(function(){
 </script>
 <div class="row">
 	<div class="large-12 columns body">
-		<h1 class="headingleft">Blog Categories</h1>
-
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>" class="bluebutton">View Posts</a></li>
-			<li><a href="#" class="toggle green">Add Category</a></li>
-		</ul>
-
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Blog Categories</h1>
+			</div>
+			<div class="large-6 columns">
+				<ul class="button-group even-2">
+					<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>" class="button">View Posts</a></li>
+					<li><a href="#" class="toggle button green">Add Category</a></li>
+				</ul>
+			</div>
+		</div>
 		<hr>
 		<div class="hidden item">
 			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">

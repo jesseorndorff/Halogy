@@ -1,9 +1,15 @@
 <div class="row">
 	<div class="large-12 columns body">
-		<h1 class="headingleft">Blog Posts</h1>
+		<div class="row">
+			<div class="large-6 columns">
+				<h1 class="headingleft">Blog Posts</h1>
+			</div>
+			<div class="large-6 columns">
 				<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-			<a href="<?php echo site_url('/admin/blog/add_post'); ?>" class="green right">Add Post</a>
-		<?php endif; ?>
+					<a href="<?php echo site_url('/admin/blog/add_post'); ?>" class="green right">Add Post</a>
+				<?php endif; ?>
+			</div>
+		</div>
 
 		<?php if ($blog_posts): ?>
 

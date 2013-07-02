@@ -7120,11 +7120,6 @@ ol.order .haschildren {
 }
 
 /* line 620, ../sass/app.scss */
-.autosave {
-  float: right;
-}
-
-/* line 621, ../sass/app.scss */
 span.autosave-saving {
   display: none;
   background: #567af0;
@@ -7133,7 +7128,7 @@ span.autosave-saving {
   border-radius: 2px;
 }
 
-/* line 622, ../sass/app.scss */
+/* line 621, ../sass/app.scss */
 span.autosave-complete {
   display: none;
   background: #567af0;
@@ -7142,28 +7137,28 @@ span.autosave-complete {
   border-radius: 2px;
 }
 
-/* line 623, ../sass/app.scss */
+/* line 622, ../sass/app.scss */
 .markup {
   margin-top: 15px;
 }
 
-/* line 631, ../sass/app.scss */
+/* line 630, ../sass/app.scss */
 .large-block-grid-4 > li {
   text-align: center;
   padding: 25px;
 }
 
-/* line 637, ../sass/app.scss */
+/* line 636, ../sass/app.scss */
 .edit-image {
   text-align: center;
 }
 
-/* line 643, ../sass/app.scss */
+/* line 642, ../sass/app.scss */
 .preview-container {
   background: #f1f1f1;
 }
 
-/* line 648, ../sass/app.scss */
+/* line 647, ../sass/app.scss */
 .ui-datepicker {
   background: white;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -7181,7 +7176,7 @@ span.autosave-complete {
   z-index: 3 !important;
 }
 
-/* line 654, ../sass/app.scss */
+/* line 653, ../sass/app.scss */
 .ui-datepicker-prev {
   border-style: solid;
   border-width: 0;
@@ -7219,7 +7214,7 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 660, ../sass/app.scss */
+/* line 659, ../sass/app.scss */
 .ui-datepicker-next {
   border-style: solid;
   border-width: 0;
@@ -7258,13 +7253,13 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 667, ../sass/app.scss */
+/* line 666, ../sass/app.scss */
 .ui-datepicker-title {
   margin: 5px 0;
   text-align: center;
 }
 
-/* line 674, ../sass/app.scss */
+/* line 673, ../sass/app.scss */
 footer {
   background: white;
   bottom: 0;
@@ -7279,7 +7274,7 @@ footer {
 
 /* iCheck plugin Flat skin, blue
 ----------------------------------- */
-/* line 687, ../sass/app.scss */
+/* line 686, ../sass/app.scss */
 .icheckbox_flat-blue,
 .iradio_flat-blue {
   display: inline-block;
@@ -7292,51 +7287,51 @@ footer {
   cursor: pointer;
 }
 
-/* line 698, ../sass/app.scss */
+/* line 697, ../sass/app.scss */
 .icheckbox_flat-blue {
   background-position: 0 0;
 }
 
-/* line 701, ../sass/app.scss */
+/* line 700, ../sass/app.scss */
 .icheckbox_flat-blue.checked {
   background-position: -22px 0;
 }
 
-/* line 704, ../sass/app.scss */
+/* line 703, ../sass/app.scss */
 .icheckbox_flat-blue.disabled {
   background-position: -44px 0;
   cursor: default;
 }
 
-/* line 708, ../sass/app.scss */
+/* line 707, ../sass/app.scss */
 .icheckbox_flat-blue.checked.disabled {
   background-position: -66px 0;
 }
 
-/* line 712, ../sass/app.scss */
+/* line 711, ../sass/app.scss */
 .iradio_flat-blue {
   background-position: -88px 0;
 }
 
-/* line 715, ../sass/app.scss */
+/* line 714, ../sass/app.scss */
 .iradio_flat-blue.checked {
   background-position: -110px 0;
 }
 
-/* line 718, ../sass/app.scss */
+/* line 717, ../sass/app.scss */
 .iradio_flat-blue.disabled {
   background-position: -132px 0;
   cursor: default;
 }
 
-/* line 722, ../sass/app.scss */
+/* line 721, ../sass/app.scss */
 .iradio_flat-blue.checked.disabled {
   background-position: -154px 0;
 }
 
 /* Retina support */
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3 / 2), only screen and (min-device-pixel-ratio: 1.5) {
-  /* line 732, ../sass/app.scss */
+  /* line 731, ../sass/app.scss */
   .icheckbox_flat-blue,
   .iradio_flat-blue {
     background-image: url(../images/blue@2x.png);
@@ -7344,12 +7339,12 @@ footer {
     background-size: 176px 22px;
   }
 }
-/* line 739, ../sass/app.scss */
+/* line 738, ../sass/app.scss */
 .hide {
   display: none;
 }
 
-/* line 743, ../sass/app.scss */
+/* line 742, ../sass/app.scss */
 .clear {
   clear: both;
 }
