@@ -31,31 +31,31 @@ $(function(){
 </script>
 <div class="row">
 	<div class="large-12 columns body">
-		<div class="large-3 columns">
-				<h3>Blog Categories</h3>
-				<ul class="side-nav">
-					<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>">View Posts</a></li>
-					<li><a href="#" class="toggle">Add Category</a></li>
-				</ul>
+		<div class="large-3 columns side-bar">
+			<ul class="button-group even-2">
+				<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>" class="small button"><i class="ss-icon">view</i> View Posts</a></li>
+				<li><a href="#" class="toggle small button green"><i class="ss-icon">add</i> Add Category</a></li>
+			</ul>
 
-				<?php if (in_array('blog', $this->permission->permissions)): ?>
-					<h3>Blog</h3>
-						<ul class="side-nav">
-							<?php if (in_array('blog', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>">All Posts</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>">Add Post</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/categories'); ?>">Categories</a></li>
-							<?php endif; ?>							
-							<li><a href="<?php echo site_url('/admin/blog/comments'); ?>">Comments</a></li>
-						</ul>
-				<?php endif; ?>
+			<?php if (in_array('blog', $this->permission->permissions)): ?>
+				<h3>Blog</h3>
+					<ul class="side-nav">
+						<?php if (in_array('blog', $this->permission->permissions)): ?>
+							<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>">All Posts</a></li>
+						<?php endif; ?>
+						<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
+							<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>">Add Post</a></li>
+						<?php endif; ?>
+						<?php if (in_array('blog_cats', $this->permission->permissions)): ?>
+							<li class="active"><a href="<?php echo site_url('/admin/blog/categories'); ?>">Categories</a></li>
+						<?php endif; ?>							
+						<li><a href="<?php echo site_url('/admin/blog/comments'); ?>">Comments</a></li>
+					</ul>
+			<?php endif; ?>
 		</div>
 
 		<div class="large-9 columns">
+			<h2>Blog Categories</h2>
 			<ul class="breadcrumbs">
 			  <li><a href="#">Home</a></li>
 			  <li><a href="#">Blog</a></li>
@@ -84,14 +84,14 @@ $(function(){
 				$class = ($i % 2) ? 'alt' : ''; $i++;
 				?>
 					<div id="blog_cats-<?php echo $category['catID']; ?>" class="large-12 columns table <?php echo $class;?>">
-						<div class="col1 large-8 columns">	
+						<div class="col1 large-9 columns">	
 							<span class="cat-name"><strong><?php echo $category['catName']; ?></strong> <small>(<?php echo url_title(strtolower(trim($category['catName']))); ?>)</small></span>
 							<?php echo @form_input($category['catID'].'[catName]', $category['catName'], 'class="formelement hide" title="Category Name"'); ?><input type="submit" class="button green small hide" value="Save" />
 						</div>
-						<div class="large-4 columns">
+						<div class="large-3 columns">
 							<ul class="button-group even-2">
-								<li><a href="#" class="edit small button"> <i class="ss-icon">edit</i> Edit</a></li>
-								<li><a href="<?php echo site_url('/admin/blog/delete_cat/'.$category['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="small button alert"><i class="ss-icon">trash</i> Delete</a></li>
+								<li><a href="#" class="edit small">Edit</a></li>
+								<li><a href="<?php echo site_url('/admin/blog/delete_cat/'.$category['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="small">Delete</a></li>
 							</ul>
 						</div>
 					</div>
