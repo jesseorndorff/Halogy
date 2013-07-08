@@ -208,9 +208,9 @@ label {
 	background-color: #FFF;
 	// @include filter-gradient(#f1f1f1, #eaeaea, vertical);
 	// @include background-image(linear-gradient(top,  #f1f1f1 0%,#f4f4f4 44%,#eaeaea 100%));
-	border-top: 1px solid #DDDDDD;
-	border-bottom: 1px solid #DDDDDD;
-	box-shadow: 0 -1px 0 $light-color;
+	//border-top: 1px solid #DDDDDD;
+	//border-bottom: 1px solid #DDDDDD;
+	//box-shadow: 0 -1px 0 $light-color;
 	padding: 10px 0 10px;
 }
 
@@ -355,6 +355,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .headingleft {
+	font-weight: normal;
 	float: left;
 }
 
@@ -642,6 +643,12 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 .preview-container {
 	background: #f1f1f1;
 	$border-radius: $global-radius;
+}
+
+.ui-sortable-placeholder {
+	border: 3px dashed #aaa; 
+	background: #ccc;
+	height: 83px;
 }
 
 .ui-datepicker {
