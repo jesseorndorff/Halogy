@@ -81,7 +81,7 @@ $(function(){
 					</div>
 				<?php endif; ?>
 
-				<div class="large-8 small-12 large-centered columns">
+				<div class="small-12 large-12 large-centered columns">
 					<div class="item">
 						<label for="postName">Title</label>
 						<p>Give your blog post a title.</p>

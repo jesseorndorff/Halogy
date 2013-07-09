@@ -76,7 +76,7 @@ $(function(){
 					</div>
 				<?php endif; ?>
 
-				<div class="small-12 large-8 large-centered columns">
+				<div class="small-12 large-12 large-centered columns">
 
 					<div class="item">
 
