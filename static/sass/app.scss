@@ -306,7 +306,6 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .body {
-	@include card(#FFF);
 	margin-bottom: 50px;
 	min-padding-bottom: 25px;
 }
@@ -389,7 +388,12 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .side-bar {
-	margin-top: 10px
+	margin-top: 10px;
+	position: fixed;
+}
+
+.touch .side-bar {
+	position: relative;
 }
 
 .side-bar .button-group {
