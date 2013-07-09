@@ -404,6 +404,15 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	margin-bottom: 1px;
 }
 
+.side-bar input {
+	width: 170px;
+	margin: 0 0 10px 0 !important;
+}
+
+.side-bar .button-group a {
+	width: 170px;
+}
+
 // Dashboard
 
 .touch-box {

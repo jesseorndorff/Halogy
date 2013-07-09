@@ -67,7 +67,7 @@ $(function(){
 				<ul class="breadcrumbs">
 				  <li><a href="#">Home</a></li>
 				  <li><a href="#">Blog</a></li>
-				  <li class="current"><a href="#">Add Post</a></li>
+				  <li class="current"><a href="#">Edit Post</a></li>
 				</ul>
 
 				<?php if ($errors = validation_errors()): ?>
