@@ -39,7 +39,7 @@
 */
 
 
-$active_group = 'default';
+/* $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
@@ -56,12 +56,12 @@ $db['default']['char_set'] = 'utf8';
 $db['default']['dbcollat'] = 'utf8_general_ci';
 $db['default']['swap_pre'] = '';
 $db['default']['autoinit'] = TRUE;
-$db['default']['stricton'] = FALSE;
+$db['default']['stricton'] = FALSE; */
 
 
 // Setup for Pagoda Box
 
-/* $active_group = 'default';
+$active_group = 'default';
 $active_record = TRUE;
  
 $db['production']['hostname'] = "tunnel.pagodabox.com";
@@ -111,7 +111,6 @@ switch (ENVIRONMENT) {
     break;
 }
 
-*/
 
 
 /* End of file database.php */
