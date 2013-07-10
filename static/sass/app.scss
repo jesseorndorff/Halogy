@@ -401,7 +401,10 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .side-bar h3{
+	color: #b8c3c9;
 	margin-bottom: 1px;
+	font-size: 1.1em;
+	font-weight: normal;
 }
 
 .side-bar input {
@@ -413,6 +416,23 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	width: 170px;
 }
 
+.side-bar > .side-nav {
+	color: #32393d;
+	padding-top: 0.2em;
+	font-size: 1em;
+}
+
+.side-bar > .side-nav a{ 
+	color: #32393d;
+}
+
+.side-bar > .side-nav a:hover{ 
+	color: $primary-color;
+}
+
+.side-bar > .side-nav li.active > a:first-child {
+	color: $primary-color;
+}
 // Dashboard
 
 .touch-box {
