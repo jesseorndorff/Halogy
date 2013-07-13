@@ -38,7 +38,7 @@ $(function(){
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="noncustom">
 
-			<div class="large-10 columns">
+			<div class="large-10 columns body">
 				<h2>Add a Post</h2>
 				<ul class="button-group right">
 					<li><input type="submit" value="Save Changes" class="button green" /></li>

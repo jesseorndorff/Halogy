@@ -29,32 +29,13 @@ $(function(){
 	initOrder('div.order');
 });
 </script>
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-2 columns side-bar">
-				<ul class="button-group">
-					<li><a href="#" class="toggle small button green"><i class="ss-icon">add</i> Add Category</a></li>
-				</ul>
-				<?php if (in_array('blog', $this->permission->permissions)): ?>
-					<h3>BLOG</h3>
-						<ul class="side-nav">
-							<?php if (in_array('blog', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>"><i class="ss-icon">Page</i> All Posts</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>"><i class="ss-icon">Add</i> Add Post</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_cats', $this->permission->permissions)): ?>
-								<li class="active"><a href="<?php echo site_url('/admin/blog/categories'); ?>"><i class="ss-icon">List</i> Categories</a></li>
-							<?php endif; ?>							
-							<li><a href="<?php echo site_url('/admin/blog/comments'); ?>"><i class="ss-icon">Comment</i> Comments</a></li>
-						</ul>
-				<?php endif; ?>
-			</div>
 
-			<div class="large-10 columns">
+
+			<div class="large-10 columns body">
 				<h2>Blog Categories</h2>
+				<ul class="button-group right">
+					<li><a href="#" class="toggle button green"><i class="ss-icon">add</i> Add Category</a></li>
+				</ul>
 				<ul class="breadcrumbs">
 				  <li><a href="#">Home</a></li>
 				  <li><a href="#">Blog</a></li>

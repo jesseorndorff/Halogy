@@ -1,8 +1,6 @@
 <?php if (!$templates): ?>
 
-<h1>Add Page</h1>
-
-<br />
+<h2>Add Page</h2>
 
 <div class="error">
 	<p>You have not yet set up any templates and you will need a template in order to create a page. You can add and import templates <a href="<?php echo site_url('/admin/pages/templates'); ?>">here</a>.</p>
@@ -127,33 +125,30 @@
 	
 	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom" id="editpage">
 
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Edit Page</h1>
+<div class="large-10 columns body">
+	<h1>Edit Page</h1>
+		<input type="hidden" name="target" id="target" value="" />
+			<div class="right">
+				<input type="submit" name="view" value="View Page" class="button save" />
+				<input type="submit" id="save" name="save" value="Save Changes" class="button green save" />
+				<input type="submit" name="publish" value="Publish Page" class="button orange save" />
 			</div>
-			<div class="large-6 columns">
-				<input type="hidden" name="target" id="target" value="" />
-				<ul class="button-group even-4">
-					<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>" class="button">Back</a></li>
-					<li><input type="submit" name="view" value="View Page" class="button save" /></li>
-					<li><input type="submit" id="save" name="save" value="Save Changes" class="button green save" /></li>
-					<li><input type="submit" name="publish" value="Publish Page" class="button orange save" /></li>
-				</ul>
-			</div>
-		</div> <!-- / row -->
+			<ul class="breadcrumbs">
+			  <li><a href="#">Home</a></li>
+			  <li><a href="#">Blog</a></li>
+			  <li class="current"><a href="#">Blog Posts</a></li>
+			</ul>
 
-				<?php if ($errors = validation_errors()): ?>
-					<div class="error clear">
-						<?php echo $errors; ?>
-					</div>
-				<?php endif; ?>
-				<?php if (isset($message)): ?>
-					<div class="message clear">
-						<?php echo $message; ?>
-					</div>
-				<?php endif; ?>
+			<?php if ($errors = validation_errors()): ?>
+				<div class="error clear">
+					<?php echo $errors; ?>
+				</div>
+			<?php endif; ?>
+			<?php if (isset($message)): ?>
+				<div class="message clear">
+					<?php echo $message; ?>
+				</div>
+			<?php endif; ?>
 
 			<div class="section-container auto" data-section>
 				<section>

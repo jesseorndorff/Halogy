@@ -28,19 +28,21 @@ $(function(){
 	initOrder('ol.order, ol.order ol');
 });
 </script>
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Pages</h1>
-			</div>
-			<div class="large-6 columns">
-				<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
-					<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green right">Add Page</a>
-				<?php endif; ?>
-			</div>
-		</div>
 
+			
+
+
+
+<div class="large-10 columns body">
+<h2>Pages</h2>
+	<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
+		<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green right">Add Page</a>
+	<?php endif; ?>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Pages</a></li>
+		<li class="current"><a href="#">View All Pages</a></li>
+	</ul>
 <?php if ($parents): ?>
 		<div class="row">
 			<div class="large-4 columns dropdown">

@@ -1,5 +1,5 @@
 
-	<div class="large-10 columns">
+	<div class="large-10 columns body">
 		<h2>Blog Posts</h2>
 		<ul class="button-group right">
 			<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
