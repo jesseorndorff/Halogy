@@ -38,32 +38,11 @@ $(function(){
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="noncustom">
 
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-2 columns side-bar">
-				<ul class="button-group">
-					<li><input type="submit" value="Save Changes" class="small button green" /></li>
-				</ul>
-
-				<?php if (in_array('blog', $this->permission->permissions)): ?>
-					<h3>BLOG</h3>
-						<ul class="side-nav">
-							<?php if (in_array('blog', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>"><i class="ss-icon">Page</i> All Posts</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-								<li class="active"><a href="<?php echo site_url('/admin/blog/add_post'); ?>"><i class="ss-icon">Add</i> Add Post</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/categories'); ?>"><i class="ss-icon">List</i> Categories</a></li>
-							<?php endif; ?>							
-							<li><a href="<?php echo site_url('/admin/blog/comments'); ?>"><i class="ss-icon">Comment</i> Comments</a></li>
-						</ul>
-				<?php endif; ?>
-			</div>
 			<div class="large-10 columns">
 				<h2>Add a Post</h2>
+				<ul class="button-group right">
+					<li><input type="submit" value="Save Changes" class="button green" /></li>
+				</ul>
 				<ul class="breadcrumbs">
 				  <li><a href="#">Home</a></li>
 				  <li><a href="#">Blog</a></li>

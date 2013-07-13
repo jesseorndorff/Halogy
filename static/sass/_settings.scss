@@ -15,7 +15,7 @@
 $em-base: 16px;
 
 // We use these to control various global styles
- $body-bg: #FFFFFF;
+ $body-bg: #F1F1F1;
 // $body-font-color: #222;
 $body-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
@@ -64,7 +64,7 @@ $shiny-edge-size: 0;
 // Grid Variables
 //
 
-$row-width: 90%;
+$row-width: 100%;
 // $column-gutter: 1.875em;
 // $total-columns: 12;
 
@@ -94,8 +94,8 @@ $header-font-color: #333;
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-$h1-font-size: emCalc(28px);
-$h2-font-size: emCalc(24px);
+$h1-font-size: emCalc(30px);
+$h2-font-size: emCalc(28px);
 $h3-font-size: emCalc(18px);
 $h4-font-size: emCalc(15px);
 $h5-font-size: emCalc(14px);
@@ -971,7 +971,7 @@ $table-head-padding: emCalc(9px) emCalc(10px) emCalc(10px);
 
 // Height and margin
 // $topbar-height: 45px;
-// $topbar-margin-bottom: emCalc(30px);
+$topbar-margin-bottom: emCalc(0px);
 
 // Control Input height for top bar
 // $topbar-input-height: 2.45em;
@@ -991,7 +991,7 @@ $table-head-padding: emCalc(9px) emCalc(10px) emCalc(10px);
 // $topbar-dropdown-toggle-size: 5px;
 // $topbar-dropdown-toggle-color: #fff;
 // $topbar-dropdown-toggle-alpha: 0.5;
-// $dropdown-label-color: #555;
+$dropdown-label-color: #d6ddee;
 
 // Top menu icon styles
 // $topbar-menu-link-transform: uppercase;

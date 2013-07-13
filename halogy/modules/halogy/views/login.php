@@ -9,7 +9,7 @@
 	</script>
 
 <div class="row">
-	<div class="large-6 small-12 large-centered columns body">
+	<div class="large-6 small-12 large-centered columns login-screen">
 		<img src="<?php echo site_url('/static/images/halogy.png'); ?>">
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">

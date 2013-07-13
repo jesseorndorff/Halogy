@@ -131,6 +131,16 @@ $portrait: "only screen and (orientation: portrait)";
 
 // Global
 
+*,
+*:after,
+*:before {
+    box-sizing: border-box;
+}
+
+.container {
+	overflow: hidden;
+}
+
 ul, ol, dl {
 	font-size: $paragraph-font-size;
 	line-height: 1.6;
@@ -190,10 +200,6 @@ label {
 	font-size: 18px;
 }
 
-.top-bar .toggle-topbar.menu-icon {
-	top: 0;
-}
-
 .table-header {
 	background: $primary-color;
 	color: $light-color;
@@ -235,6 +241,24 @@ background-color: #f9f9f9;
 	padding: 0 25px;
 }
 
+.user-dropdown {
+	color: #FFF;
+	margin-right: 25px;
+}
+
+.user-dropdown h4{
+	color: #FFF;
+	margin: 12px 15px;
+	font-size: emCalc(14px);
+}
+
+.profile {
+	height: 45px;
+	@include border-radius(45px);
+	border: 2px solid #FFF;
+	float: right;
+	margin: 6px 10px;
+}
 // Button Groups
 
 $radius: $global-radius;
@@ -381,6 +405,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	margin: 0;
 }
 
+
 // Sidebar
 
 .side {
@@ -388,12 +413,11 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .side-bar {
-	margin-top: 10px;
-	position: fixed;
-}
-
-.touch .side-bar {
+	background: darken($light-color, 80%);
+	float: left;
+	padding: 0.9375em;
 	position: relative;
+	width: 16.66667%;
 }
 
 .side-bar .button-group {
@@ -401,19 +425,18 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .side-bar h3{
-	color: #b8c3c9;
+	color: #898b94;
 	margin-bottom: 1px;
-	font-size: 1.1em;
-	font-weight: normal;
+	font-size: .9em;
+	font-weight: 800;
+	text-transform: uppercase;
 }
 
 .side-bar input {
-	width: 170px;
 	margin: 0 0 10px 0 !important;
 }
 
 .side-bar .button-group a {
-	width: 170px;
 }
 
 .side-bar > .side-nav {
@@ -423,7 +446,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .side-bar > .side-nav a{ 
-	color: #32393d;
+	color: #898b94;
 }
 
 .side-bar > .side-nav a:hover{ 
@@ -432,6 +455,16 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .side-bar > .side-nav li.active > a:first-child {
 	color: $primary-color;
+}
+
+// Sidebar Menu Items
+
+.blog_click{}
+
+// Login
+
+.login-screen {
+	@include card ($light-color);
 }
 // Dashboard
 
@@ -723,10 +756,9 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 // Footer
 
 footer {
-	background: $light-color;
+
 	bottom: 0;
-	@include box-shadow (0px 0px 5px darken(#FFF, 15%));
-	min-height: 150px;
+	min-height: 50px;
 	margin: 50px 0 0 0;
 	padding: $global-padding;
 	width: 100%;
