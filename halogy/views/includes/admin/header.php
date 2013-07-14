@@ -22,7 +22,6 @@
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery-ui-1.10.3.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/custom.modernizr.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.offcanvas.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.topbar.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.alerts.js"></script>
@@ -283,7 +282,7 @@
 					<h3>Blog</h3>
 						<ul id="mainNav" class="side-nav">
 							<?php if (in_array('blog', $this->permission->permissions)): ?>
-								<li class="active"><a href="<?php echo site_url('/admin/blog/viewall'); ?>"><i class="ss-icon">Page</i> All Posts</a></li>
+								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>"><i class="ss-icon">Page</i> All Posts</a></li>
 							<?php endif; ?>
 							<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
 								<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>"><i class="ss-icon">Add</i> Add Post</a></li>
@@ -421,8 +420,6 @@
 								<li><a href="<?php echo site_url('/admin/users/viewall'); ?>"><i class="ss-icon">user</i> All Users</a></li>
 								<li><a href="<?php echo site_url('/admin/users/groups'); ?>"><i class="ss-icon">users</i> User Groups</a></li>
 							<?php endif; ?>
-							<?php else: ?>
-								<li><a href="<?php echo site_url('/admin'); ?>">Login</a></li>
 						</ul>
 				<?php endif; ?>
 				<!-- Admin -->

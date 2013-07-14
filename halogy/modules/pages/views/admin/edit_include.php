@@ -15,26 +15,21 @@ $(function(){
 </script>
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
-
- <div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-7 columns">
-				<h1 class="headingleft">Edit 
-					<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>
-					<?php
-						if ($type == 'C') $typeLink = 'css';
-						elseif ($type == 'J') $typeLink = 'js';
-						else $typeLink = '';
-					?>
-				</h1>
-			</div>
-			<div class="large-5 columns">
-				<a href="<?php echo site_url('/admin/pages/includes'); ?>/<?php echo $typeLink; ?>" class="button right">Back to Includes</a>
-			</div>
-		</div> <!-- /row -->
-		<hr>
-
+<div class="large-10 columns body">
+	<h2>Edit 
+		<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>
+		<?php
+			if ($type == 'C') $typeLink = 'css';
+			elseif ($type == 'J') $typeLink = 'js';
+			else $typeLink = '';
+		?>
+	</h2>
+	<a href="<?php echo site_url('/admin/pages/includes'); ?>/<?php echo $typeLink; ?>" class="button right">Back to Includes</a>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Templates</a></li>
+		<li class="current"><a href="#">Edit Include</a></li>
+	</ul>	
 		<div class="large-8 columns">
 
 			<?php if ($errors = validation_errors()): ?>

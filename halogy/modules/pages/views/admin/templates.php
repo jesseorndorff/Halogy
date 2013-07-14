@@ -21,21 +21,19 @@ $(function(){
 	});
 });
 </script>
+<div class="large-10 columns body">
+	<h2>Page Templates</h2>
 
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Page Templates</h1>
-			</div>
-			<div class="large-6 columns">
-				<ul class="button-group even-3">
-					<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">View Includes</a></li>
-					<li><a data-reveal-id="zipUpload" href="#" class="button toggle-zip">Import Theme</a></li>
-					<li><a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="button green">Add Template</a></li>
-				</ul>
-			</div>
-		</div> <!-- / row -->
+	<ul class="button-group right">
+		<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">View Includes</a></li>
+		<li><a data-reveal-id="zipUpload" href="#" class="button toggle-zip">Import Theme</a></li>
+		<li><a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="button green">Add Template</a></li>
+	</ul>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li class="current"><a href="#">Templates</a></li>
+	</ul>
+
 		<div class="row">
 			<div class="large-4 columns">
 				<label for="filter">Filter</label> 
@@ -82,15 +80,15 @@ $(function(){
 			?>
 		<div class="row table <?php echo $class;?>">
 				<div class="small-6 large-5 columns">
-					<h4 class="show-for-touch">Template: </h4>
+					<h4 class="show-for-small">Template: </h4>
 					<p><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<strong>Module</strong>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?></p>
 				</div>
 				<div class="small-6 large-3 columns">
-					<h4 class="show-for-touch">Date Modified: </h4>
+					<h4 class="show-for-small">Date Modified: </h4>
 					<p><?php echo dateFmt($template['dateCreated']); ?></p>
 				</div>
 				<div class="small-6 large-2 columns">
-					<h4 class="show-for-touch">Usage: </h4>
+					<h4 class="show-for-small">Usage: </h4>
 					<?php if ($this->pages->get_template_count($template['templateID']) > 0): ?>
 						<p><?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)</p>
 					<?php endif; ?></td>

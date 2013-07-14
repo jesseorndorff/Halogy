@@ -135,8 +135,8 @@
 			</div>
 			<ul class="breadcrumbs">
 			  <li><a href="#">Home</a></li>
-			  <li><a href="#">Blog</a></li>
-			  <li class="current"><a href="#">Blog Posts</a></li>
+			  <li><a href="#">Pages</a></li>
+			  <li class="current"><a href="#">Add a Page</a></li>
 			</ul>
 
 			<?php if ($errors = validation_errors()): ?>

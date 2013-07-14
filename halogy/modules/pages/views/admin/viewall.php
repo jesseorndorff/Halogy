@@ -40,8 +40,7 @@ $(function(){
 	<?php endif; ?>
 	<ul class="breadcrumbs">
 		<li><a href="#">Home</a></li>
-		<li><a href="#">Pages</a></li>
-		<li class="current"><a href="#">View All Pages</a></li>
+		<li class="current"><a href="#">Pages</a></li>
 	</ul>
 <?php if ($parents): ?>
 		<div class="row">
@@ -81,7 +80,7 @@ $(function(){
 							<?php endif; ?>						
 	
 					<?php else: ?>
-						Draft
+						<span class="label">Draft</span>
 						<?php echo (!$page['navigation']) ? ' (hidden)' : ''; ?>
 					<?php endif; ?>
 					<?php if ($page['active'] && (!$page['newBlocks'] && !$page['newVersions'])): ?>
@@ -93,12 +92,12 @@ $(function(){
 				</div>
 				<div class="large-3 columns">
 					<ul class="button-group">
-						<li><?php echo anchor($page['uri'], 'View', array('class' => 'button small')); ?></li>
+						<li><?php echo anchor($page['uri'], 'View', array('class' => 'small button')); ?></li>
 						<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-							<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'button grey small')); ?></li>
+							<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'small button')); ?></li>
 						<?php endif; ?>
 						<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-							<li><?php echo anchor('/admin/pages/delete/'.$page['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+							<li><?php echo anchor('/admin/pages/delete/'.$page['pageID'], 'Delete', array('class' => 'small button', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
 						<?php endif; ?>
 					</ul>
 				</div>
@@ -114,23 +113,23 @@ $(function(){
 							<?php if ($child['active']): ?>
 								<span style="color:green">
 									<?php if ($child['redirect']): ?>
-										<strong>Redirect</strong> (<?php echo $child['redirect']; ?>)
+										<span class="label redirect">Redirect (<?php echo $child['redirect']; ?>)</span>
 									<?php else: ?>
 									<?php if ($child['active'] && $child['datePublished'] > 0 && ($child['newBlocks'] > 0 || $child['newVersions'] > 0)): ?>
-										<strong>Published (but modified)</strong>
+										<span class="label published">Published (but modified)</span>
 									<?php else: ?>
-										<strong>Published</strong>
+										<span class="label published">Published</span>
 									<?php endif; ?>
 										<?php echo (!$child['navigation']) ? ' (hidden)' : ''; ?>
 									<?php endif; ?>						
 								</span>
 							<?php else: ?>
-								<strong>Draft</strong>
+								<span class="label">Draft</span>
 								<?php echo (!$child['navigation']) ? ' (hidden)' : ''; ?>
 							<?php endif; ?>
 							<br />
 							<?php if ($child['active'] && (!$child['newBlocks'] && !$child['newVersions'])): ?>
-								<p>Published: <strong><?php echo dateFmt($child['datePublished'], '', '', TRUE); ?></stong>
+								<p>Published: <strong><?php echo dateFmt($child['datePublished'], '', '', TRUE); ?></strong>
 							<?php else: ?>
 								Modified: <strong><?php echo dateFmt($child['dateModified'], '', '', TRUE); ?></strong>
 							<?php endif; ?>
@@ -140,10 +139,10 @@ $(function(){
 							<ul class="button-group">
 									<li><?php echo anchor($child['uri'], 'View', array('class' => 'button small')); ?></li>
 								<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-									<li><?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'button grey small')); ?></li>
+									<li><?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'button small')); ?></li>
 								<?php endif; ?>
 								<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-									<li><?php echo anchor('/admin/pages/delete/'.$child['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+									<li><?php echo anchor('/admin/pages/delete/'.$child['pageID'], 'Delete', array('class' => 'button small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
 								<?php endif; ?>			
 							</ul>				
 						</div>
@@ -161,18 +160,18 @@ $(function(){
 								<?php if ($subchild['active']): ?>
 									<span style="color:green">
 										<?php if ($subchild['redirect']): ?>
-											<strong>Redirect</strong> (<?php echo $subchild['redirect']; ?>)
+											<span class="label redirect">Redirect(<?php echo $subchild['redirect']; ?>)</span>
 										<?php else: ?>
 										<?php if ($subchild['active'] && $subchild['datePublished'] > 0 && ($subchild['newBlocks'] > 0 || $subchild['newVersions'] > 0)): ?>
-											<strong>Published (but modified)</strong>
+											<span class="label published">Published (but modified)</span>
 										<?php else: ?>
-											<strong>Published</strong>
+											<span class="label published">Published</span>
 										<?php endif; ?>
 											<?php echo (!$subchild['navigation']) ? ' (hidden)' : ''; ?>
 										<?php endif; ?>						
 									</span>
 								<?php else: ?>
-									Draft
+									<span class="label">Draft</span>
 									<?php echo (!$subchild['navigation']) ? ' (hidden)' : ''; ?>
 								<?php endif; ?>
 								<br />
@@ -187,10 +186,10 @@ $(function(){
 								<ul class="button-group">
 									<li><?php echo anchor($subchild['uri'], 'View', array('class' => 'button small')); ?></li>
 									<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-										<li><?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'button grey small')); ?></li>
+										<li><?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'button small')); ?></li>
 									<?php endif; ?>
 									<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-										<li><?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], 'Delete', array('class' => 'button alert small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')	); ?></li>
+										<li><?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], 'Delete', array('class' => 'button small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')	); ?></li>
 									<?php endif; ?>
 							</div>
 						</div>

@@ -17,17 +17,15 @@ $(function(){
 </script>
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" id="templateform" class="custom">
 
- <div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-7 columns">
-				<h1 class="headingleft">Edit Template</h1>
-			</div>
-			<div class="large-5 columns">
-				<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button right">Back to Templates</a>
-			</div>
-		</div> <!-- /row -->
-		<hr>
+<div class="large-10 columns body">
+	<h2>Edit Template</h2>
+	<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button right">Back to Templates</a>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Templates</a></li>
+		<li class="current"><a href="#">Edit Template</a></li>
+	</ul>
+
 		<div class="large-8	 columns">
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">

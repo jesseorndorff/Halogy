@@ -1,21 +1,20 @@
 <script type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/templates.js" /></script>
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 
- <div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Add Template</h1>
-			</div>
-			<div class="large-6 columns">
-				<ul class="button-group even-3">
-					<li><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Templates</a></li>
-					<li><input type="button" id="default" value="Reset to Default" class="button" /></li>
-					<li><input type="submit" value="Save Changes" class="button green" /></li>
-				</ul>
-			</div>
-		</div> <!-- /row -->
-		<hr>
+<div class="large-10 columns body">
+	<h2>Add Template</h2>
+
+	<ul class="button-group right">
+		<li><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Back to Templates</a></li>
+		<li><input type="button" id="default" value="Reset to Default" class="button" /></li>
+		<li><input type="submit" value="Save Changes" class="button green" /></li>
+	</ul>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Templates</a></li>
+		<li class="current"><a href="#">Add Template</a></li>
+	</ul>
+
 		<div class="small-12 large-8 columns">
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">

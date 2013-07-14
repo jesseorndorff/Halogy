@@ -1,23 +1,20 @@
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Add 
-					<?php echo ($type == 'css' || $type == 'js') ? 'File' : 'Include'; ?>
-					<?php
-						if ($type == 'C') $typeLink = 'css';
-						elseif ($type == 'J') $typeLink = 'js';
-						else $typeLink = '';
-					?>
-				</h1>
-			</div>
-			<div class="large-6 columns">
-				<a href="<?php echo site_url('/admin/pages/includes/'.$typeLink); ?>" class="button right">Back to Includes</a>
-			</div>
-		</div>
-		<hr>
-
+<div class="large-10 columns body">
+	<h2>Add 
+		<?php echo ($type == 'css' || $type == 'js') ? 'File' : 'Include'; ?>
+		<?php
+			if ($type == 'C') $typeLink = 'css';
+			elseif ($type == 'J') $typeLink = 'js';
+			else $typeLink = '';
+		?>
+	</h2>
+		
+	<a href="<?php echo site_url('/admin/pages/includes/'.$typeLink); ?>" class="button right">Back to Includes</a>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Templates</a></li>
+		<li class="current"><a href="#">Add Include</a></li>
+	</ul>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>
