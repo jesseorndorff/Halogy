@@ -36,27 +36,25 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Image Folders</h1>
-			</div>
-			<div class="large-6 columns">
-				<ul class="button-group even-2">
-					<li><a href="<?php echo site_url('/admin/images/viewall'); ?>" class="button">View Images</a></li>
-					<li><a href="#" class="toggle button green" data-reveal-id="folder-reveal">Add Folder</a></li>
-				</ul>
-			</div>
-		</div>
-		<hr>
+<div class="large-10 columns body">
+	<h2>Image Folders</h2>
+	<ul class="button-group right">
+		<li><a href="<?php echo site_url('/admin/images/viewall'); ?>" class="button">View Images</a></li>
+		<li><a href="#" class="toggle button green" data-reveal-id="folder-reveal">Add Folder</a></li>
+	</ul>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Uploads</a></li>
+		<li class="current"><a href="#">Image Folders</a></li>
+	</ul>	
+
 
 		<?php if ($folders): ?>
 			<form method="post" action="<?php echo site_url('/admin/images/edit_folder'); ?>">
 
 				<ol class="order">
 				<?php foreach ($folders as $folder): ?>
-					<li id="image_folders-<?php echo $folder['folderID']; ?>">
+					<li id="image_folders-<?php echo $folder['folderID']; ?>" class="folder">
 						<div class="small-buttons large-2 columns">
 							<a href="#" class="edit button small">Edit</a>
 							<a href="<?php echo site_url('/admin/images/delete_folder/'.$folder['folderID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="button alert small">Delete</a>

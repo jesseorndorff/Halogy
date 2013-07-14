@@ -52,22 +52,20 @@ $(function(){
 
 });
 </script>
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Images</h1>
-			</div>
+<div class="large-10 columns body">
+	<h2>Images</h2>
+	<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
+		<ul class="button-group right">
+			<li><a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a></li>
+			<li><a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a></li>
+		</ul>
+	<?php endif; ?>
+		<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Uploads</a></li>
+		<li class="current"><a href="#">Images</a></li>
+	</ul>	
 
-			<div class="large-6 columns">
-				<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
-					<ul class="button-group even-2">
-						<li><a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a></li>
-						<li><a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a></li>
-					</ul>
-				<?php endif; ?>
-			</div>
-		</div>
 
        <?php echo $this->session->flashdata('error'); ?>
                 

@@ -4,17 +4,17 @@
 	$imagePath = $image['src'];
 	$imageThumbPath = $thumb['src'];
 ?>	
-<div class="row">
-	<div class="large-12 columns body">
-		<h1>Edit Image: <?php if ($image): ?> <?php echo $image['imageRef']; ?> <? endif; ?></h1>
+<div class="large-10 columns body">
+	<h2>Edit Image: <?php if ($image): ?> <?php echo $image['imageRef']; ?> <? endif; ?></h2>
 
-		<?php if ($errors = validation_errors()): ?>
-			<div class="error clear">
-				<?php echo $errors; ?>
-			</div>
-		<?php endif; ?>
+	
 
-		<hr>
+	<?php if ($errors = validation_errors()): ?>
+		<div class="error clear">
+			<?php echo $errors; ?>
+		</div>
+	<?php endif; ?>
+
 
 		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
 			<div class="large-6 columns">
