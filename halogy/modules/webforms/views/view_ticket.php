@@ -1,16 +1,18 @@
 <form action="<?php echo site_url($this->uri->uri_string()); ?>" method="post" class="custom">
 
-<div class="row">
-	<div class="large-12 columns body">
+	<div class="large-10 columns body">
 
-		<h1 class="headingleft">View Ticket</h1>
+		<h2>View Ticket</h2>
 		
-		<ul class="group-button">
+		<ul class="group-button right">
 			<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>">Back to Tickets</a></li>
 			<li><input type="submit" value="Update Ticket" class="green" /></li>
 		</ul>
-
-		<hr>
+		<ul class="breadcrumbs">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Web Forms</a></li>
+		 	<li class="current"><a href="#">View Ticket</a></li>
+		</ul>
 
 		<div class="message">
 			<p>
@@ -57,7 +59,5 @@
 		<label for="notes">Ticket notes:</label>
 		<?php echo form_textarea('notes',set_value('notes', $data['notes']), 'id="notes" class="formelement small"'); ?>
 	</div>
-</div>
-
 </form>
 

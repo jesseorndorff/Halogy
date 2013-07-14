@@ -40,7 +40,6 @@
 				<li><input type="submit" value="Save Changes" class="button green nolabel" id="submit" /></li>
 				<li><a href="<?php echo site_url('/admin/files/viewall'); ?>" class="button">Cancel</a></li>
 			</ul>
-
 			
 		</div>
 
