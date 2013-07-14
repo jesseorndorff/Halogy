@@ -1,14 +1,11 @@
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
-<div class="row">
-	<div class="large-12 columns body">
-		<h1 class="headingleft">Edit File</h1>
-
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/files/viewall'); ?>" class="bluebutton">Cancel</a></li>
-			<li><input type="submit" value="Save Changes" class="green nolabel" id="submit" /></li>
-		</ul>
-
-		<hr>
+<div class="large-10 columns body">
+	<h2>Edit File</h2>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Uploads</a></li>
+		<li class="current"><a href="#">Edit File</a></li>
+	</ul>	
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">
@@ -39,6 +36,10 @@
 					echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="folderID" class="formelement"');
 				?>	
 			</div>
+			<ul class="button-group">
+				<li><input type="submit" value="Save Changes" class="button green nolabel" id="submit" /></li>
+				<li><a href="<?php echo site_url('/admin/files/viewall'); ?>" class="button">Cancel</a></li>
+			</ul>
 
 			
 		</div>

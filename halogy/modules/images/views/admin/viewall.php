@@ -60,7 +60,7 @@ $(function(){
 			<li><a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a></li>
 		</ul>
 	<?php endif; ?>
-		<ul class="breadcrumbs">
+	<ul class="breadcrumbs">
 		<li><a href="#">Home</a></li>
 		<li><a href="#">Uploads</a></li>
 		<li class="current"><a href="#">Images</a></li>

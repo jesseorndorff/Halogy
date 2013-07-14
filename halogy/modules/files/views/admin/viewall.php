@@ -48,22 +48,19 @@ $(function(){
 	});
 });
 </script>
+<div class="large-10 columns body">
+	<h2>Files</h2>
+	<ul class="button-group right">
+		<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
+			<a href="#" class="button green toggle" data-reveal-id="upload-file">Upload File</a>
+		<?php endif; ?>
+	</ul>
+	<ul class="breadcrumbs">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Uploads</a></li>
+		<li class="current"><a href="#">Files</a></li>
+	</ul>	
 
-<div class="row">
-	<div class="large-12 columns body">
-		<div class="row">
-			<div class="large-6 columns">
-				<h1 class="headingleft">Files</h1>
-			</div>
-			<div class="large-6 columns">
-
-				<ul class="button-group right">
-					<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
-						<a href="#" class="button green toggle" data-reveal-id="upload-file">Upload File</a>
-					<?php endif; ?>
-				</ul>
-			</div>
-		</div>
 		<div class="large-4 columns">
 			<label for="folderID">
 				Folder
