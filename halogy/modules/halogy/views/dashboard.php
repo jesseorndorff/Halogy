@@ -18,10 +18,8 @@ $(function(){
 });
 </script>
 
-
-<div class="row">
 	
-	<div class="small-12 large-8 columns">
+	<div class="small-12 large-7 columns body">
 		
 		<?php if ($errors = validation_errors()): ?>
 			<div data-alert class="error">
@@ -112,7 +110,7 @@ $(function(){
 
 	</div> 
 	
-	<div class="small-12 large-4 columns sidebar">
+	<div class="small-12 large-3 columns sidebar body">
 			<div data-alert class="welcome hide-for-small">
 				<?php if ($this->session->userdata('session_admin')): ?>
 				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>

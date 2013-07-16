@@ -50,18 +50,22 @@ $(function(){
 	initOrder('table.order tbody');	
 });
 </script>
-<div class="row">
-	<div class="large-12 columns body">
+	<div class="large-10 columns body">
 
-		<h1 class="headingleft">Products</h1>
+		<h2>Products</h2>
 
-		<ul class="group-button">
+		<ul class="button-group right">
 			<?php if (in_array('shop_edit', $this->permission->permissions)): ?>	
-				<a href="<?php echo site_url('/admin/shop/add_product'); ?>" class="green">Add Product</a>
+				<a href="<?php echo site_url('/admin/shop/add_product'); ?>" class="button green">Add Product</a>
 			<?php endif; ?>
 		</ul>
 
-		<hr>
+		<ul class="breadcrumbs">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Shop</a></li>
+			<li class="current"><a href="#">Products</a></li>
+		</ul>	
+
 
 			<!-- <form method="post" action="<?php echo site_url('/admin/shop/products'); ?>" class="default" id="search">
 				<input type="text" name="searchbox" id="searchbox" class="formelement inactive" title="Search Products..." />
@@ -146,5 +150,5 @@ $(function(){
 
 		<?php endif; ?>
 	</div>
-</div>
+
 
