@@ -102,7 +102,7 @@ $(function(){
 				<p class="title" data-section-title><a href="#">Details</a></p>
 				<div class="content" data-section-content>
 				<div class="row">
-					<div class="large-6 small-12 large-centered columns">
+					<div class="large-12 small-12 large-centered columns">
 						<div id="details" class="tab">
 
 							<h2 class="underline">Product Details</h2>
@@ -222,7 +222,7 @@ $(function(){
 			<section>
 				<p class="title" data-section-title><a href="#">Product Description</a></p>
 				<div class="content" data-section-content>		
-					<div class="large-6 small-12 large-centered columns">
+					<div class="large-12 small-12 large-centered columns">
 						<h2>Product Description</h2>
 						
 						<!-- <div class="buttons">
@@ -260,7 +260,7 @@ $(function(){
 				<p class="title" data-section-title><a href="#">Options</a></p>
 				<div class="content" data-section-content>
 
-					<div class="large-6 small-12 large-centered columns">
+					<div class="large-12 small-12 large-centered columns">
 			
 						<h2 class="underline">Options</h2>
 
