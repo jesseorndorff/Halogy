@@ -75,17 +75,21 @@ $(function(){
 </script>
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
-<div class="row">
-	<div class="large-12 columns body">
+	<div class="large-10 columns body">
 
-		<h1 class="headingleft">Add Product</h1>
+		<h2>Add Product</h2>
 
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/shop/products'); ?>" class="bluebutton">Back to Products</a></li>
-			<li><input type="submit" value="Save Changes" class="green save" /></li>
+		<ul class="button-group right">
+			<li><a href="<?php echo site_url('/admin/shop/products'); ?>" class="button">Back to Products</a></li>
+			<li><input type="submit" value="Save Changes" class="button green save" /></li>
 		</ul>
 
-		<hr>
+
+		<ul class="breadcrumbs">
+			<li><a href="#">Home</a></li>
+			<li><a href="#">Shop</a></li>
+			<li class="current"><a href="#">Add a Product</a></li>
+		</ul>	
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
@@ -380,6 +384,5 @@ $(function(){
 			</section>
 		</div>
 	</div>
-</div>
 	
 </form>
