@@ -21,7 +21,7 @@
 			<li>
 			<div class="card">
 				<h3><?php echo (in_array('blog_edit', $this->permission->permissions)) ? anchor('/admin/blog/edit_post/'.$post['postID'], $post['postTitle']) : $post['postTitle']; ?></h3>
-				<p><?php echo dateFmt($post['dateCreated'], '', '', TRUE); ?></p>
+				<p><?php echo dateFmt($post['dateCreated'], '', '', FALSE); ?></p>
 				<p>Experpt text goes here. A few lines will do, maybe we limit at a few charaters.</p>
 				<div class="status">
 					<?php

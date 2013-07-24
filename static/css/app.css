@@ -7269,32 +7269,31 @@ span.autosave-complete {
 /* line 726, ../sass/app.scss */
 .large-block-grid-4 > li {
   text-align: center;
-  padding: 25px;
 }
 
-/* line 732, ../sass/app.scss */
+/* line 731, ../sass/app.scss */
 .edit-image {
   text-align: center;
 }
 
-/* line 736, ../sass/app.scss */
+/* line 735, ../sass/app.scss */
 .folder {
   margin: 10px 0 !important;
 }
 
-/* line 740, ../sass/app.scss */
+/* line 739, ../sass/app.scss */
 .preview-container {
   background: #f1f1f1;
 }
 
-/* line 745, ../sass/app.scss */
+/* line 744, ../sass/app.scss */
 .ui-sortable-placeholder {
   border: 3px dashed #aaa;
   background: #ccc;
   height: 83px;
 }
 
-/* line 751, ../sass/app.scss */
+/* line 750, ../sass/app.scss */
 .ui-datepicker {
   background: white;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -7312,7 +7311,7 @@ span.autosave-complete {
   z-index: 3 !important;
 }
 
-/* line 757, ../sass/app.scss */
+/* line 756, ../sass/app.scss */
 .ui-datepicker-prev {
   border-style: solid;
   border-width: 0;
@@ -7350,7 +7349,7 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 763, ../sass/app.scss */
+/* line 762, ../sass/app.scss */
 .ui-datepicker-next {
   border-style: solid;
   border-width: 0;
@@ -7389,13 +7388,13 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 770, ../sass/app.scss */
+/* line 769, ../sass/app.scss */
 .ui-datepicker-title {
   margin: 5px 0;
   text-align: center;
 }
 
-/* line 777, ../sass/app.scss */
+/* line 776, ../sass/app.scss */
 footer {
   bottom: 0;
   min-height: 50px;
@@ -7404,12 +7403,12 @@ footer {
   width: 100%;
 }
 
-/* line 786, ../sass/app.scss */
+/* line 785, ../sass/app.scss */
 .hide {
   display: none;
 }
 
-/* line 790, ../sass/app.scss */
+/* line 789, ../sass/app.scss */
 .clear {
   clear: both;
 }
