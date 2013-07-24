@@ -291,6 +291,11 @@ $float: left;
 	background: $fourth-color;
 }
 
+.not-published {
+	@include label;
+	background: $alert-color;
+}
+
 .redirect  { 
 	@include label;
 	background: $third-color;
@@ -307,6 +312,10 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	padding: $global-padding;
 	@include border-radius($global-radius);
 	@include box-shadow (0 1px 2px darken(#FFF, 15%));
+}
+
+.card {
+	@include card($light-color);
 }
 
 .module-tip {

@@ -15,42 +15,32 @@
 		<?php if ($blog_posts): ?>
 
 		<?php echo $this->pagination->create_links(); ?>
-
-		<table class="default clear">
-			<thead>
-				<tr>
-					<th><?php echo order_link('/admin/blog/viewall','posttitle','Post'); ?></th>
-					<th><?php echo order_link('/admin/blog/viewall','datecreated','Date'); ?></th>
-					<th class="narrow"><?php echo order_link('/admin/blog/viewall','published','Published'); ?></th>
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php foreach ($blog_posts as $post): ?>
-					<tr class="<?php echo (!$post['published']) ? 'draft' : ''; ?>">
-						<td><?php echo (in_array('blog_edit', $this->permission->permissions)) ? anchor('/admin/blog/edit_post/'.$post['postID'], $post['postTitle']) : $post['postTitle']; ?></td>
-						<td><?php echo dateFmt($post['dateCreated'], '', '', TRUE); ?></td>
-						<td>
-							<?php
-								if ($post['published']) echo '<span style="color:green;">Yes</span>';
-								else echo 'No';
-							?>
-						</td>
-						<td class="tiny">
-							<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-								<?php echo anchor('/admin/blog/edit_post/'.$post['postID'], 'Edit'); ?>
-							<?php endif; ?>
-						</td>
-						<td class="tiny">			
-							<?php if (in_array('blog_delete', $this->permission->permissions)): ?>
-								<?php echo anchor('/admin/blog/delete_post/'.$post['postID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
-							<?php endif; ?>
-						</td>
-					</tr>
-				<?php endforeach; ?>
-			</tbody>
-		</table>
+		
+		<ul class="small-block-grid-2 large-block-grid-4">
+			<?php foreach ($blog_posts as $post): ?>
+			<li>
+			<div class="card">
+				<h3><?php echo (in_array('blog_edit', $this->permission->permissions)) ? anchor('/admin/blog/edit_post/'.$post['postID'], $post['postTitle']) : $post['postTitle']; ?></h3>
+				<p><?php echo dateFmt($post['dateCreated'], '', '', TRUE); ?></p>
+				<p>Experpt text goes here. A few lines will do, maybe we limit at a few charaters.</p>
+				<div class="status">
+					<?php
+						if ($post['published']) echo '<span class="published">Published</span>';
+						else echo '<span class="not-published">Not Published</span>';
+					?>
+				</div>
+				<div class="card-admin">
+						<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
+							<?php echo anchor('/admin/blog/edit_post/'.$post['postID'], 'Edit'); ?>
+						<?php endif; ?>
+						<?php if (in_array('blog_delete', $this->permission->permissions)): ?>
+							<?php echo anchor('/admin/blog/delete_post/'.$post['postID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
+						<?php endif; ?>
+				</div>
+			</div>
+			</li>
+			<?php endforeach; ?>
+		</ul>
 
 		<?php echo $this->pagination->create_links(); ?>
 
