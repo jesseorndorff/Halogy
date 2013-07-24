@@ -415,13 +415,21 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .side-bar {
 	background: darken($light-color, 80%);
 	float: left;
-	padding: 0.9375em;
+	padding: 0 0 0.9375em 0;
 	position: relative;
 	width: 16.66667%;
 }
 
 .side-bar .button-group {
 	margin-bottom: 25px;
+}
+
+.side-bar-h {
+	background: darken(#333, 6%);
+	border-bottom: lighten(#333, 2%) 1px solid;
+	border-top: lighten(#333, 2%) 1px solid;
+	margin-top: 0px;
+	padding: 10px;
 }
 
 .side-bar h3{
