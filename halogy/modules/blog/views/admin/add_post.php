@@ -40,14 +40,6 @@ $(function(){
 
 			<div class="large-10 columns body">
 				<h2>Add a Post</h2>
-				<ul class="button-group right">
-					<li><input type="submit" value="Save Changes" class="button green" /></li>
-				</ul>
-				<ul class="breadcrumbs">
-				  <li><a href="#">Home</a></li>
-				  <li><a href="#">Blog</a></li>
-				  <li class="current"><a href="#">Edit Post</a></li>
-				</ul>
 
 				<?php if ($errors = validation_errors()): ?>
 					<div class="error">
@@ -55,7 +47,7 @@ $(function(){
 					</div>
 				<?php endif; ?>
 
-				<div class="small-12 large-12 large-centered columns">
+				<div class="small-12 large-12 large-centered columns card">
 
 					<div class="item">
 
@@ -142,7 +134,9 @@ $(function(){
 								echo @form_dropdown('allowComments',$values,set_value('allowComments', $data['allowComments']), 'id="allowComments"'); 
 							?>
 					</div>
+					<input type="submit" value="Save Changes" class="button green" />
 				</div><!-- /large 6 -->
+				
 			</div> <!-- /large 9-->
 	</div>
 </div>
