@@ -13,6 +13,9 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/app.css" media="screen" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="<?php echo $this->config->item('staticPath'); ?>/webfonts/ss-pika.css" />
+
+	<script type="text/javascript" src="//use.typekit.net/kvu5lut.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	
 	
 	

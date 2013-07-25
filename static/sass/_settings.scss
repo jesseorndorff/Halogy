@@ -17,7 +17,7 @@ $em-base: 16px;
 // We use these to control various global styles
  $body-bg: #F1F1F1;
 // $body-font-color: #222;
-$body-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$body-font-family: "proxima-nova", 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 // $body-font-weight: normal;
 // $body-font-style: normal;
 
@@ -84,7 +84,7 @@ $row-width: 100%;
 //
 
 // We use these to control header font styles
-$header-font-family: 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+$header-font-family: "proxima-nova", 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
 $header-font-weight: 600;
 // $header-font-style: normal;
 $header-font-color: #333;
@@ -594,7 +594,7 @@ $crumb-font-transform: none;
 //
 
 // We use these to style the labels
-// $label-padding: emCalc(3px) emCalc(10px) emCalc(4px);
+$label-padding: emCalc(4px) emCalc(10px) emCalc(4px);
 // $label-radius: $global-radius;
 
 // We use these to style the label text

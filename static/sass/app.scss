@@ -316,6 +316,50 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .card {
 	@include card($light-color);
+	overflow: hidden;
+}
+
+.card h3 {
+	font-weight: 400;
+}
+
+.card > .author {
+	color: #999;
+	font-size: emCalc(13px);
+	margin: 2px 0 0 0;
+}
+
+.card > .excerpt {
+	color: #32393d;
+	font-style: italic;
+}
+
+.card > .posted {
+	color: #999;
+	font-size: emCalc(13px);
+	margin: 0 0 2px 0;
+}
+
+.card-admin {
+	float: right;
+	text-align: right;
+}
+
+.card-admin a {
+	background: #f1f1f1;
+	color: #333;
+	font-size: emCalc(13px);
+	margin: emCalc(4px) 0 emCalc(4px) emCalc(10px);
+	padding: emCalc(4px) emCalc(10px) emCalc(4px);
+}
+
+.card-admin a:hover {
+	background: darken(#f1f1f1, 15%);
+}
+
+.card-status {
+	float: left;
+	text-align: left;
 }
 
 .module-tip {
@@ -724,8 +768,7 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 
 }
 .large-block-grid-4 > li {
-
-	text-align: center;
+	text-align: left;
 }
 
 .edit-image{

@@ -1,29 +1,30 @@
 
 	<div class="large-10 columns body">
-		<h2>Blog Posts</h2>
+		<h2 class="left">Blog Posts</h2>
 		<ul class="button-group right">
 			<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
 				<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>" class="button green"><i class="ss-icon">Add</i> Add a Post</a></li>
 			<?php endif; ?>
 		</ul>
-		<ul class="breadcrumbs">
+		<!-- <ul class="breadcrumbs">
 		  <li><a href="#">Home</a></li>
 		  <li><a href="#">Blog</a></li>
 		  <li class="current"><a href="#">Blog Posts</a></li>
-		</ul>
+		</ul> -->
 
 		<?php if ($blog_posts): ?>
 
 		<?php echo $this->pagination->create_links(); ?>
 		
-		<ul class="small-block-grid-2 large-block-grid-4">
+		<ul class="small-block-grid-1 large-block-grid-4">
 			<?php foreach ($blog_posts as $post): ?>
 			<li>
 			<div class="card">
 				<h3><?php echo (in_array('blog_edit', $this->permission->permissions)) ? anchor('/admin/blog/edit_post/'.$post['postID'], $post['postTitle']) : $post['postTitle']; ?></h3>
-				<p><?php echo dateFmt($post['dateCreated'], '', '', FALSE); ?></p>
-				<p>Experpt text goes here. A few lines will do, maybe we limit at a few charaters.</p>
-				<div class="status">
+				<p class="excerpt">"Experpt text goes here. A few lines will do, maybe we limit at a few charaters."</p>
+				<p class="author">Author: Jesse Orndorff</p>
+				<p class="posted">Posted: <?php echo dateFmt($post['dateCreated'], '', '', TRUE); ?></p>
+				<div class="card-status">
 					<?php
 						if ($post['published']) echo '<span class="published">Published</span>';
 						else echo '<span class="not-published">Not Published</span>';
