@@ -312,6 +312,33 @@ $float: left;
 	background: $third-color;
 }
 
+// Tabs
+
+// Removing the border at the top
+.section-container.auto > section > .title, .section-container.auto > .section > .title {
+	border: 0;
+}
+
+// Setting our own color for the active tab
+.section-container.auto > section.active > .title, .section-container.auto > .section.active > .title {
+	border-top: solid 3px $primary-color;
+}
+
+.section-container.auto > section > .title, .section-container.auto > .section > .title {
+	border-top: solid 3px $primary-color;
+}
+
+// Setting our own color for the non-active
+.section-container.auto > section:last-child .title, .section-container.auto > .section:last-child .title {
+	border-top: solid 3px $fourth-color;
+	border-right: 0;
+}
+
+// Removing the content borders
+.section-container.auto > section .content, .section-container.auto > .section .content {
+	border: 0;
+}
+
 .dropdown hr {
 	border: 0;
 }
