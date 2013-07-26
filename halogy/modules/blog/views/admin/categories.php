@@ -32,59 +32,56 @@ $(function(){
 
 
 			<div class="large-10 columns body">
-				<h2>Blog Categories</h2>
-				<ul class="button-group right">
-					<li><a href="#" class="toggle button green"><i class="ss-icon">add</i> Add Category</a></li>
-				</ul>
-				<ul class="breadcrumbs">
-				  <li><a href="#">Home</a></li>
-				  <li><a href="#">Blog</a></li>
-				  <li class="current"><a href="#">Categories</a></li>
-				</ul>
-
-				<div class="hidden item">
-					<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
-					
-						<label for="categoryName">Category Name</label>
-						<p>Give your blog category a name</p>
+				<div class="small-12 large-8 large-centered columns card">
+					<h2 class="left">Blog Categories</h2>
+					<ul class="button-group right">
+						<li><a href="#" class="toggle button green"><i class="ss-icon">add</i> Add Category</a></li>
+					</ul>
+					<div class="clear"></div>
+					<div class="hidden item">
+						<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 						
-						<?php echo @form_input('catName',$blog_cats['catName'], 'class="formelement" id="catName"'); ?>
+							<label for="categoryName">Category Name</label>
+							<p>Give your blog category a name</p>
 							
-						<input type="submit" value="Save Category" id="submit" class="small button" />
-						
-					</form>
-				</div>
-
-				<?php if ($categories): ?>
-				<form method="post" action="<?php echo site_url('/admin/blog/edit_cat'); ?>">
-					<div class="order">
-					<?php
-					$i = 0;
-					foreach ($categories as $category):
-					$class = ($i % 2) ? 'alt' : ''; $i++;
-					?>
-						<div id="blog_cats-<?php echo $category['catID']; ?>" class="large-12 columns table <?php echo $class;?>">
-							<div class="col1 large-9 columns">	
-								<span class="cat-name"><strong><?php echo $category['catName']; ?></strong> <small>(<?php echo url_title(strtolower(trim($category['catName']))); ?>)</small></span>
-								<?php echo @form_input($category['catID'].'[catName]', $category['catName'], 'class="formelement hide" title="Category Name"'); ?><input type="submit" class="button green small hide" value="Save" />
-							</div>
-							<div class="large-3 columns">
-								<ul class="button-group even-2">
-									<li><a href="#" class="edit small">Edit</a></li>
-									<li><a href="<?php echo site_url('/admin/blog/delete_cat/'.$category['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="small">Delete</a></li>
-								</ul>
-							</div>
-						</div>
-					<?php endforeach; ?>
+							<?php echo @form_input('catName',$blog_cats['catName'], 'class="formelement" id="catName"'); ?>
+								
+							<input type="submit" value="Save Category" id="submit" class="small button" />
+							
+						</form>
 					</div>
 
-				</form>
+					<?php if ($categories): ?>
+					<form method="post" action="<?php echo site_url('/admin/blog/edit_cat'); ?>">
+						<div class="order">
+						<?php
+						$i = 0;
+						foreach ($categories as $category):
+						$class = ($i % 2) ? 'alt' : ''; $i++;
+						?>
+							<div id="blog_cats-<?php echo $category['catID']; ?>" class="large-12 columns table <?php echo $class;?>">
+								<div class="col1 large-9 columns">	
+									<span class="cat-name"><strong><?php echo $category['catName']; ?></strong> <small>(<?php echo url_title(strtolower(trim($category['catName']))); ?>)</small></span>
+									<?php echo @form_input($category['catID'].'[catName]', $category['catName'], 'class="formelement hide" title="Category Name"'); ?><input type="submit" class="button green small hide" value="Save" />
+								</div>
+								<div class="large-3 columns">
+									<ul class="button-group even-2">
+										<li><a href="#" class="edit small">Edit</a></li>
+										<li><a href="<?php echo site_url('/admin/blog/delete_cat/'.$category['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="small">Delete</a></li>
+									</ul>
+								</div>
+							</div>
+						<?php endforeach; ?>
+						</div>
 
-				<?php else: ?>
+					</form>
 
-				<p>No blog categories have been created yet.</p>
+					<?php else: ?>
 
-				<?php endif; ?>
+					<p>No blog categories have been created yet.</p>
+
+					<?php endif; ?>
+				</div>
 			</div> <!-- / large-9 -->
 		</div>
 	</div>

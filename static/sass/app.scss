@@ -167,10 +167,13 @@ textarea {
 	margin: 0;
 }
 
+.list {
+	list-style-type: none;
+}
+
 .item {
 	padding-top: 30px;
 	padding-bottom: 30px;
-	border-bottom: 1px solid #f1f1f1;
 }
 
 .item > p {
@@ -182,7 +185,11 @@ textarea {
 }
 
 .checkbox-cat {
-	margin-bottom: 5px;
+	margin: 0 5px;
+}
+
+.checkbox-cat input[type="file"], input[type="checkbox"], input[type="radio"], select {
+	margin: 0 0 0.25em 0;
 }
 
 placeholder {
@@ -221,8 +228,7 @@ label {
 }
 
 .table > .columns {
-	line-height: 1.8em;
-	margin: 15px 0 0 0;
+	margin: 8px 0 0 0;
 }
 
 .table > .buttons {
@@ -259,6 +265,11 @@ background-color: #f9f9f9;
 	float: right;
 	margin: 6px 10px;
 }
+
+.reveal-modal {
+	@include border-radius(3px);
+}
+
 // Button Groups
 
 $radius: $global-radius;
@@ -787,7 +798,7 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 .ui-sortable-placeholder {
 	border: 3px dashed #aaa; 
 	background: #ccc;
-	height: 83px;
+	height: 52px;
 }
 
 .ui-datepicker {

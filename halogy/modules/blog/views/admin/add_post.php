@@ -39,16 +39,13 @@ $(function(){
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="noncustom">
 
 			<div class="large-10 columns body">
-				<h2>Add a Post</h2>
-
-				<?php if ($errors = validation_errors()): ?>
-					<div class="error">
-						<?php echo $errors; ?>
-					</div>
-				<?php endif; ?>
-
-				<div class="small-12 large-12 large-centered columns card">
-
+				<div class="small-12 large-8 large-centered columns card">
+					<h2>Add a Post</h2>
+					<?php if ($errors = validation_errors()): ?>
+						<div class="error">
+							<?php echo $errors; ?>
+						</div>
+					<?php endif; ?>
 					<div class="item">
 
 						<label for="postName">Post Title</label>
@@ -62,9 +59,11 @@ $(function(){
 						<label>Categories</label>
 							<p>Place your post in any relevant categories.</p>
 							<?php if ($categories): ?>
+							<ul class="list">
 							<?php foreach($categories as $category): ?>
-									<?php echo @form_checkbox('catsArray['.$category['catID'].']', $category['catName']); ?><span class="checkbox-cat"><?php echo $category['catName']; ?></span>
+									<li><?php echo @form_checkbox('catsArray['.$category['catID'].']', $category['catName']); ?><span class="checkbox-cat"><?php echo $category['catName']; ?></span></li>
 							<?php endforeach; ?>
+							</ul>
 							<?php else: ?>
 								<p class="error"><strong>Warning:</strong> It is strongly recommended that you use categories or your post may not appear properly. <a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')"><strong>Please update your categories here</strong></a>.</p>
 							<?php endif; ?>
