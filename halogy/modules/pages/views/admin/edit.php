@@ -219,7 +219,7 @@
 									<?php echo @form_input('description',set_value('description', $data['description']), 'id="description" class="formelement"'); ?>
 								</div>
 							
-								<div class"item">
+								<div class="item">
 									<label for="keywords">Meta Keywords</label>
 									<p>Meta tags for search engines.</p>
 									<?php echo @form_input('keywords',set_value('keywords', $data['keywords']), 'id="keywords" class="formelement"'); ?>
@@ -227,7 +227,7 @@
 
 								<h2 class="underline">Visibility and Access</h2>
 				
-								<div class"item">
+								<div class="item">
 									<label for="navigation">Show in Navigation</label>
 									<p>By default your page will appear on the navigation menu.</p>
 									<?php 
@@ -239,7 +239,7 @@
 									?>
 								</div>	
 							
-								<div class"item">
+								<div class="item">
 									<label for="active">Publish Status</label>
 									<p>Remember to set this to 'Publish' if you want to show the page.</p>
 									<?php 
