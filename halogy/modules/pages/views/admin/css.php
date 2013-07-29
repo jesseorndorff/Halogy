@@ -1,17 +1,14 @@
 <div class="large-10 columns body">
-	<h2>CSS Files</h2>
+	<div class="card">
+	<h2 class="left">CSS Files</h2>
 	
-	<ul class="button-group even-4 right">
-		<li><a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Templates</a></li>
-		<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">Includes</a></li>
-		<li><a href="<?php echo site_url('/admin/pages/includes/js'); ?>" class="button">Javascript</a></li>	
-		<li><a href="<?php echo site_url('/admin/pages/add_include/css'); ?>" class="button green">Add CSS</a></li>
-	</ul>
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li><a href="#">Templates</a></li>
-		<li class="current"><a href="#">CSS</a></li>
-	</ul>
+	<div class="right">
+		<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Templates</a>
+		<a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">Includes</a>
+		<a href="<?php echo site_url('/admin/pages/includes/js'); ?>" class="button">Javascript</a>
+		<a href="<?php echo site_url('/admin/pages/add_include/css'); ?>" class="button green">Add CSS</a>
+	</div>
+	<div class="clear"></div>
 		<?php if ($includes): ?>
 
 		<?php echo $this->pagination->create_links(); ?>

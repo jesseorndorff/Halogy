@@ -22,127 +22,123 @@ $(function(){
 });
 </script>
 <div class="large-10 columns body">
-	<h2>Page Templates</h2>
+	<div class="card">
+		<h2>Page Templates</h2>
 
-	<ul class="button-group right">
-		<li><a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">View Includes</a></li>
-		<li><a data-reveal-id="zipUpload" href="#" class="button toggle-zip">Import Theme</a></li>
-		<li><a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="button green">Add Template</a></li>
-	</ul>
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li class="current"><a href="#">Templates</a></li>
-	</ul>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">View Includes</a>
+			<a data-reveal-id="zipUpload" href="#" class="button toggle-zip">Import Theme</a>
+			<a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="button green">Add Template</a>
+		</div>
 
-		<div class="row">
-			<div class="large-4 columns">
-				<label for="filter">Filter</label> 
+			<div class="row">
+				<div class="large-4 columns">
+					<label for="filter">Filter</label> 
 
+					<?php
+						$options = array(
+							'' => 'View All',
+							'page' => 'Page Templates',
+							'module' => 'Module Templates'
+						);
+						
+						echo form_dropdown('filter', $options, $type, 'id="filter"');
+					?>
+				</div>
+			</div>
+
+			<?php if ($errors = validation_errors()): ?>
+				<div class="error clear">
+					<?php echo $errors; ?>
+				</div>
+			<?php endif; ?>
+
+			<?php if ($templates): ?>
+
+			<?php echo $this->pagination->create_links(); ?>
+			<div class="row table-header hide-for-touch">
+				<div class="large-5 columns">
+					<h3>Templates</h3>
+				</div> 
+				<div class="large-3 columns">
+					<h3>Date Modified</h3>
+				</div>
+				<div class="large-2 columns">
+					<h3>Usage</h3>
+				</div>
+				<div class="large-2 columns">
+					<h3>	</h3>
+				</div> 
+			</div>
 				<?php
-					$options = array(
-						'' => 'View All',
-						'page' => 'Page Templates',
-						'module' => 'Module Templates'
-					);
-					
-					echo form_dropdown('filter', $options, $type, 'id="filter"');
+					$i = 0;
+					foreach ($templates as $template): 
+					$class = ($i % 2) ? 'alt' : ''; $i++;
 				?>
+			<div class="row table <?php echo $class;?>">
+					<div class="small-6 large-5 columns">
+						<h4 class="show-for-small">Template: </h4>
+						<p><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<strong>Module</strong>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?></p>
+					</div>
+					<div class="small-6 large-3 columns">
+						<h4 class="show-for-small">Date Modified: </h4>
+						<p><?php echo dateFmt($template['dateCreated']); ?></p>
+					</div>
+					<div class="small-6 large-2 columns">
+						<h4 class="show-for-small">Usage: </h4>
+						<?php if ($this->pages->get_template_count($template['templateID']) > 0): ?>
+							<p><?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)</p>
+						<?php endif; ?></td>
+					</div>
+					<div class="small-12 large-2 columns buttons">
+						<ul class="button-group even-2">
+							<li><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit', array('class' => 'button small grey')); ?></li>
+							<li><?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+						</ul>
+					</div>
 			</div>
-		</div>
+			<?php endforeach; ?>
 
-		<?php if ($errors = validation_errors()): ?>
-			<div class="error clear">
-				<?php echo $errors; ?>
-			</div>
-		<?php endif; ?>
-
-		<?php if ($templates): ?>
-
-		<?php echo $this->pagination->create_links(); ?>
-		<div class="row table-header hide-for-touch">
-			<div class="large-5 columns">
-				<h3>Templates</h3>
-			</div> 
-			<div class="large-3 columns">
-				<h3>Date Modified</h3>
-			</div>
-			<div class="large-2 columns">
-				<h3>Usage</h3>
-			</div>
-			<div class="large-2 columns">
-				<h3>	</h3>
-			</div> 
-		</div>
+			<!--<table class="default">
+				<thead>
+					<tr>
+						<th>Templates</th>
+						<th>Date Modified</th>		
+						<th>Usage</th>	
+						<th>&nbsp;</th>
+						<th>&nbsp;</th>		
+					</tr>
+				</thead>
 			<?php
 				$i = 0;
 				foreach ($templates as $template): 
-				$class = ($i % 2) ? 'alt' : ''; $i++;
+				$class = ($i % 2) ? ' class="alt"' : ''; $i++;
 			?>
-		<div class="row table <?php echo $class;?>">
-				<div class="small-6 large-5 columns">
-					<h4 class="show-for-small">Template: </h4>
-					<p><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<strong>Module</strong>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?></p>
-				</div>
-				<div class="small-6 large-3 columns">
-					<h4 class="show-for-small">Date Modified: </h4>
-					<p><?php echo dateFmt($template['dateCreated']); ?></p>
-				</div>
-				<div class="small-6 large-2 columns">
-					<h4 class="show-for-small">Usage: </h4>
-					<?php if ($this->pages->get_template_count($template['templateID']) > 0): ?>
-						<p><?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)</p>
-					<?php endif; ?></td>
-				</div>
-				<div class="small-12 large-2 columns buttons">
-					<ul class="button-group even-2">
-						<li><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit', array('class' => 'button small grey')); ?></li>
-						<li><?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
-					</ul>
-				</div>
-		</div>
-		<?php endforeach; ?>
+				<tbody>
+					<tr<?php echo $class;?>>
+						<td><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<small>Module</small>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?></td>
+						<td><?php echo dateFmt($template['dateCreated']); ?></td>		
+						<td><?php if ($this->pages->get_template_count($template['templateID']) > 0): ?>
+								<?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)
+							<?php endif; ?></td>
+						<td>
+							<?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit'); ?>
+						</td>
+						<td>
+							<?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
+						</td>
+					</tr>
+				</tbody>
+			<?php endforeach; ?>
+			</table> -->
 
-		<!--<table class="default">
-			<thead>
-				<tr>
-					<th>Templates</th>
-					<th>Date Modified</th>		
-					<th>Usage</th>	
-					<th>&nbsp;</th>
-					<th>&nbsp;</th>		
-				</tr>
-			</thead>
-		<?php
-			$i = 0;
-			foreach ($templates as $template): 
-			$class = ($i % 2) ? ' class="alt"' : ''; $i++;
-		?>
-			<tbody>
-				<tr<?php echo $class;?>>
-					<td><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], ($template['modulePath'] != '') ? '<small>Module</small>: '.$template['modulePath'].' <em>('.ucfirst(preg_replace('/^(.+)_/i', '', $template['modulePath'])).')</em>' : $template['templateName']); ?></td>
-					<td><?php echo dateFmt($template['dateCreated']); ?></td>		
-					<td><?php if ($this->pages->get_template_count($template['templateID']) > 0): ?>
-							<?php echo $this->pages->get_template_count($template['templateID']); ?> page(s)
-						<?php endif; ?></td>
-					<td>
-						<?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit'); ?>
-					</td>
-					<td>
-						<?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
-					</td>
-				</tr>
-			</tbody>
-		<?php endforeach; ?>
-		</table> -->
+			<?php echo $this->pagination->create_links(); ?>
 
-		<?php echo $this->pagination->create_links(); ?>
+			<?php else: ?>
 
-		<?php else: ?>
+			<p>There are no templates here yet.</p>
 
-		<p>There are no templates here yet.</p>
-
-		<?php endif; ?>
-
+			<?php endif; ?>
 	</div>
 </div>
 

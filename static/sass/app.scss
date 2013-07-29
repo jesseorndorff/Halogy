@@ -67,7 +67,7 @@ $topbar-transition-speed: 300ms;
 @import "compass/css3";
 
 /* This controls padding around the buttons. Use a variable or em value */
-$padding: $button-med;	
+$padding: emCalc(12px);	
 
 /* This controls button color. Set to one of our variables or a custom hex value */
 $bg: $fourth-color;
@@ -214,7 +214,7 @@ label {
 
 .table-header h3 {
 	color: $light-color;
-	padding: 5px 0 3px;
+	padding: 7px 0 0 0;
 }
 
 .table {
@@ -237,6 +237,10 @@ label {
 
 .table > .columns > .button {
 	margin: 0;
+}
+
+.table > .columns > p {
+	margin-bottom: 0;
 }
 
 .alt {
