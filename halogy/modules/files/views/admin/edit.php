@@ -1,20 +1,12 @@
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
 <div class="large-10 columns body">
-	<h2>Edit File</h2>
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li><a href="#">Uploads</a></li>
-		<li class="current"><a href="#">Edit File</a></li>
-	</ul>	
-
+	<div class="small-12 large-8 large-centered columns card">
+		<h2>Edit File</h2>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
-
-		<div class="large-6 small-12 large-centered columns">
-
 			<div class="item">
 				<label for="fileRef">Reference:</label>
 				<p>Give your file a reference name</p>
@@ -36,13 +28,8 @@
 					echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="folderID" class="formelement"');
 				?>	
 			</div>
-			<ul class="button-group">
-				<li><input type="submit" value="Save Changes" class="button green nolabel" id="submit" /></li>
-				<li><a href="<?php echo site_url('/admin/files/viewall'); ?>" class="button">Cancel</a></li>
-			</ul>
-			
-		</div>
-
+			<input type="submit" value="Save Changes" class="button green nolabel" id="submit" />
+			<a href="<?php echo site_url('/admin/files/viewall'); ?>" class="button">Cancel</a>
 	</div>
 </div>
 </form>

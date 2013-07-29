@@ -37,36 +37,34 @@ $(function(){
 </script>
 
 <div class="large-10 columns body">
-	<h2>Image Folders</h2>
-	<ul class="button-group right">
-		<li><a href="<?php echo site_url('/admin/images/viewall'); ?>" class="button">View Images</a></li>
-		<li><a href="#" class="toggle button green" data-reveal-id="folder-reveal">Add Folder</a></li>
-	</ul>
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li><a href="#">Uploads</a></li>
-		<li class="current"><a href="#">Image Folders</a></li>
-	</ul>	
-
+	<h2 class="left">Image Folders</h2>
+	<div class="right">
+		<a href="<?php echo site_url('/admin/images/viewall'); ?>" class="button">View Images</a>
+		<a href="#" class="toggle button green" data-reveal-id="folder-reveal">Add Folder</a>
+	</div>
+	<div class="clear"></div>
 
 		<?php if ($folders): ?>
 			<form method="post" action="<?php echo site_url('/admin/images/edit_folder'); ?>">
-
-				<ol class="order">
+				<ul class="small-block-grid-1 large-block-grid-4">
 				<?php foreach ($folders as $folder): ?>
+				
 					<li id="image_folders-<?php echo $folder['folderID']; ?>" class="folder">
-						<div class="small-buttons large-2 columns">
-							<a href="#" class="edit button small">Edit</a>
-							<a href="<?php echo site_url('/admin/images/delete_folder/'.$folder['folderID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="button alert small">Delete</a>
+						<div class="card">
+						<div class="">
+							<h3><?php echo $folder['folderName']; ?></h3> <p>Reference: (<?php echo url_title(strtolower($folder['folderName'])); ?>)</p>
+							<?php echo @form_input($folder['folderID'].'[folderName]', $folder['folderName'], 'class="formelement hide" title="folder Name"'); ?><input type="submit" class="button green small" value="Save" />
 						</div>
-						<div class="col1 large-10 columns">
-							<span class="cat-name"><strong><?php echo $folder['folderName']; ?></strong> <small>(<?php echo url_title(strtolower($folder['folderName'])); ?>)</small></span>
-							<?php echo @form_input($folder['folderID'].'[folderName]', $folder['folderName'], 'class="formelement hide" title="folder Name"'); ?><input type="submit" class="button green small hide" value="Save" />
+						<div class="card-admin">
+							<a href="#" class="edit">Edit</a>
+							<a href="<?php echo site_url('/admin/images/delete_folder/'.$folder['folderID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="">Delete</a>
 						</div>
-						<div class="clear"></div>
+						</div>
 					</li>
+				
 				<?php endforeach; ?>
-				</ol>
+
+				</ul>
 
 			</form>
 

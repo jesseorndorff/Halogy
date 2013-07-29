@@ -53,18 +53,14 @@ $(function(){
 });
 </script>
 <div class="large-10 columns body">
-	<h2>Images</h2>
+	<h2 class="left">Images</h2>
 	<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
-		<ul class="button-group right">
-			<li><a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a></li>
-			<li><a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a></li>
-		</ul>
+		<div class="right">
+			<a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a>
+			<a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a>
+		</div>
 	<?php endif; ?>
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li><a href="#">Uploads</a></li>
-		<li class="current"><a href="#">Images</a></li>
-	</ul>	
+	<div class="clear"></div>
 
 
        <?php echo $this->session->flashdata('error'); ?>
@@ -91,7 +87,7 @@ $(function(){
 		</div>
 		<div class="large-4 large-offset-4 columns">
 			<div class="row collapse">
-				<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="custom" id="search">
+				<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="" id="search">
 					<div class="small-9 columns">
 						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Images..." />
 					</div>
@@ -133,9 +129,8 @@ $(function(){
 
 		<?php endif; ?>
 
-		<hr>
 
-		<ul class="small-block-grid-2 large-block-grid-4">
+		<ul class="small-block-grid-1 large-block-grid-4">
 		<?php if ($images): ?>
 
 			<?php echo $this->pagination->create_links(); ?>
@@ -152,7 +147,7 @@ $(function(){
 							echo '</tr><tr>'."\n";
 							$i = 0;
 						}
-						echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">';
+						echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">'; 
 
 						$imageData = $this->uploads->load_image($image['imageRef']);
 						$imagePath = $imageData['src'];
@@ -162,11 +157,17 @@ $(function(){
 		
 
 						
-							<li><a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
-							<p><strong><?php echo $image['imageRef']; ?></strong></p>
-							<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), 'Edit', array('class' => 'button small')); ?>				
-							<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()),'Delete', array('class' => 'button alert small'), 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?></li>
-						
+							<li>
+								<div class="card">
+									<h3><?php echo $image['imageRef']; ?></h3>
+									<a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
+									<div class="clear"></div>
+									<div class="card-admin">
+										<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), 'Edit'); ?>				
+										<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()),'Delete', 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?>
+									</div>
+								</div>
+							</li>
 				<?php
 						echo '</td>'."\n";
 						$i++;
@@ -310,7 +311,7 @@ $(function(){
     </script>
     
                     
-			<form id="UploadForm" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
+			<form id="UploadForm" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
 			
 				<h2>Upload an Image</h2>
 				<p>Upload any image file you want to use on your site. Want to add some folders before you start? <a href="<?php echo site_url('/admin/images/folders'); ?>">Add them now.</a></p>
@@ -348,7 +349,7 @@ $(function(){
 		</div>
 
 		<div id="upload-zip" class="hidden clear reveal-modal">
-			<form id="UploadForm2" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
+			<form id="UploadForm2" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
 				<h2>Upload a Zip File</h2>
 				<p>If you have a lot of images to upload, add them all to a zip folder and upload them here!</p>
 			

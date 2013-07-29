@@ -49,17 +49,14 @@ $(function(){
 });
 </script>
 <div class="large-10 columns body">
-	<h2>Files</h2>
-	<ul class="button-group right">
+	<h2 class="left">Files</h2>
+	<div class="right">
 		<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
 			<a href="#" class="button green toggle" data-reveal-id="upload-file">Upload File</a>
 		<?php endif; ?>
-	</ul>
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li><a href="#">Uploads</a></li>
-		<li class="current"><a href="#">Files</a></li>
-	</ul>	
+	</div>
+
+	<div class="clear"></div>
 
 		<div class="large-4 columns">
 			<label for="folderID">
@@ -129,11 +126,10 @@ $(function(){
 
 		<?php if ($files): ?>
 
-		<hr>
 
 			<?php echo $this->pagination->create_links(); ?>
 			
-		<ul class="small-block-grid-2 large-block-grid-4">
+		<ul class="small-block-grid-1 large-block-grid-4">
 				<?php
 					$numItems = sizeof($files);
 					$itemsPerRow = 6;
@@ -153,9 +149,16 @@ $(function(){
 
 				?>
 
-						<li><a href="<?php echo $filePath; ?>" title="<?php echo $file['fileRef']; ?>"><img src="<?php echo $this->config->item('staticPath'); ?>/fileicons/<?php echo $extension; ?>.png" alt="<?php echo $file['fileRef']; ?>" class="file" /></a><p><strong><?php echo $file['fileRef']; ?></strong></p>
-						<?php echo anchor('/admin/files/edit/'.$file['fileID'].'/', 'Edit', 'class="button small"'); ?>
-						<?php echo anchor('/admin/files/delete/'.$file['fileID'], 'Delete', array('class' => 'button alert small'), 'onclick="return confirm(\'Are you sure you want to delete this file?\')"'); ?></li>
+						<li>
+							<div class="card">
+								<h3><?php echo $file['fileRef']; ?></h3>
+								<a href="<?php echo $filePath; ?>" title="<?php echo $file['fileRef']; ?>"><img src="<?php echo $this->config->item('staticPath'); ?>/fileicons/<?php echo $extension; ?>.png" alt="<?php echo $file['fileRef']; ?>" class="file" /></a>
+								<div class="card-admin">
+									<?php echo anchor('/admin/files/edit/'.$file['fileID'].'/', 'Edit'); ?>
+									<?php echo anchor('/admin/files/delete/'.$file['fileID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this file?\')"'); ?>
+								</div>
+							</div>
+						</li>
 					
 				<?php
 						echo '</td>'."\n";

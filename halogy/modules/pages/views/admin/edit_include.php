@@ -43,39 +43,38 @@ $(function(){
 			
 
 			<?php if ($type == 'C'): ?>
-
+			<div class="item">
 				<label for="includeRef">Filename:</label>
+				<span>Your file will be found at &ldquo;/css/filename.css&rdquo; (make sure you use the '.css' extension).</p>
 				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-				<span class="tip">Your file will be found at &ldquo;/css/filename.css&rdquo; (make sure you use the '.css' extension).</span><br class="clear" />
-
 				<?php echo @form_hidden('type', 'C'); ?>
-
+			</div>
 			<?php elseif ($type == 'J'): ?>
-
+			<div class="item">
 				<label for="includeRef">Filename:</label>
+				<p>Your file will be found at &ldquo;/js/filename.js&rdquo; (make sure you use the '.js' extension).</p>
 				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
-				<span class="tip">Your file will be found at &ldquo;/js/filename.js&rdquo; (make sure you use the '.js' extension).</span><br class="clear" />
 
 				<?php echo @form_hidden('type', 'J'); ?>
-
+			</div>
 			<?php else: ?>
-
+			<div class="item">
 				<label for="includeRef">Reference:</label>
-				<p class="tip">To access this include just use {include:REFERENCE} in your template.</p>
+				<p>To access this include just use {include:REFERENCE} in your template.</p>
 				<?php echo @form_input('includeRef',set_value('includeRef', $data['includeRef']), 'id="includeRef" class="formelement"'); ?>
 
 				<?php echo @form_hidden('type', 'H'); ?>
-
-			<?php endif; ?>
-
-			<label for="body">Markup:</label>	
-			<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
-
-			<div class="autosave">
-				<span class="autosave-saving">Saving...</span>
-				<span class="autosave-complete"></span>
 			</div>
+			<?php endif; ?>
+			<div class="item">
+				<label for="body">Markup:</label>	
+				<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
 
+				<div class="autosave">
+					<span class="autosave-saving">Saving...</span>
+					<span class="autosave-complete"></span>
+				</div>
+			</div>
 			<input type="submit" value="Save Changes" id="submit" class="button green" />
 		</div>
 		<div class="large-4 columns">
