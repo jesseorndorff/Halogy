@@ -8,15 +8,11 @@ $(function(){
 </script>
 
 	<div class="large-10 columns body">
-		<h2>Tickets <?php if ($status) echo ' - ('.$status.')'?> </h2>
-		<ul class="button-group right">
-			<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="button"><i class="ss-icon">View</i> View Web Forms</a></li>
-		</ul>
-		<ul class="breadcrumbs">
-		  <li><a href="#">Home</a></li>
-		  <li><a href="#">Web Forms</a></li>
-		  <li class="current"><a href="#">Tickets</a></li>
-		</ul>
+		<h2 class="left">Tickets <?php if ($status) echo ' - ('.$status.')'?> </h2>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="button"><i class="ss-icon">View</i> View Web Forms</a>
+		</div>
+		<div class="clear"></div>
 		<div class="large-4 columns push-8">
 			<label for="filter">
 				Filter
