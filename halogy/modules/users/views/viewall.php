@@ -23,23 +23,23 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
-		<h1 class="headingleft">Users</h1>
-		<ul class="group-button">
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">Users</h2>
+		<div class="right">
 			<?php if (in_array('users_import', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users/import'); ?>" class="bluebutton">Import Users</a></li>
-				<li><a href="<?php echo site_url('/admin/users/export'); ?>" class="bluebutton">Export Users</a></li>
+				<a href="<?php echo site_url('/admin/users/import'); ?>" class="button">Import Users</a>
+				<a href="<?php echo site_url('/admin/users/export'); ?>" class="button">Export Users</a>
 			<?php endif; ?>
 
 			<?php if (in_array('users_groups', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="bluebutton">Groups</a></li>
+				<a href="<?php echo site_url('/admin/users/groups'); ?>" class="button">Groups</a>
 			<?php endif; ?>	
 			<?php if (in_array('users_edit', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users/add'); ?>" class="green">Add User</a></li>
+				<a href="<?php echo site_url('/admin/users/add'); ?>" class="green">Add User</a>
 			<?php endif; ?>
-		</ul>
-		<hr>
+		</div>
+		<div class="clear"></div>
 		<div class="large-4 large-offset-8 columns">
 			<div class="row collapse">
 				<form method="post" action="<?php echo site_url('/admin/users/viewall'); ?>" class="default" id="search">

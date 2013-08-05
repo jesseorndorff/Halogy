@@ -32,31 +32,26 @@ $(function(){
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 
-<div class="row">
-	<div class="large-12 columns body">	
-		<h1 class="headingleft">Edit User Group</h1>
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/users/groups'); ?>" class="bluebutton">Back to Users Groups</a></li>
-			<li><input type="submit" value="Save Changes" class="green"></li>
-		</ul>
-		<hr>
+<div class="large-10 columns body">	
+	<div class="small-12 large-8 large-centered columns card">
+		<h2 class="left">Edit User Group</h2>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/users/groups'); ?>" class="button">Back to Users Groups</a>
+			<input type="submit" value="Save Changes" class="button green">
+		</div>
+		<div class="clear"></div>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
 
-		<div class="row">
-			<div class="large-6 columns">
-				<label for="groupName">Name this group:</label>
-				<?php echo @form_input('groupName',set_value('groupName', $data['groupName']), 'id="groupName" class="formelement"'); ?>
-			</div>
-		</div>
-		<hr>
-	<?php if ($permissions): ?>
+		<label for="groupName">Name this group:</label>
+		<?php echo @form_input('groupName',set_value('groupName', $data['groupName']), 'id="groupName" class="formelement"'); ?>
 
-	<div class="row">
-		<div class="large-6 columns">
+		<hr>
+		<?php if ($permissions): ?>
+
 			<h3>Administrative Permissions</h3>
 			<p><a href="#" class="selectall button small nolabel grey">Select All</a> <a href="#" class="deselectall button small grey">De-Select All</a></p>
 			<?php foreach ($permissions as $cat => $perms): ?>
@@ -80,8 +75,7 @@ $(function(){
 				</div>
 
 			<?php endforeach; ?>
-			<?php endif; ?>
-		</div>
+		<?php endif; ?>
 	</div>
 </div>
 	

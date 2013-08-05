@@ -40,17 +40,16 @@ $(function(){
 });
 </script>
 
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
 
-<div class="row">
-	<div class="large-12 columns body">
-
-		<h1 class="headingleft">Edit User</h1>
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Back to Users</a></li>
-			<li><input type="submit" value="Save Changes" class="green"></li>
-		</ul>
-		<hr>
+<div class="large-10 columns body">
+	<div class="small-12 large-8 large-centered columns card">
+		<h2 class="left">Edit User</h2>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/users'); ?>" class="button">Back to Users</a>
+			<input type="submit" value="Save Changes" class="button green">
+		</div>
+		<div class="clear"></div>
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>
@@ -66,8 +65,7 @@ $(function(){
 				<p class="title" data-section-title><a href="#">User Details</a></p>
 				<div class="content" data-section-content>
 					<h2>User Details</h2>
-					<div class="row">
-						<div class="large-6 columns">
+
 
 							<label for="username">Username:</label>
 							<?php echo @form_input('username', set_value('username', $data['username']), 'id="username" class="formelement"'); ?>
@@ -127,16 +125,12 @@ $(function(){
 								);
 								echo @form_dropdown('active',$values,set_value('active', $data['active']), 'id="active" class="formelement"'); 
 							?>
-						</div>
-					</div>
 				</div> <!-- /content -->
 			</section>
 			<?php if (@in_array('shop', $this->permission->sitePermissions) || @in_array('community', $this->permission->sitePermissions)): ?>	
 				<section>
 					<p class="title" data-section-title><a href="#">User Address</a></p>
 					<div class="content" data-section-content>
-						<div class="row">
-							<div class="large-6 columns">
 								<?php if (@in_array('shop', $this->permission->sitePermissions) || @in_array('community', $this->permission->sitePermissions)): ?>	
 									<h2>Delivery Address</h2>
 
@@ -194,16 +188,13 @@ $(function(){
 
 									</div>
 								<?php endif; ?>
-							</div>
-						</div>
+
 					</div> <!-- /content -->
 				</section>
 				<?php if (@in_array('community', $this->permission->sitePermissions)): ?>
 					<section>
 						<p class="title" data-section-title><a href="#">Community</a></p>
 						<div class="content" data-section-content>
-							<div class="row">
-								<div class="large-6 columns">
 									<?php if (@in_array('community', $this->permission->permissions)): ?>
 
 										<h2>Community</h2>
@@ -237,14 +228,12 @@ $(function(){
 
 									<?php endif; ?>
 								</div>
-							</div>
-						</div>
+
 					</section>
 					<section>
 						<p class="title" data-section-title><a href="#">Company</a></p>
 						<div class="content" data-section-content>
-							<div class="row">
-								<div class="large-6 columns">
+
 									<?php if (@in_array('community', $this->permission->sitePermissions)): ?>
 										<h2>Company</h2>
 
@@ -258,8 +247,6 @@ $(function(){
 										<?php echo @form_input('companyWebsite',set_value('companyWebsite', $data['companyWebsite']), 'id="companyWebsite" class="formelement"'); ?>
 									<?php endif; ?>
 								</div>
-							</div>
-						</div>
 					</section>
 				<?php endif; ?>
 			<?php endif; ?>

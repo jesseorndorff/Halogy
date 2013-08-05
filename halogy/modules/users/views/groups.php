@@ -1,19 +1,19 @@
-<div class="row">
-	<div class="large-12 columns body">
-		<h1 class="headingleft">User Groups</h1>
-		<ul class="group-button">
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">User Groups</h2>
+		<div class="right">
 			<?php if (in_array('users', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users'); ?>" class="bluebutton">Users</a></li>
+				<a href="<?php echo site_url('/admin/users'); ?>" class="button">Users</a>
 			<?php endif; ?>
 			<?php if (in_array('users_groups', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/users/add_group'); ?>" class="green">Add Group</a></li>
+				<a href="<?php echo site_url('/admin/users/add_group'); ?>" class="button green">Add Group</a>
 			<?php endif; ?>
-		</ul>
+		</div>
 
-		<hr>
-<?php if ($permission_groups): ?>
+		<div class="clear"></div>
+		<?php if ($permission_groups): ?>
 
-<?php echo $this->pagination->create_links(); ?>
+		<?php echo $this->pagination->create_links(); ?>
 
 		<table class="default clear">
 			<thead>
@@ -36,14 +36,10 @@
 		<?php endforeach; ?>
 		</table>
 
-	</div>
-</div>
+		<?php echo $this->pagination->create_links(); ?>
+				
+		<?php else: ?>
 
-<?php echo $this->pagination->create_links(); ?>
-		
-<?php else: ?>
-<div class="row">
-	<div class="large-12 columns body">
 		<p>There are no permission groups set up yet.</p>
 	</div>
 </div>

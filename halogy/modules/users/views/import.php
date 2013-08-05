@@ -1,10 +1,10 @@
-<div class="row">
-	<div class="large-12 columns body">
-		<h1 class="headingleft">Import Users</h1>
-		<ul class="group-button">
-			<li><a href="/admin/users" class="button">Back to Users</a></li>
-		</ul>
-		<hr>
+<div class="large-10 columns body">
+	<div class="small-12 large-8 large-centered columns card">
+		<h2 class="left">Import Users</h2>
+		<div class="right">
+			<a href="/admin/users" class="button">Back to Users</a>
+		</div>
+		<div class="clear"></div>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
