@@ -19,7 +19,7 @@ $(function(){
 </script>
 
 <div class="large-10 columns body">
-	<div class="card">
+	<div class="small-12 large-8 large-centered columns card">
 		<h2 class="left">Upsells</h2>
 
 		<div class="right">	
@@ -34,15 +34,11 @@ $(function(){
 
 		<form method="post" action="<?php echo site_url('/admin/shop/edit_upsell'); ?>">
 
-			<ol class="order">
+			<div class="order">
 			<?php $x=0; foreach ($shop_upsells as $upsell): $x++; ?>
-				<li id="shop_upsells-<?php echo $upsell['upsellID']; ?>">
-					<div class="small-buttons large-2 columns">
-						<a href="<?php echo site_url('/admin/shop/edit_upsell/'.$upsell['upsellID']); ?>" class="showform button small">Edit</a>
-						<a href="<?php echo site_url('/admin/shop/delete_upsell/'.$upsell['upsellID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="button alert small">Delete</a>
-					</div>
-					<div class="col1 large-5 columns">			
-						<span>
+				<div id="shop_upsells-<?php echo $upsell['upsellID']; ?>">
+					<div class="col1 large-6 columns">			
+						<p>
 							<?php echo $x; ?>.
 							If
 							<?php if ($upsell['type'] == 'V'): ?>
@@ -66,10 +62,10 @@ $(function(){
 								<?php endforeach; ?>
 								is in the cart:
 							<?php endif; ?>
-						</span>
+						</p>
 					</div>
-					<div class="col2 large-5 columns">
-						Upsell
+					<div class="col2 large-3 columns">
+						<p>Upsell
 							<?php if ($upsellProduct = $this->shop->get_product($upsell['productID'])): ?>
 								<strong><?php echo $upsellProduct['productName']; ?></strong>
 							<?php else: ?>
@@ -77,12 +73,18 @@ $(function(){
 							<?php endif; ?>
 						<?php if ($upsell['remove']): ?>
 							and <strong>remove original products</strong>
-						<?php endif; ?>
+						<?php endif; ?></p>
 					</div>
-
-				</li>
+					<div class="large-3 columns">
+						<ul class="button-group even-2">
+							<li><a href="<?php echo site_url('/admin/shop/edit_upsell/'.$upsell['upsellID']); ?>" class="showform edit small">Edit</a></li>
+							<li><a href="<?php echo site_url('/admin/shop/delete_upsell/'.$upsell['upsellID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="small">Delete</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="clear"></div>
 			<?php endforeach; ?>
-			</ol>
+			</div>
 
 		</form>
 

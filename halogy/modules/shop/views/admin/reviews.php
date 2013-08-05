@@ -6,36 +6,57 @@
 
 		<?php echo $this->pagination->create_links(); ?>
 
-		<table class="default clear">
-			<thead>
-				<tr>
-					<th>Date Posted</th>
-					<th>Product</th>
-					<th>Author</th>
-					<th>Email</th>
-					<th>Review</th>
-					<th class="narrow">Status</th>
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>
-				</tr>
-			</thead>
+		<div class="row table-header hide-for-touch">
+			<div class="large-2 columns">
+				<h3>Date Posted</h3>
+			</div>
+			<div class="large-1 columns">
+				<h3>Product</h3>
+			</div>
+			<div class="large-2 columns">
+				<h3>Author</h3>
+			</div>
+			<div class="large-2 columns">
+				<h3>Email</h3>
+			</div>
+			<div class="large-2 columns">
+				<h3>Review</h3>
+			</div>
+			<div class="large-1 columns">
+				<h3>Status</h3>
+			</div>
+			<div class="large-2 columns">
+			</div>
+		</div>
+
 		<?php foreach ($reviews as $review): ?>
-			<tbody>
-				<tr>
-					<td><?php echo dateFmt($review['dateCreated']); ?></td>
-					<td><?php echo anchor('/shop/viewproduct/'.$review['productID'], $review['productName']); ?></td>
-					<td><?php echo $review['fullName']; ?></td>
-					<td><?php echo $review['email']; ?></td>
-					<td><?php echo (strlen($review['review'] > 50)) ? substr($review['review'], 0, 50).'...' : $review['review']; ?></td>
-					<td><?php echo ($review['active']) ? '<span style="color:green;">Active</span>' : '<span style="color:orange;">Pending</span>'; ?></td>		
-					<td><?php echo (!$review['active']) ? anchor('/admin/shop/approve_review/'.$review['reviewID'], 'Approve') : ''; ?></td>
-					<td>
-						<?php echo anchor('/admin/shop/delete_review/'.$review['reviewID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
-					</td>
-				</tr>
-			</tbody>
+		<div class="row table">
+			<div class="large-2 columns">
+				<p><?php echo dateFmt($review['dateCreated']); ?></p>
+			</div>
+			<div class="large-1 columns">
+				<h3>?php echo anchor('/shop/viewproduct/'.$review['productID'], $review['productName']); ?></h3>
+			</div>
+			<div class="large-2 columns">
+				<h3><?php echo $review['fullName']; ?></h3>
+			</div>
+			<div class="large-2 columns">
+				<h3><?php echo $review['email']; ?></h3>
+			</div>
+			<div class="large-2 columns">
+				<h3><?php echo (strlen($review['review'] > 50)) ? substr($review['review'], 0, 50).'...' : $review['review']; ?></h3>
+			</div>
+			<div class="large-1 columns">
+				<h3><?php echo ($review['active']) ? '<span style="color:green;">Active</span>' : '<span style="color:orange;">Pending</span>'; ?></h3>
+			</div>
+			<div class="large-2 columns">
+				<ul class="button-group even-2">
+					<li><?php echo (!$review['active']) ? anchor('/admin/shop/approve_review/'.$review['reviewID'], 'Approve') : ''; ?></li>
+					<li><?php echo anchor('/admin/shop/delete_review/'.$review['reviewID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?></li>
+				</ul>
+			</div>
+		</div>
 		<?php endforeach; ?>
-		</table>
 
 		<?php echo $this->pagination->create_links(); ?>
 
