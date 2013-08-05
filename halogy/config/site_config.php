@@ -26,6 +26,6 @@ $config['includesPath']		=	'/includes/admin';			// path to admin header and foot
 $config['uploadsPath']		=	'/static/uploads';			// where to upload files (must be 777)
 $config['staticPath']		=	'/static';					// where are the images hosted
 $config['logoPath']			=	'';							// the administration logo
-$config['stagingSites']		=	FALSE;						// whether to create upload folders for each site automatically (for MSM)
+$config['stagingSites']		=	TRUE;						// whether to create upload folders for each site automatically (for MSM)
 		
 /* END OF FILE */
