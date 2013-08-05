@@ -1,7 +1,6 @@
-<div class="row">
-	<div class="large-12 columns body">
-
-		<h1 class="headingleft">Shop Reviews</h1>
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">Shop Reviews</h2>
 
 		<?php if ($reviews): ?>
 

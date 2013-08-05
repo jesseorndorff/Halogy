@@ -18,16 +18,15 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">Upsells</h2>
 
-		<h1 class="headingleft">Upsells</h1>
-
-		<ul class="group-button">	
+		<div class="right">	
 			<a href="<?php echo site_url('/admin/shop/add_upsell'); ?>" class="showform button green">Add Upsell</a>
-		</ul>
+		</div>
 
-		<hr>
+		<div class="clear"></div>
 
 		<div class="hidden"></div>
 

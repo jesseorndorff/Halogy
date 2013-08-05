@@ -20,16 +20,16 @@ div#header, div#navigation, div#footer, .printhide{ display: none; }
 div.content h2.underline, div.content h3.underline { border: none; }
 </style>
 
-<div class="row">
-	<div class="large-12 columns body">
-
+<div class="large-10 columns body">
+	<div class="card">
 		<form action="<?php echo site_url($this->uri->uri_string()); ?>" method="post" class="custom">
 
-			<h1 class="headingleft">View Order <small class="printhide">(<a href="<?php echo site_url('/admin/shop/orders'); ?>">Back to Orders</a>)</small></h1>
+			<h2 class="left">View Order</h2>
 			
-			<div class="headingright">
-				<a href="#" class="button blue" onclick="window.print();">Print Shipping Label</a>
-				<input type="submit" value="Update Order" class="button printhide confirm" />
+			<div class="right">
+				<a href="<?php echo site_url('/admin/shop/orders'); ?>" class="button">Back to Orders</a>
+				<a href="#" class="button" onclick="window.print();">Print Shipping Label</a>
+				<input type="submit" value="Update Order" class="button green printhide confirm" />
 			</div>
 			
 			<div class="clear"></div>
