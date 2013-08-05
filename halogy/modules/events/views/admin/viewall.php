@@ -1,15 +1,14 @@
-<div class="row">
-	<div class="large-12 columns body">
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">Events</h2>
 
-		<h1 class="headingleft">Events</h1>
-
-		<ul class="group-button">
+		<div class="right">
 			<?php if (in_array('events_edit', $this->permission->permissions)): ?>
-				<li><a href="<?php echo site_url('/admin/events/add_event'); ?>" class="button green">Add Event</a></li>
+				<a href="<?php echo site_url('/admin/events/add_event'); ?>" class="button green">Add Event</a>
 			<?php endif; ?>
-		</ul>
+		</div>
 
-		<hr>
+		<div class="clear"></div>
 
 		<?php if ($events): ?>
 
