@@ -217,6 +217,11 @@ label {
 	padding: 7px 0 0 0;
 }
 
+.table-header > .columns > h3 > a {
+	color: $light-color;
+	padding: 7px 0 0 0;
+}
+
 .table {
 	background-color: #FFF;
 	// @include filter-gradient(#f1f1f1, #eaeaea, vertical);
@@ -225,6 +230,15 @@ label {
 	//border-bottom: 1px solid #DDDDDD;
 	//box-shadow: 0 -1px 0 $light-color;
 	padding: 10px 0 10px;
+}
+
+// Setting the padding for sub categories on shopping
+.order > .haschildren {
+	padding: 10px 0 0 0;
+}
+
+.order > .haschildren > .subcat > .table {
+	padding: 10px 0 0 0;
 }
 
 .table > .columns {

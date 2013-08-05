@@ -17,61 +17,66 @@ $(function(){
 	initOrder('ol.order, ol.order ol');
 });
 </script>
-<div class="row">
-	<div class="large-12 columns body">
-		<h1 class="headingleft">Shop Categories</h1>
+	<div class="large-10 columns body">
+		<div class="small-12 large-8 large-centered columns card">
+			<h2 class="left">Shop Categories</h2>
 
-		<ul class="group-button">	
-			<li><a href="<?php echo site_url('/admin/shop/products'); ?>" class="bluebutton">View Products</a></li>
-			<li><a href="<?php echo site_url('/admin/shop/add_cat'); ?>" class="showform green">Add Category</a></li>
-		</ul>
+			<div class="right">	
+				<a href="<?php echo site_url('/admin/shop/products'); ?>" class="button">View Products</a>
+				<a href="<?php echo site_url('/admin/shop/add_cat'); ?>" class="showform green button">Add Category</a>
+			</div>
 
-		<hr>
+			<div class="clear"></div>
 
-		<div class="hidden"></div>
+			<div class="hidden"></div>
 
-		<?php if ($parents): ?>
+			<?php if ($parents): ?>
 
-		<form method="post" action="<?php echo site_url('/admin/shop/edit_cat'); ?>">
+			<form method="post" action="<?php echo site_url('/admin/shop/edit_cat'); ?>">
 
-			<ol class="order">
-			<?php foreach ($parents as $cat): ?>
-				<li id="shop_cats-<?php echo $cat['catID']; ?>" class="<?php echo (@$children[$cat['catID']]) ? 'haschildren' : ''; ?>">
-					<div class="small-buttons large-2 columns">
-						<a href="<?php echo site_url('/admin/shop/edit_cat/'.$cat['catID']); ?>" class="showform button small">Edit</a>
-						<a href="<?php echo site_url('/admin/shop/delete_cat/'.$cat['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="button alert small">Delete</a>
-					</div>
-					<div class="col1 large-10 columns">			
-						<span><strong><?php echo $cat['catName']; ?></strong></span>
-						<small>(<?php echo $cat['catSafe']; ?>)</small>
-					</div>
-					
-					<?php if (@$children[$cat['catID']]): ?>
-						<ol class="subcat">
-						<?php foreach ($children[$cat['catID']] as $child): ?>
-							<li id="shop_cats-<?php echo $child['catID']; ?>">
-								<div class="small-buttons large-2 columns">
-									<a href="<?php echo site_url('/admin/shop/edit_cat/'.$child['catID']); ?>" class="showform button small">Edit</a>
-									<a href="<?php echo site_url('/admin/shop/delete_cat/'.$child['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="button alert small">Delete</a>
+				<div class="order">
+				<?php foreach ($parents as $cat): ?>
+					<div id="shop_cats-<?php echo $cat['catID']; ?>" class="large-12 columns table <?php echo (@$children[$cat['catID']]) ? 'haschildren' : ''; ?>">
+		
+						<div class="col1 large-9 columns">			
+							<span class="cat-name"><strong><?php echo $cat['catName']; ?></strong>
+							<small>(<?php echo $cat['catSafe']; ?>)</small></span>
+						</div>
+
+						<div class="large-3 columns">
+							<ul class="button-group even-2">
+								<li><a href="<?php echo site_url('/admin/shop/edit_cat/'.$cat['catID']); ?>" class="showform">Edit</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/delete_cat/'.$cat['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="">Delete</a></li>
+							</ul>
+						</div>
+						
+						<?php if (@$children[$cat['catID']]): ?>
+							<div class="subcat">
+							<?php foreach ($children[$cat['catID']] as $child): ?>
+								<div id="shop_cats-<?php echo $child['catID']; ?>" class="large-12 columns table">
+									<div class="col1 large-9 columns">
+										<span class="cat-name padded">--</span>
+										<span class="cat-name"><strong><?php echo $child['catName']; ?></strong></span>
+									</div>
+									<div class="large-3 columns">
+										<ul class="button-group even-2">
+											<li><a href="<?php echo site_url('/admin/shop/edit_cat/'.$child['catID']); ?>" class="showform">Edit</a></li>
+											<li><a href="<?php echo site_url('/admin/shop/delete_cat/'.$child['catID']); ?>" onclick="return confirm('Are you sure you want to delete this?')" class="">Delete</a></li>
+										</ul>
+									</div>
 								</div>
-								<div class="col1 large-10 columns">
-									<span class="padded">--</span>
-									<span><strong><?php echo $child['catName']; ?></strong></span>
-								</div>
+							<?php endforeach; ?>
+							</div>
+						<?php endif; ?>
+					</div>
+				<?php endforeach; ?>
+				</div>
+			</form>
 
-							</li>
-						<?php endforeach; ?>
-						</ol>
-					<?php endif; ?>
-				</li>
-			<?php endforeach; ?>
-			</ol>
-		</form>
+			<?php else: ?>
 
-		<?php else: ?>
+			<p>You haven't set up any shop categories yet.</p>
 
-		<p>You haven't set up any shop categories yet.</p>
-
-		<?php endif; ?>
+			<?php endif; ?>
+		</div>
 	</div>
-</div>

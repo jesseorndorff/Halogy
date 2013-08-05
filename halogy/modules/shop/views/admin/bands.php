@@ -5,16 +5,16 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
+<div class="large-10 columns body">
+	<div class="small-12 large-8 large-centered columns card">
 
-		<h1 class="headingleft">Shipping Bands</h1>
+		<h1 class="left">Shipping Bands</h1>
 
-		<ul class="group-button">	
-			<li><a href="<?php echo site_url('/admin/shop/add_band'); ?>" class="showform button green">Add Band</a></li>
-		</ul>
+		<div class="right">	
+			<a href="<?php echo site_url('/admin/shop/add_band'); ?>" class="showform button green">Add Band</a>
+		</div>
 
-		<hr>
+		<div class="clear"></div>
 
 		<div class="hidden"></div>
 

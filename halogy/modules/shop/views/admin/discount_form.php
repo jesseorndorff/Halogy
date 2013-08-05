@@ -40,28 +40,25 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
-		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
+<div class="large-10 columns body">
+	<div class="small-12 large-8 large-centered columns card">
+		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
 
 		<?php if (!$this->core->is_ajax()): ?>
-			<h1 class="headingleft"><?php echo (preg_match('/edit/i', $this->uri->segment(3))) ? 'Edit' : 'Add'; ?> Discount</h1>
+			<h2 class="left"><?php echo (preg_match('/edit/i', $this->uri->segment(3))) ? 'Edit' : 'Add'; ?> Discount</h2>
 		<?php endif; ?>
 
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/shop/discounts'); ?>" class="button">Back to Discounts</a></li>
-			<li><input type="submit" value="Save Changes" class="button green nolabel" /></li>
-		</ul>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/shop/discounts'); ?>" class="button">Back to Discounts</a>
+		</div>
 
-		<hr>
+		<div class="clear"></div>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
 				<?php echo $errors; ?>
 			</div>
 		<?php endif; ?>
-
-		<div class="large-6 small-12 large-centered columns">
 
 			<div class="item">
 				<label for="code">Code:</label>
@@ -138,11 +135,11 @@ $(function(){
 			<div class="item">				
 				<label for="discount">Discount:</label>
 				<div class="row collapse">
-					<div class="small-2 columns">
+					<div class="small-1 columns">
 						<span class="price prefix rounded" id="currency"><?php echo currency_symbol(); ?></span>
 						<span class="price prefix rounded" id="percentage" style="display: none;">%</span>
 					</div>
-					<div class="small-2 pull-8 columns">
+					<div class="small-3 pull-8 columns">
 						<?php echo @form_input('discount', $data['discount'], 'class="formelement small" id="discount"'); ?>
 					</div>
 				</div>
@@ -151,7 +148,7 @@ $(function(){
 				<label for="expiryDate">Expiry Date:</label>
 				<?php echo @form_input('expiryDate', dateFmt($data['expiryDate'], 'M d Y'), 'id="expiryDate" class="formelement datebox" readonly="readonly"'); ?>
 			</div>
-		</div>
+			<input type="submit" value="Save Changes" class="button green nolabel">
 		</form>
 	</div>
 </div>

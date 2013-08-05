@@ -5,42 +5,51 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">Shipping Modifiers</h2>
 
-		<h1 class="headingleft">Shipping Modifiers</h1>
+		<div class="right">	
+			<a href="<?php echo site_url('/admin/shop/add_modifier'); ?>" class="showform green">Add Modifier</a>
+		</div>
 
-		<ul class="group-button">	
-			<li><a href="<?php echo site_url('/admin/shop/add_modifier'); ?>" class="showform green">Add Modifier</a></li>
-		</ul>
-
-		<hr>
+		<div class="clear"></div>
 
 		<div class="hidden"></div>
 
 		<?php if ($shop_modifiers): ?>
-		<table class="default">
-			<thead>
-				<tr>
-					<th>Multiplier</th>
-					<th>Name</th>
-					<th>Band</th>		
-					<th class="tiny"></th>		
-					<th class="tiny"></th>
-				</tr>
-			</thead>
+		<div class="row table-header hide-for-touch">
+			<div class="large-2 columns">
+				<h3>Multiplier</h3>
+			</div>
+			<div class="large-4 columns">
+				<h3>Name</h3>
+			</div>
+			<div class="large-4 columns">
+				<h3>Band</h3>
+			</div>
+			<div class="large-2 columns">
+			</div>			
+		</div>
 			<?php foreach($shop_modifiers as $modifier): ?>
-			<tbody>
-				<tr>
-					<td><?php echo $modifier['multiplier']; ?> <small>x</small></td>
-					<td><?php echo $modifier['modifierName']; ?></td>
-					<td><?php echo $modifier['bandName']; ?></td>
-					<td><?php echo anchor('/admin/shop/edit_modifier/'.$modifier['modifierID'], 'Edit', 'class="showform"'); ?></td>
-					<td><?php echo anchor('/admin/shop/delete_modifier/'.$modifier['modifierID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\');"'); ?></td>
-				</tr>
-			</tbody>
+			<div class="row table">
+				<div class="large-2 columns">
+					<p><?php echo $modifier['multiplier']; ?> x</p>
+				</div>
+				<div class="large-4 columns">
+					<p><?php echo $modifier['modifierName']; ?></p>
+				</div>
+				<div class="large-4 columns">
+					<p><?php echo $modifier['bandName']; ?></p>
+				</div>
+				<div class="large-2 columns">
+					<ul class="button-group even-2">
+						<li><?php echo anchor('/admin/shop/edit_modifier/'.$modifier['modifierID'], 'Edit', 'class="showform"'); ?></li>
+						<li><?php echo anchor('/admin/shop/delete_modifier/'.$modifier['modifierID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\');"'); ?></li>
+					</ul>
+				</div>
+			</div>
 			<?php endforeach; ?>
-		</table>
 
 		<?php else: ?>
 

@@ -25,16 +25,15 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">Orders <?php if ($trackingStatus) echo '('.$statusArray[$trackingStatus].')'?></h2>
 
-		<h1 class="headingleft">Orders <?php if ($trackingStatus) echo '('.$statusArray[$trackingStatus].')'?></h1>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/shop/export_orders'); ?>" class="button">Export Orders as CSV</a>
+		</div>
 
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/shop/export_orders'); ?>" class="bluebutton">Export Orders as CSV</a></li>
-		</ul>
-
-		<hr>
+		<div class="clear"></div>
 
 		<div class="large-4 push-8 columns">
 
@@ -57,37 +56,56 @@ $(function(){
 
 		</div>
 
-		<hr>
-
 		<?php if ($orders): ?>
 
 		<?php echo $this->pagination->create_links(); ?>
 
-		<table class="default">
-			<thead>
-				<tr>
-					<th>Order ID</th>
-					<th>Date Ordered</th>
-					<th>Full Name</th>
-					<th>Number of Items</th>
-					<th class="narrow">Total (<?php echo currency_symbol(); ?>)</th>
-					<th>Status</th>
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>
-				</tr>
-			</thead>
+		<div class="row table">
+			<div class="large-1 columns">
+				<p>Order ID</p>
+			</div>
+			<div class="large-2 columns">
+				<p>Date Ordered</p>
+			</div>
+			<div class="large-2 columns">
+				<p>Full Name</p>
+			</div>
+			<div class="large-1 columns">
+				<p>Number of Items</p>
+			</div>
+			<div class="large-2 columns">
+				<p>Total (<?php echo currency_symbol(); ?>)</p>
+			</div>
+			<div class="large-2 columns">
+				<p>Status</p>
+			</div>
+			<div class="large-2 columns">
+
+			</div>
+		</div>
+
 		<?php foreach ($orders as $order): 
 			if (!$order['viewed']) $class = 'style="font-weight: bold;"'; else $class='';
 		?>
-			<tbody>
-				<tr <?php echo $class ?>>
-					<td><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], $order['transactionCode']); ?></td>
-					<td><?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?></td>
-					<td><?php echo $order['firstName']; ?> <?php echo $order['lastName']; ?></td>
-					<td><?php echo $order['numItems']; ?></td>
-					<td><?php echo currency_symbol().number_format($order['amount'],2); ?></td>
-					<td>
-						<?php
+		<div class="row table">
+			<div class="large-1 columns">
+				<p><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], $order['transactionCode']); ?></p>
+			</div>
+			<div class="large-2 columns">
+				<p><?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?></p>
+			</div>
+			<div class="large-2 columns">
+				<p><?php echo $order['firstName']; ?> <?php echo $order['lastName']; ?></p>
+			</div>
+			<div class="large-1 columns">
+				<p>?php echo $order['numItems']; ?></p>
+			</div>
+			<div class="large-2 columns">
+				<p><?php echo currency_symbol().number_format($order['amount'],2); ?></p>
+			</div>
+			<div class="large-2 columns">
+				<p>						
+					<?php
 							if ($order['trackingStatus'] == 'U' && $order['paid']) echo 'Unprocessed';
 							elseif ($order['trackingStatus'] == 'L') echo 'Allocated';
 							elseif ($order['trackingStatus'] == 'A') echo 'Awaiting Goods';
@@ -95,13 +113,16 @@ $(function(){
 							elseif ($order['trackingStatus'] == 'D') echo 'Dispatched';
 							else echo 'Unpaid Checkout';
 						?>
-					</td>
-					<td><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], 'View'); ?></td>
-					<td><?php echo anchor('/admin/shop/delete_order/'.$order['transactionID'], 'Delete', 'onclick="return confirm(\'Are you absolutely sure you want to delete this order? There is no undo.\')"'); ?></td>
-				</tr>
-			</tbody>
+				</p>
+			</div>
+			<div class="large-2 columns">
+				<ul class="button-group even-2">
+					<li><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], 'View'); ?></li>
+					<li><?php echo anchor('/admin/shop/delete_order/'.$order['transactionID'], 'Delete', 'onclick="return confirm(\'Are you absolutely sure you want to delete this order? There is no undo.\')"'); ?></li>
+				</ul>
+			</div>
+		</div>
 		<?php endforeach; ?>
-		</table>
 
 		<?php echo $this->pagination->create_links(); ?>
 

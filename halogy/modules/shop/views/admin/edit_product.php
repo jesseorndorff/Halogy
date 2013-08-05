@@ -84,19 +84,18 @@ $(function(){
 });
 </script>
 
-<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="custom">
-<div class="row">
-	<div class="large-12 columns body">
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
+<div class="large-10 columns body">
+	<div class="small-12 large-8 large-centered columns card">
+		<h2 class="left">Edit Product</h2>
 
-		<h1 class="headingleft">Edit Product</h1>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/shop/products'); ?>" class="button">Back to Products</a>
+			<input type="submit" name="view" value="View Product" class="button save" />
+			<input type="submit" value="Save Changes" class="button green save" />
+		</div>
 
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/admin/shop/products'); ?>" class="bluebutton">Back to Products</a></li>
-			<li><input type="submit" name="view" value="View Product" class="bluebutton save" /></li>
-			<li><input type="submit" value="Save Changes" class="green save" /></li>
-		</ul>
-
-		<hr>
+		<div class="clear"></div>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">
@@ -114,7 +113,7 @@ $(function(){
 				<p class="title" data-section-title><a href="#">Details</a></p>
 				<div class="content" data-section-content>
 				<div class="row">
-					<div class="large-6 small-12 large-centered columns">
+					<div class="large-12 small-12 large-centered columns">
 						<div id="details" class="tab">
 
 							<h2 class="underline">Product Details</h2>
@@ -233,7 +232,7 @@ $(function(){
 			<section>
 				<p class="title" data-section-title><a href="#">Product Description</a></p>
 				<div class="content" data-section-content>
-					<div class="large-6 small-12 large-centered columns">
+					<div class="large-12 small-12 large-centered columns">
 						<h2 class="underline">Product Description</h2>
 							
 						<!-- <div class="buttons">
@@ -269,7 +268,7 @@ $(function(){
 			<section>
 				<p class="title" data-section-title><a href="#">Options</a></p>
 				<div class="content" data-section-content>
-					<div class="large-6 small-12 large-centered columns">
+					<div class="large-12 small-12 large-centered columns">
 						<h2 class="underline">Options</h2>
 						<div class="item">
 							<label for="freePostage">Free Shipping?</label>

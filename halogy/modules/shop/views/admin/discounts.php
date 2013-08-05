@@ -5,16 +5,15 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
+<div class="large-10 columns body">
+	<div class="card">
+		<h2 class="left">Discount Codes</h2>
 
-		<h1 class="headingleft">Discount Codes</h1>
+		<div class="right">	
+			<a href="<?php echo site_url('/admin/shop/add_discount'); ?>" class="showform button green">Add Discount</a>
+		</div>
 
-		<ul class="group-button">	
-			<li><a href="<?php echo site_url('/admin/shop/add_discount'); ?>" class="showform button green">Add Discount</a></li>
-		</ul>
-
-		<hr>
+		<div class="clear"></div>
 
 		<div class="hidden"></div>
 
@@ -22,36 +21,52 @@ $(function(){
 
 		<?php echo $this->pagination->create_links(); ?>
 
-		<table class="default clear">
-			<thead>
-				<tr>
-					<th>Code</th>
-					<th>Calculated On</th>
-					<th>Discount</th>
-					<th>Expiry Date</th>
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>
-				</tr>
-			</thead>
-		<?php foreach ($shop_discounts as $discount): ?>
-			<tbody>
-				<tr>
-					<td><?php echo anchor('/admin/shop/edit_discount/'.$discount['discountID'], $discount['code'], 'class="showform"'); ?></td>
-					<td><?php
-						if ($discount['type'] == 'P') echo 'Product';
-						elseif ($discount['type'] == 'C') echo 'Category';
-						else echo 'Total';
-					?></td>
-					<td><?php echo ($discount['modifier'] == 'A') ? currency_symbol().number_format($discount['discount'],2) : $discount['discount'].'%'; ?></td>
-					<td><?php echo (strtotime($discount['expiryDate']) < time()) ? 
-						'<span style="color:red;">'.dateFmt($discount['expiryDate']).'</span>' : 
-						'<span style="color:green;">'.dateFmt($discount['expiryDate']).'</span>'; ?></td>
-					<td><?php echo anchor('/admin/shop/edit_discount/'.$discount['discountID'], 'Edit', 'class="showform"'); ?></td>
-					<td><?php echo anchor('/admin/shop/delete_discount/'.$discount['discountID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?></td>
-				</tr>
-			</tbody>
-		<?php endforeach; ?>
-		</table>
+		<div class="row table-header hide-for-touch">
+			<div class="large-2 columns">
+				<h3>Code</h3>
+			</div>
+			<div class="large-3 columns">
+				<h3>Calculated On</h3>
+			</div>
+			<div class="large-2 columns">
+				<h3>Discount</h3>
+			</div>
+			<div class="large-3 columns">
+				<h3>Expiry Date</h3>
+			</div>
+			<div class="large-2 columns">
+			</div>
+		</div>
+
+			<?php foreach ($shop_discounts as $discount): ?>
+				<div class="row table">
+					<div class="large-2 columns">
+						<p><?php echo anchor('/admin/shop/edit_discount/'.$discount['discountID'], $discount['code'], 'class="showform"'); ?></p>
+					</div>
+					<div class="large-3 columns">
+						<p><?php
+							if ($discount['type'] == 'P') echo 'Product';
+							elseif ($discount['type'] == 'C') echo 'Category';
+							else echo 'Total';
+						?></p>
+					</div>
+					<div class="large-2 columns">
+						<p><?php echo ($discount['modifier'] == 'A') ? currency_symbol().number_format($discount['discount'],2) : $discount['discount'].'%'; ?></p>
+					</div>
+					<div class="large-3 columns">
+						<p><?php echo (strtotime($discount['expiryDate']) < time()) ? 
+							'<span style="color:red;">'.dateFmt($discount['expiryDate']).'</span>' : 
+							'<span style="color:green;">'.dateFmt($discount['expiryDate']).'</span>'; ?></p>
+					</div>
+					<div class="large-2 columns">
+						<ul class="button-group even-2">
+							<li><?php echo anchor('/admin/shop/edit_discount/'.$discount['discountID'], 'Edit', 'class="showform"'); ?></li>
+							<li><?php echo anchor('/admin/shop/delete_discount/'.$discount['discountID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?></li>
+						</ul>
+					</div>
+				</div>
+			<?php endforeach; ?>
+			
 
 		<?php echo $this->pagination->create_links(); ?>
 

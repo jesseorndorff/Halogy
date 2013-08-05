@@ -34,9 +34,9 @@ $(function(){
 			<div class="large-10 columns body">
 				<div class="small-12 large-8 large-centered columns card">
 					<h2 class="left">Blog Categories</h2>
-					<ul class="button-group right">
-						<li><a href="#" class="toggle button green"><i class="ss-icon">add</i> Add Category</a></li>
-					</ul>
+					<div class="right">
+						<a href="#" class="toggle button green"><i class="ss-icon">add</i> Add Category</a>
+					</div>
 					<div class="clear"></div>
 					<div class="hidden item">
 						<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
