@@ -9,7 +9,7 @@
 	</script>
 
 <div class="row">
-	<div class="large-6 small-12 large-centered columns login-screen">
+	<div class="large-4 small-12 large-centered columns login-screen">
 		<img src="<?php echo site_url('/static/images/halogy.png'); ?>">
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">
@@ -25,7 +25,6 @@
 				<label for="password">Password:</label>
 				<input type="password" id="password" name="password" class="formelement" placeholder="Password"/>
 
-				<br class="clear" /><br />
 				<input type="submit" id="login" name="login" value="Login" class="button nolabel" />
 			
 			</form>

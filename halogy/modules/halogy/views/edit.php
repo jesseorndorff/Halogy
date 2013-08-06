@@ -50,18 +50,17 @@ $(function(){
 });
 
 </script>
-<div class="row">
-	<div class="large-12 columns body">
-		
+<div class="large-10 columns body">
+	<div class="small-12 large-8 large-centered columns card">
 		<form method="POST" action="<?php echo site_url($this->uri->uri_string()); ?>" class="customDISABLED">
 
-                <h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?> </h1>
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/halogy/sites'); ?>" class="bluebutton">Back to Sites</a></li>
-			<li><input type="submit" name="submit" value="Save Changes" class="green" /></li>
-		</ul>
+        <h2 class="left">Edit Site: <?php echo $data['siteDomain']; ?> </h2>
+		<div class="right">
+			<a href="<?php echo site_url('/halogy/sites'); ?>" class="button">Back to Sites</a></li>
+			<input type="submit" name="submit" value="Save Changes" class="button green">
+		</div>
 
-		<hr>
+		<div class="clear"></div>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">
@@ -76,65 +75,61 @@ $(function(){
 					<h2>Site Domain & Details</h2>
 					<p>Set the details of the website, including the name, URL, email and telephone.</p>
 					<hr>
-					<div class="row">
-						<div class="large-6 columns">
-							<h2>Domains</h2>
-
-							<label for="siteDomain">Domain:</label>
-							<?php echo @form_input('siteDomain', set_value('siteDomain', $data['siteDomain']), 'id="siteDomain" class="formelement"'); ?>
-							<span class="tip">For example 'mysite.com' (no sub-domains, www or trailing slashes)</span><br class="clear" />
-							
-							<label for="altDomain">Staging Domain:</label>
-							<?php echo @form_input('altDomain', set_value('altDomain', $data['altDomain']), 'id="altDomain" class="formelement"'); ?>
-							<span class="tip">Optional alternative domain for staging sites.</span><br class="clear" /><br />
-						</div>
+					<h2>Domains</h2>
+					<div class="item">
+						<label for="siteDomain">Domain:</label>
+						<p>For example 'mysite.com' (no sub-domains, www or trailing slashes)</p>
+						<?php echo @form_input('siteDomain', set_value('siteDomain', $data['siteDomain']), 'id="siteDomain" class="formelement"'); ?>
+					</div>
+					<div class="item">
+						<label for="altDomain">Staging Domain:</label>
+						<p>Optional alternative domain for staging sites.</p>	
+						<?php echo @form_input('altDomain', set_value('altDomain', $data['altDomain']), 'id="altDomain" class="formelement"'); ?>
 					</div>
 
-					<hr>
+					<h2>Site Details</h2>
+					<div class="item">
+						<label for="siteName">Name of Site:</label>
+						<p>The name of the site</p>
+						<?php echo @form_input('siteName', set_value('siteName', $data['siteName']), 'id="siteName" class="formelement"'); ?>
+					</div>
+					<div class="item">
+						<label for="siteURL">URL:</label>
+						<p>The full URL to the site</p>
+						<?php echo @form_input('siteURL', set_value('siteURL', $data['siteURL']), 'id="siteURL" class="formelement"'); ?>		
+					</div>
+					<div class="item">
+						<label for="siteEmail">Email:</label>
+						<p>The site contact email</p>
+						<?php echo @form_input('siteEmail', set_value('siteEmail', $data['siteEmail']), 'id="siteEmail" class="formelement"'); ?>
+					</div>
+					<div class="item">
+						<label for="siteTel">Telephone:</label>
+						<p>The site contact telephone number</p>
+						<?php echo @form_input('siteTel', set_value('siteTel', $data['siteTel']), 'id="siteTel" class="formelement"'); ?>
+					</div>
 
-					<div class="row">
-						<div class="large-6 columns">
-
-							<h2>Site Details</h2>
-
-							<label for="siteName">Name of Site:</label>
-							<?php echo @form_input('siteName', set_value('siteName', $data['siteName']), 'id="siteName" class="formelement"'); ?>
-							<span class="tip">The name of the site</span><br class="clear" />
-
-							<label for="siteURL">URL:</label>
-							<?php echo @form_input('siteURL', set_value('siteURL', $data['siteURL']), 'id="siteURL" class="formelement"'); ?>
-							<span class="tip">The full URL to the site</span><br class="clear" />
-
-							<label for="siteEmail">Email:</label>
-							<?php echo @form_input('siteEmail', set_value('siteEmail', $data['siteEmail']), 'id="siteEmail" class="formelement"'); ?>
-							<span class="tip">The site contact email</span><br class="clear" />
-
-							<label for="siteTel">Telephone:</label>
-							<?php echo @form_input('siteTel', set_value('siteTel', $data['siteTel']), 'id="siteTel" class="formelement"'); ?>
-							<span class="tip">The site contact telephone number</span><br class="clear" />
-							<br class="clear" />
-
-							<label for="active">Status:</label>
-							<?php
-								$actives = array(
-									1 => 'Active',
-									0 => 'Suspended',			
-								);	
-								echo @form_dropdown('active', $actives, $data['active'], 'id="active" class="formelement"');
-							?>
-							<span class="tip">You cannot delete sites, but you can suspend them and take them offline here.</span>
-						</div>
+					<div class="item">
+						<label for="active">Status:</label>
+						<p>You cannot delete sites, but you can suspend them and take them offline here.</p>
+						<?php
+							$actives = array(
+								1 => 'Active',
+								0 => 'Suspended',			
+							);	
+							echo @form_dropdown('active', $actives, $data['active'], 'id="active" class="formelement"');
+						?>
 					</div>
 				</div>
 			</section>
 			<section>
-                            	<p class="title" data-section-title><a href="#">Permissions</a></p>
+				<p class="title" data-section-title><a href="#">Module Permissions</a></p>
 				<div class="content" data-section-content>
 					<h2>Permissions</h2>
 					<p>Set the site module permissions.</p>
 					<hr>
 					<div class="row select-all">
-						<div class="large-6 columns">
+						<div class="large-12 columns">
 							<p><a href="#" class="selectall button small nolabel grey">Select All</a> <a href="#" class="deselectall button small nolabel grey">De-Select All</a></p>
 
 							<?php if ($permissions): ?>
