@@ -65,59 +65,39 @@ $(function(){
 				<p class="title" data-section-title><a href="#">User Details</a></p>
 				<div class="content" data-section-content>
 					<h2>User Details</h2>
-
-
+					<div class="row">
+						<div class="item large-6 columns">
 							<label for="username">Username:</label>
 							<?php echo @form_input('username', set_value('username', $data['username']), 'id="username" class="formelement"'); ?>
-							<br class="clear" />
 
 							<label for="password">Password:</label>
 							<?php echo @form_password('password','', 'id="password" class="formelement"'); ?>
-							<br class="clear" />
+							<?php if (@in_array('users_groups', $this->permission->permissions)): ?>
+								<label for="permissions">Group:</label>
+								<p>To edit permissions click on `User Groups` in the Users tab.</p>
+								<?php 
+									$values = array(
+										0 => 'None'
+									);
 
-						<?php if (@in_array('users_groups', $this->permission->permissions)): ?>
-							<label for="permissions">Group:</label>
-							<?php 
-								$values = array(
-									0 => 'None'
-								);
-
-								if ($this->session->userdata('groupID') == '-1')
-								{
-									$values[-1] = 'Superuser';
-								}
-								
-								$values[$this->site->config['groupID']] = 'Administrator';
-								if ($groups)
-								{
-									foreach($groups as $group)
+									if ($this->session->userdata('groupID') == '-1')
 									{
-										$values[$group['groupID']] = $group['groupName'];
+										$values[-1] = 'Superuser';
 									}
-								}
-								echo @form_dropdown('groupID',$values,set_value('groupIDs', $data['groupID']), 'id="groupIDs" class="formelement"'); 
-							?>
-							<span class="tip">To edit permissions click on `User Groups` in the Users tab.</span>
-							<br class="clear" />
-						<?php endif; ?>
-
-							<label for="email">Email:</label>
-							<?php echo @form_input('email',set_value('email', $data['email']), 'id="email" class="formelement"'); ?>
-							<br class="clear" />	
-
-							<label for="firstName">First Name:</label>
-							<?php echo @form_input('firstName',set_value('firstName', $data['firstName']), 'id="firstName" class="formelement"'); ?>
-							<br class="clear" />
-
-							<label for="lastName">Last Name:</label>
-							<?php echo @form_input('lastName',set_value('lastName', $data['lastName']), 'id="lastName" class="formelement"'); ?>
-							<br class="clear" />
-
-							<label for="displayName">Display Name:</label>
-							<?php echo @form_input('displayName', set_value('displayName', $data['displayName']), 'id="displayName" class="formelement" maxlength="15"'); ?>
-							<span class="tip">For use in the forums (optional).</span></span><br class="clear" />
-
+									
+									$values[$this->site->config['groupID']] = 'Administrator';
+									if ($groups)
+									{
+										foreach($groups as $group)
+										{
+											$values[$group['groupID']] = $group['groupName'];
+										}
+									}
+									echo @form_dropdown('groupID',$values,set_value('groupIDs', $data['groupID']), 'id="groupIDs" class="formelement"'); 
+								?>
+							<?php endif; ?>
 							<label for="active">Active?</label>
+							<p>Should we make this user active across the site?</p>
 							<?php 
 								$values = array(
 									1 => 'Yes',
@@ -125,15 +105,43 @@ $(function(){
 								);
 								echo @form_dropdown('active',$values,set_value('active', $data['active']), 'id="active" class="formelement"'); 
 							?>
+						</div>
+						<div class="item large-6 columns">
+							<label for="email">Email:</label>
+							<?php echo @form_input('email',set_value('email', $data['email']), 'id="email" class="formelement"'); ?>
+
+							<label for="firstName">First Name:</label>
+							<?php echo @form_input('firstName',set_value('firstName', $data['firstName']), 'id="firstName" class="formelement"'); ?>
+
+							<label for="lastName">Last Name:</label>
+							<?php echo @form_input('lastName',set_value('lastName', $data['lastName']), 'id="lastName" class="formelement"'); ?>
+
+							<label for="displayName">Display Name:</label>
+							<p>For use in the forums (optional).</p>
+							<?php echo @form_input('displayName', set_value('displayName', $data['displayName']), 'id="displayName" class="formelement" maxlength="15"'); ?>
+						</div>
+					</div>
+						<div class="row">
+							<div class="item large-6 columns">
+								<label for="avatar">User Avatar:</label>
+								<p>Upload an image of yourself, this will be used in various modules.</p>
+								<div class="avatar left"><img src="http://halogy.dev/static/uploads/avatars/jesse.png"></div>
+								<a href="#" class="small button right">Upload Avatar</a>
+							</div>
+							<div class="large-6 columns">
+								
+							</div>
+						</div>
 				</div> <!-- /content -->
 			</section>
 			<?php if (@in_array('shop', $this->permission->sitePermissions) || @in_array('community', $this->permission->sitePermissions)): ?>	
 				<section>
 					<p class="title" data-section-title><a href="#">User Address</a></p>
 					<div class="content" data-section-content>
-								<?php if (@in_array('shop', $this->permission->sitePermissions) || @in_array('community', $this->permission->sitePermissions)): ?>	
-									<h2>Delivery Address</h2>
-
+						<?php if (@in_array('shop', $this->permission->sitePermissions) || @in_array('community', $this->permission->sitePermissions)): ?>	
+							<h2>Delivery Address</h2>
+							<div class="row">
+								<div class="item large-6 columns">
 									<label for="address1">Address 1:</label>
 									<?php echo @form_input('address1',set_value('address1', $data['address1']), 'id="address1" class="formelement"'); ?>
 
@@ -142,7 +150,11 @@ $(function(){
 
 									<label for="address3">Address 3:</label>
 									<?php echo @form_input('address3',set_value('address3', $data['address3']), 'id="address3" class="formelement"'); ?>
-
+									
+									<label for="phone">Phone:</label>
+									<?php echo @form_input('phone',set_value('phone', $data['phone']), 'id="phone" class="formelement"'); ?>
+								</div>
+								<div class="item large-6 columns">
 									<label for="city">City:</label>
 									<?php echo @form_input('city',set_value('city', $data['city']), 'id="city" class="formelement"'); ?>
 
@@ -154,40 +166,42 @@ $(function(){
 
 									<label for="country">Country:</label>
 									<?php echo @display_countries('country', $data['country'], 'id="country" class="formelement"'); ?>
+								</div>
+							</div>
+							<hr>
+							<h2>Billing Address</h2>
 
-									<label for="phone">Phone:</label>
-									<?php echo @form_input('phone',set_value('phone', $data['phone']), 'id="phone" class="formelement"'); ?>
+							<p><input type="checkbox" name="sameAddress" value="1" class="checkbox" id="sameAddress" />
+							The billing address is the same as my delivery address.</p>
 
-									<h2>Billing Address</h2>
-
-									<p><input type="checkbox" name="sameAddress" value="1" class="checkbox" id="sameAddress" />
-									The billing address is the same as my delivery address.</p>
-
-									<div id="billing">
-
+							<div id="billing">
+								<div class="row">
+									<div class="item large-6 columns">
 										<label for="billingAddress1">Address 1:</label>
 										<?php echo @form_input('billingAddress1',set_value('billingAddress1', $data['billingAddress1']), 'id="billingAddress1" class="formelement"'); ?>
-									
+
 										<label for="billingAddress2">Address 2:</label>
 										<?php echo @form_input('billingAddress2',set_value('billingAddress2', $data['billingAddress2']), 'id="billingAddress2" class="formelement"'); ?>
-									
+
 										<label for="billingAddress3">Address 3:</label>
 										<?php echo @form_input('billingAddress3',set_value('billingAddress3', $data['billingAddress3']), 'id="billingAddress3" class="formelement"'); ?>
-									
+									</div>
+									<div class="item large-6 columns">
 										<label for="billingCity">City:</label>
 										<?php echo @form_input('billingCity',set_value('billingCity', $data['billingCity']), 'id="billingCity" class="formelement"'); ?>
 
 										<label for="billingState">State:</label>
 										<?php echo display_states('billingState', $data['billingState'], 'id="billingState" class="formelement"'); ?>
-									
+
 										<label for="billingPostcode">Post /ZIP Code:</label>
 										<?php echo @form_input('billingPostcode',set_value('billingPostcode', $data['billingPostcode']), 'id="billingPostcode" class="formelement"'); ?>
-									
+
 										<label for="billingCountry">Country:</label>
 										<?php echo display_countries('billingCountry', $data['billingCountry'], 'id="billingCountry" class="formelement"'); ?>
-
 									</div>
-								<?php endif; ?>
+								</div>
+							</div>
+						<?php endif; ?>
 
 					</div> <!-- /content -->
 				</section>
@@ -198,34 +212,37 @@ $(function(){
 									<?php if (@in_array('community', $this->permission->permissions)): ?>
 
 										<h2>Community</h2>
+										<div class="row">
+											<div class="item large-6 columns">
+												<label for="signature">Signature:</label>
+												<?php echo @form_textarea('signature',set_value('signature', $data['signature']), 'id="signature" class="formelement small"'); ?>
 
-										<label for="signature">Signature:</label>
-										<?php echo @form_textarea('signature',set_value('signature', $data['signature']), 'id="signature" class="formelement small"'); ?>
+												<label for="bio">Bio:</label>
+												<?php echo @form_textarea('bio',set_value('bio', $data['bio']), 'id="bio" class="formelement small"'); ?>
+											</div>
+											<div class="item large-6 columns">
+												<label for="notifications">Notifications:</label>
+												<?php
+													$values = array(
+														0 => 'No',
+														1 => 'Yes',
+													);
+													echo @form_dropdown('notifications', $values, set_value('notifications', $data['notifications']), 'id="notifications" class="formelement"'); 
+												?>
 
-										<label for="bio">Bio:</label>
-										<?php echo @form_textarea('bio',set_value('bio', $data['bio']), 'id="bio" class="formelement small"'); ?>
+												<label for="privacy">Privacy:</label>
+												<?php
+													$values = array(
+														'V' => 'Everyone can see my profile',
+														'H' => 'Hide my profile and feed'
+													);
+													echo @form_dropdown('privacy', $values, set_value('privacy', $data['privacy']), 'id="privacy" class="formelement"'); 
+												?>
 
-										<label for="notifications">Notifications:</label>
-										<?php
-											$values = array(
-												0 => 'No',
-												1 => 'Yes',
-											);
-											echo @form_dropdown('notifications', $values, set_value('notifications', $data['notifications']), 'id="notifications" class="formelement"'); 
-										?>
-
-										<label for="privacy">Privacy:</label>
-										<?php
-											$values = array(
-												'V' => 'Everyone can see my profile',
-												'H' => 'Hide my profile and feed'
-											);
-											echo @form_dropdown('privacy', $values, set_value('privacy', $data['privacy']), 'id="privacy" class="formelement"'); 
-										?>
-
-										<label for="kudos">Kudos:</label>
-										<?php echo @form_input('kudos',set_value('kudos', $data['kudos']), 'id="kudos" class="formelement"'); ?>
-
+												<label for="kudos">Kudos:</label>
+												<?php echo @form_input('kudos',set_value('kudos', $data['kudos']), 'id="kudos" class="formelement"'); ?>
+											</div>
+										</div>
 									<?php endif; ?>
 								</div>
 
@@ -236,15 +253,19 @@ $(function(){
 
 									<?php if (@in_array('community', $this->permission->sitePermissions)): ?>
 										<h2>Company</h2>
+										<div class="row">
+											<div class="item large-6 columns">
+												<label for="companyName">Company Name:</label>
+												<?php echo @form_input('companyName',set_value('companyName', $data['companyName']), 'id="companyName" class="formelement"'); ?>
 
-										<label for="companyName">Company Name:</label>
-										<?php echo @form_input('companyName',set_value('companyName', $data['companyName']), 'id="companyName" class="formelement"'); ?>
-
-										<label for="companyDescription">Company Description:</label>
-										<?php echo @form_textarea('companyDescription',set_value('companyDescription', $data['companyDescription']), 'id="companyDescription" class="formelement small"'); ?>
-
-										<label for="companyWebsite">Company Website:</label>
-										<?php echo @form_input('companyWebsite',set_value('companyWebsite', $data['companyWebsite']), 'id="companyWebsite" class="formelement"'); ?>
+												<label for="companyDescription">Company Description:</label>
+												<?php echo @form_textarea('companyDescription',set_value('companyDescription', $data['companyDescription']), 'id="companyDescription" class="formelement small"'); ?>
+											</div>
+											<div class="item large-6 columns">
+												<label for="companyWebsite">Company Website:</label>
+												<?php echo @form_input('companyWebsite',set_value('companyWebsite', $data['companyWebsite']), 'id="companyWebsite" class="formelement"'); ?>
+											</div>
+										</div>
 									<?php endif; ?>
 								</div>
 					</section>
