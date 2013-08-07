@@ -64,18 +64,20 @@ $(document).ready(function($) {
   var allPanels = $('.side-bar > ul').hide();
     
   $('.side-bar > h3 > a').click(function() {
-      $this = $(this);
-      $target =  $this.parent().next();
-
-      if(!$target.hasClass('active')){
-         allPanels.removeClass('active').slideUp();
-         $target.addClass('active').slideDown();
-      }
+     if ($(this).hasClass('selected')) {
+               $(this).removeClass('selected');
+               $(this).parent().next().slideUp();
+          } else {
+          	   $('.side-bar > h3 > a').removeClass('selected');
+               $(this).addClass('selected');
+               $('.side-bar ul').slideUp();
+               $(this).parent().next().slideDown();
+          }
       
     return false;
   });
 
-})(jQuery);
+});
 </script>
 	
 	<title><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin - Halogy</title>
@@ -362,7 +364,7 @@ $(document).ready(function($) {
 				<?php if (in_array('webforms', $this->permission->permissions)): ?>
 					<h3 class="side-bar-h"><a href="#">Web Forms</a></h3>
 						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>">ickets</a></li>
+							<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>">Tickets</a></li>
 							<?php if (in_array('webforms_edit', $this->permission->permissions)): ?>
 								<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>">All Web Forms</a></li>
 								<li><a href="<?php echo site_url('/admin/webforms/add_form'); ?>">Add Web Form</a></li>
