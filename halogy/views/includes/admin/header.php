@@ -39,7 +39,7 @@
   })
 </script>
 
-<!-- Setting the Sidebar to 100% Height 
+<!-- Setting the Sidebar to 100% Height -->
 <script>
   $(document).ready(function(){
       resizeDiv();
@@ -54,7 +54,27 @@
       vph = $(window).height(); 
       $('.side-bar').css({'height': vph + 'px'});
   }
-</script> -->
+</script>
+
+<script>
+$(document).ready(function($) {
+    
+  var allPanels = $('.side-bar > ul').hide();
+    
+  $('.side-bar > h3 > a').click(function() {
+      $this = $(this);
+      $target =  $this.parent().next();
+
+      if(!$target.hasClass('active')){
+         allPanels.removeClass('active').slideUp();
+         $target.addClass('active').slideDown();
+      }
+      
+    return false;
+  });
+
+})(jQuery);
+</script>
 	
 	<title><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin - Halogy</title>
 	
@@ -282,7 +302,7 @@
 		<div class="row">
 			<nav role="navigation" class="side-bar hide-for-small" >
 				<?php if (in_array('blog', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Blog</h3>
+					<h3 class="side-bar-h"><a href="#">Blog</a></h3>
 						<ul id="mainNav" class="side-nav">
 							<?php if (in_array('blog', $this->permission->permissions)): ?>
 								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>"><i class="ss-icon">Page</i> All Posts</a></li>
@@ -299,7 +319,7 @@
 				<!-- Pages -->
 				<?php if($this->session->userdata('session_admin')): ?>
 					<?php if (in_array('pages', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Pages</h3>
+					<h3 class="side-bar-h"><a href="#">Pages</a></h3>
 						<ul class="side-nav">
 							<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>"><i class="ss-icon">View</i> All Pages</a></li>
 							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
@@ -310,7 +330,7 @@
 				<?php endif; ?>
 				<!-- Templates -->
 				<?php if (in_array('pages_templates', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Templates</h3>
+					<h3 class="side-bar-h"><a href="#">Templates</a></h3>
 						<ul class="side-nav">
 							<li><a href="<?php echo site_url('/admin/pages/templates'); ?>"><i class="ss-icon">View</i> All Templates</a></li>
 							<li><a href="<?php echo site_url('/admin/pages/includes'); ?>">Includes</a></li>
@@ -321,7 +341,7 @@
 				<!-- Uploads -->
 				
 				<?php if (in_array('images', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Uploads</h3>
+					<h3 class="side-bar-h"><a href="#">Uploads</a></h3>
 						<ul class="side-nav">
 							<li><a href="<?php echo site_url('/admin/images/viewall'); ?>"><i class="ss-icon">Picture</i> Images</a></li>
 							<?php if (in_array('images_all', $this->permission->permissions)): ?>
@@ -338,7 +358,7 @@
 				<!-- Webforms -->
 				
 				<?php if (in_array('webforms', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Web Forms</h3>
+					<h3 class="side-bar-h"><a href="#">Web Forms</a></h3>
 						<ul class="side-nav">
 							<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>"><i class="ss-icon">tag</i> Tickets</a></li>
 							<?php if (in_array('webforms_edit', $this->permission->permissions)): ?>
@@ -350,7 +370,7 @@
 				<!-- Shop -->
 				
 				<?php if (in_array('shop', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Shop</h3>
+					<h3 class="side-bar-h"><a href="#">Shop</a></h3>
 						<ul class="side-nav">
 							<li><a href="<?php echo site_url('/admin/shop/products'); ?>"><i class="ss-icon">View</i> All Products</a></li>
 							<?php if (in_array('shop_edit', $this->permission->permissions)): ?>
@@ -381,7 +401,7 @@
 				<!-- Events -->
 				
 				<?php if (in_array('events', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Events</h3>
+					<h3 class="side-bar-h"><a href="#">Events</a></h3>
 						<ul class="side-nav">
 							<li><a href="<?php echo site_url('/admin/events/viewall'); ?>"><i class="ss-icon">view</i> All Events</a></li>
 						<?php if (in_array('events_edit', $this->permission->permissions)): ?>
@@ -392,7 +412,7 @@
 				<!-- Forums -->
 				
 				<?php if (in_array('forums', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Forums</h3>
+					<h3 class="side-bar-h"><a href="#">Forums</a></h3>
 						<ul class="side-nav hidden">
 							<li><a href="<?php echo site_url('/admin/forums/forums'); ?>">Forums</a></li>
 							<?php if (in_array('forums_cats', $this->permission->permissions)): ?>
@@ -403,7 +423,7 @@
 				<!-- Wiki -->
 				
 				<?php if (in_array('wiki', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Wiki</h3>
+					<h3 class="side-bar-h"><a href="#">Wiki</a></h3>
 						<ul class="side-nav hidden">
 							<?php if (in_array('wiki_edit', $this->permission->permissions)): ?>
 								<li><a href="<?php echo site_url('/admin/wiki/viewall'); ?>">All Wiki Pages</a></li>
@@ -417,7 +437,7 @@
 				<!-- Users -->
 				
 				<?php if (in_array('users', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h">Users</h3>
+					<h3 class="side-bar-h"><a href="#">Users</a></h3>
 						<ul class="side-nav">
 							<?php if (in_array('users_groups', $this->permission->permissions)): ?>
 								<li><a href="<?php echo site_url('/admin/users/viewall'); ?>"><i class="ss-icon">user</i> All Users</a></li>
@@ -427,7 +447,7 @@
 				<?php endif; ?>
 				<!-- Admin -->
 				
-				<h3 class="side-bar-h">Admin</h3>
+				<h3 class="side-bar-h"><a href="#">Admin</a></h3>
 				<ul class="side-nav">
 					<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>
 					<?php if ($this->session->userdata('session_admin')): ?>
