@@ -535,18 +535,20 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .side-bar-h {
 	background: darken(#333, 6%);
-	border-bottom: lighten(#333, 2%) 1px solid;
-	border-top: lighten(#333, 2%) 1px solid;
 	margin-top: 0px;
 	padding: 10px;
 }
 
 .side-bar h3{
 	color: #898b94;
-	margin-bottom: 1px;
+	margin: 0;
 	font-size: .9em;
 	font-weight: 800;
 	text-transform: uppercase;
+}
+
+.side-bar h3 > a {
+	color: #898b94;
 }
 
 .side-bar input {

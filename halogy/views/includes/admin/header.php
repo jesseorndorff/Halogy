@@ -56,6 +56,8 @@
   }
 </script>
 
+<!-- Sidebar jquery slide -->
+<!-- Need to move to scripts -->
 <script>
 $(document).ready(function($) {
     
@@ -305,15 +307,15 @@ $(document).ready(function($) {
 					<h3 class="side-bar-h"><a href="#">Blog</a></h3>
 						<ul id="mainNav" class="side-nav">
 							<?php if (in_array('blog', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>"><i class="ss-icon">Page</i> All Posts</a></li>
+								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>">All Posts</a></li>
 							<?php endif; ?>
 							<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>"><i class="ss-icon">Add</i> Add Post</a></li>
+								<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>">Add Post</a></li>
 							<?php endif; ?>
 							<?php if (in_array('blog_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/categories'); ?>"><i class="ss-icon">List</i> Categories</a></li>
+								<li><a href="<?php echo site_url('/admin/blog/categories'); ?>">Categories</a></li>
 							<?php endif; ?>							
-							<li><a href="<?php echo site_url('/admin/blog/comments'); ?>"><i class="ss-icon">Comment</i> Comments</a></li>
+							<li><a href="<?php echo site_url('/admin/blog/comments'); ?>">Comments</a></li>
 						</ul>
 				<?php endif; ?>
 				<!-- Pages -->
@@ -321,9 +323,9 @@ $(document).ready(function($) {
 					<?php if (in_array('pages', $this->permission->permissions)): ?>
 					<h3 class="side-bar-h"><a href="#">Pages</a></h3>
 						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>"><i class="ss-icon">View</i> All Pages</a></li>
+							<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>">All Pages</a></li>
 							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-							<li><a href="<?php echo site_url('/admin/pages/add'); ?>"><i class="ss-icon">Add</i> Add Page</a></li>
+							<li><a href="<?php echo site_url('/admin/pages/add'); ?>">Add Page</a></li>
 							<?php endif; ?>
 						</ul>
 					<?php endif; ?>	
@@ -332,7 +334,7 @@ $(document).ready(function($) {
 				<?php if (in_array('pages_templates', $this->permission->permissions)): ?>
 					<h3 class="side-bar-h"><a href="#">Templates</a></h3>
 						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/pages/templates'); ?>"><i class="ss-icon">View</i> All Templates</a></li>
+							<li><a href="<?php echo site_url('/admin/pages/templates'); ?>">All Templates</a></li>
 							<li><a href="<?php echo site_url('/admin/pages/includes'); ?>">Includes</a></li>
 							<li><a href="<?php echo site_url('/admin/pages/includes/css'); ?>">CSS</a></li>
 							<li><a href="<?php echo site_url('/admin/pages/includes/js'); ?>">Javascript</a></li>
@@ -343,14 +345,14 @@ $(document).ready(function($) {
 				<?php if (in_array('images', $this->permission->permissions)): ?>
 					<h3 class="side-bar-h"><a href="#">Uploads</a></h3>
 						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/images/viewall'); ?>"><i class="ss-icon">Picture</i> Images</a></li>
+							<li><a href="<?php echo site_url('/admin/images/viewall'); ?>">Images</a></li>
 							<?php if (in_array('images_all', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/images/folders'); ?>"><i class="ss-icon">picturefolder</i> Image Folders</a></li>
+								<li><a href="<?php echo site_url('/admin/images/folders'); ?>">Image Folders</a></li>
 							<?php endif; ?>
 							<?php if (in_array('files', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/files/viewall'); ?>"><i class="ss-icon">page</i> Files</a></li>
+								<li><a href="<?php echo site_url('/admin/files/viewall'); ?>">Files</a></li>
 								<?php if (in_array('files_all', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/files/folders'); ?>"><i class="ss-icon">	folder</i> File Folders</a></li>
+								<li><a href="<?php echo site_url('/admin/files/folders'); ?>">File Folders</a></li>
 								<?php endif; ?>
 							<?php endif; ?>
 						</ul>
@@ -360,10 +362,10 @@ $(document).ready(function($) {
 				<?php if (in_array('webforms', $this->permission->permissions)): ?>
 					<h3 class="side-bar-h"><a href="#">Web Forms</a></h3>
 						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>"><i class="ss-icon">tag</i> Tickets</a></li>
+							<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>">ickets</a></li>
 							<?php if (in_array('webforms_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>"><i class="ss-icon">Form</i> All Web Forms</a></li>
-								<li><a href="<?php echo site_url('/admin/webforms/add_form'); ?>"><i class="ss-icon">Add</i> Add Web Form</a></li>
+								<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>">All Web Forms</a></li>
+								<li><a href="<?php echo site_url('/admin/webforms/add_form'); ?>">Add Web Form</a></li>
 							<?php endif; ?>
 						</ul>
 				<?php endif; ?>
@@ -372,29 +374,29 @@ $(document).ready(function($) {
 				<?php if (in_array('shop', $this->permission->permissions)): ?>
 					<h3 class="side-bar-h"><a href="#">Shop</a></h3>
 						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/shop/products'); ?>"><i class="ss-icon">View</i> All Products</a></li>
+							<li><a href="<?php echo site_url('/admin/shop/products'); ?>">All Products</a></li>
 							<?php if (in_array('shop_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/add_product'); ?>"><i class="ss-icon">Add</i> Add Product</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/add_product'); ?>">Add Product</a></li>
 							<?php endif; ?>
 							<?php if (in_array('shop_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/categories'); ?>"><i class="ss-icon">List</i> Categories</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/categories'); ?>">Categories</a></li>
 							<?php endif; ?>
 							<?php if (in_array('shop_orders', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/orders'); ?>"><i class="ss-icon">View</i> View Orders</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/orders'); ?>">View Orders</a></li>
 							<?php endif; ?>
 							<?php if (in_array('shop_shipping', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/bands'); ?>"><i class="ss-icon">deliveryvan</i> Shipping Bands</a></li>
-								<li><a href="<?php echo site_url('/admin/shop/postages'); ?>"><i class="ss-icon">cash</i> Shipping Costs</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/bands'); ?>">Shipping Bands</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/postages'); ?>">Shipping Costs</a></li>
 								<li><a href="<?php echo site_url('/admin/shop/modifiers'); ?>">Shipping Modifiers</a></li>								
 							<?php endif; ?>
 							<?php if (in_array('shop_discounts', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/discounts'); ?>"><i class="ss-icon">percent</i> Discount Codes</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/discounts'); ?>">Discount Codes</a></li>
 							<?php endif; ?>
 							<?php if (in_array('shop_reviews', $this->permission->permissions)): ?>
 								<li><a href="<?php echo site_url('/admin/shop/reviews'); ?>">Reviews</a></li>
 							<?php endif; ?>
 							<?php if (in_array('shop_upsells', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/upsells'); ?>"><i class="ss-icon">addcart</i> Upsells</a></li>
+								<li><a href="<?php echo site_url('/admin/shop/upsells'); ?>">Upsells</a></li>
 							<?php endif; ?>	
 						</ul>
 				<?php endif; ?>
@@ -403,9 +405,9 @@ $(document).ready(function($) {
 				<?php if (in_array('events', $this->permission->permissions)): ?>
 					<h3 class="side-bar-h"><a href="#">Events</a></h3>
 						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/events/viewall'); ?>"><i class="ss-icon">view</i> All Events</a></li>
+							<li><a href="<?php echo site_url('/admin/events/viewall'); ?>">All Events</a></li>
 						<?php if (in_array('events_edit', $this->permission->permissions)): ?>
-							<li><a href="<?php echo site_url('/admin/events/add_event'); ?>"><i class="ss-icon">add</i> Add Event</a></li>
+							<li><a href="<?php echo site_url('/admin/events/add_event'); ?>">Add Event</a></li>
 						<?php endif; ?>	
 						</ul>
 				<?php endif; ?>
@@ -440,8 +442,8 @@ $(document).ready(function($) {
 					<h3 class="side-bar-h"><a href="#">Users</a></h3>
 						<ul class="side-nav">
 							<?php if (in_array('users_groups', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/users/viewall'); ?>"><i class="ss-icon">user</i> All Users</a></li>
-								<li><a href="<?php echo site_url('/admin/users/groups'); ?>"><i class="ss-icon">users</i> User Groups</a></li>
+								<li><a href="<?php echo site_url('/admin/users/viewall'); ?>">All Users</a></li>
+								<li><a href="<?php echo site_url('/admin/users/groups'); ?>">User Groups</a></li>
 							<?php endif; ?>
 						</ul>
 				<?php endif; ?>
