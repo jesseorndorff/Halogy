@@ -18,49 +18,68 @@
 			</div>
 		</div>
 
+		<div class="clear"></div>
+
 		<?php if ($sites): ?>
 
 		<?php echo $this->pagination->create_links(); ?>
 
-		<table class="default">
-			<thead>
-				<tr>
-					<th><?php echo order_link('halogy/sites/viewall','siteName','Site Name'); ?></th>
-					<th><?php echo order_link('halogy/sites/viewall','dateCreated','Date Created'); ?></th>
-					<th><?php echo order_link('halogy/sites/viewall','siteDomain','Domain'); ?></th>
-					<th><?php echo order_link('halogy/sites/viewall','altDomain','Staging Domain'); ?></th>		
-					<th class="narrow"><?php echo order_link('halogy/sites/viewall','active','Status'); ?></th>		
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>
-				</tr>
-			</thead>
-		<?php
-			$i=0;
-			foreach ($sites as $site):
-			$class = ($i % 2) ? ' class="alt"' : ''; $i++;
-		?>
-			<tbody>
-			<tr<?php echo $class; ?>>
-				<td><?php echo anchor('/halogy/edit_site/'.$site['siteID'], $site['siteName']); ?></td>
-				<td><?php echo dateFmt($site['dateCreated']); ?></td>		
-				<td><?php echo $site['siteDomain']; ?></td>
-				<td><?php echo $site['altDomain']; ?></td>		
-				<td>
-					<?php
+			<div class="row table-header hide-for-touch">
+				<div class="large-2 columns">
+					<h3><?php echo order_link('halogy/sites/viewall','siteName','Site Name'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('halogy/sites/viewall','dateCreated','Date Created'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('halogy/sites/viewall','siteDomain','Domain'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('halogy/sites/viewall','altDomain','Staging Domain'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('halogy/sites/viewall','active','Status'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+				</div>
+			</div>
+
+			<?php
+				$i=0;
+				foreach ($sites as $site):
+				$class = ($i % 2) ? 'alt' : ''; $i++;
+			?>
+
+			<div class="row table <?php echo $class;?>">
+				<div class="large-2 columns">
+					<p><?php echo anchor('/halogy/edit_site/'.$site['siteID'], $site['siteName']); ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p><?php echo dateFmt($site['dateCreated']); ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p><?php echo $site['siteDomain']; ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p><?php echo $site['altDomain']; ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p>					
+						<?php
 						if ($site['active']) echo '<span style="color:green"><strong>Active</strong></span>';
 						if (!$site['active']) echo '<span style="color:red">Suspended</span>';
 					?>
-				</td>	
-				<td class="tiny">
-					<?php echo anchor('/halogy/edit_site/'.$site['siteID'], 'Edit'); ?>
-				</td>
-				<td class="tiny">
-					<?php echo anchor('/halogy/delete_site/'.$site['siteID'], 'Delete', 'onclick="return confirm(\'Are you absolutely SURE you want to delete this site?\n\nThere is no undo!\')"'); ?>
-				</td>
-			</tr>
-			</tbody>
-		<?php endforeach; ?>
-		</table>
+					</p>
+				</div>
+				<div class="large-2 columns">
+					<ul class="button-group even-2">
+						<li><?php echo anchor('/halogy/edit_site/'.$site['siteID'], 'Edit', array('class' => 'button small grey')); ?></li>
+						<li><?php echo anchor('/halogy/delete_site/'.$site['siteID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+					</ul>
+				</div>
+			</div>
+
+			<?php endforeach; ?>
 
 		<?php echo $this->pagination->create_links(); ?>
 

@@ -39,7 +39,7 @@
   })
 </script>
 
-<!-- Setting the Sidebar to 100% Height -->
+<!-- Setting the Sidebar to 100% Height 
 <script>
   $(document).ready(function(){
       resizeDiv();
@@ -57,7 +57,7 @@
 </script>
 
 <!-- Sidebar jquery slide -->
-<!-- Need to move to scripts -->
+<!-- Need to move to scripts 
 <script>
 $(document).ready(function($) {
     
@@ -78,7 +78,7 @@ $(document).ready(function($) {
   });
 
 });
-</script>
+</script> --> 
 	
 	<title><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin - Halogy</title>
 	
