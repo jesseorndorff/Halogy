@@ -52,24 +52,37 @@ $(function(){
 				</form>
 			</div>
 		</div>
+		<div class="clear"></div>
 
 		<?php if ($users): ?>
 
 		<?php echo $this->pagination->create_links(); ?>
+			
+			<div class="row table-header hide-for-touch">
+				<div class="large-2 columns">
+					<h3><?php echo order_link('/admin/users/viewall','username','Username'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('/admin/users/viewall','datecreated','Date Created'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('/admin/users/viewall','lastname','Name'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('/admin/users/viewall','email','Email'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+					<h3><?php echo order_link('/admin/users/viewall','groupid','Group'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+				</div>
+			</div>
 
-		<table class="default clear">
-			<thead>
-				<tr>
-					<th><?php echo order_link('/admin/users/viewall','username','Username'); ?></th>
-					<th><?php echo order_link('/admin/users/viewall','datecreated','Date Created'); ?></th>
-					<th><?php echo order_link('/admin/users/viewall','lastname','Name'); ?></th>
-					<th><?php echo order_link('/admin/users/viewall','email','Email'); ?></th>
-					<th><?php echo order_link('/admin/users/viewall','groupid','Group'); ?></th>
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>		
-				</tr>
-			</thead>
-		<?php foreach ($users as $user): ?>
+		<?php 
+			$i=0;
+			foreach ($users as $user): 
+			$class = ($i % 2) ? 'alt' : ''; $i++;
+		?>
 		<?php 
 			$class = '';
 			if ($user['groupID'] == $this->site->config['groupID'] || $user['groupID'] < 0) $class = 'class="blue"';
@@ -79,32 +92,43 @@ $(function(){
 			$userlink = (in_array('users_edit', $this->permission->permissions)) ? anchor('/admin/users/edit/'.$user['userID'], $username) : $username;
 			
 		?>
-			<tr <?php echo $class; ?>>
-				<td><?php echo $userlink; ?></td>
-				<td><?php echo dateFmt($user['dateCreated'], '', '', TRUE); ?></td>
-				<td><?php echo trim($user['firstName'].' '.$user['lastName']); ?></td>
-				<td><?php echo $user['email']; ?></td>
-				<td>
-					<?php
-						if ($user['groupID'] == $this->site->config['groupID'] || $user['groupID'] < 0) echo 'Administrator';
-						elseif (@in_array($user['groupID'], $adminGroups)) echo $userGroups[$user['groupID']];
-						elseif (@in_array($user['groupID'], $normalGroups)) echo $userGroups[$user['groupID']];
-					?>
-				</td>
-				<td class="tiny">
-					<?php if (in_array('users_edit', $this->permission->permissions)): ?>
-						<?php echo anchor('/admin/users/edit/'.$user['userID'], 'Edit'); ?>
-					<?php endif; ?>
-				</td>
-				<td class="tiny">
-					<?php if (in_array('users_delete', $this->permission->permissions)): ?>
-						<?php echo anchor('/admin/users/delete/'.$user['userID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
-					<?php endif; ?>
 
-				</td>
-			</tr>
+			<div class="row table <?php echo $class;?>">
+				<div class="large-2 columns">
+					<p><?php echo $userlink; ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p><?php echo dateFmt($user['dateCreated'], '', '', TRUE); ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p><?php echo trim($user['firstName'].' '.$user['lastName']); ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p><?php echo $user['email']; ?></p>
+				</div>
+				<div class="large-2 columns">
+					<p>					
+						<?php
+							if ($user['groupID'] == $this->site->config['groupID'] || $user['groupID'] < 0) echo 'Administrator';
+							elseif (@in_array($user['groupID'], $adminGroups)) echo $userGroups[$user['groupID']];
+							elseif (@in_array($user['groupID'], $normalGroups)) echo $userGroups[$user['groupID']];
+						?>
+					</p>
+				</div>
+				<div class="large-2 columns">
+					<ul class="button-group even-2">
+						<?php if (in_array('users_edit', $this->permission->permissions)): ?>
+							<li><?php echo anchor('/admin/users/edit/'.$user['userID'], 'Edit', array('class' => 'button small grey')); ?></li>
+						<?php endif; ?>
+						<?php if (in_array('users_delete', $this->permission->permissions)): ?>
+							<li><?php echo anchor('/admin/users/delete/'.$user['userID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+						<?php endif; ?>
+					</ul>
+				</div>
+			</div>
+			
 		<?php endforeach; ?>
-		</table>
+
 		<?php echo $this->pagination->create_links(); ?>
 
 		<?php else: ?>

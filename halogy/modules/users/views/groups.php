@@ -15,26 +15,32 @@
 
 		<?php echo $this->pagination->create_links(); ?>
 
-		<table class="default clear">
-			<thead>
-				<tr>
-					<th><?php echo order_link('/admin/users/viewall','groupName','Group name'); ?></th>
-					<th class="tiny">&nbsp;</th>
-					<th class="tiny">&nbsp;</th>		
-				</tr>
-			</thead>
-		<?php foreach ($permission_groups as $group): ?>
-				<tr>
-					<td><?php echo (in_array('users_groups', $this->permission->permissions)) ? anchor('/admin/users/edit_group/'.$group['groupID'], $group['groupName']) : $group['groupName']; ?></td>
-					<td class="tiny">
-						<?php echo anchor('/admin/users/edit_group/'.$group['groupID'], 'Edit'); ?>
-					</td>
-					<td class="tiny">
-						<?php echo anchor('/admin/users/delete_group/'.$group['groupID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?>
-					</td>
-				</tr>
+			<div class="row table-header hide-for-touch">
+				<div class="large-10 columns">
+					<h3><?php echo order_link('/admin/users/viewall','groupName','Group name'); ?></h3>
+				</div>
+				<div class="large-2 columns">
+				</div>
+			</div>
+
+		<?php 
+			$i=0;
+			foreach ($permission_groups as $group):
+			$class = ($i % 2) ? 'alt' : ''; $i++;
+		?>
+			<div class="row table <?php echo $class;?>">
+				<div class="large-10 columns">
+					<p><?php echo (in_array('users_groups', $this->permission->permissions)) ? anchor('/admin/users/edit_group/'.$group['groupID'], $group['groupName']) : $group['groupName']; ?></p>
+				</div>
+				<div class="large-2 columns">
+					<ul class="button-group even-2">
+						<li><?php echo anchor('/admin/users/edit_group/'.$group['groupID'], 'Edit', array('class' => 'button small grey')); ?></li>
+						<li><?php echo anchor('/admin/users/delete_group/'.$group['groupID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
+					</ul>
+				</div>
+			</div>
+
 		<?php endforeach; ?>
-		</table>
 
 		<?php echo $this->pagination->create_links(); ?>
 				
