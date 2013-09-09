@@ -76,7 +76,7 @@ $(function(){
 				<section>
 					<p class="title" data-section-title><a href="#">Description</a></p>
 					<div class="content" data-section-content>
-
+					<div class="row">
 						<div class="large-12 small-12 large-centered columns">
 
 						<h2 class="underline">Event Description</h2>	
@@ -106,42 +106,45 @@ $(function(){
 							<label for="excerpt">Excerpt:</label>
 							<?php echo @form_textarea('excerpt', set_value('excerpt', $data['excerpt']), 'id="excerpt" class="formelement code short"'); ?>
 						</div>
-						</div>
+					</div>
 					</div>
 				</section>
 				<section>
 					<p class="title" data-section-title><a href="#">Publishing</a></p>
 					<div class="content" data-section-content>
-						<h2 class="underline">Publishing</h2>
-						
-						<div class="item">
-							<label for="featured">Featured:</label>
-							<?php 
-								$values = array(
-									0 => 'No',
-									1 => 'Yes',
-								);
-								echo @form_dropdown('featured',$values,set_value('featured', $data['featured']), 'id="featured"'); 
-							?>
-						</div>
+					<div class="row">
+						<div class="large-12 small-12 large-centered columns">
+							<h2 class="underline">Publishing</h2>
+							
+							<div class="item">
+								<label for="featured">Featured:</label>
+								<?php 
+									$values = array(
+										0 => 'No',
+										1 => 'Yes',
+									);
+									echo @form_dropdown('featured',$values,set_value('featured', $data['featured']), 'id="featured"'); 
+								?>
+							</div>
 
-						<div class="item">
-							<label for="tags">Tags:</label>
-							<p>Separate tags with spaces (e.g. &ldquo;event popular london&rdquo;)</p>
-							<?php echo @form_input('tags', set_value('tags', $data['tags']), 'id="tags" class="formelement"'); ?>
-						</div>
+							<div class="item">
+								<label for="tags">Tags:</label>
+								<p>Separate tags with spaces (e.g. &ldquo;event popular london&rdquo;)</p>
+								<?php echo @form_input('tags', set_value('tags', $data['tags']), 'id="tags" class="formelement"'); ?>
+							</div>
 
-						<div class="item">
-							<label for="published">Publish:</label>
-							<?php 
-								$values = array(
-									1 => 'Yes',
-									0 => 'No (save as draft)',
-								);
-								echo @form_dropdown('published',$values,set_value('published', $data['published']), 'id="published"'); 
-							?>
+							<div class="item">
+								<label for="published">Publish:</label>
+								<?php 
+									$values = array(
+										1 => 'Yes',
+										0 => 'No (save as draft)',
+									);
+									echo @form_dropdown('published',$values,set_value('published', $data['published']), 'id="published"'); 
+								?>
+							</div>
 						</div>
-						</div>
+					</div>
 					</div>
 				</section>
 			</div>

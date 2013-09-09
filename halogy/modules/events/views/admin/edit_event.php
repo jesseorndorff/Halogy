@@ -81,7 +81,7 @@ $(function(){
 				<section>
 					<p class="title" data-section-title><a href="#">Description</a></p>
 					<div class="content" data-section-content>
-
+					<div class="row">
 						<div class="large-12 small-12 large-centered columns">
 
 						<h2 class="underline">Event Description</h2>	
@@ -113,10 +113,12 @@ $(function(){
 						</div>
 						</div>
 					</div>
+					</div>
 				</section>
 				<section>
 					<p class="title" data-section-title><a href="#">Publishing</a></p>
 					<div class="content" data-section-content>
+					<div class="row">
 						<h2 class="underline">Publishing</h2>
 						
 						<div class="item">
@@ -146,7 +148,7 @@ $(function(){
 								echo @form_dropdown('published',$values,set_value('published', $data['published']), 'id="published"'); 
 							?>
 						</div>
-						</div>
+					</div>
 					</div>
 				</section>
 			</div>
