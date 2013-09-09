@@ -6804,10 +6804,11 @@ label {
 
 /* line 474, ../sass/app.scss */
 .message p {
-  margin: 0;
+  margin: 2px 5px 0px;
+  font-size: 1em;
 }
 
-/* line 478, ../sass/app.scss */
+/* line 479, ../sass/app.scss */
 .important-message {
   border-style: solid;
   border-width: 0px;
@@ -6824,52 +6825,52 @@ label {
   border-radius: 2px;
 }
 
-/* line 484, ../sass/app.scss */
+/* line 485, ../sass/app.scss */
 .important-message > a {
   color: white;
   text-decoration: underline;
 }
 
-/* line 489, ../sass/app.scss */
+/* line 490, ../sass/app.scss */
 .headingleft {
   font-weight: normal;
   float: left;
 }
 
-/* line 494, ../sass/app.scss */
+/* line 495, ../sass/app.scss */
 .hidden {
   display: none;
 }
 
-/* line 498, ../sass/app.scss */
+/* line 499, ../sass/app.scss */
 .col1 > input {
   display: none;
 }
 
-/* line 502, ../sass/app.scss */
+/* line 503, ../sass/app.scss */
 .cat-name {
   color: #4d4d4d;
   font-size: 18px;
 }
 
-/* line 507, ../sass/app.scss */
+/* line 508, ../sass/app.scss */
 .versions li {
   list-style-type: none;
   border-bottom: 1px solid #DDD;
   padding: 10px 0;
 }
 
-/* line 513, ../sass/app.scss */
+/* line 514, ../sass/app.scss */
 .versions button.small, .button.small {
   margin: 0;
 }
 
-/* line 520, ../sass/app.scss */
+/* line 521, ../sass/app.scss */
 .side {
   background: #34495e;
 }
 
-/* line 524, ../sass/app.scss */
+/* line 525, ../sass/app.scss */
 .side-bar {
   background: #333333;
   float: left;
@@ -6878,19 +6879,19 @@ label {
   width: 16.66667%;
 }
 
-/* line 532, ../sass/app.scss */
+/* line 533, ../sass/app.scss */
 .side-bar .button-group {
   margin-bottom: 25px;
 }
 
-/* line 536, ../sass/app.scss */
+/* line 537, ../sass/app.scss */
 .side-bar-h {
   background: #242424;
   margin-top: 0px;
   padding: 10px;
 }
 
-/* line 542, ../sass/app.scss */
+/* line 543, ../sass/app.scss */
 .side-bar h3 {
   color: #898b94;
   margin: 0;
@@ -6899,39 +6900,39 @@ label {
   text-transform: uppercase;
 }
 
-/* line 550, ../sass/app.scss */
+/* line 551, ../sass/app.scss */
 .side-bar h3 > a {
   color: #898b94;
 }
 
-/* line 554, ../sass/app.scss */
+/* line 555, ../sass/app.scss */
 .side-bar input {
   margin: 0 0 10px 0 !important;
 }
 
-/* line 561, ../sass/app.scss */
+/* line 562, ../sass/app.scss */
 .side-bar > .side-nav {
   color: #32393d;
   padding-top: 0.2em;
   font-size: 1em;
 }
 
-/* line 567, ../sass/app.scss */
+/* line 568, ../sass/app.scss */
 .side-bar > .side-nav a {
   color: #898b94;
 }
 
-/* line 571, ../sass/app.scss */
+/* line 572, ../sass/app.scss */
 .side-bar > .side-nav a:hover {
   color: #567af0;
 }
 
-/* line 575, ../sass/app.scss */
+/* line 576, ../sass/app.scss */
 .side-bar > .side-nav li.active > a:first-child {
   color: #567af0;
 }
 
-/* line 585, ../sass/app.scss */
+/* line 586, ../sass/app.scss */
 .login-screen {
   background: white;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -6945,7 +6946,7 @@ label {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 590, ../sass/app.scss */
+/* line 591, ../sass/app.scss */
 .touch-box {
   border-style: solid;
   border-width: 0;
@@ -6982,12 +6983,12 @@ label {
   color: white;
 }
 
-/* line 597, ../sass/app.scss */
+/* line 598, ../sass/app.scss */
 .touch-box i {
   font-size: 5em;
 }
 
-/* line 601, ../sass/app.scss */
+/* line 602, ../sass/app.scss */
 .admin-header {
   background: #567af0;
   border-top-left-radius: 2px;
@@ -6996,13 +6997,13 @@ label {
   text-align: left;
 }
 
-/* line 609, ../sass/app.scss */
+/* line 610, ../sass/app.scss */
 .admin-header h3 {
   color: white;
   margin: 0;
 }
 
-/* line 614, ../sass/app.scss */
+/* line 615, ../sass/app.scss */
 .activity {
   background: #FFF;
   color: #595959;
@@ -7015,12 +7016,12 @@ label {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 624, ../sass/app.scss */
+/* line 625, ../sass/app.scss */
 .activity ul {
   list-style-type: none;
 }
 
-/* line 630, ../sass/app.scss */
+/* line 631, ../sass/app.scss */
 .dash-users {
   background: #25bca7;
   border-radius: 2px;
@@ -7029,23 +7030,23 @@ label {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 638, ../sass/app.scss */
+/* line 639, ../sass/app.scss */
 .dash-users i {
   font-size: 5em;
 }
 
-/* line 642, ../sass/app.scss */
+/* line 643, ../sass/app.scss */
 .dash-users p {
   margin-bottom: 0;
 }
 
-/* line 646, ../sass/app.scss */
+/* line 647, ../sass/app.scss */
 .dash-users .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 651, ../sass/app.scss */
+/* line 652, ../sass/app.scss */
 .dash-sales {
   background: #9b59b6;
   border-radius: 2px;
@@ -7054,29 +7055,29 @@ label {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 659, ../sass/app.scss */
+/* line 660, ../sass/app.scss */
 .dash-sales i {
   font-size: 5em;
 }
 
-/* line 663, ../sass/app.scss */
+/* line 664, ../sass/app.scss */
 .dash-sales p {
   margin-bottom: 0;
 }
 
-/* line 667, ../sass/app.scss */
+/* line 668, ../sass/app.scss */
 .dash-sales .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 672, ../sass/app.scss */
+/* line 673, ../sass/app.scss */
 .dash-sales .dash-number-money {
   float: right;
   font-size: 2em;
 }
 
-/* line 677, ../sass/app.scss */
+/* line 678, ../sass/app.scss */
 .dash-tickets {
   background: #567af0;
   border-radius: 2px;
@@ -7085,34 +7086,34 @@ label {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 685, ../sass/app.scss */
+/* line 686, ../sass/app.scss */
 .dash-tickets i {
   font-size: 5em;
 }
 
-/* line 689, ../sass/app.scss */
+/* line 690, ../sass/app.scss */
 .dash-tickets p {
   margin-bottom: 0;
 }
 
-/* line 693, ../sass/app.scss */
+/* line 694, ../sass/app.scss */
 .dash-tickets .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 701, ../sass/app.scss */
+/* line 702, ../sass/app.scss */
 .sidebar ul {
   list-style-type: none;
 }
 
-/* line 705, ../sass/app.scss */
+/* line 706, ../sass/app.scss */
 .sidebar-module-header h3 {
   color: white;
   margin: 0;
 }
 
-/* line 711, ../sass/app.scss */
+/* line 712, ../sass/app.scss */
 .sidebar-module-header {
   background: #567af0;
   border-top-left-radius: 2px;
@@ -7121,7 +7122,7 @@ label {
   text-align: center;
 }
 
-/* line 719, ../sass/app.scss */
+/* line 720, ../sass/app.scss */
 .sidebar-module {
   background: #FFF;
   color: #595959;
@@ -7134,12 +7135,12 @@ label {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 729, ../sass/app.scss */
+/* line 730, ../sass/app.scss */
 .sidebar-module ul {
   line-height: 1.8em;
 }
 
-/* line 733, ../sass/app.scss */
+/* line 734, ../sass/app.scss */
 .welcome {
   background: #f39c12;
   border-radius: 2px;
@@ -7148,7 +7149,7 @@ label {
   margin: 0 0 20px 0;
   text-shadow: 0 1px #b06f09;
 }
-/* line 740, ../sass/app.scss */
+/* line 741, ../sass/app.scss */
 .welcome .close {
   font-size: 1.375em;
   padding: 5px 4px 4px;
@@ -7164,23 +7165,23 @@ label {
   opacity: 0.5;
 }
 
-/* line 743, ../sass/app.scss */
+/* line 744, ../sass/app.scss */
 .welcome h3 {
   color: white;
 }
 
-/* line 747, ../sass/app.scss */
+/* line 748, ../sass/app.scss */
 ul.dashboardnav {
   margin: 0 5px 2px 0;
   text-align: right;
 }
 
-/* line 748, ../sass/app.scss */
+/* line 749, ../sass/app.scss */
 ul.dashboardnav li {
   display: inline;
 }
 
-/* line 749, ../sass/app.scss */
+/* line 750, ../sass/app.scss */
 ul.dashboardnav li a {
   background: #ccc;
   color: #fff;
@@ -7189,37 +7190,37 @@ ul.dashboardnav li a {
   border-radius: 2px;
 }
 
-/* line 750, ../sass/app.scss */
+/* line 751, ../sass/app.scss */
 ul.dashboardnav li.active a {
   background: #567af0;
 }
 
-/* line 752, ../sass/app.scss */
+/* line 753, ../sass/app.scss */
 div#placeholder {
   height: 180px;
   margin-bottom: 10px;
   margin-top: 45px;
 }
 
-/* line 756, ../sass/app.scss */
+/* line 757, ../sass/app.scss */
 .default {
   border-radius: 2px;
   width: 100%;
 }
 
-/* line 761, ../sass/app.scss */
+/* line 762, ../sass/app.scss */
 .default > thead {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   color: white;
 }
 
-/* line 766, ../sass/app.scss */
+/* line 767, ../sass/app.scss */
 .default > thead a {
   color: white;
 }
 
-/* line 772, ../sass/app.scss */
+/* line 773, ../sass/app.scss */
 .perm-heading {
   background: #f9f9f9;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -7236,24 +7237,24 @@ div#placeholder {
   clear: both;
 }
 
-/* line 778, ../sass/app.scss */
+/* line 779, ../sass/app.scss */
 .perm-heading .button {
   float: right;
 }
 
-/* line 779, ../sass/app.scss */
+/* line 780, ../sass/app.scss */
 .perm-heading .checkbox {
   float: left;
 }
 
-/* line 780, ../sass/app.scss */
+/* line 781, ../sass/app.scss */
 .perm-heading > label {
   float: left;
   font-size: 1.25em;
   width: 50%;
 }
 
-/* line 785, ../sass/app.scss */
+/* line 786, ../sass/app.scss */
 .permissions {
   background: #f9f9f9;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -7270,14 +7271,14 @@ div#placeholder {
   clear: both;
 }
 
-/* line 791, ../sass/app.scss */
+/* line 792, ../sass/app.scss */
 .permissions > label {
   float: left;
   font-size: 1.125em;
   width: 50%;
 }
 
-/* line 799, ../sass/app.scss */
+/* line 800, ../sass/app.scss */
 ul.order, ol.order {
   list-style-type: none;
   padding: 0;
@@ -7285,14 +7286,14 @@ ul.order, ol.order {
   line-height: 1.5em;
 }
 
-/* line 800, ../sass/app.scss */
+/* line 801, ../sass/app.scss */
 ul.order ul, ol.order ol {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-/* line 801, ../sass/app.scss */
+/* line 802, ../sass/app.scss */
 ul.order li, ol.order li {
   margin: 0;
   padding: 0;
@@ -7301,63 +7302,63 @@ ul.order li, ol.order li {
   clear: both;
 }
 
-/* line 802, ../sass/app.scss */
+/* line 803, ../sass/app.scss */
 ul.order ul li, ol.order ol li {
   margin: 0;
 }
 
-/* line 803, ../sass/app.scss */
+/* line 804, ../sass/app.scss */
 ol.order {
   list-style-position: inside;
 }
 
-/* line 804, ../sass/app.scss */
+/* line 805, ../sass/app.scss */
 ol.order .buttons {
   display: inline;
   float: left;
   text-align: right;
 }
 
-/* line 805, ../sass/app.scss */
+/* line 806, ../sass/app.scss */
 .order img {
   margin: 0 5px 0 0;
   padding: 8px 0;
   vertical-align: middle;
 }
 
-/* line 806, ../sass/app.scss */
+/* line 807, ../sass/app.scss */
 .order p {
   margin-bottom: 0;
 }
 
-/* line 808, ../sass/app.scss */
+/* line 809, ../sass/app.scss */
 .page-order {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-/* line 813, ../sass/app.scss */
+/* line 814, ../sass/app.scss */
 ol.order .pagelink {
   font-size: 1.2em;
 }
 
-/* line 814, ../sass/app.scss */
+/* line 815, ../sass/app.scss */
 ol.order .draft {
   background: #ffffec !important;
 }
 
-/* line 815, ../sass/app.scss */
+/* line 816, ../sass/app.scss */
 ol.order .hiddenpage {
   background: #e9e9e9;
 }
 
-/* line 816, ../sass/app.scss */
+/* line 817, ../sass/app.scss */
 ol.order .haschildren {
   margin: 8px 0;
   border-bottom: none !important;
 }
 
-/* line 818, ../sass/app.scss */
+/* line 819, ../sass/app.scss */
 span.autosave-saving {
   display: none;
   background: #567af0;
@@ -7366,7 +7367,7 @@ span.autosave-saving {
   border-radius: 2px;
 }
 
-/* line 819, ../sass/app.scss */
+/* line 820, ../sass/app.scss */
 span.autosave-complete {
   display: none;
   background: #567af0;
@@ -7375,39 +7376,39 @@ span.autosave-complete {
   border-radius: 2px;
 }
 
-/* line 820, ../sass/app.scss */
+/* line 821, ../sass/app.scss */
 .markup {
   margin-top: 15px;
 }
 
-/* line 828, ../sass/app.scss */
+/* line 829, ../sass/app.scss */
 .large-block-grid-4 > li {
   text-align: left;
 }
 
-/* line 832, ../sass/app.scss */
+/* line 833, ../sass/app.scss */
 .edit-image {
   text-align: center;
 }
 
-/* line 836, ../sass/app.scss */
+/* line 837, ../sass/app.scss */
 .folder {
   margin: 10px 0 !important;
 }
 
-/* line 840, ../sass/app.scss */
+/* line 841, ../sass/app.scss */
 .preview-container {
   background: #f1f1f1;
 }
 
-/* line 845, ../sass/app.scss */
+/* line 846, ../sass/app.scss */
 .ui-sortable-placeholder {
   border: 3px dashed #aaa;
   background: #ccc;
   height: 52px;
 }
 
-/* line 851, ../sass/app.scss */
+/* line 852, ../sass/app.scss */
 .ui-datepicker {
   background: white;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -7425,7 +7426,7 @@ span.autosave-complete {
   z-index: 3 !important;
 }
 
-/* line 857, ../sass/app.scss */
+/* line 858, ../sass/app.scss */
 .ui-datepicker-prev {
   border-style: solid;
   border-width: 0;
@@ -7463,7 +7464,7 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 863, ../sass/app.scss */
+/* line 864, ../sass/app.scss */
 .ui-datepicker-next {
   border-style: solid;
   border-width: 0;
@@ -7502,13 +7503,13 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 870, ../sass/app.scss */
+/* line 871, ../sass/app.scss */
 .ui-datepicker-title {
   margin: 5px 0;
   text-align: center;
 }
 
-/* line 877, ../sass/app.scss */
+/* line 878, ../sass/app.scss */
 footer {
   bottom: 0;
   min-height: 50px;
@@ -7517,12 +7518,12 @@ footer {
   width: 100%;
 }
 
-/* line 886, ../sass/app.scss */
+/* line 887, ../sass/app.scss */
 .hide {
   display: none;
 }
 
-/* line 890, ../sass/app.scss */
+/* line 891, ../sass/app.scss */
 .clear {
   clear: both;
 }

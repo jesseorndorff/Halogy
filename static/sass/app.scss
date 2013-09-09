@@ -472,7 +472,8 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .message p {
-	margin: 0;
+	margin: 2px 5px 0px;
+	font-size: emCalc(16px)
 }
 
 .important-message{

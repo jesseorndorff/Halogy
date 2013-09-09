@@ -215,7 +215,8 @@ $(function(){
 				</section>
 				<section>
 					<p class="title" data-section-title><a href="#">Product Description</a></p>
-					<div class="content" data-section-content>		
+					<div class="content" data-section-content>	
+					<div class="row">	
 						<div class="large-12 small-12 large-centered columns">
 							<h2>Product Description</h2>
 							
@@ -246,14 +247,14 @@ $(function(){
 								<h3>Preview</h3>
 								<div class="preview"></div>
 							</div>
-
 						</div>
+					</div>
 					</div>
 				</section>
 				<section>
 					<p class="title" data-section-title><a href="#">Options</a></p>
 					<div class="content" data-section-content>
-
+					<div class="row">
 						<div class="large-12 small-12 large-centered columns">
 				
 							<h2 class="underline">Options</h2>
@@ -374,6 +375,7 @@ $(function(){
 								</div>
 							</div>
 						</div>
+					</div>
 					</div>
 				</section>
 			</div>
