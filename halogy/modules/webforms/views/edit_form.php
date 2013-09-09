@@ -113,6 +113,7 @@ $(function(){
 					<p>Here you can display a custom message after the user submits the form.</p>
 					<?php echo @form_textarea('outcomeMessage', set_value('outcomeMessage', $data['outcomeMessage']), 'id="outcomeMessage" class="formelement small"'); ?>
 				</div>
+				<input type="submit" value="Save Changes" class="button green" />
 		</div>
 	</div>
 </form>
