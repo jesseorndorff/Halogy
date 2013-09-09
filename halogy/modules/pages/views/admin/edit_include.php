@@ -78,7 +78,7 @@ $(function(){
 			<input type="submit" value="Save Changes" id="submit" class="button green" />
 		</div>
 		<div class="large-4 columns">
-			<h2>Versions</h2>	
+			<h3>Versions</h3>	
 
 			<ul class="versions">
 			<?php if ($versions): ?>
