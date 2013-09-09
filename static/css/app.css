@@ -1746,7 +1746,7 @@ h2 {
 
 /* line 197, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.1.6/scss/foundation/components/_type.scss */
 h3 {
-  font-size: 0.8125em;
+  font-size: 1.1875em;
 }
 
 /* line 198, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.1.6/scss/foundation/components/_type.scss */
@@ -1958,7 +1958,7 @@ blockquote p {
 
   /* line 362, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.1.6/scss/foundation/components/_type.scss */
   h3 {
-    font-size: 1.125em;
+    font-size: 1.5em;
   }
 
   /* line 363, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.1.6/scss/foundation/components/_type.scss */
@@ -6626,11 +6626,6 @@ label {
   -moz-box-shadow: 0 1px 2px #d9d9d9;
   box-shadow: 0 1px 2px #d9d9d9;
   overflow: hidden;
-}
-
-/* line 378, ../sass/app.scss */
-.card h3 {
-  font-weight: 400;
 }
 
 /* line 382, ../sass/app.scss */

@@ -130,6 +130,7 @@
 		<h2 class="left">Edit Page</h2>
 		<input type="hidden" name="target" id="target" value="" />
 		<div class="right">
+			<a href="<?php echo site_url('/admin/pages/viewall'); ?>" class="button">Back to Pages</a>
 			<input type="submit" name="view" value="View Page" class="button save" />
 		</div>
 
@@ -146,7 +147,7 @@
 		<div class="clear"></div>
 			<div class="large-8 columns">
 
-				<h2>Basic Information</h2>
+				<h3>Basic Information</h3>
 				<p>Set the basic details of the page including: name, parent, and template.</p>
 				<div class="item">
 					<label for="pageName">Page Name</label>
@@ -201,7 +202,7 @@
 					<?php echo @form_input('redirect',set_value('redirect', $data['redirect']), 'id="redirect" class="formelement"'); ?>
 				</div>
 		
-				<h2 class="underline">Meta Data</h2>
+				<h3>Meta Data</h3>
 
 				<div class="item">
 					<label for="title">Page Title</label>
@@ -221,7 +222,7 @@
 					<?php echo @form_input('keywords',set_value('keywords', $data['keywords']), 'id="keywords" class="formelement"'); ?>
 				</div>
 
-				<h2 class="underline">Visibility and Access</h2>
+				<h3>Visibility and Access</h3>
 
 				<div class="item">
 					<label for="navigation">Show in Navigation</label>
@@ -269,7 +270,7 @@
 
 			</div>
 			<div class="large-4 columns">
-				<h2>Versions</h2>	
+				<h3>Versions</h3>	
 				<p>Here is the history for this page, you can revert your page back to any previous state.</p>
 				<?php if ($versions): ?>
 
