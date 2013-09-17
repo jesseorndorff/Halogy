@@ -40,7 +40,7 @@ $(function(){
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="noncustom">
 
 			<div class="large-10 columns body">
-				<div class="small-12 large-8 large-centered columns card">
+				<div class="small-12 large-12 large-centered columns card">
 					<h2 class="left">Edit Blog Post</h2>
 					<div class="button-group right">
 						<input type="submit" name="view" value="View Blog Post" class="button" />
@@ -63,7 +63,8 @@ $(function(){
 					</div>
 
 					<div class="item">
-						<a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')" class="button small right">Add</a>
+						<a href="#" data-reveal-id="addCat" class="button small right">Add</a>
+						<!-- <a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')" class="button small right">Add</a> -->
 						<label>Categories</label>
 						<p>Place your post in any relevant categories.</p>
 							<div class="categories">
@@ -152,5 +153,19 @@ $(function(){
 <div id="previewModal" class="reveal-modal">
 	<h3>Post Preview:</h3>
 	<div class="preview"></div>
+	<a class="close-reveal-modal">&#215;</a>
+</div>
+
+<div id="addCat" class="reveal-modal">
+	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
+	
+		<label for="categoryName">Category Name</label>
+		<p>Give your blog category a name</p>
+		
+		<?php echo @form_input('catName',$blog_cats['catName'], 'class="formelement" id="catName"'); ?>
+			
+		<input type="submit" value="Save Category" id="submit" class="small button" />
+		
+	</form>
 	<a class="close-reveal-modal">&#215;</a>
 </div>

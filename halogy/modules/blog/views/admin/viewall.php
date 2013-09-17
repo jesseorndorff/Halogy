@@ -11,14 +11,14 @@
 
 		<?php echo $this->pagination->create_links(); ?>
 		
-		<ul class="small-block-grid-1 large-block-grid-4">
+		<ul class="small-block-grid-1 large-block-grid-2">
 			<?php foreach ($blog_posts as $post): ?>
 			<li>
 				<div class="card">
+					<p class="posted"><?php echo dateFmt($post['dateCreated'], '', '', TRUE); ?></p>
 					<h3><?php echo (in_array('blog_edit', $this->permission->permissions)) ? anchor('/admin/blog/edit_post/'.$post['postID'], $post['postTitle']) : $post['postTitle']; ?></h3>
-					<p class="excerpt">"Experpt text goes here. A few lines will do, maybe we limit at a few charaters."</p>
-					<p class="author">Author: Jesse Orndorff</p>
-					<p class="posted">Posted: <?php echo dateFmt($post['dateCreated'], '', '', TRUE); ?></p>
+					<p class="excerpt"><?php echo $post['excerpt']; ?></p>
+					<p class="author">Posted By: <!--<?php echo $post['author']; ?>--></p>
 					<div class="card-status">
 						<?php
 							if ($post['published']) echo '<span class="published">Published</span>';

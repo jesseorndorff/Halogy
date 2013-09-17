@@ -85,7 +85,7 @@ $row-width: 100%;
 
 // We use these to control header font styles
 $header-font-family: "proxima-nova", 'Open Sans', "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-$header-font-weight: 600;
+$header-font-weight: 800;
 // $header-font-style: normal;
 $header-font-color: #333;
 // $header-line-height: 1.4;
@@ -594,8 +594,8 @@ $crumb-font-transform: none;
 //
 
 // We use these to style the labels
-$label-padding: emCalc(4px) emCalc(10px) emCalc(4px);
-// $label-radius: $global-radius;
+$label-padding: emCalc(7px) emCalc(10px) emCalc(5px);
+$label-radius: $global-radius;
 
 // We use these to style the label text
 // $label-font-size: emCalc(14px);

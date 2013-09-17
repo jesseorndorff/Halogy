@@ -39,7 +39,7 @@ $(function(){
 					</div>
 					<div class="clear"></div>
 					<div class="hidden item">
-						<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
+						<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
 						
 							<label for="categoryName">Category Name</label>
 							<p>Give your blog category a name</p>

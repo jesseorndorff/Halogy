@@ -202,11 +202,6 @@ input {
 	border-radius: $global-radius;
 }
 
-label {
-	font-weight: bold;
-	font-size: 18px;
-}
-
 .table-header {
 	background: $primary-color;
 	color: $light-color;
@@ -315,19 +310,28 @@ $float: left;
 
 // Labels
 
+label {
+	@include border-radius(3px);
+	font-weight: bold;
+	font-size: 18px;
+}
+
 /* Using the available options */
 .published  { 
 	@include label;
+	@include border-radius(3px);
 	background: $fourth-color;
 }
 
 .not-published {
 	@include label;
+	@include border-radius(3px);
 	background: $alert-color;
 }
 
 .redirect  { 
 	@include label;
+	@include border-radius(3px);
 	background: $third-color;
 }
 
@@ -376,9 +380,9 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	overflow: hidden;
 }
 
-// .card h3 {
-//	font-weight: 400;
-//}
+.card h3 {
+	font-weight: 700;
+}
 
 .card > .author {
 	color: #999;
@@ -387,13 +391,15 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .card > .excerpt {
-	color: #32393d;
-	font-style: italic;
+	color: #222222;
+	font-size: emCalc(16px);
+	font-weight: 400;
 }
 
 .card > .posted {
-	color: #999;
-	font-size: emCalc(13px);
+	color: #888686;
+	font-size: emCalc(14px);
+	font-weight: 600;
 	margin: 0 0 2px 0;
 }
 
@@ -404,13 +410,16 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .card-admin a {
 	background: #f1f1f1;
-	color: #333;
-	font-size: emCalc(13px);
+	@include border-radius(3px);
+	color: #a3a3a3;
+	font-size: emCalc(14px);
+	font-weight: 700;
 	margin: emCalc(4px) 0 emCalc(4px) emCalc(10px);
 	padding: emCalc(4px) emCalc(10px) emCalc(4px);
 }
 
 .card-admin a:hover {
+	color: #222;
 	background: darken(#f1f1f1, 15%);
 }
 

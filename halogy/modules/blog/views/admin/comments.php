@@ -5,12 +5,12 @@
 
 				<?php echo $this->pagination->create_links(); ?>
 
-				<ul class="small-block-grid-1 large-block-grid-4">
+				<ul class="small-block-grid-1 large-block-grid-2">
 					<?php foreach ($comments as $comment): ?>
 						<li>
 							<div class="card">
 								<h3><?php echo anchor('/blog/'.dateFmt($comment['uriDate'], 'Y/m/').$comment['uri'], $comment['postTitle']); ?></h3>
-								<p class="excerpt">"<?php echo (strlen($comment['comment'] > 50)) ? htmlentities(substr($comment['comment'], 0, 50)).'...' : htmlentities($comment['comment']); ?>"</p>
+								<p class="excerpt">"<?php echo (strlen($comment['comment'] > 5)) ? htmlentities(substr($comment['comment'], 0, 5)).'...' : htmlentities($comment['comment']); ?>"</p>
 								<p class="author">Comment by: <?php echo $comment['fullName']; ?></p>
 								<p class="posted">Posted: <?php echo dateFmt($comment['dateCreated']); ?></p>
 								<div class="card-status">
