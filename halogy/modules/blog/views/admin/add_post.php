@@ -1,45 +1,7 @@
-<script type="text/javascript">
-function preview(el){
-	$.post('<?php echo site_url('/admin/blog/preview'); ?>', { body: $(el).val() }, function(data){
-		$('div.preview').html(data);
-	});
-}
-$(function(){
-	$('div.category>span, div.category>input').hover(
-		function() {
-			if (!$(this).prev('input').attr('checked') && !$(this).attr('checked')){
-				$(this).parent().addClass('hover');
-			}
-		},
-		function() {
-			if (!$(this).prev('input').attr('checked') && !$(this).attr('checked')){
-				$(this).parent().removeClass('hover');
-			}
-		}
-	);	
-	$('div.category>span').click(function(){
-		if ($(this).prev('input').attr('checked')){
-			$(this).prev('input').attr('checked', false);
-			$(this).parent().removeClass('hover');
-		} else {
-			$(this).prev('input').attr('checked', true);
-			$(this).parent().addClass('hover');
-		}
-	});
-	$('textarea#body').focus(function(){
-		$('.previewbutton').show();
-	});
-	$('textarea#body').blur(function(){
-		preview(this);
-	});
-	preview($('textarea#body'));
-});
-</script>
-
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="noncustom">
 
 			<div class="large-10 columns body">
-				<div class="small-12 large-8 large-centered columns card">
+				<div class="small-12 large-12 large-centered columns card">
 					<h2>Add a Post</h2>
 					<?php if ($errors = validation_errors()): ?>
 						<div class="error">
