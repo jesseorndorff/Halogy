@@ -80,15 +80,15 @@ $(function(){
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="customDISABLED">
 
-<div class="row">
-	<div class="large-12 columns body">
-		<h1 class="headingleft">Add Site</h1>
-		<ul class="group-button">
-			<li><a href="<?php echo site_url('/halogy/sites'); ?>" class="bluebutton">Back to Sites</a></li>
-			<li><input type="submit" value="Add Site" class="green"></li>
-		</ul>
+<div class="large-10 columns body">
+	<div class="small-12 large-12 large-centered columns card">
+		<h2 class="left">Add Site</h2>
+		<div class="right">
+			<a href="<?php echo site_url('/halogy/sites'); ?>" class="button">Back to Sites</a>
+			<input type="submit" value="Add Site" class="button green">
+		</div>
 		
-		<hr>
+		<div class="clear"></div>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">

@@ -32,7 +32,7 @@ $(function(){
 
 
 			<div class="large-10 columns body">
-				<div class="small-12 large-8 large-centered columns card">
+				<div class="small-12 large-12 large-centered columns card">
 					<h2 class="left">Blog Categories</h2>
 					<div class="right">
 						<a href="#" class="toggle button green"><i class="ss-icon">add</i> Add Category</a>

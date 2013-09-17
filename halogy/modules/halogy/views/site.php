@@ -31,15 +31,14 @@ $(function(){
 });
 </script>
 
-<div class="row">
-	<div class="large-12 columns body">
-		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
-		<h1 class="headingleft">Edit Site: <?php echo $data['siteDomain']; ?></h1>
-		<ul class="group-button">
-			<li><input type="submit" value="Save Changes" class="green" /></li>
-		</ul>
-		<hr>
-
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
+<div class="large-10 columns body">
+	<div class="small-12 large-12 large-centered columns card">
+		<h2 class="left">Edit Site: <?php echo $data['siteDomain']; ?></h2>
+		<div class="right">
+			<input type="submit" value="Save Changes" class="button green">
+		</div>
+		<div class="clear"></div>
 		<?php if ($errors = validation_errors()): ?>
 			<div data-alert class="error">
 		<?php echo $errors; ?>

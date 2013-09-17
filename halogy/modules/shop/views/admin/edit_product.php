@@ -86,7 +86,7 @@ $(function(){
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
 <div class="large-10 columns body">
-	<div class="small-12 large-8 large-centered columns card">
+	<div class="small-12 large-12 large-centered columns card">
 		<h2 class="left">Edit Product</h2>
 
 		<div class="right">

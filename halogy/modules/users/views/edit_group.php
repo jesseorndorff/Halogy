@@ -33,7 +33,7 @@ $(function(){
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="custom">
 
 <div class="large-10 columns body">	
-	<div class="small-12 large-8 large-centered columns card">
+	<div class="small-12 large-12 large-centered columns card">
 		<h2 class="left">Edit User Group</h2>
 		<div class="right">
 			<a href="<?php echo site_url('/admin/users/groups'); ?>" class="button">Back to Users Groups</a>
