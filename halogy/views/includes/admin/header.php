@@ -444,19 +444,17 @@ $(document).ready(function($) {
 				<h3 class="side-bar-h"><a href="#">Admin</a></h3>
 				<ul class="side-nav">
 					<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>
-					
-						<li><a href="<?php echo site_url('/admin/dashboard'); ?>">Dashboard</a></li>
-						<li><a href="<?php echo site_url('/admin/users/edit/'.$this->session->userdata('userID')); ?>">My Account</a></li>
-						<?php if ($this->session->userdata('groupID') == $this->site->config['groupID'] || $this->session->userdata('groupID') < 0): ?>
-							<li><a href="<?php echo site_url('/admin/site/'); ?>">My Site</a></li>
-						<?php endif; ?>
-						<?php if ($this->session->userdata('groupID') < 0 && @file_exists(APPPATH.'modules/halogy/controllers/halogy.php')): ?>
-							<li><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
-							<li><a href="<?php echo site_url('/halogy/sites'); ?>">Sites</a></li>
-						<?php else: ?>
-							<li class="last"><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
-						<?php endif; ?>	
-
+					<li><a href="<?php echo site_url('/admin/dashboard'); ?>">Dashboard</a></li>
+					<li><a href="<?php echo site_url('/admin/users/edit/'.$this->session->userdata('userID')); ?>">My Account</a></li>
+					<?php if ($this->session->userdata('groupID') == $this->site->config['groupID'] || $this->session->userdata('groupID') < 0): ?>
+						<li><a href="<?php echo site_url('/admin/site/'); ?>">My Site</a></li>
+					<?php endif; ?>
+					<?php if ($this->session->userdata('groupID') < 0 && @file_exists(APPPATH.'modules/halogy/controllers/halogy.php')): ?>
+						<li><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
+						<li><a href="<?php echo site_url('/halogy/sites'); ?>">Sites</a></li>
+					<?php else: ?>
+						<li class="last"><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
+					<?php endif; ?>
 				</ul>
 				<?php endif; ?>
 			</nav>

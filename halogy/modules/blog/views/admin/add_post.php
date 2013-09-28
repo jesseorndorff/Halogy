@@ -8,17 +8,17 @@
 							<?php echo $errors; ?>
 						</div>
 					<?php endif; ?>
-					<div class="item">
-
-						<label for="postName">Post Title</label>
-						<p>Give your blog post a title.</p>
-						<?php echo @form_input('postTitle', set_value('postTitle', $data['postTitle']), 'id="postTitle" class="formelement" placeholder="Sample Post Title"'); ?>
-
+					<div class="large-6 columns">
+						<div class="item">
+							<label for="postName">Post Title</label>
+							<p>Give your blog post a title.</p>
+							<?php echo @form_input('postTitle', set_value('postTitle', $data['postTitle']), 'id="postTitle" class="formelement" placeholder="Sample Post Title"'); ?>
+						</div>
 					</div>
-
-					<div class="item">
-						<a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')" class="button small right">Add</a>
-						<label>Categories</label>
+					<div class="large-6 columns">
+						<div class="item">
+							<a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')" class="button small right">Add</a>
+							<label>Categories</label>
 							<p>Place your post in any relevant categories.</p>
 							<?php if ($categories): ?>
 							<ul class="list">
@@ -29,8 +29,8 @@
 							<?php else: ?>
 								<p class="error"><strong>Warning:</strong> It is strongly recommended that you use categories or your post may not appear properly. <a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')"><strong>Please update your categories here</strong></a>.</p>
 							<?php endif; ?>
+						</div>
 					</div>
-
 					<div class="item">
 					
 						<div class="buttons">
@@ -64,15 +64,15 @@
 
 					</div>
 
-					<div class="item">
-
+					<div class="large-6 columns">
+						<div class="item">
 							<label for="tags">Tags</label>
 							<p>Tags are used to help orginize your posts. You can separate tags with a comma (e.g. “places, hobbies, favourite work”) to create multiple tags.</p>
 							<?php echo @form_input('tags', set_value('tags', $data['tags']), 'id="tags" class="formelement" placeholder="Add, Your Tags, Here"'); ?>
+						</div>
 					</div>
-
-					<div class="item">
-
+					<div class="large-6 columns">
+						<div class="item">
 							<label for="published">Publish:</label>
 							<?php 
 								$values = array(
@@ -81,11 +81,8 @@
 								);
 								echo @form_dropdown('published',$values,set_value('published', $data['published']), 'id="published"'); 
 							?>
-
-					</div>
-
-					<div class="item">
-
+						</div>
+						<div class="item">
 							<label for="allowComments">Allow Comments?</label>
 							<?php 
 								$values = array(
@@ -94,6 +91,7 @@
 								);
 								echo @form_dropdown('allowComments',$values,set_value('allowComments', $data['allowComments']), 'id="allowComments"'); 
 							?>
+						</div>
 					</div>
 					<input type="submit" value="Save Changes" class="button green" />
 				</div><!-- /large 6 -->

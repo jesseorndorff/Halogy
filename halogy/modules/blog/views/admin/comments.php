@@ -5,7 +5,7 @@
 
 				<?php echo $this->pagination->create_links(); ?>
 
-				<ul class="small-block-grid-1 large-block-grid-2">
+				<ul class="small-block-grid-1 large-block-grid-1">
 					<?php foreach ($comments as $comment): ?>
 						<li>
 							<div class="card">

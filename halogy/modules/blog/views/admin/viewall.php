@@ -40,7 +40,6 @@
 
 		<?php echo $this->pagination->create_links(); ?>
 
-
 		<?php else: ?>
 
 		<p class="clear">There are no blog posts yet.</p>
