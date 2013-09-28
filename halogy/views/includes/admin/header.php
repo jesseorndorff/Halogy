@@ -6,9 +6,6 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
 	<link rel="icon" href="<?php echo $this->config->item('staticPath'); ?>/images/favicon.ico" type="image/x-icon" />
-	<!--<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/admin.css" media="all" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/lightbox.css" media="screen" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/datepicker.css" media="screen" /> -->
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/normalize.css" media="screen" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->config->item('staticPath'); ?>/css/app.css" media="screen" />
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600italic,700italic,400,600,700' rel='stylesheet' type='text/css'>
@@ -17,11 +14,6 @@
 	<script type="text/javascript" src="//use.typekit.net/kvu5lut.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	
-	
-	
-	<!--<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.lightbox.js"></script> -->
-	<!-- <script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/default.js"></script> -->
-	<!-- <script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/admin.js"></script> -->
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery-ui-1.10.3.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/custom.modernizr.js"></script>
@@ -299,8 +291,6 @@ $(document).ready(function($) {
 				</ul>
 			</div>
 		</div>
-		
-
 	</nav>
 	<div class="container">
 		<div class="row">
@@ -450,11 +440,11 @@ $(document).ready(function($) {
 						</ul>
 				<?php endif; ?>
 				<!-- Admin -->
-				
+				<?php if ($this->session->userdata('session_admin')): ?>
 				<h3 class="side-bar-h"><a href="#">Admin</a></h3>
 				<ul class="side-nav">
 					<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>
-					<?php if ($this->session->userdata('session_admin')): ?>
+					
 						<li><a href="<?php echo site_url('/admin/dashboard'); ?>">Dashboard</a></li>
 						<li><a href="<?php echo site_url('/admin/users/edit/'.$this->session->userdata('userID')); ?>">My Account</a></li>
 						<?php if ($this->session->userdata('groupID') == $this->site->config['groupID'] || $this->session->userdata('groupID') < 0): ?>
@@ -466,10 +456,9 @@ $(document).ready(function($) {
 						<?php else: ?>
 							<li class="last"><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
 						<?php endif; ?>	
-					<?php else: ?>
-						<li class="last"><a href="<?php echo site_url('/admin'); ?>">Login</a></li>
-					<?php endif; ?>
+
 				</ul>
+				<?php endif; ?>
 			</nav>
 
 

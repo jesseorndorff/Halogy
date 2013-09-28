@@ -535,7 +535,6 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .side-bar {
 	background: darken($light-color, 80%);
 	float: left;
-	padding: 0 0 0.9375em 0;
 	position: relative;
 	width: 16.66667%;
 }
@@ -595,6 +594,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .login-screen {
 	@include card ($light-color);
+	margin: 35px 0;
 }
 // Dashboard
 

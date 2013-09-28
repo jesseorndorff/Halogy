@@ -2,14 +2,8 @@
 	if(!$this->session->userdata('session_admin')) {
 ?>
 
-	<script type="text/javascript">
-	$(function(){
-		$('#username').focus();
-	});
-	</script>
-
 <div class="row">
-	<div class="large-4 small-12 large-centered columns login-screen">
+	<div class="large-6 small-11 large-centered small-centered columns login-screen">
 		<img src="<?php echo site_url('/static/images/halogy.png'); ?>">
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error">
