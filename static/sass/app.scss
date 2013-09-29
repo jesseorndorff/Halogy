@@ -294,7 +294,9 @@ $float: left;
 	text-align: right;
   	& > li { @include button-group-style($radius, $even, $float); }
 }
-
+.button {
+	@include button($padding, $primary-color, $radius, $full-width, $disabled, $is-input);
+}
 .success {
 	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
 }
@@ -540,6 +542,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .side-bar .button-group {
+
 	margin-bottom: 25px;
 }
 
