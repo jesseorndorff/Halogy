@@ -2,7 +2,7 @@
 	<div class="card">
 		<h2 class="left">Web Forms</h2>
 		<div class="right">
-			<a href="<?php echo site_url('/admin/webforms/add_form'); ?>" class="button green"><i class="ss-icon">Add</i> Add Web Form</a>
+			<a href="<?php echo site_url('/admin/webforms/add_form'); ?>" class="button green">Add Web Form</a>
 		</div>
 		<div class="clear"></div>
 		<?php if ($web_forms): ?>

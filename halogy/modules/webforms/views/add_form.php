@@ -33,7 +33,7 @@ $(function(){
 					<?php echo $message; ?>
 				</div>
 			<?php endif; ?>
-
+			<div class="small-12 large-8 large-centered columns">
 				<div class="item">
 					<label for="formName">Form Name</label>
 					<p>Give your form a name.</p>
@@ -114,6 +114,7 @@ $(function(){
 					<?php echo @form_textarea('outcomeMessage', set_value('outcomeMessage', $data['outcomeMessage']), 'id="outcomeMessage" class="formelement small"'); ?>
 				</div>
 				<input type="submit" value="Save Changes" class="button green" />
+			</div>
 		</div>
 	</div>
 </form>
