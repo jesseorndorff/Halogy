@@ -5,7 +5,7 @@
 			<a href="<?php echo site_url('/halogy/add_site'); ?>" class="button green">Add Site</a>
 		</div>
 		<div class="clear"></div>
-		<div class="large-3 large-offset-9 columns">
+		<div class="large-4 large-offset-8 columns">
 			<div class="row collapse">
 				<form method="post" action="<?php echo site_url('/halogy/sites'); ?>" class="default" id="search">
 				<div class="small-9 columns">

@@ -102,20 +102,25 @@ $portrait: "only screen and (orientation: portrait)";
 /* Used to alter styles for screens at least 768px wide. This is where the grid changes. */
 @media #{$small} { 
 	.body {min-height: 400px;}
+	[data-section='']:not([data-section-resized]):not([data-section-small-style]), [data-section='auto']:not([data-section-resized]):not([data-section-small-style]), .section-container.auto:not([data-section-resized]):not([data-section-small-style]) {
+    visibility: visible;
+  }
 }
 
 /* Used to alter styles for screens at least 1280px wide. */
 @media #{$medium} { 
 	.body {min-height: 400px;}
+	/* Hack because we broke something with the tabs views */
+	[data-section='']:not([data-section-resized]):not([data-section-small-style]), [data-section='auto']:not([data-section-resized]):not([data-section-small-style]), .section-container.auto:not([data-section-resized]):not([data-section-small-style]) {
+    visibility: visible;
+  }
 }
 
 /* Used to alter styles for screens at least 1440px wide. */
 @media #{$large} { 
-	/*.row {
-		width: 90%;
-		max-width: 90%;
-	} */
-
+	[data-section='']:not([data-section-resized]):not([data-section-small-style]), [data-section='auto']:not([data-section-resized]):not([data-section-small-style]), .section-container.auto:not([data-section-resized]):not([data-section-small-style]) {
+    visibility: visible;
+  }
 }
 
 /* Apply styles to screens in landscape orientation */
