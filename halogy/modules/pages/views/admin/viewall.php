@@ -57,12 +57,12 @@ $(function(){
 			</div>
 			<hr>
 			<?php foreach ($parents as $page): ?>
-				<div class="row">
+				<div class="row pages">
 					<div class="large-4 columns">
 						<strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName'], 'class="pagelink"') : $page['pageName']; ?></strong>
 						<p>Path: <?php echo $page['uri']; ?></p>				
 					</div>
-					<div class="large-4 columns">
+					<div class="large-5 columns">
 						<?php if ($page['active']): ?>
 								<?php if ($page['redirect']): ?>
 								<span class="label redirect">
@@ -80,7 +80,7 @@ $(function(){
 								<?php endif; ?>						
 		
 						<?php else: ?>
-							<span class="label">Draft</span>
+							<span class="label draft">Draft</span>
 							<?php echo (!$page['navigation']) ? ' (hidden)' : ''; ?>
 						<?php endif; ?>
 						<?php if ($page['active'] && (!$page['newBlocks'] && !$page['newVersions'])): ?>
@@ -88,10 +88,10 @@ $(function(){
 						<?php else: ?>
 							<p>Modified: <?php echo dateFmt($page['dateModified'], '', '', TRUE); ?>
 						<?php endif; ?>
-						<em>by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></em></p>
+						by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></p>
 					</div>
 					<div class="large-3 columns">
-						<ul class="button-group">
+						<ul class="button-group right">
 							<li><?php echo anchor($page['uri'], 'View', array('class' => 'small button')); ?></li>
 							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 								<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'small button')); ?></li>
@@ -104,14 +104,13 @@ $(function(){
 				</div>
 					<?php if (isset($children[$page['pageID']]) && $children[$page['pageID']]): ?>
 						<?php foreach ($children[$page['pageID']] as $child): ?>
-						<div class="row subpage">
+						<div class="row subpage pages">
 							<div class="large-4 columns">
 								<span class="padded"><img src="<?php echo $this->config->item('staticPath'); ?>/images/arrow_child.gif" alt="Arrow" /></span> <strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$child['pageID'], $child['pageName'], 'class="pagelink"') : $child['pageName']; ?></strong><br />
 								<p>Path: <?php echo $child['uri']; ?></p>
 							</div>
-							<div class="large-4 columns">
+							<div class="large-5 columns">
 								<?php if ($child['active']): ?>
-									<span style="color:green">
 										<?php if ($child['redirect']): ?>
 											<span class="label redirect">Redirect (<?php echo $child['redirect']; ?>)</span>
 										<?php else: ?>
@@ -122,21 +121,20 @@ $(function(){
 										<?php endif; ?>
 											<?php echo (!$child['navigation']) ? ' (hidden)' : ''; ?>
 										<?php endif; ?>						
-									</span>
 								<?php else: ?>
-									<span class="label">Draft</span>
+									<span class="label draft">Draft</span>
 									<?php echo (!$child['navigation']) ? ' (hidden)' : ''; ?>
 								<?php endif; ?>
-								<br />
+								
 								<?php if ($child['active'] && (!$child['newBlocks'] && !$child['newVersions'])): ?>
-									<p>Published: <strong><?php echo dateFmt($child['datePublished'], '', '', TRUE); ?></strong>
+									<p>Published: <?php echo dateFmt($child['datePublished'], '', '', TRUE); ?>
 								<?php else: ?>
-									Modified: <strong><?php echo dateFmt($child['dateModified'], '', '', TRUE); ?></strong>
+									<p>Modified: <?php echo dateFmt($child['dateModified'], '', '', TRUE); ?>
 								<?php endif; ?>
 								 by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></p>
 							</div>
 							<div class="large-3 columns">
-								<ul class="button-group">
+								<ul class="button-group right">
 										<li><?php echo anchor($child['uri'], 'View', array('class' => 'button small')); ?></li>
 									<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 										<li><?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'button small')); ?></li>
@@ -151,14 +149,13 @@ $(function(){
 				
 					<?php if (isset($subchildren[$child['pageID']]) && $subchildren[$child['pageID']]): ?>
 						<?php foreach ($subchildren[$child['pageID']] as $subchild): ?>
-							<div class="row">
+							<div class="row pages">
 								<div class="large-4 columns">
 									<span class="padded"><img src="<?php echo $this->config->item('staticPath'); ?>/images/arrow_subchild.gif" alt="Arrow" /></span> <strong><?php echo (in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$subchild['pageID'], $subchild['pageName'], 'class="pagelink"') : $subchild['pageName']; ?></strong>
 									<p>Path: <?php echo $subchild['uri']; ?></p>
 								</div>
-								<div class="large-4 columns">
+								<div class="large-5 columns">
 									<?php if ($subchild['active']): ?>
-										<span style="color:green">
 											<?php if ($subchild['redirect']): ?>
 												<span class="label redirect">Redirect(<?php echo $subchild['redirect']; ?>)</span>
 											<?php else: ?>
@@ -169,21 +166,19 @@ $(function(){
 											<?php endif; ?>
 												<?php echo (!$subchild['navigation']) ? ' (hidden)' : ''; ?>
 											<?php endif; ?>						
-										</span>
 									<?php else: ?>
-										<span class="label">Draft</span>
+										<span class="label draft">Draft</span>
 										<?php echo (!$subchild['navigation']) ? ' (hidden)' : ''; ?>
 									<?php endif; ?>
-									<br />
 									<?php if ($subchild['active'] && (!$subchild['newBlocks'] && !$subchild['newVersions'])): ?>
-										Published: <strong><?php echo dateFmt($subchild['datePublished'], '', '', TRUE); ?></strong> 
+										<p>Published: <?php echo dateFmt($subchild['datePublished'], '', '', TRUE); ?> 
 									<?php else: ?>
-										Modified: <strong><?php echo dateFmt($subchild['dateModified'], '', '', TRUE); ?></strong> 
+										<p>Modified: <?php echo dateFmt($subchild['dateModified'], '', '', TRUE); ?>
 									<?php endif; ?>
-									<em>by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></em>
+									by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></p>
 								</div>
 								<div class="large-3 columns">
-									<ul class="button-group">
+									<ul class="button-group right">
 										<li><?php echo anchor($subchild['uri'], 'View', array('class' => 'button small')); ?></li>
 										<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 											<li><?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'button small')); ?></li>
