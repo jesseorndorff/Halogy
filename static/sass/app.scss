@@ -367,14 +367,13 @@ label {
 
 // Tabs
 
+//.section-container.auto > section.active > .title, .section-container.auto > .section.active > .title {
+//	background: $primary-color;
+//}
+
 // Removing the border at the top
 .section-container.auto > section > .title, .section-container.auto > .section > .title {
 	border: 0;
-}
-
-// Setting our own color for the active tab
-.section-container.auto > section.active > .title, .section-container.auto > .section.active > .title {
-	border-top: solid 3px $primary-color;
 }
 
 .section-container.auto > section > .title, .section-container.auto > .section > .title {
@@ -383,8 +382,8 @@ label {
 
 // Setting our own color for the non-active
 .section-container.auto > section:last-child .title, .section-container.auto > .section:last-child .title {
-	border-top: solid 3px $fourth-color;
-	border-right: 0;
+	border-top: solid 3px $primary-color	;
+	border-right: 3px;
 }
 
 // Removing the content borders

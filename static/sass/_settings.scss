@@ -797,12 +797,12 @@ $label-radius: $global-radius;
 
 // These style the titles
 // $section-title-color: #333;
-// $section-title-bg: #efefef;
-// $section-title-bg-active: darken($section-title-bg, $section-function-factor);
-// $section-title-bg-active-tabs: #fff;
+$section-title-bg: darken(#FFF, 5%);
+$section-title-bg-active: darken(#FFF, 10%);
+$section-title-bg-active-tabs: #fff;
 
 // Want to control border size, here ya go!
-$section-border-size: 1px;
+$section-border-size: 0px;
 // $section-border-style: solid;
 // $section-border-color: #ccc;
 
