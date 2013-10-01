@@ -35,10 +35,13 @@ $(function(){
 			</div>
 		<?php endif; ?>
 
-		<div class="admin-header"><h3><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> - <?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h3></div>
+		<div class="admin-header"><h4><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> - <?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s Dashboard</h4></div>
 		
 		<div class="activity" class="loader">
-
+				<?php if ($this->session->userdata('session_admin')): ?>
+				<h4>Welcome back <?php echo $this->session->userdata('username'); ?>!</h4>
+				<p>Here's a few things that have been happening on your website.</p>
+				<?php endif; ?>
 			<ul class="dashboardnav button-group hide-for-touch right">
 				<li class="<?php echo ($days == 30) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin'); ?>">Last 30 Days</a></li>
 				<li class="<?php echo ($days == 60) ? 'active' : ''; ?>"><a class="button" href="<?php echo site_url('/admin/dashboard/60'); ?>">Last 60 Days</a></li>
@@ -59,67 +62,66 @@ $(function(){
 			<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
 
 		<?php endif; ?>
-
-		<div class="large-6 columns">
-			<div class="dash-sales">
-				<i class="ss-icon">basket</i>
-				<p class="dash-number"><?php echo number_format($monthlyTotalSales); ?></p>
-				<p>Monthly Total Sales</p>
+		<div class="card">
+			<h4><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> - Sales, Tickets, and Users</h4>
+			<hr>
+			<div class="large-6 columns">
+				<div class="dash-sales">
+					<i class="ss-icon">basket</i>
+					<p class="dash-number"><?php echo number_format($monthlyTotalSales); ?></p>
+					<p>Monthly Total Sales</p>
+				</div>
+			</div>
+			
+			<div class="large-6 columns">
+				<div class="dash-sales">
+					<i class="ss-icon">cash</i>
+					<p class="dash-number-money">$<?php echo number_format($monthlyTotalSalesVolume,2); ?></p>
+					<p>Monthly Sales</p>
+				</div>
+			</div>
+			
+			<div class="large-6 columns">
+				<div class="dash-tickets">
+					<i class="ss-icon">headset</i>
+					<p class="dash-number"><?php echo number_format($unopenedTickets); ?></p>
+					<p>Unopened Tickets</p>
+				</div>
+			</div>
+			
+			<div class="large-6 columns">
+				<div class="dash-tickets">
+					<i class="ss-icon">headset</i>
+					<p class="dash-number"><?php echo number_format($activeTickets); ?></p>
+					<p>Active Tickets</p>
+				</div>
+			</div>
+			
+			<div class="large-6 columns">
+				<div class="dash-users">
+					<i class="ss-icon">users</i>
+					<p class="dash-number"><?php echo number_format($numUsersWeek); ?></p>
+					<p>New Users This Week</p>
+				</div>
+			</div>
+			
+			<div class="large-6 columns">
+				<div class="dash-users">
+					<i class="ss-icon">usergroup</i>
+					<p class="dash-number"><?php echo number_format($numUsers); ?></p>
+					<p>Total Users</p>
+				</div>
 			</div>
 		</div>
-		
-		<div class="large-6 columns">
-			<div class="dash-sales">
-				<i class="ss-icon">cash</i>
-				<p class="dash-number-money">$<?php echo number_format($monthlyTotalSalesVolume,2); ?></p>
-				<p>Monthly Sales</p>
-			</div>
-		</div>
-		
-		<div class="large-6 columns">
-			<div class="dash-tickets">
-				<i class="ss-icon">headset</i>
-				<p class="dash-number"><?php echo number_format($unopenedTickets); ?></p>
-				<p>Unopened Tickets</p>
-			</div>
-		</div>
-		
-		<div class="large-6 columns">
-			<div class="dash-tickets">
-				<i class="ss-icon">headset</i>
-				<p class="dash-number"><?php echo number_format($activeTickets); ?></p>
-				<p>Active Tickets</p>
-			</div>
-		</div>
-		
-		<div class="large-6 columns">
-			<div class="dash-users">
-				<i class="ss-icon">users</i>
-				<p class="dash-number"><?php echo number_format($numUsersWeek); ?></p>
-				<p>New Users This Week</p>
-			</div>
-		</div>
-		
-		<div class="large-6 columns">
-			<div class="dash-users">
-				<i class="ss-icon">usergroup</i>
-				<p class="dash-number"><?php echo number_format($numUsers); ?></p>
-				<p>Total Users</p>
-			</div>
-		</div>
-
 	</div> 
 	
 	<div class="small-12 large-3 columns sidebar body">
-			<div data-alert class="welcome hide-for-small">
-				<?php if ($this->session->userdata('session_admin')): ?>
-				<h3>Welcome back <?php echo $this->session->userdata('username'); ?>!</h3>
-				<p>Here's a few things that have been happening on your website.</p>
-				<?php endif; ?>
-			</div>
+			<!-- <div data-alert class="welcome hide-for-small">
+
+			</div> -->
 		
 		<div class="sidebar-module-header">
-			<h3>Site Information</h3>
+			<h4>Site Information</h4>
 		</div>
 		
 		<div class="sidebar-module">
@@ -131,7 +133,7 @@ $(function(){
 		</div>
 		
 		<div class="sidebar-module-header">
-			<h3>Site Statistics</h3>
+			<h4>Site Statistics</h4>
 		</div>
 		<div class="sidebar-module">
 			<ul>
@@ -145,7 +147,7 @@ $(function(){
 		</div>
 		
 		<div class="sidebar-module-header">
-			<h3>User Statistics</h3>
+			<h4>User Statistics</h4>
 		</div>
 		<div class="sidebar-module">
 			
@@ -176,13 +178,13 @@ $(function(){
 		</div>
 		
 		<div class="sidebar-module-header">
-			<h3>Most Popular</h3>
+			<h4>Most Popular</h4>
 		</div>
 		
 		<div class="sidebar-module">
 
 			<?php if ($popularPages): ?>
-				<h3>Most popular pages</h3>
+				<h4>Most popular pages</h4>
 				<ol>		
 					<?php foreach ($popularPages as $page): ?>
 						<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], $page['pageName']); ?></li>
@@ -194,7 +196,7 @@ $(function(){
 				
 			<?php if (@in_array('blog', $this->permission->sitePermissions)): ?>
 
-				<h3>Most popular blog posts</h3>
+				<h4>Most popular blog posts</h4>
 
 				<?php if ($popularBlogPosts): ?>
 						<ol>		
@@ -210,7 +212,7 @@ $(function(){
 
 			<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>		
 
-				<h3>Most popular shop products</h3>
+				<h4>Most popular shop products</h4>
 
 				<?php if ($popularShopProducts): ?>
 					<ol>		

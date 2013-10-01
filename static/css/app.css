@@ -1665,7 +1665,7 @@ h3 {
 
 /* line 201, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.3.1/scss/foundation/components/_type.scss */
 h4 {
-  font-size: 0.625em;
+  font-size: 0.8125em;
 }
 
 /* line 202, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.3.1/scss/foundation/components/_type.scss */
@@ -1882,7 +1882,7 @@ blockquote p {
 
   /* line 370, ../../../../../.rvm/gems/ruby-1.9.3-p327/gems/zurb-foundation-4.3.1/scss/foundation/components/_type.scss */
   h4 {
-    font-size: 0.9375em;
+    font-size: 1.125em;
   }
 }
 /*
@@ -7767,12 +7767,13 @@ label {
 }
 
 /* line 628, ../sass/app.scss */
-.admin-header h3 {
+.admin-header h4 {
   color: white;
+  font-weight: 600;
   margin: 0;
 }
 
-/* line 633, ../sass/app.scss */
+/* line 634, ../sass/app.scss */
 .activity {
   background: #FFF;
   color: #595959;
@@ -7785,12 +7786,12 @@ label {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 643, ../sass/app.scss */
+/* line 644, ../sass/app.scss */
 .activity ul {
   list-style-type: none;
 }
 
-/* line 649, ../sass/app.scss */
+/* line 650, ../sass/app.scss */
 .dash-users {
   background: #25bca7;
   border-radius: 2px;
@@ -7799,23 +7800,23 @@ label {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 657, ../sass/app.scss */
+/* line 658, ../sass/app.scss */
 .dash-users i {
-  font-size: 5em;
+  font-size: 4em;
 }
 
-/* line 661, ../sass/app.scss */
+/* line 662, ../sass/app.scss */
 .dash-users p {
   margin-bottom: 0;
 }
 
-/* line 665, ../sass/app.scss */
+/* line 666, ../sass/app.scss */
 .dash-users .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 670, ../sass/app.scss */
+/* line 671, ../sass/app.scss */
 .dash-sales {
   background: #9b59b6;
   border-radius: 2px;
@@ -7824,29 +7825,29 @@ label {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 678, ../sass/app.scss */
+/* line 679, ../sass/app.scss */
 .dash-sales i {
-  font-size: 5em;
+  font-size: 4em;
 }
 
-/* line 682, ../sass/app.scss */
+/* line 683, ../sass/app.scss */
 .dash-sales p {
   margin-bottom: 0;
 }
 
-/* line 686, ../sass/app.scss */
+/* line 687, ../sass/app.scss */
 .dash-sales .dash-number {
   float: right;
   font-size: 3em;
 }
 
-/* line 691, ../sass/app.scss */
+/* line 692, ../sass/app.scss */
 .dash-sales .dash-number-money {
   float: right;
   font-size: 2em;
 }
 
-/* line 696, ../sass/app.scss */
+/* line 697, ../sass/app.scss */
 .dash-tickets {
   background: #567af0;
   border-radius: 2px;
@@ -7855,17 +7856,17 @@ label {
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
 }
 
-/* line 704, ../sass/app.scss */
+/* line 705, ../sass/app.scss */
 .dash-tickets i {
-  font-size: 5em;
+  font-size: 4em;
 }
 
-/* line 708, ../sass/app.scss */
+/* line 709, ../sass/app.scss */
 .dash-tickets p {
   margin-bottom: 0;
 }
 
-/* line 712, ../sass/app.scss */
+/* line 713, ../sass/app.scss */
 .dash-tickets .dash-number {
   float: right;
   font-size: 3em;
@@ -7876,22 +7877,23 @@ label {
   list-style-type: none;
 }
 
-/* line 724, ../sass/app.scss */
-.sidebar-module-header h3 {
+/* line 725, ../sass/app.scss */
+.sidebar-module-header {
+  background: #32393d;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+  padding: 6px 0;
+  text-align: center;
+}
+
+/* line 733, ../sass/app.scss */
+.sidebar-module-header h4 {
+  font-weight: 600;
   color: white;
   margin: 0;
 }
 
-/* line 730, ../sass/app.scss */
-.sidebar-module-header {
-  background: #567af0;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
-  padding: 10px 0;
-  text-align: center;
-}
-
-/* line 738, ../sass/app.scss */
+/* line 739, ../sass/app.scss */
 .sidebar-module {
   background: #FFF;
   color: #595959;
@@ -7904,12 +7906,12 @@ label {
   box-shadow: 0 1px 2px #d9d9d9;
 }
 
-/* line 748, ../sass/app.scss */
+/* line 749, ../sass/app.scss */
 .sidebar-module ul {
   line-height: 1.8em;
 }
 
-/* line 752, ../sass/app.scss */
+/* line 753, ../sass/app.scss */
 .welcome {
   background: #f39c12;
   border-radius: 2px;
@@ -7918,7 +7920,7 @@ label {
   margin: 0 0 20px 0;
   text-shadow: 0 1px #b06f09;
 }
-/* line 759, ../sass/app.scss */
+/* line 760, ../sass/app.scss */
 .welcome .close {
   font-size: 1.375em;
   padding: 5px 4px 4px;
@@ -7934,23 +7936,23 @@ label {
   opacity: 0.5;
 }
 
-/* line 762, ../sass/app.scss */
+/* line 763, ../sass/app.scss */
 .welcome h3 {
   color: white;
 }
 
-/* line 766, ../sass/app.scss */
+/* line 767, ../sass/app.scss */
 ul.dashboardnav {
   margin: 0 5px 2px 0;
   text-align: right;
 }
 
-/* line 767, ../sass/app.scss */
+/* line 768, ../sass/app.scss */
 ul.dashboardnav li {
   display: inline;
 }
 
-/* line 768, ../sass/app.scss */
+/* line 769, ../sass/app.scss */
 ul.dashboardnav li a {
   background: #ccc;
   color: #fff;
@@ -7959,37 +7961,37 @@ ul.dashboardnav li a {
   border-radius: 2px;
 }
 
-/* line 769, ../sass/app.scss */
+/* line 770, ../sass/app.scss */
 ul.dashboardnav li.active a {
   background: #567af0;
 }
 
-/* line 771, ../sass/app.scss */
+/* line 772, ../sass/app.scss */
 div#placeholder {
   height: 180px;
   margin-bottom: 10px;
   margin-top: 45px;
 }
 
-/* line 775, ../sass/app.scss */
+/* line 776, ../sass/app.scss */
 .default {
   border-radius: 2px;
   width: 100%;
 }
 
-/* line 780, ../sass/app.scss */
+/* line 781, ../sass/app.scss */
 .default > thead {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   color: white;
 }
 
-/* line 785, ../sass/app.scss */
+/* line 786, ../sass/app.scss */
 .default > thead a {
   color: white;
 }
 
-/* line 791, ../sass/app.scss */
+/* line 792, ../sass/app.scss */
 .perm-heading {
   background: #f9f9f9;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -8006,24 +8008,24 @@ div#placeholder {
   clear: both;
 }
 
-/* line 797, ../sass/app.scss */
+/* line 798, ../sass/app.scss */
 .perm-heading .button {
   float: right;
 }
 
-/* line 798, ../sass/app.scss */
+/* line 799, ../sass/app.scss */
 .perm-heading .checkbox {
   float: left;
 }
 
-/* line 799, ../sass/app.scss */
+/* line 800, ../sass/app.scss */
 .perm-heading > label {
   float: left;
   font-size: 1.25em;
   width: 50%;
 }
 
-/* line 804, ../sass/app.scss */
+/* line 805, ../sass/app.scss */
 .permissions {
   background: #f9f9f9;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -8040,14 +8042,14 @@ div#placeholder {
   clear: both;
 }
 
-/* line 810, ../sass/app.scss */
+/* line 811, ../sass/app.scss */
 .permissions > label {
   float: left;
   font-size: 1.125em;
   width: 50%;
 }
 
-/* line 818, ../sass/app.scss */
+/* line 819, ../sass/app.scss */
 ul.order, ol.order {
   list-style-type: none;
   padding: 0;
@@ -8055,14 +8057,14 @@ ul.order, ol.order {
   line-height: 1.5em;
 }
 
-/* line 819, ../sass/app.scss */
+/* line 820, ../sass/app.scss */
 ul.order ul, ol.order ol {
   list-style-type: none;
   padding: 0;
   margin: 0;
 }
 
-/* line 820, ../sass/app.scss */
+/* line 821, ../sass/app.scss */
 ul.order li, ol.order li {
   margin: 0;
   padding: 0;
@@ -8071,63 +8073,63 @@ ul.order li, ol.order li {
   clear: both;
 }
 
-/* line 821, ../sass/app.scss */
+/* line 822, ../sass/app.scss */
 ul.order ul li, ol.order ol li {
   margin: 0;
 }
 
-/* line 822, ../sass/app.scss */
+/* line 823, ../sass/app.scss */
 ol.order {
   list-style-position: inside;
 }
 
-/* line 823, ../sass/app.scss */
+/* line 824, ../sass/app.scss */
 ol.order .buttons {
   display: inline;
   float: left;
   text-align: right;
 }
 
-/* line 824, ../sass/app.scss */
+/* line 825, ../sass/app.scss */
 .order img {
   margin: 0 5px 0 0;
   padding: 8px 0;
   vertical-align: middle;
 }
 
-/* line 825, ../sass/app.scss */
+/* line 826, ../sass/app.scss */
 .order p {
   margin-bottom: 0;
 }
 
-/* line 827, ../sass/app.scss */
+/* line 828, ../sass/app.scss */
 .page-order {
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
-/* line 832, ../sass/app.scss */
+/* line 833, ../sass/app.scss */
 ol.order .pagelink {
   font-size: 1.2em;
 }
 
-/* line 833, ../sass/app.scss */
+/* line 834, ../sass/app.scss */
 ol.order .draft {
   background: #ffffec !important;
 }
 
-/* line 834, ../sass/app.scss */
+/* line 835, ../sass/app.scss */
 ol.order .hiddenpage {
   background: #e9e9e9;
 }
 
-/* line 835, ../sass/app.scss */
+/* line 836, ../sass/app.scss */
 ol.order .haschildren {
   margin: 8px 0;
   border-bottom: none !important;
 }
 
-/* line 837, ../sass/app.scss */
+/* line 838, ../sass/app.scss */
 span.autosave-saving {
   display: none;
   background: #567af0;
@@ -8136,7 +8138,7 @@ span.autosave-saving {
   border-radius: 2px;
 }
 
-/* line 838, ../sass/app.scss */
+/* line 839, ../sass/app.scss */
 span.autosave-complete {
   display: none;
   background: #567af0;
@@ -8145,39 +8147,39 @@ span.autosave-complete {
   border-radius: 2px;
 }
 
-/* line 839, ../sass/app.scss */
+/* line 840, ../sass/app.scss */
 .markup {
   margin-top: 15px;
 }
 
-/* line 847, ../sass/app.scss */
+/* line 848, ../sass/app.scss */
 .large-block-grid-4 > li {
   text-align: left;
 }
 
-/* line 851, ../sass/app.scss */
+/* line 852, ../sass/app.scss */
 .edit-image {
   text-align: center;
 }
 
-/* line 855, ../sass/app.scss */
+/* line 856, ../sass/app.scss */
 .folder {
   margin: 10px 0 !important;
 }
 
-/* line 859, ../sass/app.scss */
+/* line 860, ../sass/app.scss */
 .preview-container {
   background: #f1f1f1;
 }
 
-/* line 864, ../sass/app.scss */
+/* line 865, ../sass/app.scss */
 .ui-sortable-placeholder {
   border: 3px dashed #aaa;
   background: #ccc;
   height: 52px;
 }
 
-/* line 870, ../sass/app.scss */
+/* line 871, ../sass/app.scss */
 .ui-datepicker {
   background: white;
   padding: 0.9375em 0.9375em 0.625em 0.9375em;
@@ -8195,7 +8197,7 @@ span.autosave-complete {
   z-index: 3 !important;
 }
 
-/* line 876, ../sass/app.scss */
+/* line 877, ../sass/app.scss */
 .ui-datepicker-prev {
   border-style: solid;
   border-width: 0;
@@ -8233,7 +8235,7 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 882, ../sass/app.scss */
+/* line 883, ../sass/app.scss */
 .ui-datepicker-next {
   border-style: solid;
   border-width: 0;
@@ -8272,13 +8274,13 @@ span.autosave-complete {
   color: white;
 }
 
-/* line 889, ../sass/app.scss */
+/* line 890, ../sass/app.scss */
 .ui-datepicker-title {
   margin: 5px 0;
   text-align: center;
 }
 
-/* line 896, ../sass/app.scss */
+/* line 897, ../sass/app.scss */
 footer {
   bottom: 0;
   min-height: 50px;
@@ -8287,12 +8289,12 @@ footer {
   width: 100%;
 }
 
-/* line 905, ../sass/app.scss */
+/* line 906, ../sass/app.scss */
 .hide {
   display: none;
 }
 
-/* line 909, ../sass/app.scss */
+/* line 910, ../sass/app.scss */
 .clear {
   clear: both;
 }

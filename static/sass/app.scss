@@ -625,8 +625,9 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	text-align: left;
 }
 
-.admin-header h3{
+.admin-header h4{
 	color: $light-color;
+	font-weight: 600;
 	margin: 0;
 }
 
@@ -655,7 +656,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .dash-users i {
-	font-size: 5em;
+	font-size: 4em;
 }
 
 .dash-users p {
@@ -676,7 +677,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .dash-sales i {
-	font-size: 5em;
+	font-size: 4em;
 }
 
 .dash-sales p {
@@ -702,7 +703,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .dash-tickets i {
-	font-size: 5em;
+	font-size: 4em;
 }
 
 .dash-tickets p {
@@ -714,25 +715,25 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 	font-size: 3em;
 }
 
-
 // Sidebar
 
 .sidebar ul{
 	list-style-type: none;
 }
 
-.sidebar-module-header h3{
-	color: $light-color;
-	margin: 0;
-}
-
 
 .sidebar-module-header {
-	background: $primary-color;
+	background: #32393d;
 	border-top-left-radius: $global-radius;
 	border-top-right-radius: $global-radius;
-	padding: 10px 0;
+	padding: 6px 0;
 	text-align: center;
+}
+
+.sidebar-module-header h4{
+	font-weight: 600;
+	color: $light-color;
+	margin: 0;
 }
 
 .sidebar-module {
