@@ -94,7 +94,7 @@ $(function(){
 			<input type="submit" name="view" value="View Product" class="button save" />
 			<input type="submit" value="Save Changes" class="button green save" />
 		</div>
-
+		<hr>
 		<div class="clear"></div>
 
 		<?php if ($errors = validation_errors()): ?>
@@ -109,124 +109,120 @@ $(function(){
 		<?php endif; ?>
 
 		<div class="section-container auto" data-section>
-			<section>
+			<section class="active">
 				<p class="title" data-section-title><a href="#">Details</a></p>
 				<div class="content" data-section-content>
 				<div class="row">
-					<div class="large-12 small-12 large-centered columns">
-						<div id="details" class="tab">
+					<h3>Product Details</h3>
+					<div class="large-6 columns">
+						<div class="item">
+							<label for="productName">Product name</label>
+							<p>Give your product a great name.</p>
+							<?php echo @form_input('productName',set_value('productName', $data['productName']), 'id="productName" class="formelement"'); ?>
+						</div>
 
-							<h2 class="underline">Product Details</h2>
+						<div class="item">
+							<label for="catalogueID">Catalogue ID</label>
+							<p>This is for your own catalogue reference and stock keeping.</p>
+							<?php echo @form_input('catalogueID',set_value('catalogueID', $data['catalogueID']), 'id="catalogueID" class="formelement"'); ?>
+						</div>
 
-							<div class="item">
-								<label for="productName">Product name</label>
-								<p>Give your product a great name.</p>
-								<?php echo @form_input('productName',set_value('productName', $data['productName']), 'id="productName" class="formelement"'); ?>
-							</div>
+						<div class="item">
+							<label for="subtitle">Sub-title / Author:</label>
+							<?php echo @form_input('subtitle',set_value('subtitle', $data['subtitle']), 'id="subtitle" class="formelement"'); ?>
+						</div>
 
-							<div class="item">
-								<label for="catalogueID">Catalogue ID</label>
-								<p>This is for your own catalogue reference and stock keeping.</p>
-								<?php echo @form_input('catalogueID',set_value('catalogueID', $data['catalogueID']), 'id="catalogueID" class="formelement"'); ?>
-							</div>
-
-							<div class="item">
-								<label for="subtitle">Sub-title / Author:</label>
-								<?php echo @form_input('subtitle',set_value('subtitle', $data['subtitle']), 'id="subtitle" class="formelement"'); ?>
-							</div>
-
-							<div class="item">
-								<label for="tags">Tags:</label>
-								<p>Create tags to help organize your products or highlight features. Separate tags with a comma (e.g. &ldquo;places, hobbies, favourite work&rdquo;)</p>
-								<?php echo @form_input('tags', set_value('tags', $data['tags']), 'id="tags" class="formelement"'); ?>
-							</div>
-
-							<div class="item">
-							<label for="price">Price:</label>
-							<p>You'll likley want to charge something for your product. Enter the price here.</p>
-								<div class="row collapse">
-									<div class="small-3 columns">
-										<span class="prefix radius price"><?php echo currency_symbol(); ?></span>
-									</div>
-									<div class="small-9 columns">
-										<?php echo @form_input('price',number_format(set_value('price', $data['price']),2,'.',''), 'id="price" class="formelement small"'); ?>
-									</div>
+						<div class="item">
+							<label for="tags">Tags:</label>
+							<p>Create tags to help organize your products or highlight features. Separate tags with a comma (e.g. &ldquo;places, hobbies, favourite work&rdquo;)</p>
+							<?php echo @form_input('tags', set_value('tags', $data['tags']), 'id="tags" class="formelement"'); ?>
+						</div>
+						<div class="item">
+						<label for="price">Price:</label>
+						<p>You'll likley want to charge something for your product. Enter the price here.</p>
+							<div class="row collapse">
+								<div class="small-1 columns">
+									<span class="prefix radius price"><?php echo currency_symbol(); ?></span>
 								</div>
-							</div>
-
-							<div class="item">
-								<label for="image">Image:</label>
-								<div class="uploadfile">
-									<?php if ($imagePath):?>
-										<a href="<?php echo $imageThumbPath; ?>" title="<?php echo set_value('productName', $data['productName']); ?>" class="lightbox right"><img src="<?php echo $imagePath; ?>" alt="Product image" class="pic" /></a>
-									<?php endif; ?>
-									<?php echo @form_upload('image',set_value('image', $data['image']), 'size="16" id="image"'); ?>
+								<div class="small-11 columns">
+									<?php echo @form_input('price',number_format(set_value('price', $data['price']),2,'.',''), 'id="price" class="formelement small"'); ?>
 								</div>
-							</div>
-
-							<div class="item">
-								<a href="<?php echo site_url('/admin/shop/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')" class="button small right">Add</a>		
-								<label for="category">Category:</label>
-								<p>Add categories to your product.</p>
-								<div class="categories">
-									<?php if ($categories): ?>
-									<?php foreach($categories as $category): ?>
-										<div class="category<?php echo (isset($data['categories'][$category['catID']])) ? ' hover' : ''; ?>">
-											<?php echo @form_checkbox('catsArray['.$category['catID'].']', $category['catName'], (isset($data['categories'][$category['catID']])) ? 1 : ''); ?><span><?php echo ($category['parentID']) ? '<small>'.$category['parentName'].' &gt;</small> '.$category['catName'] : $category['catName']; ?></span>
-										</div>
-									<?php endforeach; ?>
-									<?php else: ?>
-										<p class="alert-box">Warning: It is strongly recommended that you use categories or this may not appear properly. <a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">Please update your categories here</a>.
-									<?php endif; ?>
-								</div>
-							</div>
-
-							<h2 class="underline">Availability</h2>
-							
-							<div class="item">
-								<label for="status">Status:</label>
-								<?php 
-									$values = array(
-										'S' => 'In stock',
-										'O' => 'Out of stock',
-										'P' => 'Pre-order'
-									);
-									echo @form_dropdown('status',$values,set_value('status', $data['status']), 'id="status" class="formelement"'); 
-								?>
-							</div>
-
-							<?php if ($this->site->config['shopStockControl']): ?>
-								<div class="item">
-									<label for="stock">Stock:</label>
-									<?php echo @form_input('stock',set_value('stock', $data['stock']), 'id="stock" class="formelement small"'); ?>
-								</div>
-							<?php endif; ?>	
-
-							<div class="item">
-								<label for="featured">Featured?</label>
-								<p>Featured products will show on the shop front page.</p>
-								<?php 
-									$values = array(
-										'N' => 'No',
-										'Y' => 'Yes',
-									);
-									echo @form_dropdown('featured',$values,set_value('featured', $data['featured']), 'id="featured" class="formelement"'); 
-								?>
-							</div>
-
-							<div class="item">
-								<label for="published">Visible:</label>
-								<?php 
-									$values = array(
-										1 => 'Yes',
-										0 => 'No (hide product)',
-									);
-									echo @form_dropdown('published',$values,set_value('published', $data['published']), 'id="published"'); 
-								?>
 							</div>
 						</div>
 					</div>
-				</div>
+					<div class="large-6 columns">
+						<div class="item">
+							<label for="image">Image:</label>
+							<p>Upload an image for this product.</p>
+							<div class="uploadfile">
+								<?php if ($imagePath):?>
+									<a href="<?php echo $imageThumbPath; ?>" title="<?php echo set_value('productName', $data['productName']); ?>" class="lightbox right"><img src="<?php echo $imagePath; ?>" alt="Product image" class="pic" /></a>
+								<?php endif; ?>
+								<?php echo @form_upload('image',set_value('image', $data['image']), 'size="16" id="image"'); ?>
+							</div>
+						</div>
+
+						<div class="item">
+							<a href="<?php echo site_url('/admin/shop/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')" class="button small right">Add</a>		
+							<label for="category">Category:</label>
+							<p>Select the categories you want this product to be listed in.</p>
+							<div class="categories">
+								<?php if ($categories): ?>
+								<?php foreach($categories as $category): ?>
+									<div class="category<?php echo (isset($data['categories'][$category['catID']])) ? ' hover' : ''; ?>">
+										<?php echo @form_checkbox('catsArray['.$category['catID'].']', $category['catName'], (isset($data['categories'][$category['catID']])) ? 1 : ''); ?><span><?php echo ($category['parentID']) ? ''.$category['parentName'].'  '.$category['catName'] : $category['catName']; ?></span>
+									</div>
+								<?php endforeach; ?>
+								<?php else: ?>
+									<p class="alert-box">Warning: It is strongly recommended that you use categories or this may not appear properly. <a href="<?php echo site_url('/admin/blog/categories'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">Please update your categories here</a>.
+								<?php endif; ?>
+							</div>
+						</div>
+
+						<h3>Availability</h3>
+						<p>Controll the status of this product.</p>
+						<div class="item">
+							<label for="status">Status:</label>
+							<?php 
+								$values = array(
+									'S' => 'In stock',
+									'O' => 'Out of stock',
+									'P' => 'Pre-order'
+								);
+								echo @form_dropdown('status',$values,set_value('status', $data['status']), 'id="status" class="formelement"'); 
+							?>
+						</div>
+
+						<?php if ($this->site->config['shopStockControl']): ?>
+							<div class="item">
+								<label for="stock">Stock:</label>
+								<?php echo @form_input('stock',set_value('stock', $data['stock']), 'id="stock" class="formelement small"'); ?>
+							</div>
+						<?php endif; ?>	
+
+						<div class="item">
+							<label for="featured">Featured?</label>
+							<p>Featured products will show on the shop front page.</p>
+							<?php 
+								$values = array(
+									'N' => 'No',
+									'Y' => 'Yes',
+								);
+								echo @form_dropdown('featured',$values,set_value('featured', $data['featured']), 'id="featured" class="formelement"'); 
+							?>
+						</div>
+
+						<div class="item">
+							<label for="published">Visible:</label>
+							<?php 
+								$values = array(
+									1 => 'Yes',
+									0 => 'No (hide product)',
+								);
+								echo @form_dropdown('published',$values,set_value('published', $data['published']), 'id="published"'); 
+							?>
+						</div>
+					</div>
 				</div>
 			</section>
 			<section>
@@ -234,7 +230,7 @@ $(function(){
 				<div class="content" data-section-content>
 				<div class="row">
 					<div class="large-12 small-12 large-centered columns">
-						<h2 class="underline">Product Description</h2>
+						<h3>Product Description</h3>
 							
 						<!-- <div class="buttons">
 							<a href="#" class="boldbutton"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_bold.png" alt="Bold" title="Bold" /></a>
@@ -271,8 +267,8 @@ $(function(){
 				<p class="title" data-section-title><a href="#">Options</a></p>
 				<div class="content" data-section-content>
 				<div class="row">
-					<div class="large-12 small-12 large-centered columns">
-						<h2 class="underline">Options</h2>
+					<div class="large-6 columns">
+						<h3>Options</h3>
 						<div class="item">
 							<label for="freePostage">Free Shipping?</label>
 							<?php 
@@ -314,15 +310,15 @@ $(function(){
 								echo @form_dropdown('bandID', $options, set_value('bandID', $data['bandID']),'id="bands" class="formelement"');
 							?>
 						</div>
+					</div>
+					<div class="large-6 columns">
+						
+						<div class="section-container accordion" data-section="accordion">
+						  <section>
+						    <p class="title" data-section-title><a href="#">Color Variations</a></p>
+						    <div class="content" data-section-content>
 
-						<h2 class="underline">Variations</h2>
-
-						<div class="item">
-							<div id="variation1">
-								<div class="addvars">
-									<p><a href="#" class="addvar button small">Add <?php echo $this->site->config['shopVariation1']; ?> Variations</a></p>
-								</div>
-								<div class="showvars" style="display: none;">
+								
 									<?php foreach (range(1,5) as $x): $i = $x-1; ?>
 										
 									<label for="variation1-<?php echo $x; ?>"><?php echo $this->site->config['shopVariation1']; ?> <?php echo $x; ?>:</label>
@@ -337,15 +333,13 @@ $(function(){
 									</div>
 									<?php endforeach; ?>		
 																
-								</div>
+								
 							</div>
-
-
+						</section>
+					  	<section>
+						    <p class="title" data-section-title><a href="#">Size Variations</a></p>
+						    <div class="content" data-section-content>
 							<div id="variation2">
-								<div class="addvars">
-									<p><a href="#" class="addvar button small">Add <?php echo $this->site->config['shopVariation2']; ?> Variations</a></p>
-								</div>
-								<div class="showvars" style="display: none;">
 									
 									<?php foreach (range(1,5) as $x): $i = $x-1; ?>
 										
@@ -362,14 +356,16 @@ $(function(){
 									
 									<?php endforeach; ?>
 																
-								</div>
-							</div>
 
+							</div>
+							</div>
+						</section>
+					  	<section>
+						    <p class="title" data-section-title><a href="#">Other Variations</a></p>
+						    <div class="content" data-section-content>
 							<div id="variation3">
-								<div class="addvars">
-									<p><a href="#" class="addvar button small">Add <?php echo $this->site->config['shopVariation3']; ?> Variations</a></p>
-								</div>
-								<div class="showvars" style="display: none;">
+
+							
 									
 									<?php foreach (range(1,5) as $x): $i = $x-1; ?>
 										
@@ -385,9 +381,10 @@ $(function(){
 									</div>
 									<?php endforeach; ?>
 																
-								</div>
+								
 							</div>
 						</div>
+						</section>
 					</div>
 				</div>
 				</div>

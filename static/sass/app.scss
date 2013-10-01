@@ -189,6 +189,15 @@ textarea {
 	color: #999	;
 }
 
+.category {
+	display: inline-block;
+	margin: 5px 0;
+}
+
+.category input[type="checkbox"]{
+	margin: 0 10px;
+}
+
 .checkbox-cat {
 	margin: 0 5px;
 }
