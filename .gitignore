@@ -39,7 +39,7 @@ Thumbs.db
 
 # SaSS *
 ######################
-static/.sass_cache
+static/.sass_cache/
 static/config.rb
 
 # Halogy #

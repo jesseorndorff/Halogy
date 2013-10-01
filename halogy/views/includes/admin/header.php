@@ -13,7 +13,7 @@
 
 	<script type="text/javascript" src="//use.typekit.net/kvu5lut.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-	
+
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery-ui-1.10.3.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/custom.modernizr.js"></script>
@@ -97,7 +97,7 @@ $(document).ready(function($) {
 							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 							<li><a href="<?php echo site_url('/admin/pages/add'); ?>">Add Page</a></li>
 							<?php endif; ?>
-							</ul>
+						</ul>
 					</li>
 				<?php endif; ?>
 				<!-- Templates -->
