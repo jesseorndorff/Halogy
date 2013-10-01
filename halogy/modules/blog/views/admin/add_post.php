@@ -3,6 +3,7 @@
 			<div class="large-10 columns body">
 				<div class="small-12 large-12 large-centered columns card">
 					<h2>Add a Post</h2>
+					<hr>
 					<?php if ($errors = validation_errors()): ?>
 						<div class="error">
 							<?php echo $errors; ?>
