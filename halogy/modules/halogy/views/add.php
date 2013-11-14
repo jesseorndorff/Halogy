@@ -1,5 +1,5 @@
 <script type="text/javascript">
-$(function(){	
+$(function(){
 	$('a.showtab').click(function(event){
 		event.preventDefault();
 		var div = $(this).attr('href'); 
@@ -13,32 +13,23 @@ $(function(){
 	});
 	$('div.tab:not(#tab1)').hide();
 	$('div.permissions input[type="checkbox"]').each(function(){
-		if ($(this).attr('checked')) {
-			$(this).parent('div').prev('div').children('input[type="checkbox"]').attr('checked', true);
+		if ($(this).prop('checked')) {
+			$(this).parent('div').prev('div').children('input[type="checkbox"]').prop('checked', true);
 		}
 	});	
 	$('input.selectall').click(function(){
 		$el = $(this).parent('div').next('div').children('input[type="checkbox"]');
-		$flag = $(this).attr('checked');
+		$flag = $(this).prop('checked');
 		if ($flag) {
-			$($el).attr('checked', true);
+			$($el).prop('checked', true);
 		}
 		else {
-			$($el).attr('checked', false);
+			$($el).prop('checked', false);
 		}
 	});
 	$('.seemore').click(function(){
 		$el = $(this).parent('div').next('div');
 		$($el).toggle('400');
-	});
-	$('#siteDomain').change(function(){
-		var domainVal = $(this).val();
-		domainVal = domainVal.replace(/^(http)s?:\/+((w+)\.)?|^www\.|\/+/i, '');
-		$(this).val(domainVal);
-		$('#siteURL').val('http://www.'+domainVal);
-	});
-	$('#adminEmail').change(function(){
-		$('#username').val($(this).val());
 	});
 	$('#siteDomain').change(function(){
 		var domainVal = $(this).val();
@@ -58,24 +49,14 @@ $(function(){
 		$('#siteURL').val('http://www.'+domainVal);
 		$('#siteEmail').val('info@'+domainVal);
 	});
-	$('form').submit(function(){
-		$('div.permissions input').each(function(){
-			if($(this).attr('checked') != true){
-				$(this).closest('form').submit();
-			};
-		});
-		alert('You do not have any permissions set for this site.');
-		return false;
-	});
 	$('a.selectall').click(function(event){
 		event.preventDefault();
-		$('input[type="checkbox"]').attr('checked', true);
-	});
+		$('input[type="checkbox"]').prop('checked', true);
+	});	
 	$('a.deselectall').click(function(event){
 		event.preventDefault();
-		$('input[type="checkbox"]').attr('checked', false);
-	});
-});
+		$('input[type="checkbox"]').prop('checked', false);
+	});	
 </script>
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
