@@ -2,6 +2,7 @@
 	var days = <?php echo $days; ?>;
 </script>
 <script type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.flot.js"></script>
+<script type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.flot.time.js"></script>
 <!--[if IE]>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/excanvas.js"></script>
 <![endif]-->
