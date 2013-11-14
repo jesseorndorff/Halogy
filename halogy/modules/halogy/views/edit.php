@@ -13,18 +13,18 @@ $(function(){
 	});
 	$('div.tab:not(#tab1)').hide();
 	$('div.permissions input[type="checkbox"]').each(function(){
-		if ($(this).attr('checked')) {
-			$(this).parent('div').prev('div').children('input[type="checkbox"]').attr('checked', true);
+		if ($(this).prop('checked')) {
+			$(this).parent('div').prev('div').children('input[type="checkbox"]').prop('checked', true);
 		}
 	});	
 	$('input.selectall').click(function(){
 		$el = $(this).parent('div').next('div').children('input[type="checkbox"]');
-		$flag = $(this).attr('checked');
+		$flag = $(this).prop('checked');
 		if ($flag) {
-			$($el).attr('checked', true);
+			$($el).prop('checked', true);
 		}
 		else {
-			$($el).attr('checked', false);
+			$($el).prop('checked', false);
 		}
 	});
 	$('.seemore').click(function(){
@@ -51,11 +51,11 @@ $(function(){
 	});
 	$('a.selectall').click(function(event){
 		event.preventDefault();
-		$('input[type="checkbox"]').attr('checked', true);
+		$('input[type="checkbox"]').prop('checked', true);
 	});	
 	$('a.deselectall').click(function(event){
 		event.preventDefault();
-		$('input[type="checkbox"]').attr('checked', false);
+		$('input[type="checkbox"]').prop('checked', false);
 	});	
 
 });
