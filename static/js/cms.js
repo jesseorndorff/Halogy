@@ -230,81 +230,81 @@
 		}
 	});
 	$('textarea.code').resizer();
-	$('.halogycms_confirm').live('click', function () {
+	$('.halogycms_confirm').bind('click', function () {
 		return confirm('You may lose unsaved changes. Continue?')
 	});
-	$('a.halogycms_toggle').live('click', function () {
+	$('a.halogycms_toggle').bind('click', function () {
 		preview(this);
 		return false
 	});
-	$('a.halogycms_editbutton').live('click', function () {
+	$('a.halogycms_editbutton').bind('click', function () {
 		edit(this);
 		return false
 	});
-	$('div.halogycms_edit:not(.halogycms_preview)').live('dblclick', function () {
+	$('div.halogycms_edit:not(.halogycms_preview)').bind('dblclick', function () {
 		edit($(this).find('a.halogycms_editbutton'));
 		return false
 	});
-	$('a.halogycms_cancelbutton').live('click', function () {
+	$('a.halogycms_cancelbutton').bind('click', function () {
 		cancel(this);
 		return false
 	});
-	$('a.halogycms_saveall').live('click', function () {
+	$('a.halogycms_saveall').bind('click', function () {
 		return autosave(this)
 	});
-	$('a.halogycms_imagebutton').live('click', function () {
+	$('a.halogycms_imagebutton').bind('click', function () {
 		showimages(this);
 		return false
 	});
-	$('.halogycms_insertimage').live('click', function () {
+	$('.halogycms_insertimage').bind('click', function () {
 		insertimage(this);
 		return false
 	});
-	$('a.halogycms_filebutton').live('click', function () {
+	$('a.halogycms_filebutton').bind('click', function () {
 		showfiles(this);
 		return false
 	});
-	$('.halogycms_insertfile').live('click', function () {
+	$('.halogycms_insertfile').bind('click', function () {
 		insertfile(this);
 		return false
 	});
-	$('a.halogycms_close').live('click', function () {
+	$('a.halogycms_close').bind('click', function () {
 		hidebrowser();
 		return false
 	});
-	$('a.halogycms_boldbutton').live('click', function () {
+	$('a.halogycms_boldbutton').bind('click', function () {
 		formatting(this, 'bold');
 		return false
 	});
-	$('a.halogycms_italicbutton').live('click', function () {
+	$('a.halogycms_italicbutton').bind('click', function () {
 		formatting(this, 'italic');
 		return false
 	});
-	$('a.halogycms_h1button').live('click', function () {
+	$('a.halogycms_h1button').bind('click', function () {
 		formatting(this, 'h1');
 		return false
 	});
-	$('a.halogycms_h2button').live('click', function () {
+	$('a.halogycms_h2button').bind('click', function () {
 		formatting(this, 'h2');
 		return false
 	});
-	$('a.halogycms_h3button').live('click', function () {
+	$('a.halogycms_h3button').bind('click', function () {
 		formatting(this, 'h3');
 		return false
 	});
-	$('a.halogycms_urlbutton').live('click', function () {
+	$('a.halogycms_urlbutton').bind('click', function () {
 		formatting(this, 'url');
 		return false
 	});
-	$('a.halogycms_togglefolder').live('click', function () {
+	$('a.halogycms_togglefolder').bind('click', function () {
 		toggleFolder(this);
 		return false
 	});
-	$('a.halogycms_savebutton').live('click', function () {
+	$('a.halogycms_savebutton').bind('click', function () {
 		save(this);
 		return false
 	});
-	$('#halogycms_editpic').live('click', function () {
+	$('#halogycms_editpic').bind('click', function () {
 		showpopup(this);
 		return false
 	});
@@ -313,20 +313,20 @@
 	}, function () {
 		hideadmin()
 	});
-	$('img.pic').live('mouseover', function () {
+	$('img.pic').bind('mouseover', function () {
 		editpic(this)
 	});
-	$('#halogycms_editpic').live('mouseover', function () {
+	$('#halogycms_editpic').bind('mouseover', function () {
 		editshow()
 	});
-	$('img,#halogycms_editpic').live('mouseout', function () {
+	$('img,#halogycms_editpic').bind('mouseout', function () {
 		edithide()
 	});
-	$('div.halogycms_edit:not(.halogycms_active,.halogycms_preview)').live('mouseover', function () {
+	$('div.halogycms_edit:not(.halogycms_active,.halogycms_preview)').bind('mouseover', function () {
 		$(this).children('.halogycms_buttons').children('a.halogycms_editbutton').addClass('halogycms_hover');
 		$(this).addClass('halogycms_hover')
 	});
-	$('div.halogycms_edit:not(.halogycms_active)').live('mouseout', function () {
+	$('div.halogycms_edit:not(.halogycms_active)').bind('mouseout', function () {
 		$(this).children('.halogycms_buttons').children('a.halogycms_editbutton').removeClass('halogycms_hover');
 		$(this).removeClass('halogycms_hover')
 	});

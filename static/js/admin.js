@@ -14,14 +14,14 @@
 					$.scrollTo('#content', 200);
 					$('input:first:not(.button)').focus()
 				})
-			})
+			});			
 		} else {
 			$('div.hidden:visible').slideUp(200);
 			$('div.hidden').slideDown(200, function () {
 				$.scrollTo('#content', 200);
 				$('input:first:not(.button)').focus()
 			})
-		}
+		}		
 		return false
 	}
 	function hideForm(a) {
@@ -29,7 +29,7 @@
 		$('.showform').removeClass('active');
 		$('div.hidden:visible').slideUp(200, function () {
 			$('div.hidden').html('')
-		})
+		});
 	}
 	function checkajax() {
 		if (updated == 0) {
@@ -149,74 +149,74 @@
 				return false
 			}
 		});
-		$('a.toggle').live('click', function () {
+		$('a.toggle').bind('click', function () {
 			toggle();
 			return false
 		});
-		$('a.previewbutton').live('click', function () {
+		$('a.previewbutton').bind('click', function () {
 			$(this).hide();
 			return false
 		});
-		$('.halogycms_confirm').live('click', function () {
+		$('.halogycms_confirm').bind('click', function () {
 			return confirm('You may lose unsaved changes. Continue?')
 		});
-		$('a.halogycms_imagebutton').live('click', function () {
+		$('a.halogycms_imagebutton').bind('click', function () {
 			showimages(this);
 			return false
 		});
-		$('.halogycms_insertimage').live('click', function () {
+		$(document).on('click', '.halogycms_insertimage', function () {
 			insertimage(this);
 			return false
 		});
-		$('a.halogycms_filebutton').live('click', function () {
+		$('a.halogycms_filebutton').bind('click', function () {
 			showfiles(this);
 			return false
 		});
-		$('.halogycms_insertfile').live('click', function () {
+		$(document).on('click', '.halogycms_insertfile', function () {
 			insertfile(this);
 			return false
 		});
-		$('a.halogycms_close').live('click', function () {
+		$(document).on('click', 'a.halogycms_close', function () {
 			hidebrowser();
 			return false
 		});
-		$('a.boldbutton').live('click', function () {
-			formatting(this, 'bold');
-			return false
-		});
-		$('a.italicbutton').live('click', function () {
-			formatting(this, 'italic');
-			return false
-		});
-		$('a.h1button').live('click', function () {
-			formatting(this, 'h1');
-			return false
-		});
-		$('a.h2button').live('click', function () {
-			formatting(this, 'h2');
-			return false
-		});
-		$('a.h3button').live('click', function () {
-			formatting(this, 'h3');
-			return false
-		});
-		$('a.urlbutton').live('click', function () {
-			formatting(this, 'url');
-			return false
-		});
-		$('a.togglefolder').live('click', function () {
+		$(document).on('click', 'a.halogycms_togglefolder', function () {
 			toggleFolder(this);
 			return false
 		});
-		$('a.showform').live('click', function () {
+		$('a.boldbutton').bind('click', function () {
+			formatting(this, 'bold');
+			return false
+		});
+		$('a.italicbutton').bind('click', function () {
+			formatting(this, 'italic');
+			return false
+		});
+		$('a.h1button').bind('click', function () {
+			formatting(this, 'h1');
+			return false
+		});
+		$('a.h2button').bind('click', function () {
+			formatting(this, 'h2');
+			return false
+		});
+		$('a.h3button').bind('click', function () {
+			formatting(this, 'h3');
+			return false
+		});
+		$('a.urlbutton').bind('click', function () {
+			formatting(this, 'url');
+			return false
+		});		
+		$('a.showform').bind('click', function () {
 			showForm(this);
 			return false
 		});
-		$('input#cancel').live('click', function () {
+		$(document).on('click', 'input#cancel', function () {
 			hideForm(this);
 			return false
 		});
-		$('.cancel').live('click', function () {
+		$('.cancel').bind('click', function () {
 			$('div.hidden').slideUp('100');
 			return false
 		});
