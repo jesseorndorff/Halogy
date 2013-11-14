@@ -509,7 +509,7 @@ class Blog extends MX_Controller {
 
 	function ac_search()
 	{
-		$tags = strtolower($_POST["q"]);
+		$tags = strtolower($_GET["q"]);
         if (!$tags)
         {
         	return FALSE;

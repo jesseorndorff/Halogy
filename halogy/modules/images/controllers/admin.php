@@ -522,7 +522,7 @@ class Admin extends CI_Controller {
 	
 	function ac_images()
 	{	
-		$q = strtolower($_POST["q"]);
+		$q = strtolower($_GET["q"]);
 		if (!$q) return;
 		
 		// form dropdown
