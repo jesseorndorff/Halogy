@@ -1,7 +1,7 @@
 <script type="text/javascript">
 $(function(){
-	$.listen('click', 'a.showform', function(event){showForm(this,event);});
-	$.listen('click', 'input#cancel', function(event){hideForm(this,event);});
+	$(document).on('click', 'a.showform', function(event){showForm(this,event);});
+	$(document).on('click', 'input#cancel', function(event){hideForm(this,event);});
 });
 </script>
 

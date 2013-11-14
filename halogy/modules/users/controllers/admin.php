@@ -318,7 +318,7 @@ class Admin extends MX_Controller {
 
 	function ac_users()
 	{	
-		$q = strtolower($_POST["q"]);
+		$q = strtolower($_GET["q"]);
         if (!$q) return;
 
         // form dropdown

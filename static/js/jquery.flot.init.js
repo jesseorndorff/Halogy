@@ -41,7 +41,7 @@ $(function(){
 			points: { show: true },
 			grid: { hoverable: true, clickable: false, markings: weekendAreas },
 			yaxis: { min: 0, tickDecimals: 0 },
-			xaxis: { mode: 'time' }
+			xaxis: { mode: 'time', timeformat: "%b %d" }
 		});
 
 		function showTooltip(x, y, contents) {

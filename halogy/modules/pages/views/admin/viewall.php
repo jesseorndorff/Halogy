@@ -24,8 +24,8 @@ $(function(){
 			$('.hiddenpage, .subpage, .draft').slideDown();
 		}
 	});
-	$('a.showform').live('click', function(event){showForm(this,event);});
-	$('input#cancel').live('click', function(event){hideForm(this,event);});
+	$('a.showform').bind('click', function(event){showForm(this,event);});
+	$('input#cancel').bind('click', function(event){hideForm(this,event);});
 	initOrder('ol.order, ol.order ol');
 });
 </script>
