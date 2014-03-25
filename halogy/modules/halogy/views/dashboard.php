@@ -19,7 +19,7 @@ $(function(){
 </script>
 
 	
-	<div class="small-12 large-7 columns body">
+	<div class="small-12 large-8 columns body">
 		
 		<?php if ($errors = validation_errors()): ?>
 			<div data-alert class="error">
@@ -115,7 +115,7 @@ $(function(){
 		</div>
 	</div> 
 	
-	<div class="small-12 large-3 columns sidebar body">
+	<div class="small-12 large-4 columns sidebar body">
 			<!-- <div data-alert class="welcome hide-for-small">
 
 			</div> -->

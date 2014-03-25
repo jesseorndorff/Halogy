@@ -10,45 +10,6 @@ $success-color: #27ae60; // Success & Save Alert Color
 $light-color: #FFFFFF;
 $dark-color: #000000;
 
-/* Background color for the top bar */
-$topbar-bg: $primary-color;
-
-/* Height and margin */
-$topbar-height: 60px;
-// $topbar-margin-bottom: emCalc(30px);
-
-/* Control Input height for top bar */
-// $topbar-input-height: 2.45em;
-
-/* Controlling the styles for the title in the top bar */
-$topbar-title-weight: 600;
-// $topbar-title-font-size: emCalc(17px);
-
-/* Set the link colors and styles for top-level nav */
-$topbar-link-color: $light-color;
-$topbar-link-weight: 600;
-// $topbar-link-font-size: emCalc(13px);
-
-/* Style the top bar dropdown elements */
-$topbar-dropdown-bg: $primary-color;
-$topbar-dropdown-link-color: $light-color;
-$topbar-dropdown-toggle-size: 5px;
-$topbar-dropdown-toggle-color: #fff;
-$topbar-dropdown-toggle-alpha: 0.5;
-$dropdown-label-color: $primary-color;
-
-/* Top menu icon styles */
-// $topbar-menu-link-transform: uppercase;
-// $topbar-menu-link-font-size: emCalc(13px);
-// $topbar-menu-link-weight: bold;
-// $topbar-menu-link-color: #fff;
-// $topbar-menu-icon-color: #fff;
-$topbar-menu-link-color-toggled: #FFF;
-$topbar-menu-icon-color-toggled: #F9F9F9;
-
-/* Transitions and breakpoint styles */
-$topbar-transition-speed: 300ms;
-
 // Set Oppacity by White(0.15) or Back(0.15)
 @function white($opacity){
     @return rgba(0,0,0,$opacity)

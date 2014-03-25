@@ -17,13 +17,7 @@
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/jquery-ui-1.10.3.js"></script>
 	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/vendor/custom.modernizr.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.topbar.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.alerts.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.section.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.forms.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.reveal.js"></script>
-	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/foundation/foundation.dropdown.js"></script>
+	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/bower_components/foundation/js/foundation.js"></script>
 <script>
   $(function(){
     $(document)
@@ -78,14 +72,14 @@ $(document).ready(function($) {
 <body>
 
 	<!-- Start Nav -->
-	<nav class="top-bar">
+	<nav class="top-bar" data-topbar>
 		<ul class="title-area">
 			<li class="name">
 				<h1><a href="/admin"><img alt="Halogy" src="<?php echo site_url('/static/images/device.png'); ?>"></a></h1>
 			</li>
 			<li class="toggle-topbar menu-icon"><a href="#"><span>Menu</span></a></li>
 		</ul>
-		<section class="top-bar-section show-for-small">
+		<section class="top-bar-section">
 			<ul class="left">
 				<!-- Pages -->
 				
@@ -272,7 +266,7 @@ $(document).ready(function($) {
 				</li>
 			</ul> <!-- / left -->
 		</section> <!-- /left section -->
-		<section class="top-bar-section hide-for-small">
+		<!--<section class="top-bar-section hide-for-small">
 			<div class="right user-dropdown">
 				<img class="profile" src="<?php echo site_url('/static/uploads/avatars/jesse.png'); ?>">
 				
@@ -290,173 +284,8 @@ $(document).ready(function($) {
 					</li>	
 				</ul>
 			</div>
-		</div>
+		</section> -->
 	</nav>
-	<div class="container">
-		<div class="row">
-			<nav role="navigation" class="side-bar hide-for-small" >
-				<?php if (in_array('blog', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Blog</a></h3>
-						<ul id="mainNav" class="side-nav">
-							<?php if (in_array('blog', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/viewall'); ?>">All Posts</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/add_post'); ?>">Add Post</a></li>
-							<?php endif; ?>
-							<?php if (in_array('blog_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/blog/categories'); ?>">Categories</a></li>
-							<?php endif; ?>							
-							<li><a href="<?php echo site_url('/admin/blog/comments'); ?>">Comments</a></li>
-						</ul>
-				<?php endif; ?>
-				<!-- Pages -->
-				<?php if($this->session->userdata('session_admin')): ?>
-					<?php if (in_array('pages', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Pages</a></h3>
-						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/pages/viewall'); ?>">All Pages</a></li>
-							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-							<li><a href="<?php echo site_url('/admin/pages/add'); ?>">Add Page</a></li>
-							<?php endif; ?>
-						</ul>
-					<?php endif; ?>	
-				<?php endif; ?>
-				<!-- Templates -->
-				<?php if (in_array('pages_templates', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Templates</a></h3>
-						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/pages/templates'); ?>">All Templates</a></li>
-							<li><a href="<?php echo site_url('/admin/pages/includes'); ?>">Includes</a></li>
-							<li><a href="<?php echo site_url('/admin/pages/includes/css'); ?>">CSS</a></li>
-							<li><a href="<?php echo site_url('/admin/pages/includes/js'); ?>">Javascript</a></li>
-						</ul>
-				<?php endif; ?>
-				<!-- Uploads -->
-				
-				<?php if (in_array('images', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Uploads</a></h3>
-						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/images/viewall'); ?>">Images</a></li>
-							<?php if (in_array('images_all', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/images/folders'); ?>">Image Folders</a></li>
-							<?php endif; ?>
-							<?php if (in_array('files', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/files/viewall'); ?>">Files</a></li>
-								<?php if (in_array('files_all', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/files/folders'); ?>">File Folders</a></li>
-								<?php endif; ?>
-							<?php endif; ?>
-						</ul>
-				<?php endif; ?>
-				<!-- Webforms -->
-				
-				<?php if (in_array('webforms', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Web Forms</a></h3>
-						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/webforms/tickets'); ?>">Tickets</a></li>
-							<?php if (in_array('webforms_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/webforms/viewall'); ?>">All Web Forms</a></li>
-								<li><a href="<?php echo site_url('/admin/webforms/add_form'); ?>">Add Web Form</a></li>
-							<?php endif; ?>
-						</ul>
-				<?php endif; ?>
-				<!-- Shop -->
-				
-				<?php if (in_array('shop', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Shop</a></h3>
-						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/shop/products'); ?>">All Products</a></li>
-							<?php if (in_array('shop_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/add_product'); ?>">Add Product</a></li>
-							<?php endif; ?>
-							<?php if (in_array('shop_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/categories'); ?>">Categories</a></li>
-							<?php endif; ?>
-							<?php if (in_array('shop_orders', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/orders'); ?>">View Orders</a></li>
-							<?php endif; ?>
-							<?php if (in_array('shop_shipping', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/bands'); ?>">Shipping Bands</a></li>
-								<li><a href="<?php echo site_url('/admin/shop/postages'); ?>">Shipping Costs</a></li>
-								<li><a href="<?php echo site_url('/admin/shop/modifiers'); ?>">Shipping Modifiers</a></li>								
-							<?php endif; ?>
-							<?php if (in_array('shop_discounts', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/discounts'); ?>">Discount Codes</a></li>
-							<?php endif; ?>
-							<?php if (in_array('shop_reviews', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/reviews'); ?>">Reviews</a></li>
-							<?php endif; ?>
-							<?php if (in_array('shop_upsells', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/shop/upsells'); ?>">Upsells</a></li>
-							<?php endif; ?>	
-						</ul>
-				<?php endif; ?>
-				<!-- Events -->
-				
-				<?php if (in_array('events', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Events</a></h3>
-						<ul class="side-nav">
-							<li><a href="<?php echo site_url('/admin/events/viewall'); ?>">All Events</a></li>
-						<?php if (in_array('events_edit', $this->permission->permissions)): ?>
-							<li><a href="<?php echo site_url('/admin/events/add_event'); ?>">Add Event</a></li>
-						<?php endif; ?>	
-						</ul>
-				<?php endif; ?>
-				<!-- Forums -->
-				
-				<?php if (in_array('forums', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Forums</a></h3>
-						<ul class="side-nav hidden">
-							<li><a href="<?php echo site_url('/admin/forums/forums'); ?>">Forums</a></li>
-							<?php if (in_array('forums_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/forums/categories'); ?>">Forum Categories</a></li>
-							<?php endif; ?>
-						</ul>
-				<?php endif; ?>
-				<!-- Wiki -->
-				
-				<?php if (in_array('wiki', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Wiki</a></h3>
-						<ul class="side-nav hidden">
-							<?php if (in_array('wiki_edit', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/wiki/viewall'); ?>">All Wiki Pages</a></li>
-							<?php endif; ?>
-							<?php if (in_array('wiki_cats', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/wiki/categories'); ?>">Wiki Categories</a></li>
-							<?php endif; ?>
-							<li><a href="<?php echo site_url('/admin/wiki/changes'); ?>">Recent Changes</a></li>
-						</ul>
-				<?php endif; ?>
-				<!-- Users -->
-				
-				<?php if (in_array('users', $this->permission->permissions)): ?>
-					<h3 class="side-bar-h"><a href="#">Users</a></h3>
-						<ul class="side-nav">
-							<?php if (in_array('users_groups', $this->permission->permissions)): ?>
-								<li><a href="<?php echo site_url('/admin/users/viewall'); ?>">All Users</a></li>
-								<li><a href="<?php echo site_url('/admin/users/groups'); ?>">User Groups</a></li>
-							<?php endif; ?>
-						</ul>
-				<?php endif; ?>
-				<!-- Admin -->
-				<?php if ($this->session->userdata('session_admin')): ?>
-				<h3 class="side-bar-h"><a href="#">Admin</a></h3>
-				<ul class="side-nav">
-					<li><a href="<?php echo site_url('/'); ?>">View Site</a></li>
-					<li><a href="<?php echo site_url('/admin/dashboard'); ?>">Dashboard</a></li>
-					<li><a href="<?php echo site_url('/admin/users/edit/'.$this->session->userdata('userID')); ?>">My Account</a></li>
-					<?php if ($this->session->userdata('groupID') == $this->site->config['groupID'] || $this->session->userdata('groupID') < 0): ?>
-						<li><a href="<?php echo site_url('/admin/site/'); ?>">My Site</a></li>
-					<?php endif; ?>
-					<?php if ($this->session->userdata('groupID') < 0 && @file_exists(APPPATH.'modules/halogy/controllers/halogy.php')): ?>
-						<li><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
-						<li><a href="<?php echo site_url('/halogy/sites'); ?>">Sites</a></li>
-					<?php else: ?>
-						<li class="last"><a href="<?php echo site_url('/admin/logout'); ?>">Logout</a></li>
-					<?php endif; ?>
-				</ul>
-				<?php endif; ?>
-			</nav>
+	<div class="row">
 
 
