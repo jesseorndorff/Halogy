@@ -21,7 +21,7 @@ $(function(){
 	});
 });
 </script>
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="card">
 		<h2>Page Templates</h2>
 

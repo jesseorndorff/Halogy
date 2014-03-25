@@ -15,7 +15,7 @@ $(function(){
 </script>
 
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="card">
 		<h2 class="left">Edit 
 			<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>

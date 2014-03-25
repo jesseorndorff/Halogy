@@ -17,7 +17,7 @@ $(function(){
 </script>
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" id="templateform" class="">
 
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="card">
 		<h2 class="left">Edit Template</h2>
 		<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button right">Back to Templates</a>
