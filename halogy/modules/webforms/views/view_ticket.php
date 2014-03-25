@@ -1,6 +1,6 @@
 <form action="<?php echo site_url($this->uri->uri_string()); ?>" method="post" class="custom">
 
-	<div class="large-10 columns body">
+	<div class="large-12 columns body">
 
 		<h2>View Ticket</h2>
 		

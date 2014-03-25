@@ -35,13 +35,14 @@ $(function(){
 	initOrder('ol.order');
 });
 </script>
-<div class="large-10 columns body">
-	<h2 class="left">File Folders</h2>
-	<div class="right">
-		<a href="<?php echo site_url('/admin/files/viewall'); ?>" class="button">View Files</a>
-		<a href="#" class="toggle button green" data-reveal-id="file-folder-reveal">Add Folder</a>
-	</div>
-	<div class="clear"></div>
+<div class="large-12 columns body">
+	<div class="card">
+		<h2 class="left">File Folders</h2>
+		<div class="right">
+			<a href="<?php echo site_url('/admin/files/viewall'); ?>" class="button">View Files</a>
+			<a href="#" class="toggle button green" data-reveal-id="file-folder-reveal">Add Folder</a>
+		</div>
+		<div class="clear"></div>
 
 		<?php if ($folders): ?>
 			<form method="post" action="<?php echo site_url('/admin/files/edit_folder'); ?>">
@@ -69,9 +70,10 @@ $(function(){
 		<p>No folders have been created yet.</p>
 
 		<?php endif; ?>
+	</div>
 </div>
 
-<div id="file-folder-reveal" class="hidden reveal-modal">
+<div id="file-folder-reveal" class="hidden reveal-modal" data-reveal>
 	<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 	
 		<label for="folderName">Folder Name:</label>

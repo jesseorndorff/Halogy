@@ -4,7 +4,7 @@
 	$imagePath = $image['src'];
 	$imageThumbPath = $thumb['src'];
 ?>	
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="card">
 		<h2 class="left">Edit Image: <?php if ($image): ?> <?php echo $image['imageRef']; ?> <? endif; ?></h2>
 		<a href="<?php echo site_url('/admin/images/viewall/'); ?>" class="button right">Back to Images</a>

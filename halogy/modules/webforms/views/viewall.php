@@ -1,4 +1,4 @@
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="card">
 		<h2 class="left">Web Forms</h2>
 		<div class="right">

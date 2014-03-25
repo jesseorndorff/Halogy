@@ -52,145 +52,147 @@ $(function(){
 
 });
 </script>
-<div class="large-10 columns body">
-	<h2 class="left">Images</h2>
-	<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
-		<div class="right">
-			<a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a>
-			<a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a>
-		</div>
-	<?php endif; ?>
-	<div class="clear"></div>
-
-
-       <?php echo $this->session->flashdata('error'); ?>
-                
-		<div class="large-4 columns">
-			<label for="folderID">
-				Folder
-			</label> 
-
-			<?php
-				$options = '';
-				$options['me'] = 'My Images';
-				if (@in_array('images_all', $this->permission->permissions)):
-					$options['all'] = 'View All Images';
-
-					if ($folders):
-						foreach ($folders as $folder):
-							$options[$folder['folderID']] = $folder['folderName'];
-						endforeach;
-					endif;
-				endif;
-				echo form_dropdown('folderID', $options, $folderID, 'id="folderID"');
-			?>
-		</div>
-		<div class="large-4 large-offset-4 columns">
-			<div class="row collapse">
-				<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="" id="search">
-					<div class="small-9 columns">
-						<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Images..." />
-					</div>
-					<div class="small-3 columns">
-						<input type="submit" class="button prefix" id="searchbutton" value="Search" />
-					</div>
-				</form>
-			</div>
-		</div>
-
-
-		<?php if ($errors = validation_errors()): ?>
-			<div class="error clear">
-				<?php echo $errors; ?>
+<div class="large-12 columns body">
+	<div class="card">
+		<h2 class="left">Images</h2>
+		<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
+			<div class="right">
+				<a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a>
+				<a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a>
 			</div>
 		<?php endif; ?>
+		<div class="clear"></div>
 
-		<?php if ($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6): ?>
 
-			<?php if ($quota > $this->site->plans['storage']): ?>
-			
-			<div class="error clear">
-				<p>You have gone over your storage capacity, we will be contacting you soon.</p>
+	       <?php echo $this->session->flashdata('error'); ?>
+	                
+			<div class="large-4 columns">
+				<label for="folderID">
+					Folder
+				</label> 
+
+				<?php
+					$options = '';
+					$options['me'] = 'My Images';
+					if (@in_array('images_all', $this->permission->permissions)):
+						$options['all'] = 'View All Images';
+
+						if ($folders):
+							foreach ($folders as $folder):
+								$options[$folder['folderID']] = $folder['folderName'];
+							endforeach;
+						endif;
+					endif;
+					echo form_dropdown('folderID', $options, $folderID, 'id="folderID"');
+				?>
 			</div>
-			
-			<div class="quota">
-				<div class="over"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
-			</div>
-			
-			<?php else: ?>
-			
-			<div class="quota">
-				<div class="used" style="width: <?php echo ($quota > 0) ? (floor($quota / $this->site->plans['storage'] * 100)) : 0; ?>%"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
-			</div>
-			
+			<!--<div class="large-4 large-offset-4 columns">
+				<div class="row collapse">
+					<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="" id="search">
+						<div class="small-9 columns">
+							<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Images..." />
+						</div>
+						<div class="small-3 columns">
+							<input type="submit" class="button prefix" id="searchbutton" value="Search" />
+						</div>
+					</form>
+				</div>
+			</div> -->
+
+
+			<?php if ($errors = validation_errors()): ?>
+				<div class="error clear">
+					<?php echo $errors; ?>
+				</div>
 			<?php endif; ?>
 
-			<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
+			<?php if ($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6): ?>
 
-		<?php endif; ?>
-
-
-		<ul class="small-block-grid-1 large-block-grid-4">
-		<?php if ($images): ?>
-
-			<?php echo $this->pagination->create_links(); ?>
-
-				<?php
-					$numItems = sizeof($images);
-					$itemsPerRow = 4;
-					$i = 0;
-								
-					foreach ($images as $image)
-					{
-						if (($i % $itemsPerRow) == 0 && $i > 1)
-						{
-							echo '</tr><tr>'."\n";
-							$i = 0;
-						}
-						echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">'; 
-
-						$imageData = $this->uploads->load_image($image['imageRef']);
-						$imagePath = $imageData['src'];
-						$imageData = $this->uploads->load_image($image['imageRef'], true);				
-						$imageThumbPath = $imageData['src'];
-				?>
-		
-
-						
-							<li>
-								<div class="card">
-									<h3><?php echo $image['imageRef']; ?></h3>
-									<a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
-									<div class="clear"></div>
-									<div class="card-admin">
-										<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), 'Edit'); ?>				
-										<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()),'Delete', 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?>
-									</div>
-								</div>
-							</li>
-				<?php
-						echo '</td>'."\n";
-						$i++;
-					}
+				<?php if ($quota > $this->site->plans['storage']): ?>
 				
-					for($x = 0; $x < ($itemsPerRow - $i); $x++)
-					{
-						echo '<td width="'.floor((1 / $itemsPerRow) * 100).'%">&nbsp;</td>';
-					}
-				?>
+				<div class="error clear">
+					<p>You have gone over your storage capacity, we will be contacting you soon.</p>
+				</div>
+				
+				<div class="quota">
+					<div class="over"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
+				</div>
+				
+				<?php else: ?>
+				
+				<div class="quota">
+					<div class="used" style="width: <?php echo ($quota > 0) ? (floor($quota / $this->site->plans['storage'] * 100)) : 0; ?>%"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
+				</div>
+				
+				<?php endif; ?>
 
+				<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
+
+			<?php endif; ?>
+
+
+			<ul class="small-block-grid-1 large-block-grid-4">
+			<?php if ($images): ?>
+
+				<?php echo $this->pagination->create_links(); ?>
+
+					<?php
+						$numItems = sizeof($images);
+						$itemsPerRow = 4;
+						$i = 0;
+									
+						foreach ($images as $image)
+						{
+							if (($i % $itemsPerRow) == 0 && $i > 1)
+							{
+								echo '</tr><tr>'."\n";
+								$i = 0;
+							}
+							echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">'; 
+
+							$imageData = $this->uploads->load_image($image['imageRef']);
+							$imagePath = $imageData['src'];
+							$imageData = $this->uploads->load_image($image['imageRef'], true);				
+							$imageThumbPath = $imageData['src'];
+					?>
 			
-			<?php echo $this->pagination->create_links(); ?>
-		</ul>
-		<?php else: ?>
-		
-		<p>You have not yet uploaded any images.</p>
 
-		<?php endif; ?>
+							
+								<li>
+									<div class="card">
+										<h3><?php echo $image['imageRef']; ?></h3>
+										<a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
+										<div class="clear"></div>
+										<div class="card-admin">
+											<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), 'Edit'); ?>				
+											<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()),'Delete', 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?>
+										</div>
+									</div>
+								</li>
+					<?php
+							echo '</td>'."\n";
+							$i++;
+						}
+					
+						for($x = 0; $x < ($itemsPerRow - $i); $x++)
+						{
+							echo '<td width="'.floor((1 / $itemsPerRow) * 100).'%">&nbsp;</td>';
+						}
+					?>
+
+				
+				<?php echo $this->pagination->create_links(); ?>
+			</ul>
+			<?php else: ?>
+			
+			<p>You have not yet uploaded any images.</p>
+
+			<?php endif; ?>
+		</div>
 	</div>
 </div>
 
-		<div id="upload-image" class="hidden clear reveal-modal">
+		<div id="upload-image" class="hidden clear reveal-modal" data-reveal>
 <style>
 #progressbox,#progressbox2 {
     border: 1px solid #0099CC;

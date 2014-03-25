@@ -1,5 +1,5 @@
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="small-12 large-8 large-centered columns card">
 		<h2>Edit File</h2>
 		<?php if ($errors = validation_errors()): ?>

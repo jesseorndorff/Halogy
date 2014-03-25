@@ -7,10 +7,10 @@ $(function(){
 });
 </script>
 
-	<div class="large-10 columns body">
+	<div class="large-12 columns body">
 		<h2 class="left">Tickets <?php if ($status) echo ' - ('.$status.')'?> </h2>
 		<div class="right">
-			<a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="button"><i class="ss-icon">View</i> View Web Forms</a>
+			<a href="<?php echo site_url('/admin/webforms/viewall'); ?>" class="button">View Web Forms</a>
 		</div>
 		<div class="clear"></div>
 		<div class="large-4 columns push-8">
