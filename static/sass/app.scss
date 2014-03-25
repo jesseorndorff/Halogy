@@ -125,14 +125,6 @@ textarea {
 	height: 125px;
 }
 
-.button {
-	@include radius;
-}
-
-.button btt {
-	margin: 0;
-}
-
 .list {
 	list-style-type: none;
 }
@@ -216,14 +208,6 @@ input {
 	margin: 8px 0 0 0;
 }
 
-.table > .buttons {
-	text-align: right;
-}
-
-.table > .columns > .button {
-	margin: 0;
-}
-
 .table > .columns > p {
 	margin-bottom: 0;
 }
@@ -259,70 +243,48 @@ background-color: #f9f9f9;
 	@include border-radius(3px);
 }
 
-// Button Groups
-
-$radius: $global-radius;
-$even: false;
-$float: left;
-
-.button-group { @include button-group-container;
-	text-align: right;
-  	& > li { @include button-group-style($radius, $even, $float); }
-}
-.button {
-	@include button($padding, $primary-color, $radius, $full-width, $disabled, $is-input);
-}
-.success {
-	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
-}
-.green {
-	@include button($padding, $bg, $radius, $full-width, $disabled, $is-input);
-}
-.orange {
-	@include button($padding, $third-color, $radius, $full-width, $disabled, $is-input);
-}
-.grey {
-	@include button($padding, darken($light-color, 10%), $radius, $full-width, $disabled, $is-input);
-}
-
-// Labels
-
-label {
-	@include border-radius(3px);
-	font-weight: bold;
-	font-size: 18px;
-}
-
 /* Using the available options */
 .draft {
-	@include label;
+	@include label(
+		$padding:7px 16px 7px
+	);
 	@include border-radius(3px);
 	background: darken(#FFF, 25%);
 	float: left;
+	font-weight: 600;
 	margin: 0 15px 0 0;
 }
 
 .published  { 
-	@include label;
+	@include label(
+		$padding:7px 16px 7px
+	);
 	@include border-radius(3px);
 	background: $fourth-color;
 	float: left;
+	font-weight: 600;
 	margin: 0 15px 0 0;
 }
 
 .not-published {
-	@include label;
+	@include label(
+		$padding:7px 16px 7px
+	);
 	@include border-radius(3px);
 	background: $alert-color;
 	float: left;
+	font-weight: 600;
 	margin: 0 15px 0 0;
 }
 
 .redirect  { 
-	@include label;
+	@include label(
+		$padding:7px 16px 7px
+	);
 	@include border-radius(3px);
 	background: $third-color;
 	float: left;
+	font-weight: 600;
 	margin: 0 15px 0 0;
 }
 

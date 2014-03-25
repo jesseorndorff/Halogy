@@ -29,11 +29,7 @@ $(function(){
 });
 </script>
 
-			
-
-
-
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="small-12 large-12 large-centered columns card">
 	<h2 class="left">Pages</h2>
 	<div class="right">
