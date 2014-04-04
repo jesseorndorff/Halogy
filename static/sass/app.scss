@@ -28,7 +28,7 @@ $dark-color: #000000;
 @import "compass/css3";
 
 /* This controls padding around the buttons. Use a variable or em value */
-$padding: emCalc(12px);	
+$padding: emCalc(8px);	
 
 /* This controls button color. Set to one of our variables or a custom hex value */
 $bg: $fourth-color;
@@ -176,7 +176,7 @@ input {
 
 .table-header h3 {
 	color: $light-color;
-	font-size: emCalc(18px);
+	font-size: emCalc(14px);
 	padding: 7px 0 0 0;
 }
 
@@ -193,6 +193,14 @@ input {
 	//border-bottom: 1px solid #DDDDDD;
 	//box-shadow: 0 -1px 0 $light-color;
 	padding: 10px 0 10px;
+}
+
+// Buttons 
+
+.grey { 
+	color: #FFF !important;
+	@include button($padding, #bfbfbf);
+	@include radius;
 }
 
 // Setting the padding for sub categories on shopping
@@ -225,10 +233,10 @@ background-color: #f9f9f9;
 	margin-right: 25px;
 }
 
-.user-dropdown h4{
+.user-dropdown h4-font-size{
 	color: #FFF;
 	margin: 12px 15px;
-	font-size: emCalc(14px);
+	font-size: $h4-font-size;
 }
 
 .profile {
@@ -387,8 +395,11 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 }
 
 .header {
-	@include card(#FFF);
+	border-bottom: 5px solid #f1f1f1;
+	display: inline-block;
 	margin-bottom: 20px;
+	padding: 5px 0 20px 0;
+	width: 100%;
 }
 
 .header h1{
@@ -397,7 +408,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 
 .header .button {
 	float: right;
-	margin: 10px 15px;
+	margin: 5px 4px !important;
 }
 
 .body {
@@ -825,7 +836,7 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 // Footer
 
 footer {
-
+	background: #32393d;
 	bottom: 0;
 	min-height: 50px;
 	margin: 50px 0 0 0;

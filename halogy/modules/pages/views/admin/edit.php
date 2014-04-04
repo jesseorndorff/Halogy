@@ -127,14 +127,18 @@
 
 <div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Edit Page</h2>
-		<input type="hidden" name="target" id="target" value="" />
-		<div class="right">
-			<a href="<?php echo site_url('/admin/pages/viewall'); ?>" class="button">Back to Pages</a>
-			<input type="submit" name="view" value="View Page" class="button save" />
+		<div class="header">
+			<div class="large-4 small-12 columns left">
+				<h2>Edit Page</h2>
+				<a href="<?php echo site_url('/admin/pages/viewall'); ?>">Back to Pages</a>
+				<input type="hidden" name="target" id="target" value="" />
+			</div>
+			<div class="large-6 small-12 columns right">
+				<input type="submit" name="view" value="View Page" class="button save small" />
+				<input type="submit" id="save" name="save" value="Save Changes" class="button success save small" />
+				<input type="submit" name="publish" value="Publish Page" class="button secondary save small" />
+			</div>
 		</div>
-
-		<hr>
 
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error clear">
@@ -147,8 +151,8 @@
 			</div>
 		<?php endif; ?>
 		<div class="clear"></div>
-
-		<dl class="tabs" data-tab>
+		<div class="large-12 columns">
+		<dl class="tabs vertical" data-tab>
 			<dd class="active"><a href="#panel2-1">Basic Information</a></dd>
 			<dd><a href="#panel2-2">Meta Data & SEO</a></dd>
 			<dd><a href="#panel2-3">Visibility and Access</a></dd>
@@ -157,7 +161,7 @@
 		<div class="tabs-content">
 			<div class="content active" id="panel2-1">
 				<div class="row">
-					<div class="large-6 small-12 columns large-centered">
+					<div class="large-6 columns large-centered">
 						<h3>Basic Information</h3>
 						<p>Set the basic details of the page including: name, parent, and template.</p>
 						<div class="item">
@@ -331,13 +335,11 @@
 					</div>
 				</div>
 			</div>
-			<input type="submit" id="save" name="save" value="Save Changes" class="button green save" />
-			<input type="submit" name="publish" value="Publish Page" class="button orange save" />
-
-
+		</div>
 	</div>
 </div>
 
-	</form>
+</form>
+</div>
 
 <?php endif; ?>

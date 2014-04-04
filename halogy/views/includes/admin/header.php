@@ -24,47 +24,6 @@
     .foundation();
   })
 </script>
-
-<!-- Setting the Sidebar to 100% Height 
-<script>
-  $(document).ready(function(){
-      resizeDiv();
-  });
-
-  window.onresize = function(event) {
-      resizeDiv();
-  }
-
-  function resizeDiv() {
-      vpw = $(window).width(); 
-      vph = $(window).height(); 
-      $('.side-bar').css({'height': vph + 'px'});
-  }
-</script>
-
-<!-- Sidebar jquery slide -->
-<!-- Need to move to scripts 
-<script>
-$(document).ready(function($) {
-    
-  var allPanels = $('.side-bar > ul').hide();
-    
-  $('.side-bar > h3 > a').click(function() {
-     if ($(this).hasClass('selected')) {
-               $(this).removeClass('selected');
-               $(this).parent().next().slideUp();
-          } else {
-          	   $('.side-bar > h3 > a').removeClass('selected');
-               $(this).addClass('selected');
-               $('.side-bar ul').slideUp();
-               $(this).parent().next().slideDown();
-          }
-      
-    return false;
-  });
-
-});
-</script> --> 
 	
 	<title><?php echo (isset($this->site->config['siteName'])) ? $this->site->config['siteName'] : 'Login to'; ?> Admin - Halogy</title>
 	

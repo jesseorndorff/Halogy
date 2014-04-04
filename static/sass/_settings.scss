@@ -7,7 +7,7 @@
 //
 
 // This is the default html and body font-size for the base rem value.
-$rem-base: 16px;
+$rem-base: 16;
 
 // Allows the use of rem-calc() or lower-bound() in your settings
 @import "foundation/functions";
@@ -127,12 +127,12 @@ $shiny-edge-size: 0;
 // $header-text-rendering: optimizeLegibility;
 
 // We use these to control header font sizes
-// $h1-font-size: rem-calc(44);
-// $h2-font-size: rem-calc(37);
-// $h3-font-size: rem-calc(27);
-// $h4-font-size: rem-calc(23);
-// $h5-font-size: rem-calc(18);
-// $h6-font-size: 1rem;
+$h1-font-size: rem-calc(44);
+$h2-font-size: rem-calc(37);
+$h3-font-size: rem-calc(27);
+$h4-font-size: rem-calc(18);
+$h5-font-size: rem-calc(14);
+$h6-font-size: 1rem;
 
 // These control how subheaders are styled.
 // $subheader-line-height: 1.4;
@@ -328,13 +328,13 @@ $shiny-edge-size: 0;
 
 // We use these to control button text styles.
 // $button-font-family: $body-font-family;
-// $button-font-color: #fff;
+$button-font-color: #fff;
 // $button-font-color-alt: #333;
 // $button-font-tny: rem-calc(11);
 // $button-font-sml: rem-calc(13);
 // $button-font-med: rem-calc(16);
 // $button-font-lrg: rem-calc(20);
-// $button-font-weight: normal;
+ $button-font-weight: 600;
 // $button-font-align: center;
 
 // We use these to control various hover effects.
@@ -481,8 +481,8 @@ $shiny-edge-size: 0;
 
 // We use these to style the labels in different ways
 // $form-label-pointer: pointer;
-// $form-label-font-size: rem-calc(14);
-// $form-label-font-weight: normal;
+$form-label-font-size: rem-calc(16);
+$form-label-font-weight: bold;
 // $form-label-line-height: 1.5;
 // $form-label-font-color: scale-color(#000, $lightness: 30%);
 // $form-label-bottom-margin: 0;
@@ -1067,8 +1067,8 @@ $shiny-edge-size: 0;
 // $include-html-tabs-classes: $include-html-classes;
 
 // $tabs-navigation-padding: rem-calc(16);
-// $tabs-navigation-bg-color: #efefef  ;
-// $tabs-navigation-active-bg-color: #fff;
+$tabs-navigation-bg-color: #efefef;
+$tabs-navigation-active-bg-color: darken($tabs-navigation-bg-color, 15% );
 // $tabs-navigation-hover-bg-color: scale-color($tabs-navigation-bg-color, $lightness: -6%);
 // $tabs-navigation-font-color: #222;
 // $tabs-navigation-font-size: rem-calc(16);
@@ -1131,10 +1131,10 @@ $shiny-edge-size: 0;
 
 // Background color for the top bar
 // $topbar-bg-color: #333;
-$topbar-bg: $primary-color;
+$topbar-bg: #32393d;
 
 // Height and margin
-$topbar-height: 50px;
+$topbar-height: 45px;
 // $topbar-margin-bottom: 0;
 
 // Controlling the styles for the title in the top bar
@@ -1142,7 +1142,7 @@ $topbar-title-weight: 600;
 // $topbar-title-font-size: rem-calc(17);
 
 // Style the top bar dropdown elements
-$topbar-dropdown-bg: $primary-color;
+$topbar-dropdown-bg: #32393d;
 $topbar-dropdown-link-color: $light-color;
 // $topbar-dropdown-link-bg: #333;
 // $topbar-dropdown-link-weight: normal;

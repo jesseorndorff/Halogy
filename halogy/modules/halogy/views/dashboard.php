@@ -18,7 +18,6 @@ $(function(){
 });
 </script>
 
-	
 	<div class="small-12 large-8 columns body">
 		
 		<?php if ($errors = validation_errors()): ?>

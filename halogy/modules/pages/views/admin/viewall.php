@@ -30,28 +30,25 @@ $(function(){
 </script>
 
 <div class="large-12 columns body">
-	<div class="small-12 large-12 large-centered columns card">
-	<h2 class="left">Pages</h2>
-	<div class="right">
-		<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
-			<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button green right">Add Page</a>
-		<?php endif; ?>
-	</div>
-	<div class="clear"></div>
-	<?php if ($parents): ?>
-			<div class="row">
-				<div class="large-4 columns dropdown">
-					<label for="collapse">Collapse</label> 
-
-					<select id="collapse">
-						<option value="all">Show all</option>		
-						<option value="hidden">Hide hidden pages</option>
-						<option value="collapse">Hide sub-pages</option>		
-						<option value="drafts">Hide drafts</option>		
-					</select>
-				</div>
+	<div class="card">
+		<div class="columns header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Pages</h2>
+			<?php if ($parents): ?>
+				<label for="collapse">Collapse</label> 
+				<select id="collapse">
+					<option value="all">Show all</option>		
+					<option value="hidden">Hide hidden pages</option>
+					<option value="collapse">Hide sub-pages</option>		
+					<option value="drafts">Hide drafts</option>		
+				</select>
 			</div>
-			<hr>
+			<div class="small-12 medium-5 large-2 columns right">
+				<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
+					<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button secondary radius expand small">Add Page</a>
+				<?php endif; ?>
+			</div>
+		</div>
 			<?php foreach ($parents as $page): ?>
 				<div class="row pages">
 					<div class="large-4 columns">
@@ -86,16 +83,14 @@ $(function(){
 						<?php endif; ?>
 						by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></p>
 					</div>
-					<div class="large-3 columns">
-						<ul class="button-group right">
-							<li><?php echo anchor($page['uri'], 'View', array('class' => 'small button')); ?></li>
-							<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-								<li><?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'small button')); ?></li>
-							<?php endif; ?>
-							<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-								<li><?php echo anchor('/admin/pages/delete/'.$page['pageID'], 'Delete', array('class' => 'small button', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
-							<?php endif; ?>
-						</ul>
+					<div class="small-12 large-2 columns">
+						<?php echo anchor($page['uri'], 'View', array('class' => 'tiny button grey')); ?>
+						<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
+							<?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'tiny button grey')); ?>
+						<?php endif; ?>
+						<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
+							<?php echo anchor('/admin/pages/delete/'.$page['pageID'], 'Delete', array('class' => 'tiny alert button radius', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
+						<?php endif; ?>
 					</div>
 				</div>
 					<?php if (isset($children[$page['pageID']]) && $children[$page['pageID']]): ?>
@@ -129,16 +124,14 @@ $(function(){
 								<?php endif; ?>
 								 by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></p>
 							</div>
-							<div class="large-3 columns">
-								<ul class="button-group right">
-										<li><?php echo anchor($child['uri'], 'View', array('class' => 'button small')); ?></li>
+							<div class="small-12 large-2 columns">
+										<?php echo anchor($child['uri'], 'View', array('class' => 'tiny button grey')); ?>
 									<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-										<li><?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'button small')); ?></li>
+										<?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'tiny button grey')); ?>
 									<?php endif; ?>
 									<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-										<li><?php echo anchor('/admin/pages/delete/'.$child['pageID'], 'Delete', array('class' => 'button small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
-									<?php endif; ?>			
-								</ul>				
+										<?php echo anchor('/admin/pages/delete/'.$child['pageID'], 'Delete', array('class' => 'tiny button alert', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
+									<?php endif; ?>					
 							</div>
 						</div>
 					<?php endforeach; ?>
@@ -173,14 +166,13 @@ $(function(){
 									<?php endif; ?>
 									by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></p>
 								</div>
-								<div class="large-3 columns">
-									<ul class="button-group right">
-										<li><?php echo anchor($subchild['uri'], 'View', array('class' => 'button small')); ?></li>
+								<div class="small-12 large-2 columns">
+										<?php echo anchor($subchild['uri'], 'View', array('class' => 'tiny button grey')); ?>
 										<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
-											<li><?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'button small')); ?></li>
+											<?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'tiny button grey')); ?>
 										<?php endif; ?>
 										<?php if (in_array('pages_delete', $this->permission->permissions)): ?>
-											<li><?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], 'Delete', array('class' => 'button small', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')	); ?></li>
+											<?php echo anchor('/admin/pages/delete/'.$subchild['pageID'], 'Delete', array('class' => 'tiny button alert radius', 'onclick' => 'return confirm(\'Are you sure you want to delete this?\')')	); ?>
 										<?php endif; ?>
 								</div>
 							</div>
