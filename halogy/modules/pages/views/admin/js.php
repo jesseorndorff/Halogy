@@ -1,13 +1,16 @@
 <div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Javascript Files</h2>
-		<div class="right">
-			<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Templates</a>
-			<a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">Includes</a>
-			<a href="<?php echo site_url('/admin/pages/includes/css'); ?>" class="button">CSS</a>
-			<a href="<?php echo site_url('/admin/pages/add_include/js'); ?>" class="button green">Add Javascript</a>
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Javascript Files</h2>
+			</div>
+			<div class="large-6 small-12 columns right">
+				<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="small button radius">Templates</a>
+				<a href="<?php echo site_url('/admin/pages/includes'); ?>" class="small button radius">Includes</a>
+				<a href="<?php echo site_url('/admin/pages/includes/css'); ?>" class="small button radius">CSS</a>
+				<a href="<?php echo site_url('/admin/pages/add_include/js'); ?>" class="small button secondary radius">Add Javascript</a>
+			</div>
 		</div>
-		<div class="clear"></div>
 
 		<?php if ($includes): ?>
 

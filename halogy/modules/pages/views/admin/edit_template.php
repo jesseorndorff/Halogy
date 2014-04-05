@@ -19,21 +19,29 @@ $(function(){
 
 <div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Edit Template</h2>
-		<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button right">Back to Templates</a>
-		<div class="clear"></div>
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2 class="left">Edit Template</h2>
+			</div>
+			<div class="large-6 small-12 columns right">
+				<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="small button radius">Back to Templates</a>
+				<input type="button" id="default" value="Reset to Default" class="small button radius">
+				<input type="submit" value="Save Changes" class="small button success">
+			</div>
+		</div>
+
+		<?php if ($errors = validation_errors()): ?>
+			<div class="error">
+				<?php echo $errors; ?>
+			</div>
+		<?php endif; ?>
+		<?php if (isset($message)): ?>
+			<div class="message">
+				<?php echo $message; ?>
+			</div>
+		<?php endif; ?>	
 
 		<div class="large-8	columns">
-			<?php if ($errors = validation_errors()): ?>
-				<div class="error">
-					<?php echo $errors; ?>
-				</div>
-			<?php endif; ?>
-			<?php if (isset($message)): ?>
-				<div class="message">
-					<?php echo $message; ?>
-				</div>
-			<?php endif; ?>	
 			<div class="item">
 				<div class="showModuleName">
 					<label for="templateName">Name:</label>
@@ -129,8 +137,6 @@ $(function(){
 					<span class="autosave-complete"></span>
 				</div>
 			</div>
-				<input type="button" id="default" value="Reset to Default" class="button">
-				<input type="submit" value="Save Changes" class="button green">
 		</div>
 		<div class="large-4 columns">
 			<h3>Versions</h3>	

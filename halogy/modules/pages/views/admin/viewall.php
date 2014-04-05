@@ -31,7 +31,7 @@ $(function(){
 
 <div class="large-12 columns body">
 	<div class="card">
-		<div class="columns header">
+		<div class="header">
 			<div class="small-12 medium-6 large-4 columns left">
 				<h2>Pages</h2>
 			<?php if ($parents): ?>
@@ -83,7 +83,7 @@ $(function(){
 						<?php endif; ?>
 						by <?php echo $this->core->lookup_user($page['userID'], TRUE); ?></p>
 					</div>
-					<div class="small-12 large-2 columns">
+					<div class="small-12 large-3 columns">
 						<?php echo anchor($page['uri'], 'View', array('class' => 'tiny button grey')); ?>
 						<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 							<?php echo anchor('/admin/pages/edit/'.$page['pageID'], 'Edit', array('class' => 'tiny button grey')); ?>
@@ -124,7 +124,7 @@ $(function(){
 								<?php endif; ?>
 								 by <?php echo $this->core->lookup_user($child['userID'], TRUE); ?></p>
 							</div>
-							<div class="small-12 large-2 columns">
+							<div class="small-12 large-3 columns">
 										<?php echo anchor($child['uri'], 'View', array('class' => 'tiny button grey')); ?>
 									<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 										<?php echo anchor('/admin/pages/edit/'.$child['pageID'], 'Edit', array('class' => 'tiny button grey')); ?>
@@ -166,7 +166,7 @@ $(function(){
 									<?php endif; ?>
 									by <?php echo $this->core->lookup_user($subchild['userID'], TRUE); ?></p>
 								</div>
-								<div class="small-12 large-2 columns">
+								<div class="small-12 large-3 columns">
 										<?php echo anchor($subchild['uri'], 'View', array('class' => 'tiny button grey')); ?>
 										<?php if (in_array('pages_edit', $this->permission->permissions)): ?>
 											<?php echo anchor('/admin/pages/edit/'.$subchild['pageID'], 'Edit', array('class' => 'tiny button grey')); ?>

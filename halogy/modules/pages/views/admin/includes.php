@@ -1,12 +1,16 @@
 <div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Includes</h2>
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Includes</h2>
+			</div>
 		
-		<div class="right">
-			<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Templates</a>
-			<a href="<?php echo site_url('/admin/pages/includes/css'); ?>" class="button">CSS</a>
-			<a href="<?php echo site_url('/admin/pages/includes/js'); ?>" class="button">Javascript</a>	
-			<a href="<?php echo site_url('/admin/pages/add_include'); ?>" class="button green">Add Include</a>
+			<div class="large-6 small-12 columns right">
+				<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="small button radius">Templates</a>
+				<a href="<?php echo site_url('/admin/pages/includes/css'); ?>" class="small button radius">CSS</a>
+				<a href="<?php echo site_url('/admin/pages/includes/js'); ?>" class="small button radius">Javascript</a>	
+				<a href="<?php echo site_url('/admin/pages/add_include'); ?>" class="small button secondary radius">Add Include</a>
+			</div>
 		</div>
 
 		<div class="clear"></div>
@@ -39,10 +43,8 @@
 					<p><?php echo dateFmt($include['dateCreated']); ?></p>
 				</div>
 				<div class="large-2 columns">
-					<ul class="button-group even-2">
-						<li><?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], 'Edit', array('class' => 'button small grey')); ?></li>
-						<li><?php echo anchor('/admin/pages/delete_include/'.$include['includeID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
-					</ul>
+					<?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], 'Edit', array('class' => 'tiny button grey')); ?>
+					<?php echo anchor('/admin/pages/delete_include/'.$include['includeID'], 'Delete', array('class' => 'tiny button alert radius', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
 				</div>
 			</div>
 

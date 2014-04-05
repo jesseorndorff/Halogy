@@ -23,29 +23,28 @@ $(function(){
 </script>
 <div class="large-12 columns body">
 	<div class="card">
-		<h2>Page Templates</h2>
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Page Templates</h2>
+				<label for="filter">Filter</label> 
 
-		<div class="right">
-			<a href="<?php echo site_url('/admin/pages/includes'); ?>" class="button">View Includes</a>
-			<a data-reveal-id="zipUpload" href="#" class="button toggle-zip">Import Theme</a>
-			<a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="button green">Add Template</a>
-		</div>
-
-			<div class="row">
-				<div class="large-4 columns">
-					<label for="filter">Filter</label> 
-
-					<?php
-						$options = array(
-							'' => 'View All',
-							'page' => 'Page Templates',
-							'module' => 'Module Templates'
-						);
-						
-						echo form_dropdown('filter', $options, $type, 'id="filter"');
-					?>
-				</div>
+				<?php
+					$options = array(
+						'' => 'View All',
+						'page' => 'Page Templates',
+						'module' => 'Module Templates'
+					);
+					
+					echo form_dropdown('filter', $options, $type, 'id="filter"');
+				?>
 			</div>
+
+			<div class="large-6 small-12 columns right">
+				<a href="<?php echo site_url('/admin/pages/includes'); ?>" class="small button radius">View Includes</a>
+				<a data-reveal-id="zipUpload" href="#" class="small button radius toggle-zip">Import Theme</a>
+				<a href="<?php echo site_url('/admin/pages/add_template'); ?>" class="small button secondary radius">Add Template</a>
+			</div>
+		</div>	<!-- / header -->
 
 			<?php if ($errors = validation_errors()): ?>
 				<div class="error clear">
@@ -91,10 +90,8 @@ $(function(){
 						<?php endif; ?></td>
 					</div>
 					<div class="small-12 large-2 columns buttons">
-						<ul class="button-group even-2">
-							<li><?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit', array('class' => 'button small grey')); ?></li>
-							<li><?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
-						</ul>
+						<?php echo anchor('/admin/pages/edit_template/'.$template['templateID'], 'Edit', array('class' => 'tiny button grey')); ?>
+						<?php echo anchor('/admin/pages/delete_template/'.$template['templateID'], 'Delete', array('class' => 'tiny button alert radius', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
 					</div>
 			</div>
 			<?php endforeach; ?>
@@ -142,7 +139,7 @@ $(function(){
 	</div>
 </div>
 
-		<div id="zipUpload" class="reveal-modal">
+		<div id="zipUpload" class="reveal-modal" data-reveal>
 			<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="default">
 				<h2>Import Your Theme</h2>
 				<p>Importing your custom theme is simple. Just zip up your HTML, CSS, JS files and upload the zip here!</p>
