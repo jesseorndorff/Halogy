@@ -22,7 +22,7 @@
 					<div class="large-5 columns">
 						<?php
 							if ($post['published']) echo '<span class="published">Published</span>';
-							else echo '<span class="not-published">Not Published</span>';
+							else echo '<span class="label draft">Not Published</span>';
 						?>
 						<p class="posted">Posted On: <?php echo dateFmt($post['dateCreated'], '', '', TRUE); ?></p>
 					</div>
