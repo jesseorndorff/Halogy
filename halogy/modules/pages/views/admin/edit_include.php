@@ -17,16 +17,21 @@ $(function(){
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="default">
 <div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Edit 
-			<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>
-			<?php
-				if ($type == 'C') $typeLink = 'css';
-				elseif ($type == 'J') $typeLink = 'js';
-				else $typeLink = '';
-			?>
-		</h2>
-		<a href="<?php echo site_url('/admin/pages/includes'); ?>/<?php echo $typeLink; ?>" class="button right">Back to Includes</a>
-		<div class="clear"></div>
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Edit 
+					<?php echo ($type == 'C' || $type == 'J') ? 'File' : 'Include'; ?>
+					<?php
+						if ($type == 'C') $typeLink = 'css';
+						elseif ($type == 'J') $typeLink = 'js';
+						else $typeLink = '';
+					?>
+				</h2>
+			</div>
+			<div class="large-6 small-12 columns right">
+				<a href="<?php echo site_url('/admin/pages/includes'); ?>/<?php echo $typeLink; ?>" class="small button radius">Back to Includes</a>
+			</div>
+		</div>
 		<div class="large-8 columns">
 
 			<?php if ($errors = validation_errors()): ?>

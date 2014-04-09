@@ -9668,13 +9668,13 @@ input {
 
 /* line 172, ../sass/app.scss */
 .table-header {
-  background: #567af0;
-  color: white;
+  background: #FFF;
+  color: #333;
 }
 
 /* line 177, ../sass/app.scss */
 .table-header h3 {
-  color: white;
+  color: #333;
   font-size: 0.875rem;
   padding: 7px 0 0 0;
 }
@@ -10175,7 +10175,7 @@ input {
 .versions li {
   list-style-type: none;
   border-bottom: 1px solid #DDD;
-  padding: 10px 0;
+  padding: 10px 0 18px;
 }
 
 /* line 487, ../sass/app.scss */

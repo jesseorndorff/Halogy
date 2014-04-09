@@ -35,10 +35,8 @@
 							<p><?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], $include['includeRef']); ?><p>
 						</div>
 						<div class="large-2 columns">
-							<ul class="button-group even-2">
-								<li><?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], 'Edit', array('class' => 'button small grey')); ?></li>
-								<li><?php echo anchor('/admin/pages/delete_include/'.$include['includeID'].'/js', 'Delete', array('class' => 'button alert small', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?></li>
-							</ul>
+							<?php echo anchor('/admin/pages/edit_include/'.$include['includeID'], 'Edit', array('class' => 'button tiny grey')); ?>
+							<?php echo anchor('/admin/pages/delete_include/'.$include['includeID'].'/js', 'Delete', array('class' => 'tiny button alert radius', 'onClick' => 'return confirm(\'Are you sure you want to delete this?\')')); ?>
 						</div>
 					</div>
 				<?php endforeach; ?>

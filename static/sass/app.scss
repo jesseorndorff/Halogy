@@ -170,12 +170,12 @@ input {
 }
 
 .table-header {
-	background: $primary-color;
-	color: $light-color;
+	background: #FFF;
+	color: #333;
 }
 
 .table-header h3 {
-	color: $light-color;
+	color: #333;
 	font-size: emCalc(14px);
 	padding: 7px 0 0 0;
 }
@@ -481,7 +481,7 @@ $global-padding: emCalc(15px) emCalc(15px) emCalc(10px) emCalc(15px);
 .versions li{
 	list-style-type: none;
 	border-bottom: 1px solid #DDD;
-	padding: 10px 0;
+	padding: 10px 0 18px;
 }
 
 .versions button.small, .button.small {

@@ -326,7 +326,7 @@
 									<?php if ($data['draftID'] == $version['versionID']): ?>
 										<strong><?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?></strong>
 									<?php else: ?>
-										<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> <?php echo anchor('/admin/pages/revert_draft/'.$data['pageID'].'/'.$version['versionID'], 'Revert', array('class' => 'button small grey right', 'onClick' => 'return confirm(\'You will lose unsaved changes. Continue?\');')); ?>
+										<?php echo dateFmt($version['dateCreated'], '', '', TRUE).(($user = $this->core->lookup_user($version['userID'], TRUE)) ? ' <em>(by '.$user.')</em>' : ''); ?> <?php echo anchor('/admin/pages/revert_draft/'.$data['pageID'].'/'.$version['versionID'], 'Revert', array('class' => 'button tiny grey right', 'onClick' => 'return confirm(\'You will lose unsaved changes. Continue?\');')); ?>
 									<?php endif; ?>
 								</li>
 							<?php endforeach; ?>
