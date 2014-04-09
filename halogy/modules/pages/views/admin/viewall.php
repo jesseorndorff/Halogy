@@ -45,7 +45,7 @@ $(function(){
 			</div>
 			<div class="small-12 medium-5 large-2 columns right">
 				<?php if (in_array('pages_edit', $this->permission->permissions)): ?>	
-					<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button secondary radius expand small">Add Page</a>
+					<a href="<?php echo site_url('/admin/pages/add'); ?>" class="button secondary radius small">Add Page</a>
 				<?php endif; ?>
 			</div>
 		</div>
