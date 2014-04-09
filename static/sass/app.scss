@@ -84,17 +84,6 @@ $portrait: "only screen and (orientation: portrait)";
   }
 }
 
-/* Apply styles to screens in landscape orientation */
-@media #{$landscape} { }
-
-/* Apply styles to screens in portrait orientation */
-@media #{$portrait} { }
-
-/* We also use Modernizr to add a .touch class to the body when applicable */
-/* You can prepend this class to anything and it will style only for touch devices */
-.touch .your-element {}
-
-
 // Global
 
 *,
@@ -113,6 +102,10 @@ ul, ol, dl {
 	margin-bottom: 1.25em;
 	list-style-position: inside;
 	font-family: inherit;
+}
+
+.text-right {
+	text-align: right;
 }
 
 .tip {
@@ -838,10 +831,16 @@ span.autosave-complete { display: none; background:$primary-color; color: $light
 footer {
 	background: #32393d;
 	bottom: 0;
+	color: #FFF;
 	min-height: 50px;
 	margin: 50px 0 0 0;
 	padding: $global-padding;
 	width: 100%;
+}
+
+footer .copyright {
+	font-weight: 800;
+	margin: 10px 0;
 }
 
 .hide {
