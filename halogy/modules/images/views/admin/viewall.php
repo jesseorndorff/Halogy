@@ -54,19 +54,10 @@ $(function(){
 </script>
 <div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Images</h2>
-		<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
-			<div class="right">
-				<a href="#" class="button" data-reveal-id="upload-zip">Upload Zip</a>
-				<a href="#" class="button green" data-reveal-id="upload-image">Upload Image</a>
-			</div>
-		<?php endif; ?>
-		<div class="clear"></div>
-
-
-	       <?php echo $this->session->flashdata('error'); ?>
-	                
-			<div class="large-4 columns">
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Images</h2>
+				<?php echo $this->session->flashdata('error'); ?>
 				<label for="folderID">
 					Folder
 				</label> 
@@ -86,141 +77,138 @@ $(function(){
 					echo form_dropdown('folderID', $options, $folderID, 'id="folderID"');
 				?>
 			</div>
-			<!--<div class="large-4 large-offset-4 columns">
-				<div class="row collapse">
-					<form method="post" action="<?php echo site_url('/admin/images/viewall'); ?>" class="" id="search">
-						<div class="small-9 columns">
-							<input type="text" name="searchbox" id="searchbox" class="formelement inactive" placeholder="Search Images..." />
-						</div>
-						<div class="small-3 columns">
-							<input type="submit" class="button prefix" id="searchbutton" value="Search" />
-						</div>
-					</form>
-				</div>
-			</div> -->
-
-
-			<?php if ($errors = validation_errors()): ?>
-				<div class="error clear">
-					<?php echo $errors; ?>
-				</div>
-			<?php endif; ?>
-
-			<?php if ($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6): ?>
-
-				<?php if ($quota > $this->site->plans['storage']): ?>
-				
-				<div class="error clear">
-					<p>You have gone over your storage capacity, we will be contacting you soon.</p>
-				</div>
-				
-				<div class="quota">
-					<div class="over"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
-				</div>
-				
-				<?php else: ?>
-				
-				<div class="quota">
-					<div class="used" style="width: <?php echo ($quota > 0) ? (floor($quota / $this->site->plans['storage'] * 100)) : 0; ?>%"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
-				</div>
-				
+			<div class="large-6 small-12 columns right">
+				<?php if ($this->site->config['plan'] = 0 || $this->site->config['plan'] = 6 || (($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6) && $quota < $this->site->plans['storage'])): ?>
+					<div class="right">
+						<a href="#" class="small button radius" data-reveal-id="upload-zip">Upload Zip</a>
+						<a href="#" class="small button radius success" data-reveal-id="upload-image">Upload Image</a>
+					</div>
+				<?php endif; ?>
+			</div>
+		</div>
+		<div class="row table">
+			<div class="small-12 columns">
+				<?php if ($errors = validation_errors()): ?>
+					<div class="error clear">
+						<?php echo $errors; ?>
+					</div>
 				<?php endif; ?>
 
-				<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
+				<?php if ($this->site->config['plan'] > 0 && $this->site->config['plan'] < 6): ?>
 
-			<?php endif; ?>
-
-
-			<ul class="small-block-grid-1 large-block-grid-4">
-			<?php if ($images): ?>
-
-				<?php echo $this->pagination->create_links(); ?>
-
-					<?php
-						$numItems = sizeof($images);
-						$itemsPerRow = 4;
-						$i = 0;
-									
-						foreach ($images as $image)
-						{
-							if (($i % $itemsPerRow) == 0 && $i > 1)
-							{
-								echo '</tr><tr>'."\n";
-								$i = 0;
-							}
-							echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">'; 
-
-							$imageData = $this->uploads->load_image($image['imageRef']);
-							$imagePath = $imageData['src'];
-							$imageData = $this->uploads->load_image($image['imageRef'], true);				
-							$imageThumbPath = $imageData['src'];
-					?>
-			
-
-							
-								<li>
-									<div class="card">
-										<h3><?php echo $image['imageRef']; ?></h3>
-										<a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
-										<div class="clear"></div>
-										<div class="card-admin">
-											<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), 'Edit'); ?>				
-											<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()),'Delete', 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?>
-										</div>
-									</div>
-								</li>
-					<?php
-							echo '</td>'."\n";
-							$i++;
-						}
+					<?php if ($quota > $this->site->plans['storage']): ?>
 					
-						for($x = 0; $x < ($itemsPerRow - $i); $x++)
-						{
-							echo '<td width="'.floor((1 / $itemsPerRow) * 100).'%">&nbsp;</td>';
-						}
-					?>
+					<div class="error clear">
+						<p>You have gone over your storage capacity, we will be contacting you soon.</p>
+					</div>
+					
+					<div class="quota">
+						<div class="over"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
+					</div>
+					
+					<?php else: ?>
+					
+					<div class="quota">
+						<div class="used" style="width: <?php echo ($quota > 0) ? (floor($quota / $this->site->plans['storage'] * 100)) : 0; ?>%"><?php echo floor($quota / $this->site->plans['storage'] * 100); ?>%</div>
+					</div>
+					
+					<?php endif; ?>
 
+					<p><small>You have used <strong><?php echo number_format($quota); ?>kb</strong> out of your <strong><?php echo number_format($this->site->plans['storage']); ?> KB</strong> quota.</small></p>
+
+				<?php endif; ?>
+			</div>
+			<div class="small-12 columns">
+				<ul class="small-block-grid-1 large-block-grid-4">
+				<?php if ($images): ?>
+
+					<?php echo $this->pagination->create_links(); ?>
+
+						<?php
+							$numItems = sizeof($images);
+							$itemsPerRow = 4;
+							$i = 0;
+										
+							foreach ($images as $image)
+							{
+								if (($i % $itemsPerRow) == 0 && $i > 1)
+								{
+									echo '</tr><tr>'."\n";
+									$i = 0;
+								}
+								echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">'; 
+
+								$imageData = $this->uploads->load_image($image['imageRef']);
+								$imagePath = $imageData['src'];
+								$imageData = $this->uploads->load_image($image['imageRef'], true);				
+								$imageThumbPath = $imageData['src'];
+						?>
 				
-				<?php echo $this->pagination->create_links(); ?>
-			</ul>
-			<?php else: ?>
-			
-			<p>You have not yet uploaded any images.</p>
 
-			<?php endif; ?>
+								
+									<li>
+										<div class="card">
+											<h3><?php echo $image['imageRef']; ?></h3>
+											<a href="<?php echo $imagePath; ?>" title="<?php echo $image['imageName']; ?>" class="lightbox"><?php echo ($thumb = display_image($imageThumbPath, $image['imageName'], 100, 'class="pic"')) ? $thumb : display_image($imagePath, $image['imageName'], 100, 'class="pic"'); ?></a>
+											<div class="clear"></div>
+											<div class="card-admin">
+												<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), 'Edit'); ?>				
+												<?php echo anchor('/admin/images/delete/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()),'Delete', 'onclick="return confirm(\'Are you sure you want to delete this image?\')"'); ?>
+											</div>
+										</div>
+									</li>
+						<?php
+								echo '</td>'."\n";
+								$i++;
+							}
+						
+							for($x = 0; $x < ($itemsPerRow - $i); $x++)
+							{
+								echo '<td width="'.floor((1 / $itemsPerRow) * 100).'%">&nbsp;</td>';
+							}
+						?>
+
+					
+					<?php echo $this->pagination->create_links(); ?>
+				</ul>
+				<?php else: ?>
+				
+				<p>You have not yet uploaded any images.</p>
+
+				<?php endif; ?>
+			</div>
 		</div>
 	</div>
 </div>
 
-		<div id="upload-image" class="hidden clear reveal-modal" data-reveal>
-<style>
-#progressbox,#progressbox2 {
-    border: 1px solid #0099CC;
-    padding: 1px;
-    position:relative;
-    width:400px;
-    border-radius: 3px;
-    margin: 10px;
-    display:none;
-    text-align:left;
-}
-#progressbar,#progressbar2 {
-    height:20px;
-    border-radius: 3px;
-    background-color: #003333;
-    width:1%;
-}
-#statustxt,#statustxt2 {
-    top:3px;
-    left:50%;
-    position:absolute;
-    display:inline-block;
-    color: #000000;
-}
-</style>
-    
-<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.form.min.js"></script>
-<script type="text/javascript">
+<div id="upload-image" class="hidden clear reveal-modal" data-reveal>
+	<style>
+		#progressbox,#progressbox2 {
+		    border: 1px solid #0099CC;
+		    padding: 1px;
+		    position:relative;
+		    width:400px;
+		    border-radius: 3px;
+		    margin: 10px;
+		    display:none;
+		    text-align:left;
+		}
+		#progressbar,#progressbar2 {
+		    height:20px;
+		    border-radius: 3px;
+		    background-color: #003333;
+		    width:1%;
+		}
+		#statustxt,#statustxt2 {
+		    top:3px;
+		    left:50%;
+		    position:absolute;
+		    display:inline-block;
+		    color: #000000;
+		}
+	</style>
+	<script language="javascript" type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/jquery.form.min.js"></script>
+	<script type="text/javascript">
         $(document).ready(function() {
         //elements
         var progressbox     = $('#progressbox');
@@ -312,71 +300,73 @@ $(function(){
 
     </script>
     
-                    
-			<form id="UploadForm" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
-			
-				<h2>Upload an Image</h2>
-				<p>Upload any image file you want to use on your site. Want to add some folders before you start? <a href="<?php echo site_url('/admin/images/folders'); ?>">Add them now.</a></p>
-				<label for="image">Image:</label>
-				<div class="uploadfile hide-for-touch">
-					<?php echo @form_upload('image', '', 'size="16" id="image"'); ?>
-				</div>
 
-				<div class="uploadfile show-for-touch">
-					<input type="file" accept="/*" capture="camera" name="image" id="image">
-				</div>
+	<form id="UploadForm" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
+	
+		<h2>Upload an Image</h2>
+		<p>Upload any image file you want to use on your site. Want to add some folders before you start? <a href="<?php echo site_url('/admin/images/folders'); ?>">Add them now.</a></p>
+		<label for="image">Image:</label>
+		<div class="uploadfile hide-for-touch">
+			<?php echo @form_upload('image', '', 'size="16" id="image"'); ?>
+		</div>
+
+		<div class="uploadfile show-for-touch">
+			<input type="file" accept="/*" capture="camera" name="image" id="image">
+		</div>
+		
+		<label for="imageName">Description (alt tag):</label>
+		<?php echo @form_input('imageName', $images['imageName'], 'class="formelement" id="imageName"'); ?>
+
+		<p class="tip">Note: You will want to add image folders before uploading your images.</p>
+		<label for="imageFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
+		<?php
+			$options = '';		
+			$options[0] = 'No Folder';
+			if ($folders):
+				foreach ($folders as $folderID):
+					$options[$folderID['folderID']] = $folderID['folderName'];
+				endforeach;
+			endif;
 				
-				<label for="imageName">Description (alt tag):</label>
-				<?php echo @form_input('imageName', $images['imageName'], 'class="formelement" id="imageName"'); ?>
+			echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="imageFolderID" class="formelement"');
+		?>	
 
-				<p class="tip">Note: You will want to add image folders before uploading your images.</p>
-				<label for="imageFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
-				<?php
-					$options = '';		
-					$options[0] = 'No Folder';
-					if ($folders):
-						foreach ($folders as $folderID):
-							$options[$folderID['folderID']] = $folderID['folderName'];
-						endforeach;
-					endif;
-						
-					echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="imageFolderID" class="formelement"');
-				?>	
+		<input type="submit" value="Save Changes" class="small button radius success nolabel" id="submit" />
+		<a href="<?php echo site_url('/admin/images'); ?>" class="small button radius cancel grey">Cancel</a>			
+	</form>
+    <div id="progressbox"><div id="progressbar"></div ><div id="statustxt">0%</div ></div>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
 
-				<input type="submit" value="Save Changes" class="button nolabel" id="submit" />
-				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>			
-			</form>
-                        <div id="progressbox"><div id="progressbar"></div ><div id="statustxt">0%</div ></div>
-                        <a class="close-reveal-modal">&#215;</a>
+<div id="upload-zip" class="hidden clear reveal-modal" data-reveal>
+	<form id="UploadForm2" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
+		<h2>Upload a Zip File</h2>
+		<p>If you have a lot of images to upload, add them all to a zip folder and upload them here!</p>
+	
+		<label for="image">ZIP File:</label>
+		<div class="uploadfile hide-for-touch ">
+			<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
+		</div>
+		<div class="uploadfile show-for-touch">
+			<input type="file" accept="/*" capture="camera" name="image" id="image">
 		</div>
 
-		<div id="upload-zip" class="hidden clear reveal-modal">
-			<form id="UploadForm2" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" enctype="multipart/form-data" class="">
-				<h2>Upload a Zip File</h2>
-				<p>If you have a lot of images to upload, add them all to a zip folder and upload them here!</p>
-			
-				<label for="image">ZIP File:</label>
-				<div class="uploadfile hide-for-touch ">
-					<?php echo @form_upload('zip', '', 'size="16" id="image"'); ?>
-				</div>
+		<label for="zipFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
+		<?php
+			$options[0] = 'No Folder';
+			if ($folders):
+				foreach ($folders as $folderID):
+					$options[$folderID['folderID']] = $folderID['folderName'];
+				endforeach;
+			endif;
+				
+			echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="zipFolderID" class="formelement"');
+		?>
+		<br class="clear" /><br />		
 
-				<label for="zipFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
-				<?php
-					$options[0] = 'No Folder';
-					if ($folders):
-						foreach ($folders as $folderID):
-							$options[$folderID['folderID']] = $folderID['folderName'];
-						endforeach;
-					endif;
-						
-					echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="zipFolderID" class="formelement"');
-				?>
-				<br class="clear" /><br />		
-
-				<input type="submit" value="Upload Zip" name="upload_zip" class="button nolabel" id="submit2" />
-				<a href="<?php echo site_url('/admin/images'); ?>" class="button cancel grey">Cancel</a>
-			</form>
-                        <div id="progressbox2"><div id="progressbar2"></div ><div id="statustxt2">0%</div ></div>
-                        <a class="close-reveal-modal">&#215;</a>
-		</div>
-
+		<input type="submit" value="Upload Zip" name="upload_zip" class="small button radius nolabel" id="submit2" />
+		<a href="<?php echo site_url('/admin/images'); ?>" class="small button radius cancel grey">Cancel</a>
+	</form>
+    <div id="progressbox2"><div id="progressbar2"></div ><div id="statustxt2">0%</div ></div>
+    <a class="close-reveal-modal">&#215;</a>
+</div>
