@@ -1,30 +1,33 @@
 <script type="text/javascript" src="<?php echo $this->config->item('staticPath'); ?>/js/templates.js" /></script>
 <form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
-
-<div class="large-10 columns body">
-	<div class="small-12 large-12 large-centered columns card">
-		<h2 class="left">Add Template</h2>
-
-		<div class="right">
-			<a href="<?php echo site_url('/admin/pages/templates'); ?>" class="button">Back to Templates</a>
+<div class="large-12 columns body">
+	<div class="card">
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Add Template</h2>
+				<a href="<?php echo site_url('/admin/pages/templates'); ?>">Back to Templates</a>
+			</div>
+			<div class="large-6 small-12 columns right">
+				<input type="button" id="default" value="Reset to Default" class="small button radius alert" />
+				<input type="submit" value="Save Changes" class="small button radius success" />
+			</div>
 		</div>
-		<div class="clear"></div>
-
-
+		<div class="row table">
+			<div class="small-12 columns">
 				<?php if ($errors = validation_errors()): ?>
 					<div class="error">
 						<?php echo $errors; ?>
 					</div>
 				<?php endif; ?>
-				<div class="item">
-					<div class="showModuleName">
-						<label for="templateName">Name:</label>
-						<?php echo @form_input('templateName',set_value('templateName', $data['templateName']), 'id="templateName" class="formelement"'); ?>
-					</div>
+			</div>
+			<div class="small-12 columns item">
+				<div class="showModuleName">
+					<label for="templateName">Name:</label>
+					<?php echo @form_input('templateName',set_value('templateName', $data['templateName']), 'id="templateName" class="formelement"'); ?>
 				</div>
-				
-				<div class="item">
-					<label for="moduleSelect">Module:</label>
+			</div>
+			<div class="small-12 columns item">
+				<label for="moduleSelect">Module:</label>
 					<p>To make a module template (e.g. for the Blog) select the module here.</p>
 					<?php 
 						$values = array();
@@ -95,20 +98,15 @@
 						<label for="modulePath">Module Reference:</label>
 						<?php echo @form_input('modulePath',set_value('modulePath', $data['modulePath']), 'id="modulePath" class="formelement"'); ?>
 					</div>
-				</div>
-
-				<div class="item">
-					<div class="autosave">
+			</div>
+			<div class="small-12 columns item">
+				<div class="autosave">
 						<label for="body">Markup:</label>
 						<p>Paste the code from your editor here.</p>
 						<?php echo @form_textarea('body',set_value('body', $data['body']), 'id="body" class="code editor"'); ?>
 					</div>
-				</div>
-				<input type="button" id="default" value="Reset to Default" class="button" />
-				<input type="submit" value="Save Changes" class="button green" />
-
-		
+			</div>
+		</div>
 	</div>
 </div>
-	
 </form>
