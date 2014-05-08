@@ -24,114 +24,105 @@ $(function(){
 	});	
 });
 </script>
-
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Orders <?php if ($trackingStatus) echo '('.$statusArray[$trackingStatus].')'?></h2>
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Orders <?php if ($trackingStatus) echo '('.$statusArray[$trackingStatus].')'?></h2>
+				<label for="filter">
+					Filter
+				</label> 
 
-		<div class="right">
-			<a href="<?php echo site_url('/admin/shop/export_orders'); ?>" class="button">Export Orders as CSV</a>
+				<?php
+					foreach ($statusArray as $key => $status):
+						$options[$key] = $status;
+					endforeach;
+					
+					echo form_dropdown('filter',$options,$trackingStatus,'id="filter"');
+				?>
+			</div>
+			<div class="large-6 small-12 columns right">
+				<a href="<?php echo site_url('/admin/shop/export_orders'); ?>" class="button small radius">Export Orders as CSV</a>
+			</div>
 		</div>
-
-		<div class="clear"></div>
-
-		<div class="large-4 push-8 columns">
-
-			<!-- <form method="post" action="<?php echo site_url('/admin/shop/orders'); ?>" class="default" id="search">
-				<input type="text" name="searchbox" id="searchbox" class="formelement inactive" title="Search Products..." />
-				<input type="image" src="<?php echo $this->config->item('staticPath'); ?>/images/btn_search.gif" id="searchbutton" />
-			</form> -->
-
-			<label for="filter">
-				Filter
-			</label> 
-
-			<?php
-				foreach ($statusArray as $key => $status):
-					$options[$key] = $status;
-				endforeach;
-				
-				echo form_dropdown('filter',$options,$trackingStatus,'id="filter"');
-			?>
-
-		</div>
-
-		<?php if ($orders): ?>
-
-		<?php echo $this->pagination->create_links(); ?>
-
 		<div class="row table">
-			<div class="large-1 columns">
-				<p>Order ID</p>
-			</div>
-			<div class="large-2 columns">
-				<p>Date Ordered</p>
-			</div>
-			<div class="large-2 columns">
-				<p>Full Name</p>
-			</div>
-			<div class="large-1 columns">
-				<p>Number of Items</p>
-			</div>
-			<div class="large-2 columns">
-				<p>Total (<?php echo currency_symbol(); ?>)</p>
-			</div>
-			<div class="large-2 columns">
-				<p>Status</p>
-			</div>
-			<div class="large-2 columns">
+			<div class="small-12 columns item">
+				<?php if ($orders): ?>
 
+				<?php echo $this->pagination->create_links(); ?>
+
+				<div class="row table">
+					<div class="large-1 columns">
+						<p>Order ID</p>
+					</div>
+					<div class="large-2 columns">
+						<p>Date Ordered</p>
+					</div>
+					<div class="large-2 columns">
+						<p>Full Name</p>
+					</div>
+					<div class="large-1 columns">
+						<p>Number of Items</p>
+					</div>
+					<div class="large-2 columns">
+						<p>Total (<?php echo currency_symbol(); ?>)</p>
+					</div>
+					<div class="large-2 columns">
+						<p>Status</p>
+					</div>
+					<div class="large-2 columns">
+
+					</div>
+				</div>
+
+				<?php foreach ($orders as $order): 
+					if (!$order['viewed']) $class = 'style="font-weight: bold;"'; else $class='';
+				?>
+				<div class="row table">
+					<div class="large-1 columns">
+						<p><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], $order['transactionCode']); ?></p>
+					</div>
+					<div class="large-2 columns">
+						<p><?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?></p>
+					</div>
+					<div class="large-2 columns">
+						<p><?php echo $order['firstName']; ?> <?php echo $order['lastName']; ?></p>
+					</div>
+					<div class="large-1 columns">
+						<p>?php echo $order['numItems']; ?></p>
+					</div>
+					<div class="large-2 columns">
+						<p><?php echo currency_symbol().number_format($order['amount'],2); ?></p>
+					</div>
+					<div class="large-2 columns">
+						<p>						
+							<?php
+									if ($order['trackingStatus'] == 'U' && $order['paid']) echo 'Unprocessed';
+									elseif ($order['trackingStatus'] == 'L') echo 'Allocated';
+									elseif ($order['trackingStatus'] == 'A') echo 'Awaiting Goods';
+									elseif ($order['trackingStatus'] == 'O') echo 'Out of Stock';
+									elseif ($order['trackingStatus'] == 'D') echo 'Dispatched';
+									else echo 'Unpaid Checkout';
+								?>
+						</p>
+					</div>
+					<div class="large-2 columns">
+						<ul class="button-group even-2">
+							<li><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], 'View'); ?></li>
+							<li><?php echo anchor('/admin/shop/delete_order/'.$order['transactionID'], 'Delete', 'onclick="return confirm(\'Are you absolutely sure you want to delete this order? There is no undo.\')"'); ?></li>
+						</ul>
+					</div>
+				</div>
+				<?php endforeach; ?>
+
+				<?php echo $this->pagination->create_links(); ?>
+
+				<?php else: ?>
+
+				<p class="clear">There were no orders found.</p>
+
+				<?php endif; ?>
 			</div>
 		</div>
-
-		<?php foreach ($orders as $order): 
-			if (!$order['viewed']) $class = 'style="font-weight: bold;"'; else $class='';
-		?>
-		<div class="row table">
-			<div class="large-1 columns">
-				<p><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], $order['transactionCode']); ?></p>
-			</div>
-			<div class="large-2 columns">
-				<p><?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?></p>
-			</div>
-			<div class="large-2 columns">
-				<p><?php echo $order['firstName']; ?> <?php echo $order['lastName']; ?></p>
-			</div>
-			<div class="large-1 columns">
-				<p>?php echo $order['numItems']; ?></p>
-			</div>
-			<div class="large-2 columns">
-				<p><?php echo currency_symbol().number_format($order['amount'],2); ?></p>
-			</div>
-			<div class="large-2 columns">
-				<p>						
-					<?php
-							if ($order['trackingStatus'] == 'U' && $order['paid']) echo 'Unprocessed';
-							elseif ($order['trackingStatus'] == 'L') echo 'Allocated';
-							elseif ($order['trackingStatus'] == 'A') echo 'Awaiting Goods';
-							elseif ($order['trackingStatus'] == 'O') echo 'Out of Stock';
-							elseif ($order['trackingStatus'] == 'D') echo 'Dispatched';
-							else echo 'Unpaid Checkout';
-						?>
-				</p>
-			</div>
-			<div class="large-2 columns">
-				<ul class="button-group even-2">
-					<li><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], 'View'); ?></li>
-					<li><?php echo anchor('/admin/shop/delete_order/'.$order['transactionID'], 'Delete', 'onclick="return confirm(\'Are you absolutely sure you want to delete this order? There is no undo.\')"'); ?></li>
-				</ul>
-			</div>
-		</div>
-		<?php endforeach; ?>
-
-		<?php echo $this->pagination->create_links(); ?>
-
-		<?php else: ?>
-
-		<p class="clear">There were no orders found.</p>
-
-		<?php endif; ?>
-
 	</div>
 </div>
-
