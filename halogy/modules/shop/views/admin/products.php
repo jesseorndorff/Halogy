@@ -50,123 +50,104 @@ $(function(){
 	initOrder('table.order tbody');	
 });
 </script>
-<div class="large-10 columns body">
+<div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Products</h2>
-
-		<div class="right">
-			<?php if (in_array('shop_edit', $this->permission->permissions)): ?>	
-				<a href="<?php echo site_url('/admin/shop/add_product'); ?>" class="button green">Add Product</a>
-			<?php endif; ?>
-		</div>
-		<div class="clear"></div>
-
-
-			<!-- <form method="post" action="<?php echo site_url('/admin/shop/products'); ?>" class="default" id="search">
-				<input type="text" name="searchbox" id="searchbox" class="formelement inactive" title="Search Products..." />
-				<input type="image" src="<?php echo $this->config->item('staticPath'); ?>/images/btn_search.gif" id="searchbutton" />
-			</form> 
-			
-			<label for="category">
-				Category
-			</label> 
-
-			<?php
-				$options = array(
-					'' => 'View All Products...',
-					'featured' => 'Featured'
-				);
-				if ($categories):
-					foreach ($categories as $category):
-						$options[$category['catID']] = ($category['parentID']) ? '-- '.$category['catName'] : $category['catName'];
-					endforeach;
-				endif;					
-				echo @form_dropdown('catID', $options, set_value('catID', $catID), 'id="category" class="formelement"');
-			?>	 -->
-
-		<?php if ($products): ?>
-
-		<?php echo $this->pagination->create_links(); ?>
-
-		<div class="row table-header hide-for-touch <?php echo ($catID) ? ' order' : ''; ?>">
-			<div class="large-2 columns">
-				<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'productName','Product name', (($catID) ? 5 : 4)); ?></h3>
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<h2>Products</h2>
 			</div>
-			<div class="large-1 columns">
-				<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'subtitle','Subtitle', (($catID) ? 5 : 4)); ?></h3>
-			</div>
-			<div class="large-2 columns">
-				<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'catalogueID','Catalogue ID', (($catID) ? 5 : 4)); ?></h3>
-			</div>
-			<div class="large-2 columns">
-				<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'dateCreated','Date added', (($catID) ? 5 : 4)); ?></h3>
-			</div>
-			<div class="large-2 columns">
-				<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'price','Price ('.currency_symbol().')', (($catID) ? 5 : 4)); ?></h3>
-			</div>
-			<?php if ($this->site->config['shopStockControl']): ?>
-				<div class="large-1 columns">
-					<h3><?php echo order_link('/admin/shop/products'.(($catID) ? '/'.$catID : ''),'stock','Stock', (($catID) ? 5 : 4)); ?></h3>
-				</div>
-			<?php endif; ?>
-			<div class="large-1 columns">
-				<h3><?php echo order_link('/admin/shop/products'.(($catID) ? '/'.$catID : ''),'published','Published', (($catID) ? 5 : 4)); ?></h3>
-			</div>
-			<div class="large-2 columns">
-			</div>
-		</div>
-		<?php foreach ($products as $product): ?>
-		<div class="row table <?php echo (!$product['published']) ? 'draft' : ''; ?>" id="shop_products-<?php echo $product['productID']; ?>">
-			<div class="large-2 columns">
-				<p><?php echo (in_array('shop_edit', $this->permission->permissions)) ? anchor('/admin/shop/edit_product/'.$product['productID'], $product['productName']) : $product['productName']; ?></p>
-			</div>
-			<div class="large-1 columns">
-				<p><?php echo $product['subtitle']; ?></p>
-			</div>
-			<div class="large-2 columns">
-				<p><?php echo $product['catalogueID']; ?></p>
-			</div>
-			<div class="large-2 columns">
-				<p><?php echo dateFmt($product['dateCreated'], '', '', TRUE); ?></p>
-			</div>
-			<div class="large-2 columns">
-				<p><?php echo currency_symbol(); ?><?php echo number_format($product['price'],2); ?></p>
-			</div>
-			<?php if ($this->site->config['shopStockControl']): ?>
-				<div class="large-1 columns">
-					<p><?php echo ($product['stock'] > 0) ? '<span style="color:green;">'.$product['stock'].'</span>' : '<span style="color:red;">'.$product['stock'].'</span>'; ?></p>
-				</div>
-			<?php endif; ?>
-			<div class="large-1 columns">
-				<p>			
-					<?php
-							if ($product['published']) echo '<span style="color:green;">Yes</span>';
-							else echo 'No';
-						?>
-				</p>
-			</div>
-			<div class="large-2 columns">
-				<ul class="button-group even-2">
+			<div class="large-6 small-12 columns right">
 				<?php if (in_array('shop_edit', $this->permission->permissions)): ?>	
-					<li><?php echo anchor('/admin/shop/edit_product/'.$product['productID'], 'Edit'); ?></li>
+					<a href="<?php echo site_url('/admin/shop/add_product'); ?>" class="button small radius success">Add Product</a>
 				<?php endif; ?>
-				<?php if (in_array('shop_delete', $this->permission->permissions)): ?>	
-					<li><?php echo anchor('/admin/shop/delete_product/'.$product['productID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?></li>
-				<?php endif; ?>
-				</ul>
 			</div>
 		</div>
-		<?php endforeach; ?>
-		
+		<div class="row table">
+			<div class="small-12 columns">
+				<?php if ($products): ?>
 
-		<?php echo $this->pagination->create_links(); ?>
+				<?php echo $this->pagination->create_links(); ?>
 
-		<?php else: ?>
+				<div class="row table-header hide-for-touch <?php echo ($catID) ? ' order' : ''; ?>">
+					<div class="large-2 columns">
+						<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'productName','Product name', (($catID) ? 5 : 4)); ?></h3>
+					</div>
+					<div class="large-1 columns">
+						<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'subtitle','Subtitle', (($catID) ? 5 : 4)); ?></h3>
+					</div>
+					<div class="large-2 columns">
+						<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'catalogueID','Catalogue ID', (($catID) ? 5 : 4)); ?></h3>
+					</div>
+					<div class="large-2 columns">
+						<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'dateCreated','Date added', (($catID) ? 5 : 4)); ?></h3>
+					</div>
+					<div class="large-2 columns">
+						<h3><?php echo order_link('admin/shop/products'.(($catID) ? '/'.$catID : ''),'price','Price ('.currency_symbol().')', (($catID) ? 5 : 4)); ?></h3>
+					</div>
+					<?php if ($this->site->config['shopStockControl']): ?>
+						<div class="large-1 columns">
+							<h3><?php echo order_link('/admin/shop/products'.(($catID) ? '/'.$catID : ''),'stock','Stock', (($catID) ? 5 : 4)); ?></h3>
+						</div>
+					<?php endif; ?>
+					<div class="large-1 columns">
+						<h3><?php echo order_link('/admin/shop/products'.(($catID) ? '/'.$catID : ''),'published','Published', (($catID) ? 5 : 4)); ?></h3>
+					</div>
+					<div class="large-2 columns">
+					</div>
+				</div>
+				<?php foreach ($products as $product): ?>
+				<div class="row table <?php echo (!$product['published']) ? 'draft' : ''; ?>" id="shop_products-<?php echo $product['productID']; ?>">
+					<div class="large-2 columns">
+						<p><?php echo (in_array('shop_edit', $this->permission->permissions)) ? anchor('/admin/shop/edit_product/'.$product['productID'], $product['productName']) : $product['productName']; ?></p>
+					</div>
+					<div class="large-1 columns">
+						<p><?php echo $product['subtitle']; ?></p>
+					</div>
+					<div class="large-2 columns">
+						<p><?php echo $product['catalogueID']; ?></p>
+					</div>
+					<div class="large-2 columns">
+						<p><?php echo dateFmt($product['dateCreated'], '', '', TRUE); ?></p>
+					</div>
+					<div class="large-2 columns">
+						<p><?php echo currency_symbol(); ?><?php echo number_format($product['price'],2); ?></p>
+					</div>
+					<?php if ($this->site->config['shopStockControl']): ?>
+						<div class="large-1 columns">
+							<p><?php echo ($product['stock'] > 0) ? '<span style="color:green;">'.$product['stock'].'</span>' : '<span style="color:red;">'.$product['stock'].'</span>'; ?></p>
+						</div>
+					<?php endif; ?>
+					<div class="large-1 columns">
+						<p>			
+							<?php
+									if ($product['published']) echo '<span style="color:green;">Yes</span>';
+									else echo 'No';
+								?>
+						</p>
+					</div>
+					<div class="large-2 columns">
+						<ul class="button-group even-2">
+						<?php if (in_array('shop_edit', $this->permission->permissions)): ?>	
+							<li><?php echo anchor('/admin/shop/edit_product/'.$product['productID'], 'Edit'); ?></li>
+						<?php endif; ?>
+						<?php if (in_array('shop_delete', $this->permission->permissions)): ?>	
+							<li><?php echo anchor('/admin/shop/delete_product/'.$product['productID'], 'Delete', 'onclick="return confirm(\'Are you sure you want to delete this?\')"'); ?></li>
+						<?php endif; ?>
+						</ul>
+					</div>
+				</div>
+				<?php endforeach; ?>
+				
 
-		<p>No products were found.</p>
+				<?php echo $this->pagination->create_links(); ?>
+
+				<?php else: ?>
+
+				<p>No products were found.</p>
 
 
-		<?php endif; ?>
+				<?php endif; ?>
+			</div>
+		</div>
 	</div>
-
-
+</div>
