@@ -1,32 +1,31 @@
-<div class="large-10 columns body">
-	<div class="small-12 large-12 large-centered columns card">
-		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
-
-		<?php if (!$this->core->is_ajax()): ?>
-			<h2 class="left"><?php echo (preg_match('/edit/i', $this->uri->segment(3))) ? 'Edit' : 'Add'; ?> Shipping Modifier</h2>
-		<?php endif; ?>
-
-		<div class="right">
-			<a href="<?php echo site_url('/admin/shop/modifiers'); ?>" class="button">Back to Modifiers</a>
-			<input type="submit" value="Save Changes" class="button green nolabel">
-		</div>
-
-		<div class="clear"></div>
-
-		<?php if ($errors = validation_errors()): ?>
-			<div class="error">
-				<?php echo $errors; ?>
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
+<div class="large-12 columns body">
+	<div class="card">
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<?php if (!$this->core->is_ajax()): ?>
+					<h2><?php echo (preg_match('/edit/i', $this->uri->segment(3))) ? 'Edit' : 'Add'; ?> Shipping Modifier</h2>
+					<a href="<?php echo site_url('/admin/shop/modifiers'); ?>" >Back to Modifiers</a>
+				<?php endif; ?>
 			</div>
-		<?php endif; ?>
-
-		<?php if ($bands): ?>
-			
-			<div class="item">
+			<div class="large-6 small-12 columns right">
+				<input type="submit" value="Save Changes" class="button small radius success nolabel">
+			</div>
+		</div>
+		<div class="row table">
+			<div class="small-12 columns">
+				<?php if ($errors = validation_errors()): ?>
+					<div class="error">
+						<?php echo $errors; ?>
+					</div>
+				<?php endif; ?>
+			</div>
+			<?php if ($bands): ?>
+			<div class="small-12 columns item">
 				<label for="modifierName">Name:</label>
 				<?php echo @form_input('modifierName', $data['modifierName'], 'class="formelement" id="modifierName"'); ?>
 			</div>
-
-			<div class="item">
+			<div class="small-12 columns item">
 				<label for="templateID">Band:</label>
 				<?php
 					$options = '';
@@ -37,8 +36,7 @@
 					echo @form_dropdown('bandID', $options, $data['bandID'], 'id="bandID" class="formelement"');
 				?>
 			</div>
-
-			<div class="item">						
+			<div class="small-12 columns item">
 				<label for="multiplier">Multiplier:</label>
 				<div class="row collapse">
 					<div class="small-1 columns">
@@ -49,14 +47,13 @@
 					</div>
 				</div>
 			</div>
-				
-			</form>
-
-		<?php else: ?>
-
-		You need to create shipping bands before you can add postage modifiers.
-
-		<?php endif; ?>
-
+		
+			<?php else: ?>
+			<div class="small-12 columns item">
+				<p>You need to create shipping bands before you can add postage modifiers.</p>
+			</div>
+			<?php endif; ?>
+		</div>
 	</div>
 </div>
+</form>
