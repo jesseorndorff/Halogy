@@ -39,33 +39,33 @@ $(function(){
 	showObjects('select#type');	
 });
 </script>
-
-<div class="large-10 columns body">
-	<div class="small-12 large-12 large-centered columns card">
-		<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
-
-		<?php if (!$this->core->is_ajax()): ?>
-			<h2 class="left"><?php echo (preg_match('/edit/i', $this->uri->segment(3))) ? 'Edit' : 'Add'; ?> Discount</h2>
-		<?php endif; ?>
-
-		<div class="right">
-			<a href="<?php echo site_url('/admin/shop/discounts'); ?>" class="button">Back to Discounts</a>
-		</div>
-
-		<div class="clear"></div>
-
-		<?php if ($errors = validation_errors()): ?>
-			<div class="error">
-				<?php echo $errors; ?>
+<form method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
+<div class="large-12 columns body">
+	<div class="card">
+		<div class="header">
+			<div class="small-12 medium-6 large-4 columns left">
+				<?php if (!$this->core->is_ajax()): ?>
+					<h2><?php echo (preg_match('/edit/i', $this->uri->segment(3))) ? 'Edit' : 'Add'; ?> Discount</h2>
+				<?php endif; ?>
+				<a href="<?php echo site_url('/admin/shop/discounts'); ?>" >Back to Discounts</a>
 			</div>
-		<?php endif; ?>
-
-			<div class="item">
+			<div class="large-6 small-12 columns right">
+				<input type="submit" value="Save Changes" class="button small radius success nolabel">
+			</div>
+		</div>
+		<div class="row table">
+			<div class="small-12 columns">
+				<?php if ($errors = validation_errors()): ?>
+					<div class="error">
+						<?php echo $errors; ?>
+					</div>
+				<?php endif; ?>
+			</div>
+			<div class="small-12 columns item">
 				<label for="code">Code:</label>
 				<?php echo @form_input('code', $data['code'], 'class="formelement" id="code"'); ?>
 			</div>
-
-			<div class="item">
+			<div class="small-12 columns item">
 				<label for="type">Calculated On:</label>
 				<?php 
 					$values = array(
@@ -76,41 +76,33 @@ $(function(){
 					echo @form_dropdown('type',$values,set_value('type', $data['type']), 'id="type" class="formelement"'); 
 				?>
 			</div>
-
-			<div style="display: none;" id="categories">
-				<div class="item">	
-					<label for="catID">Category:</label>
-					<?php
-						$options = '';
-						$options[0] = 'Select a Category...';			
-						if ($categories):
-							foreach ($categories as $category):
-								$options[$category['catID']] = ($category['parentID']) ? '-- '.$category['catName'] : $category['catName'];
-							endforeach;
-						endif;					
-						echo @form_dropdown('catID',$options,set_value('catID', $data['objectID']),'id="catID" class="formelement"');
-					?>	
-				</div>
+			<div style="display: none;" id="categories" class="small-12 columns item">
+				<label for="catID">Category:</label>
+				<?php
+					$options = '';
+					$options[0] = 'Select a Category...';			
+					if ($categories):
+						foreach ($categories as $category):
+							$options[$category['catID']] = ($category['parentID']) ? '-- '.$category['catName'] : $category['catName'];
+						endforeach;
+					endif;					
+					echo @form_dropdown('catID',$options,set_value('catID', $data['objectID']),'id="catID" class="formelement"');
+				?>
 			</div>
-
-			
-			<div style="display: none;" id="products">
-				<div class="item">
-					<label for="productID">Product:</label>
-					<?php
-						$options = '';		
-						if ($products):
-							foreach ($products as $product):
-								$options[$product['productID']] = $product['productName'];
-							endforeach;
-						endif;
-						$objectIDArray = (isset($data['objectID'])) ? @explode(',',$data['objectID']) : $this->input->post('productID');
-						echo @form_dropdown('productID[]',$options, $objectIDArray, 'id="productID" class="formelement" multiple="multiple"');
-					?>	
-				</div>
+			<div style="display: none;" id="products" class="small-12 columns item">
+				<label for="productID">Product:</label>
+				<?php
+					$options = '';		
+					if ($products):
+						foreach ($products as $product):
+							$options[$product['productID']] = $product['productName'];
+						endforeach;
+					endif;
+					$objectIDArray = (isset($data['objectID'])) ? @explode(',',$data['objectID']) : $this->input->post('productID');
+					echo @form_dropdown('productID[]',$options, $objectIDArray, 'id="productID" class="formelement" multiple="multiple"');
+				?>
 			</div>
-
-			<div class="item">
+			<div class="small-12 columns item">
 				<label for="base">Taken Off:</label>
 				<?php 
 					$values = array(
@@ -120,8 +112,7 @@ $(function(){
 					echo @form_dropdown('base',$values,set_value('base', $data['base']), 'id="base" class="formelement"'); 
 				?>
 			</div>
-
-			<div class="item">
+			<div class="small-12 columns item">
 				<label for="modifier">Modifier:</label>
 				<?php 
 					$values = array(
@@ -131,8 +122,7 @@ $(function(){
 					echo @form_dropdown('modifier',$values,set_value('modifier', $data['modifier']), 'id="modifier" class="formelement"'); 
 				?>
 			</div>
-
-			<div class="item">				
+			<div class="small-12 columns item">
 				<label for="discount">Discount:</label>
 				<div class="row collapse">
 					<div class="small-1 columns">
@@ -144,11 +134,11 @@ $(function(){
 					</div>
 				</div>
 			</div>
-			<div class="item">
+			<div class="small-12 columns item">
 				<label for="expiryDate">Expiry Date:</label>
 				<?php echo @form_input('expiryDate', dateFmt($data['expiryDate'], 'M d Y'), 'id="expiryDate" class="formelement datebox" readonly="readonly"'); ?>
 			</div>
-			<input type="submit" value="Save Changes" class="button green nolabel">
-		</form>
+		</div>
 	</div>
 </div>
+</form>
