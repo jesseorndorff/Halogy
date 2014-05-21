@@ -16,50 +16,51 @@ $(function(){
 });
 </script>
 
-<div class="large-10 columns body">
-	<div class="small-12 large-8 large-centered columns card">
-		<form name="form" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
-			
-			<h2 class="left">Add Event</h2>
-			
-			<div class="right">
-				<a href="<?php echo site_url('/admin/events'); ?>" class="button">Back to Events</a>
-				<input type="submit" value="Save Changes" class="button green">
+<form name="form" method="post" action="<?php echo site_url($this->uri->uri_string()); ?>" class="">
+<div class="large-12 columns body">
+	<div class="card">
+		<div class="header">
+			<div class="large-4 small-12 columns left">
+				<h2>Add Event</h2>
+				<a href="<?php echo site_url('/admin/events'); ?>">Back to Events</a>
 			</div>
-			
-			<div class="clear"></div>
-			
-			<?php if ($errors = validation_errors()): ?>
-				<div class="error">
-					<?php echo $errors; ?>
-				</div>
-			<?php endif; ?>
+			<div class="large-6 small-12 columns right">
+				<input type="submit" value="Save Changes" class="button small radius success">
+			</div>
+		</div>
 
-						<div class="section-container auto" data-section>
-				<section>
-					<p class="title" data-section-title><a href="#">Details</a></p>
-					<div class="content" data-section-content>
+		<?php if ($errors = validation_errors()): ?>
+			<div class="large-12 columns error">
+				<?php echo $errors; ?>
+			</div>
+		<?php endif; ?>
+				
+		<div class="large-12 columns">
+			<dl class="tabs vertical" data-tab>
+				<dd class="active"><a href="#panel2-1">Details</a></dd>
+				<dd><a href="#panel2-2">Description</a></dd>
+				<dd><a href="#panel2-3">Publishing</a></dd>
+			</dl>
+
+			<div class="tabs-content">
+				<div class="content active" id="panel2-1">
 					<div class="row">
-						<div class="large-12 small-12 large-centered columns">
-							<div id="details" class="tab">
-							<h2 class="underline">Place and Time</h2>
-
+						<div class="small-12 large-6 columns large-centered">
+							<h3>Place and Time</h3>
 							<div class="item">
 								<label for="eventName">Event Title:</label>
 								<?php echo @form_input('eventTitle', set_value('eventTitle', $data['eventTitle']), 'id="eventTitle" class="formelement"'); ?>
 							</div>
-
 							<div class="item">
 								<label for="eventDate">Start Date:</label>
 								<?php echo @form_input('eventDate', date('M d Y', strtotime($data['eventDate'])), 'id="eventDate" class="formelement datebox" readonly="readonly"'); ?>
 							</div>
-
 							<div class="item">
 								<label for="eventEnd">End Date:</label>
 								<p>This is optional and useful if the event goes on for more than one day.</p>
 								<?php echo @form_input('eventEnd', (($data['eventEnd'] > 0) ? date('M d Y', strtotime($data['eventEnd'])) : ''), 'id="eventEnd" class="formelement datebox" readonly="readonly"'); ?>
 							</div>
-
+							
 							<div class="item">
 								<label for="time">Time:</label>
 								<?php echo @form_input('time', set_value('time', $data['time']), 'id="time" class="formelement"'); ?>
@@ -71,51 +72,28 @@ $(function(){
 							</div>
 						</div>
 					</div>
-					</div>
-				</section>
-				<section>
-					<p class="title" data-section-title><a href="#">Description</a></p>
-					<div class="content" data-section-content>
+				</div>
+				
+				<div class="content" id="panel2-2">
 					<div class="row">
-						<div class="large-12 small-12 large-centered columns">
-
-						<h2 class="underline">Event Description</h2>	
-						
-						<!--<div class="buttons">
-							<a href="#" class="boldbutton"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_bold.png" alt="Bold" title="Bold" /></a>
-							<a href="#" class="italicbutton"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_italic.png" alt="Italic" title="Italic" /></a>
-							<a href="#" class="h1button"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_h1.png" alt="Heading 1" title="Heading 1"/></a>
-							<a href="#" class="h2button"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_h2.png" alt="Heading 2" title="Heading 2" /></a>
-							<a href="#" class="h3button"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_h3.png" alt="Heading 3" title="Heading 3" /></a>	
-							<a href="#" class="urlbutton"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_url.png" alt="Insert Link" title="Insert Link" /></a>
-							<a href="<?php echo site_url('/admin/images/browser'); ?>" class="halogycms_imagebutton"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_image.png" alt="Insert Image" title="Insert Image" /></a>
-							<a href="<?php echo site_url('/admin/files/browser'); ?>" class="halogycms_filebutton"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_file.png" alt="Insert File" title="Insert File" /></a>
-							<a href="#" class="previewbutton"><img src="<?php echo $this->config->item('staticPath'); ?>/images/btn_save.png" alt="Preview" title="Preview" /></a>	
-						</div> -->
-
-						<div class="item">
-							<label for="body">Body:</label>
-							<?php echo @form_textarea('description', set_value('description', $data['description']), 'id="body" class="formelement code half"'); ?>
-						</div>
-
-						<div class="item">
-							<div class="preview"></div>
-						</div>
-
-						<div class="item">
-							<label for="excerpt">Excerpt:</label>
-							<?php echo @form_textarea('excerpt', set_value('excerpt', $data['excerpt']), 'id="excerpt" class="formelement code short"'); ?>
+						<div class="small-12 large-6 columns large-centered">
+							<h3>Event Description</h3>
+							<div class="item">
+								<label for="body">Body:</label>
+								<?php echo @form_textarea('description', set_value('description', $data['description']), 'id="body" class="formelement code half"'); ?>
+							</div>
+							<div class="item">
+								<label for="excerpt">Excerpt:</label>
+								<?php echo @form_textarea('excerpt', set_value('excerpt', $data['excerpt']), 'id="excerpt" class="formelement code short"'); ?>
+							</div>
 						</div>
 					</div>
-					</div>
-				</section>
-				<section>
-					<p class="title" data-section-title><a href="#">Publishing</a></p>
-					<div class="content" data-section-content>
+				</div>
+
+				<div class="content" id="panel2-3">
 					<div class="row">
-						<div class="large-12 small-12 large-centered columns">
-							<h2 class="underline">Publishing</h2>
-							
+						<div class="small-12 large-6 columns large-centered">
+							<h3>Publishing</h3>
 							<div class="item">
 								<label for="featured">Featured:</label>
 								<?php 
@@ -126,13 +104,11 @@ $(function(){
 									echo @form_dropdown('featured',$values,set_value('featured', $data['featured']), 'id="featured"'); 
 								?>
 							</div>
-
 							<div class="item">
 								<label for="tags">Tags:</label>
 								<p>Separate tags with spaces (e.g. &ldquo;event popular london&rdquo;)</p>
 								<?php echo @form_input('tags', set_value('tags', $data['tags']), 'id="tags" class="formelement"'); ?>
 							</div>
-
 							<div class="item">
 								<label for="published">Publish:</label>
 								<?php 
@@ -145,9 +121,9 @@ $(function(){
 							</div>
 						</div>
 					</div>
-					</div>
-				</section>
+				</div>				
 			</div>
-		</form>
+		</div>
 	</div>
 </div>
+</form>
