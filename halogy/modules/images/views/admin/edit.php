@@ -3,10 +3,10 @@
 	$thumb = $this->uploads->load_image($data['imageRef'], true);
 	$imagePath = $image['src'];
 	$imageThumbPath = $thumb['src'];
-?>	
+?>
 <div class="large-12 columns body">
 	<div class="card">
-		<h2 class="left">Edit Image: <?php if ($image): ?> <?php echo $image['imageRef']; ?> <? endif; ?></h2>
+		<h2 class="left">Edit Image: <?php if ($image): ?> <?php echo $image['imageRef']; ?> <?php endif; ?></h2>
 		<a href="<?php echo site_url('/admin/images/viewall/'); ?>" class="button right">Back to Images</a>
 		<div class="clear"></div>
 
@@ -33,12 +33,12 @@
 								$options[$folderID['folderID']] = $folderID['folderName'];
 							endforeach;
 						endif;
-							
+
 						echo @form_dropdown('folderID',$options,set_value('folderID', $data['folderID']),'id="folderID" class="formelement"');
-					?>	
+					?>
 				</div>
 
-				<div class="item">				
+				<div class="item">
 					<label for="imageName">Description:</label>
 					<p>Add a detailed description for your image here. We use this for alt tags and some templates may use it.</p>
 					<?php echo @form_input('imageName', $data['imageName'], 'class="formelement" id="imageName"'); ?>
@@ -54,18 +54,18 @@
 					<label for="class">Display:</label>
 					<?php
 						$values = array(
-							'default' => 'Default',	
+							'default' => 'Default',
 							'left' => 'Left Align',
-							'center' => 'Center Align',			
+							'center' => 'Center Align',
 							'right' => 'Right Align',
 							'bordered' => 'Border',
 							'bordered left' => 'Border - Left Align',
-							'bordered center' => 'Border - Center Align',			
+							'bordered center' => 'Border - Center Align',
 							'bordered right' => 'Border - Right Align',
-							'full' => 'Full Width',			
+							'full' => 'Full Width',
 							'' => 'No Style'
-						);					
-						echo @form_dropdown('class',$values,$data['class'], 'class="formelement"'); 
+						);
+						echo @form_dropdown('class',$values,$data['class'], 'class="formelement"');
 					?>
 				</div>
 
@@ -80,7 +80,7 @@
 			<div class="large-6 columns edit-image">
 				<?php echo ($thumb = display_image($imagePath, $data['imageName'], 0, 'class="pic th" ')) ? $thumb : display_image($imagePath, $data['imageName'], 0, 'class="pic"'); ?>
 			</div>
-			
+
 		</form>
 
 	</div>
