@@ -129,7 +129,7 @@ CREATE TABLE `ha_community_messages` (
 
 CREATE TABLE `ha_ci_sessions` (
   `session_id` varchar(40) collate utf8_unicode_ci NOT NULL default '0',
-  `ip_address` varchar(16) collate utf8_unicode_ci NOT NULL default '0',
+  `ip_address` varchar(45) collate utf8_unicode_ci NOT NULL default '0',
   `user_agent` varchar(50) collate utf8_unicode_ci NOT NULL default '',
   `last_activity` int(10) unsigned NOT NULL default '0',
   `user_data` text collate utf8_unicode_ci NOT NULL,
@@ -287,7 +287,7 @@ CREATE TABLE `ha_events` (
   `groupID` int(11) NOT NULL default '0',
   `tags` varchar(250) collate utf8_unicode_ci default NULL,
   `published` tinyint(1) unsigned NOT NULL default '1',
-  `featured` tinyint(1) unsigned default '0',  
+  `featured` tinyint(1) unsigned default '0',
   `deleted` tinyint(1) unsigned default '0',
   `siteID` int(11) default NULL,
   PRIMARY KEY  (`eventID`)
@@ -679,7 +679,7 @@ VALUES
 	('Add / edit templates','emailer_templates','Emailer',0),
 	('Add / edit lists','emailer_lists','Emailer',0);
 
-	
+
 /*!40000 ALTER TABLE `ha_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -817,11 +817,11 @@ CREATE TABLE `ha_shop_products` (
   `subtitle` varchar(100) collate utf8_unicode_ci default NULL,
   `description` text collate utf8_unicode_ci,
   `excerpt` text collate utf8_unicode_ci,
-  `tags` varchar(250) collate utf8_unicode_ci default NULL, 
+  `tags` varchar(250) collate utf8_unicode_ci default NULL,
   `price` double(10,2) NOT NULL default '0.00',
   `imageName` varchar(200) collate utf8_unicode_ci NOT NULL default 'noimage.gif',
   `status` enum('S','O','P','D') collate utf8_unicode_ci NOT NULL default 'S',
-  `stock` int(11) unsigned NOT NULL default '1',  
+  `stock` int(11) unsigned NOT NULL default '1',
   `fileID` int(11) default NULL,
   `views` int(11) NOT NULL default '0',
   `featured` enum('Y','T','N') collate utf8_unicode_ci NOT NULL default 'N',
