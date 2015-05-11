@@ -1,6 +1,9 @@
 # HALOGY CHANGE LOG
 --------------------
 
+## Version 1.2.4
+- Updated CodeIgniter to version 2.1.4
+
 ## Version 1.2.3
 - Updated CodeIgniter to version 2.1.3
 
