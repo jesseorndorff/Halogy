@@ -75,7 +75,7 @@ See LICENSE.txt for details.
 ## What Changed in This Fork
 
 - PHP 8.1 or later (tested on 8.3) with MariaDB 10.x / MySQL 8
-- Security hardening: password_hash() with automatic upgrade of MD5 passwords, signed session and remember-me cookies, CSRF protection for POST requests and state-changing links, HttpOnly/SameSite cookies, a per-install encryption key, and a fix for a privilege escalation in public registration
+- Security hardening: password_hash() with automatic upgrade of MD5 passwords, signed session and remember-me cookies, origin-checked CSRF protection for POST requests with same-origin verification and confirmation pages for state-changing links, HttpOnly/SameSite cookies, a per-install encryption key, escaping of member/visitor content (wiki, forum posts, blog comments, shop reviews, webform tickets), and a fix for a privilege escalation in public registration
 - Fixed known PHP 8 fatal errors and deprecation warnings across the modules
 - Docker setup for one-command local development
 - Environment-based database configuration
