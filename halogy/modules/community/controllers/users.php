@@ -62,7 +62,7 @@ class Users extends MX_Controller {
 
 	function login($redirect = '')
 	{
-		$output = '';
+		$output = array();
 
 		// set redirect to default if not given
 		if ($redirect == '')
@@ -82,7 +82,7 @@ class Users extends MX_Controller {
 				$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 			
 				// set admin session name, if given
-				if ($output = $this->auth->login($username, $this->input->post('password'), 'session_user', FALSE, $this->input->post('remember')))
+				if ($this->auth->login($username, $this->input->post('password'), 'session_user', FALSE, $this->input->post('remember')))
 				{
 					// for use with ce
 					if ($this->session->userdata('groupID') > 0 && $this->permission->get_group_permissions($this->session->userdata('groupID')))
@@ -176,17 +176,17 @@ class Users extends MX_Controller {
 			$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 
 			// set header and footer
-			$emailHeader = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailHeader']);
+			$emailHeader = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailHeader']);
 			$emailHeader = str_replace('{email}', $this->input->post('email'), $emailHeader);
-			$emailFooter = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailFooter']);
+			$emailFooter = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailFooter']);
 			$emailFooter = str_replace('{email}', $this->input->post('email'), $emailFooter);
-			$emailAccount = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailAccount']);
+			$emailAccount = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailAccount']);
 			$emailAccount = str_replace('{email}', $this->input->post('email'), $emailAccount);
 			$emailAccount = str_replace('{password}', $this->input->post('password'), $emailAccount);
 			
 		
 			// send email			
-			$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+			$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 			$this->email->to($this->input->post('email'));			
 			$this->email->subject('New account set up on '.$this->site->config['siteName']);
 			$this->email->message($emailHeader."\n\n".$emailAccount."\n\n".$emailFooter);
@@ -578,7 +578,7 @@ class Users extends MX_Controller {
 
 	function ac_search()
 	{
-		$tags = strtolower($_POST["q"]);
+		$tags = strtolower((string)@$_POST["q"]);
         if (!$tags)
         {
         	return FALSE;
@@ -625,13 +625,13 @@ class Users extends MX_Controller {
 				$this->users->set_reset_key($user['userID'], $key);
 
 				// set header and footer
-				$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailHeader']);
+				$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailHeader']);
 				$emailHeader = str_replace('{email}', $user['email'], $emailHeader);
-				$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailFooter']);
+				$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailFooter']);
 				$emailFooter = str_replace('{email}', $user['email'], $emailFooter);
 				
 				// send email			
-				$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+				$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 				$this->email->to($user['email']);			
 				$this->email->subject('Password reset request on '.$this->site->config['siteName']);
 				$this->email->message($emailHeader."\n\nA password reset request has been submitted on ".$this->site->config['siteName'].". If you did not request to have your password reset please ignore this email.\n\nIf you did want to reset your password please click on the link below.\n\n".site_url('users/reset/'.$key)."\n\n".$emailFooter);
@@ -695,13 +695,13 @@ class Users extends MX_Controller {
 				if ($this->core->update('users', $objectID))
 				{	
 					// set header and footer
-					$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailHeader']);
+					$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailHeader']);
 					$emailHeader = str_replace('{email}', $user['email'], $emailHeader);
-					$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailFooter']);
+					$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailFooter']);
 					$emailFooter = str_replace('{email}', $user['email'], $emailFooter);
 								
 					// send email			
-					$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+					$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 					$this->email->to($user['email']);			
 					$this->email->subject('Your password was reset on '.$this->site->config['siteName']);
 					$this->email->message($emailHeader."\n\nYour password for ".$this->site->config['siteName']." has been reset!\n\n".$emailFooter);

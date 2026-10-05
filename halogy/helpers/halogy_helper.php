@@ -297,7 +297,7 @@ function lookup_country($country)
 {
 	$countries = get_country_codes();
 
-	return ucwords(strtolower(@$countries[$country]));
+	return ucwords(strtolower((string)@$countries[$country]));
 }
 
 // helper for displaying countries (no ID)
@@ -391,7 +391,7 @@ function lookup_state($state)
 {
 	$states = get_state_codes();
 
-	return ucwords(strtolower(@$states[$state]));
+	return ucwords(strtolower((string)@$states[$state]));
 }
 
 // helper for displaying countries (no ID)
@@ -447,6 +447,9 @@ function display_image($path, $alt, $size = '', $extras = '', $nopic = FALSE)
 	{
 		$imageHTML = '<img src="'.$path.'" alt="'.$alt.'" ';
 	}
+
+	// image may not exist (getimagesize failed), e.g. when falling back to a no-picture image
+	if (!is_array($imageSize)) $imageSize = array(0, 0);
 
 	if ($size)
 	{

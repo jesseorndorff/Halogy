@@ -73,7 +73,7 @@ class Forums extends MX_Controller {
 					
 					foreach($forums as $forum)
 					{
-						if ($forum['groupID'] > 0 && @!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID'))
+						if ($forum['groupID'] > 0 && !in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID'))
 						{
 							$output['categories'][$category['catID']]['category:forums'] = array();
 						}
@@ -105,7 +105,7 @@ class Forums extends MX_Controller {
 			{
 				foreach($forums as $forum)
 				{
-					if ($forum['groupID'] > 0 && @!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID'))
+					if ($forum['groupID'] > 0 && !in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID'))
 					{
 						$output['forums'][] = array();
 					}
@@ -148,7 +148,7 @@ class Forums extends MX_Controller {
 		}
 
 		// check its not a private forum
-		if ($forum['groupID'] > 0 && (@!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID')))
+		if ($forum['groupID'] > 0 && (!in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID')))
 		{
 			redirect('/forums');
 		}	
@@ -201,7 +201,7 @@ class Forums extends MX_Controller {
 		$forum = $this->forums->get_forum($topic['forumID']);
 
 		// check its not a private forum
-		if ($forum['groupID'] > 0 && (@!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID')))
+		if ($forum['groupID'] > 0 && (!in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID')))
 		{
 			redirect('/forums');
 		}
@@ -215,7 +215,7 @@ class Forums extends MX_Controller {
 					'post:id' => $post['postID'],
 					'post:date' => dateFmt($post['dateCreated']),
 					'post:links' => anchor('/forums/addreply/'.$post['topicID'].'/'.$post['postID'], 'Quote').' | '.
-					(($this->session->userdata('userID') == $post['userID'] || @in_array('forums', $this->permission->permissions)) ? 
+					(($this->session->userdata('userID') == $post['userID'] || in_array('forums', ($this->permission->permissions ?: array()))) ? 
 						anchor('/forums/editpost/'.$post['postID'], 'Edit').' | '.anchor('/forums/deletepost/'.$post['postID'], 'Delete') : ''
 					),
 					'post:body' => bbcode($post['body']),
@@ -233,7 +233,7 @@ class Forums extends MX_Controller {
 		$subscriptions = $this->forums->get_subscriptions($topicID);
 
 		// load add topic form
-		if ($this->session->userdata('session_user') && @in_array('forums', $this->permission->permissions))
+		if ($this->session->userdata('session_user') && in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			// move topic
 			if (count($_POST) && $this->input->post('moveTopic') && intval($this->input->post('forumID')))
@@ -272,10 +272,10 @@ class Forums extends MX_Controller {
 		// populate template
 		$output['forum:title'] = $forum['forumName'];
 		$output['forum:id'] = $forum['forumID'];
-		$output['topic:title'] = $topic['topicTitle'] . (($topic['userID'] == $this->session->userdata('userID') || @in_array('forums', @$this->permission->permissions)) ?
+		$output['topic:title'] = $topic['topicTitle'] . (($topic['userID'] == $this->session->userdata('userID') || in_array('forums', ($this->permission->permissions ?: array()))) ?
 			anchor('/forums/edittopic/'.$topic['topicID'], ' <small>(edit)</small>') : '');
 		$output['topic:id'] = $topic['topicID'];			
-		$output['topic:subscribed'] = (@in_array($this->session->userdata('userID'), $subscriptions)) ? TRUE : FALSE;
+		$output['topic:subscribed'] = (in_array($this->session->userdata('userID'), ($subscriptions ?: array()))) ? TRUE : FALSE;
 		$output['topic:locked'] = ($topic['locked']) ? TRUE : FALSE;
 
 		// get categories
@@ -285,7 +285,7 @@ class Forums extends MX_Controller {
 			{
 				$options['C'.$category['catID']] = '**'.$category['catName'].'**';
 				$catforums = $this->forums->get_forums($category['catID']);
-				foreach ($catforums as $catforum)
+				foreach (($catforums ?: array()) as $catforum)
 				{
 					$options[$catforum['forumID']] = $catforum['forumName'];
 				}
@@ -303,7 +303,7 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 				
 		// set title
 		$output['page:title'] = $topic['topicTitle'].' | Community Forums';		
@@ -409,7 +409,7 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
 		$output['form:title'] = ($this->input->post('title')) ? $this->input->post('title') : '';
@@ -439,7 +439,7 @@ class Forums extends MX_Controller {
 		{
 			show_error('Please make sure you post in a valid topic.');
 		}
-		if ($topic['locked'] && (@!in_array('forums', @$this->permission->permissions)))
+		if ($topic['locked'] && (!in_array('forums', ($this->permission->permissions ?: array()))))
 		{
 			show_error('You cannot reply to this topic as it is locked.');
 		}
@@ -510,7 +510,7 @@ class Forums extends MX_Controller {
 				$subscribers = $this->forums->get_subscriptions($topicID);				
 
 				// subscribe to topic
-				if (@!in_array($this->session->userdata('userID'), $subscribers))
+				if (!in_array($this->session->userdata('userID'), ($subscribers ?: array())))
 				{
 					$this->forums->add_subscription($topicID, $this->session->userdata('userID'));
 				}
@@ -521,12 +521,12 @@ class Forums extends MX_Controller {
 					foreach($users as $sub)
 					{
 						// set header and footer
-						$emailHeader = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], $this->site->config['emailHeader']);
+						$emailHeader = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], (string)$this->site->config['emailHeader']);
 						$emailHeader = str_replace('{email}', $sub['email'], $emailHeader );
-						$emailFooter = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], $this->site->config['emailFooter']);
+						$emailFooter = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], (string)$this->site->config['emailFooter']);
 						$emailFooter = str_replace('{email}', $sub['email'], $emailFooter);
 						
-						$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+						$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 						$this->email->to($sub['email']);			
 						$this->email->subject('Subscription Notification for '.$topic['topicTitle']);
 						$this->email->message($emailHeader."\n\nSomeone replied to a topic you are subscribed to titled \"".$topic['topicTitle']."\".\n\nYou can view this topic by clicking on the link below:\n\n".site_url('/forums/viewpost/'.$postID)."\n\nThey said:\n\"".$this->input->post('body')."\"\n\n".$emailFooter);
@@ -543,7 +543,7 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
 		$output['form:body'] = ($this->input->post('body')) ? $this->input->post('body') : @$quote;
@@ -570,7 +570,7 @@ class Forums extends MX_Controller {
 		{
 			show_error('Please make sure you edit a valid post.');
 		}
-		if ($post['userID'] != $this->session->userdata('userID') && @!in_array('forums', $this->permission->permissions))
+		if ($post['userID'] != $this->session->userdata('userID') && !in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			show_error('You are not authorised to edit this post.');
 		}
@@ -601,7 +601,7 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
 		$output['topic:title'] = $post['topicTitle'];
@@ -628,7 +628,7 @@ class Forums extends MX_Controller {
 		{
 			show_error('Please make sure you edit a valid topic.');
 		}
-		if ($topic['userID'] != $this->session->userdata('userID') && @!in_array('forums', $this->permission->permissions))
+		if ($topic['userID'] != $this->session->userdata('userID') && !in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			show_error('You are not authorised to edit this topic.');
 		}
@@ -659,7 +659,7 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
 		$output['form:title'] = htmlentities($topic['topicTitle']);
@@ -685,7 +685,7 @@ class Forums extends MX_Controller {
 		{
 			show_error('Please make sure you delete a valid post.');
 		}
-		if ($post['userID'] != $this->session->userdata('userID') && @!in_array('forums', $this->permission->permissions))
+		if ($post['userID'] != $this->session->userdata('userID') && !in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			show_error('You are not authorised to delete this post.');
 		}
@@ -747,16 +747,8 @@ class Forums extends MX_Controller {
 
 	function tag($tag = '')
 	{
-		// get partials
-		$output = $this->partials;	
-				
-		$data['posts'] = $this->forums->get_posts_by_tag($tag);
-
-		// set content
-		$output['forum-content'] = $this->parser->parse('read', $data, TRUE);		
-		
-		// display with cms layer
-		$this->pages->view('forum', $output, TRUE);
+		// tag browsing is not supported by the forums model, so send them to the forums index
+		redirect('/forums');
 	}
 
 	function search($forumID, $tag = '')
@@ -812,7 +804,7 @@ class Forums extends MX_Controller {
 
 	function ac_search($forumID)
 	{
-		$tags = strtolower($_POST["q"]);
+		$tags = strtolower((string)@$_POST["q"]);
         if (!$tags)
         {
         	return FALSE;
@@ -872,7 +864,7 @@ class Forums extends MX_Controller {
 		$data['feed_url'] = site_url('/forum');
 		$data['page_description'] = 'Topics RSS feed for '.$this->site->config['siteName'].'.';
 		$data['page_language'] = 'en';
-		$data['creator_email'] = $this->site->config['siteEmail'];
+		$data['creator_email'] = (string)$this->site->config['siteEmail'];
 		$data['posts'] = $this->forums->get_topics($forumID, $limit);
 		
 		$this->output->set_header('Content-Type: application/rss+xml');
@@ -888,7 +880,7 @@ class Forums extends MX_Controller {
 		$data['feed_url'] = site_url('/forum');
 		$data['page_description'] = 'Posts RSS feed for '.$this->site->config['siteName'].'.';
 		$data['page_language'] = 'en';
-		$data['creator_email'] = $this->site->config['siteEmail'];
+		$data['creator_email'] = (string)$this->site->config['siteEmail'];
 		$data['posts'] = $this->forums->get_posts($topicID, $limit);
 		
 		$this->output->set_header('Content-Type: application/rss+xml');
@@ -913,7 +905,7 @@ class Forums extends MX_Controller {
 		$subs = $this->forums->get_subscriptions($topicID);
 
 		// check this user against subs
-		if (@!in_array($this->session->userdata('userID'), $subs))
+		if (!in_array($this->session->userdata('userID'), ($subs ?: array())))
 		{
 			// add subscription
 			$this->forums->add_subscription($topicID, $this->session->userdata('userID'));

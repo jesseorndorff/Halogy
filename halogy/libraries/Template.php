@@ -1121,7 +1121,7 @@ class Template {
 		{
 			foreach($files[1] as $file => $value)
 			{
-				$fileData = $this->get_file($value);
+				if (!$fileData = $this->get_file($value)) continue;
 					
 				$body = str_replace('{file:'.$value.'}', anchor('/files/'.$fileData['fileRef'].$fileData['extension'], 'Download', 'class="file '.str_replace('.', '', $fileData['extension']).'"'), $body);
 			}
