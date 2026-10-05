@@ -184,14 +184,14 @@ class Messages extends MX_Controller {
 				if ($data['user']['notifications'])
 				{
 					// set header and footer
-					$emailHeader = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], $this->site->config['emailHeader']);
+					$emailHeader = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], (string)$this->site->config['emailHeader']);
 					$emailHeader = str_replace('{email}', $data['user']['email'], $emailHeader);
-					$emailFooter = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], $this->site->config['emailFooter']);
+					$emailFooter = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], (string)$this->site->config['emailFooter']);
 					$emailFooter = str_replace('{email}', $data['user']['email'], $emailFooter);
 										
 					// send email
 					$this->load->library('email');
-					$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+					$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 					$this->email->to($data['user']['email']);			
 					$this->email->subject('New Message on '.$this->site->config['siteName']);
 					$this->email->message($emailHeader."\n\n".$this->session->userdata('firstName')." ".$this->session->userdata('lastName')." has sent you a message. You can log in using the link below and read your new message.\n\n".site_url('/messages')."\n\n----------------------------------------\n\nThey said:\n\n".$this->input->post('message')."\n\n----------------------------------------\n\n".$emailFooter);
@@ -269,14 +269,14 @@ class Messages extends MX_Controller {
 				if ($data['user']['notifications'] && $data['message']['userID'] != $this->session->userdata('userID'))
 				{
 					// set header and footer
-					$emailHeader = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], $this->site->config['emailHeader']);
+					$emailHeader = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], (string)$this->site->config['emailHeader']);
 					$emailHeader = str_replace('{email}', $data['user']['email'], $emailHeader);
-					$emailFooter = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], $this->site->config['emailFooter']);
+					$emailFooter = str_replace('{name}', $data['user']['firstName'].' '.$data['user']['lastName'], (string)$this->site->config['emailFooter']);
 					$emailFooter = str_replace('{email}', $data['user']['email'], $emailFooter);
 										
 					// send email
 					$this->load->library('email');
-					$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+					$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 					$this->email->to($data['user']['email']);			
 					$this->email->subject('New Message on '.$this->site->config['siteName']);
 					$this->email->message($emailHeader."\n\n".$this->session->userdata('firstName')." ".$this->session->userdata('lastName')." has sent you a message. You can log in using the link below and read your new message.\n\n".site_url('/messages')."\n\n".$emailFooter);
@@ -362,7 +362,7 @@ class Messages extends MX_Controller {
 
 	function ac_search()
 	{
-		$query = strtolower($_POST["q"]);
+		$query = strtolower((string)@$_POST["q"]);
         if (!$query)
         {
         	return FALSE;

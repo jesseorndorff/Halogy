@@ -66,7 +66,7 @@ $(function(){
 	<div style="display: none;" id="products">
 		<label for="productIDs">Include:</label>
 		<?php
-			$options = '';		
+			$options = array();		
 			if ($products):
 				foreach ($products as $product):
 					$options[$product['productID']] = $product['productName'];
@@ -80,7 +80,7 @@ $(function(){
 	
 	<label for="productID">Then upsell:</label>
 	<?php
-		$options = '';		
+		$options = array();		
 		if ($products):
 			foreach ($products as $products):
 				$options[$products['productID']] = $products['productName'];

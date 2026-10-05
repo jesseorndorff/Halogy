@@ -142,11 +142,12 @@ class Admin extends MX_Controller {
 				$tags = '';
 				if ($this->input->post('tags'))
 				{
+					$tagList = array();
 					foreach (explode(',', $this->input->post('tags')) as $tag)
 					{
-						$tags[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
+						$tagList[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
 					}
-					$tags = implode(', ', $tags);
+					$tags = implode(', ', $tagList);
 				}
 				
 				// set tags
@@ -268,11 +269,12 @@ class Admin extends MX_Controller {
 				$tags = '';
 				if ($this->input->post('tags'))
 				{
+					$tagList = array();
 					foreach (explode(',', $this->input->post('tags')) as $tag)
 					{
-						$tags[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
+						$tagList[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
 					}
-					$tags = implode(', ', $tags);
+					$tags = implode(', ', $tagList);
 				}
 				
 				// set tags
@@ -341,9 +343,9 @@ class Admin extends MX_Controller {
 
 			// set image path!
 			$image = $this->uploads->load_image($productID, true, true);
-			$output['imagePath'] = $image['src'];
+			$output['imagePath'] = ($image) ? $image['src'] : '';
 			$image = $this->uploads->load_image($productID, false, true);
-			$output['imageThumbPath'] = $image['src'];
+			$output['imageThumbPath'] = ($image) ? $image['src'] : '';
 			
 			// get categories
 			$output['categories'] = $this->shop->get_categories();
@@ -390,7 +392,7 @@ class Admin extends MX_Controller {
 	function preview()
 	{
 		// get parsed body
-		$html = $this->template->parse_body($this->input->post('body'));
+		$html = $this->template->parse_body((string)$this->input->post('body'));
 
 		// filter for scripts
 		$html = preg_replace('/<script(.*)<\/script>/is', '<em>This block contained scripts, please refresh page.</em>', $html);
@@ -602,11 +604,11 @@ class Admin extends MX_Controller {
 				if ($this->input->post('trackingStatus') == 'D')
 				{
 					// set header and footer
-					$emailHeader = str_replace('{name}', $output['order']['firstName'].' '.$output['order']['lastName'], $this->site->config['emailHeader']);
+					$emailHeader = str_replace('{name}', $output['order']['firstName'].' '.$output['order']['lastName'], (string)$this->site->config['emailHeader']);
 					$emailHeader = str_replace('{email}', $output['order']['email'], $emailHeader);
-					$emailFooter = str_replace('{name}', $output['order']['firstName'].' '.$output['order']['lastName'], $this->site->config['emailFooter']);
+					$emailFooter = str_replace('{name}', $output['order']['firstName'].' '.$output['order']['lastName'], (string)$this->site->config['emailFooter']);
 					$emailFooter = str_replace('{email}', $output['order']['email'], $emailFooter);
-					$emailDispatch = str_replace('{name}', $output['order']['firstName'].' '.$output['order']['lastName'], $this->site->config['emailDispatch']);
+					$emailDispatch = str_replace('{name}', $output['order']['firstName'].' '.$output['order']['lastName'], (string)$this->site->config['emailDispatch']);
 					$emailDispatch = str_replace('{email}', $output['order']['email'], $emailDispatch);
 					$emailDispatch = str_replace('{order-id}', '#'.$output['order']['transactionCode'], $emailDispatch);
 									
@@ -1366,14 +1368,15 @@ class Admin extends MX_Controller {
 
 	function ac_products()
 	{	
-		$q = strtolower($_GET["q"]);
+		$q = strtolower((string)@$_GET["q"]);
 		if (!$q) return;
 		
 		// form dropdown
 		$results = $this->shop->get_products(NULL, $q);
 		
 		// go foreach
-		foreach((array)$results as $row)
+		$items = array();
+		foreach(($results ?: array()) as $row)
 		{
 			$items[$row['catalogueID']] = $row['productName'];
 		}
@@ -1390,14 +1393,15 @@ class Admin extends MX_Controller {
 	
 	function ac_orders()
 	{	
-		$q = strtolower($_POST["q"]);
+		$q = strtolower((string)@$_POST["q"]);
 		if (!$q) return;
 		
 		// form dropdown
 		$results = $this->shop->get_orders(NULL, NULL, $q);
 		
 		// go foreach
-		foreach((array)$results as $row)
+		$items = array();
+		foreach(($results ?: array()) as $row)
 		{
 			$items[$row['transactionCode']] = trim($row['firstName'].' '.$row['lastName']);
 		}

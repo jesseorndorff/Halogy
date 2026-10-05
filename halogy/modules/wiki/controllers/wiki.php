@@ -91,13 +91,16 @@ class Wiki extends MX_Controller {
 		// load wiki page
 		$wikipage = $this->wiki->get_page(FALSE, $page);
 
+		// default for pages that don't exist yet
+		if (!$wikipage) $wikipage = array('pageID' => 0, 'versionID' => 0, 'catID' => 0, 'uri' => $page, 'pageName' => '', 'body' => '');
+
 		// get versions
-		$versions = $this->wiki->get_versions($page['pageID']);
+		$versions = $this->wiki->get_versions($wikipage['pageID']);
 
 		// get page
 		$output['wikipage'] = $wikipage;
 		$output['wikipage:link'] = site_url('/wiki/edit/'.$this->core->encode($page));
-		$output['wikipage:body'] = mkdn($wikipage['body']);
+		$output['wikipage:body'] = mkdn((string)$wikipage['body']);
 
 		// set title
 		$output['page:title'] = $this->site->config['siteName'].' | Wiki - '.$wikipage['pageName'];
@@ -129,6 +132,9 @@ class Wiki extends MX_Controller {
 
 		// load wiki page
 		$wikipage = $this->wiki->get_page(FALSE, $uri);
+
+		// default for pages that don't exist yet
+		if (!$wikipage) $wikipage = array('pageID' => 0, 'versionID' => 0, 'catID' => 0, 'uri' => $uri, 'pageName' => '', 'body' => '');
 
 		// get versions
 		if ($versions = $this->wiki->get_versions($wikipage['pageID']))
@@ -205,7 +211,8 @@ class Wiki extends MX_Controller {
 	function pages($catID = '')
 	{
 		// get category or fail
-		$category = ($catID && $row = $this->wiki->get_categories($catID)) ? $row['catName'] : 'Uncategorized';
+		$row = ($catID) ? $this->wiki->get_categories($catID) : FALSE;
+		$category = ($row) ? $row['catName'] : 'Uncategorized';
 		
 		// get partials
 		$output = $this->partials;
@@ -226,7 +233,7 @@ class Wiki extends MX_Controller {
 		// set title
 		$output['page:title'] = $this->site->config['siteName'].' | Wiki - '.$category;
 		$output['page:heading'] = $category;
-		$output['page:description'] = mkdn($row['description']);
+		$output['page:description'] = mkdn(($row) ? (string)$row['description'] : '');
 		
 		// display with cms layer
 		$this->pages->view('wiki', $output, TRUE);	

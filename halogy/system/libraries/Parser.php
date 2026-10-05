@@ -141,7 +141,7 @@ class CI_Parser {
 	 */
 	function _parse_single($key, $val, $string)
 	{
-		return str_replace($this->l_delim.$key.$this->r_delim, $val, $string);
+		return str_replace($this->l_delim.$key.$this->r_delim, (string)$val, $string);
 	}
 
 	// --------------------------------------------------------------------
