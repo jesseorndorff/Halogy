@@ -1,42 +1,56 @@
-HALOGY 1.2 INSTALLATION GUIDE
-=============================
+# Halogy
 
-Thank you for downloading Halogy. This guide provides the basic steps needed in order to get Halogy running on your server. 
+Halogy is a content management system built on CodeIgniter 2.1, originally developed by Haloweb around 2011. It features Markdown content blocks, inline editing, template tags, and a suite of built-in modules: pages, blog, events, shop, forums, wiki, community, webforms, files/images, users, and multi-site management. This fork updates it to run on current PHP and MySQL/MariaDB versions.
 
+> **Warning: Legacy Software**
+>
+> This is a legacy, unmaintained codebase running on a patched CodeIgniter 2.1 core. It is not recommended for production use or anything internet-facing. Use this project to explore or preserve a historical CMS. For new projects, consider modern alternatives.
 
-QUICK START GUIDE
-------------------------------
+## Requirements
 
-1. Download the latest repository from https://github.com/jesseorndorff/Halogy
-2. Extract the contents in to your Web Root folder (including the '/static' folder, 'index.php' and the '.htaccess' files).
-3. Run the provided SQL dump in your MySQL database.
-4. Configure your database settings in the '/halogy/config/database.php' file.
+- PHP 8.1 or later (tested on PHP 8.3) with extensions: mysqli, gd, zip, mbstring
+- MariaDB 10.x or MySQL 8.x configured with `sql_mode` allowing zero dates (no strict mode)
+- Apache with mod_rewrite enabled, or any server configured to rewrite requests to index.php
 
--- NOTE: At this point Halogy should run on your domain, but for security reasons we suggest you continue --
+## Quick Start with Docker
 
-5. Move the '/halogy' outside of the Web Root, for example in to the parent directory, or a Code repository folder.
-6. Edit the 'index.php' file, go to line 63, and change the path to your new system folder (e.g. '../halogy').
+The easiest way to run Halogy is with Docker:
 
--- TESTING A NEW SITE --
+```bash
+docker compose up --build
+```
 
-7. Go to 'mydomain.com/admin'.
-8. Login with the default superuser account: (superuser / super123).
-9. Change your superuser password to a more secure password and then create a website administrator by clicking on Users.
+Once running:
+- Open the site at http://localhost:8080
+- Access the admin panel at http://localhost:8080/admin
+- Log in with username `superuser` and password `super123`
+- **Change the password immediately** after first login
 
-You should now be good to go.
+Uploads are stored in the `uploads` named volume and the database in `db_data`. Run `docker compose down` to stop services and preserve both volumes, or `docker compose down -v` to delete them. The compose file runs with `HALOGY_ENV=development` (all PHP errors shown); switch to `production` for anything beyond local exploration.
 
+## Manual Installation
 
-FURTHER CONFIGURATIONS
-------------------------------
+If not using Docker:
 
-Because Halogy is built upon the amazing CodeIgniter framework (http://codeigniter.com), you can easily extend and modify Halogy to
-your hearts content. There are also configurations you can make to Halogy using the standard CodeIgniter configuration files, for
-example the database.php (in /halogy/config), the config.php (for character encoding and compression settings), etc.
+1. Copy all files to your web root (including `index.php`, `.htaccess`, `halogy/`, and `static/`)
+2. Create a database and import `halogy_sql_dump.sql`
+3. Set the environment variables or edit `halogy/config/database.php`:
+   - `HALOGY_DB_HOST`: database hostname
+   - `HALOGY_DB_USER`: database user
+   - `HALOGY_DB_PASS`: database password
+   - `HALOGY_DB_NAME`: database name
+4. Make `static/uploads` (and its subfolders) writable by the web server user: `chown -R www-data:www-data static/uploads`
+5. (Optional) For security, move `halogy/` outside the web root to a parent directory or code repository, then update the `$application_folder` variable in `index.php` to point to it using a full server path (e.g., `$application_folder = '/var/www/halogy'`)
+6. Set `HALOGY_ENV=production` for production use (hides errors); `development` shows all errors
 
+## Extending
 
-MODULES
-------------------------------
+Halogy uses the HMVC pattern: custom modules are mini-applications placed in `halogy/modules/`. See the CodeIgniter 2 documentation for details on building modules. Access them via `yoursite.com/modulename`.
 
-We hope you'll find the built-in modules everything you'll need for your sites, however you are free to build your own modules by
-just building mini-applications (see the CodeIgniter and HMVC documentation) and dropping them in to the Modules folder inside the
-Application. You can then access the modules by going to yoursite.com/module.
+## License
+
+See LICENSE.txt for details.
+
+## What Changed in This Fork
+
+See CHANGELOG.TXT.
