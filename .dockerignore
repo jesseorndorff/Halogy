@@ -9,3 +9,4 @@ Dockerfile
 .env
 .env.local
 halogy_sql_dump.sql
+halogy/config/encryption_key.php

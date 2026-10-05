@@ -373,6 +373,43 @@ class CI_Session {
 	// --------------------------------------------------------------------
 
 	/**
+	 * Regenerate the session ID, keeping all session data
+	 *
+	 * Call this whenever the privilege level of a session changes (login) so
+	 * a session ID known before authentication is useless afterwards.
+	 *
+	 * @access	public
+	 * @return	void
+	 */
+	function sess_regenerate()
+	{
+		$old_sessid = $this->userdata['session_id'];
+		$new_sessid = bin2hex(random_bytes(16));
+
+		$this->userdata['session_id'] = $new_sessid;
+		$this->userdata['last_activity'] = $this->now;
+
+		$cookie_data = NULL;
+
+		if ($this->sess_use_database === TRUE)
+		{
+			// the cookie only carries the default fields, the rest lives in the DB row
+			$cookie_data = array();
+			foreach (array('session_id','ip_address','user_agent','last_activity') as $val)
+			{
+				$cookie_data[$val] = $this->userdata[$val];
+			}
+
+			$this->CI->db->where('session_id', $old_sessid);
+			$this->CI->db->update($this->sess_table_name, array('session_id' => $new_sessid, 'last_activity' => $this->now));
+		}
+
+		$this->_set_cookie($cookie_data);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
 	 * Destroy the current session
 	 *
 	 * @access	public

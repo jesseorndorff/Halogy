@@ -155,6 +155,7 @@ class Halogy extends MX_Controller {
 				$this->core->set['groupID'] = $groupID;	
 				$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
 				$this->core->set['email'] = $this->input->post('adminEmail');
+				$this->core->privilegedUserFields = TRUE;	// superuser-only controller
 				$this->core->update('users');
 							
 				// where to redirect to

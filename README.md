@@ -28,6 +28,8 @@ Once running:
 
 Uploads are stored in the `uploads` named volume and the database in `db_data`. Run `docker compose down` to stop services and preserve both volumes, or `docker compose down -v` to delete them. The compose file runs with `HALOGY_ENV=development` (all PHP errors shown); switch to `production` for anything beyond local exploration.
 
+The image generates its own encryption key (used to sign session and remember-me cookies) at build time; set `HALOGY_ENCRYPTION_KEY` to override it, and note that rebuilding the image generates a new key and logs everyone out unless that variable is set.
+
 ## Manual Installation
 
 If not using Docker:

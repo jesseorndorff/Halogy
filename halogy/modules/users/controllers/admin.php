@@ -141,6 +141,9 @@ class Admin extends MX_Controller {
 			'lastName' => array('label' => 'Last name', 'rules' => 'trim|ucfirst')
 		);
 
+		// admin context: only users with edit permission may set group, active, etc.
+		$this->core->privilegedUserFields = in_array('users_edit', (array)$this->permission->permissions);
+
 		// get values
 		$output['data'] = $this->core->get_values($this->table);
 		$output['groups'] = $this->permission->get_groups();		
@@ -215,6 +218,9 @@ class Admin extends MX_Controller {
 			'firstName' => array('label' => 'First name', 'rules' => 'trim|ucfirst'),
 			'lastName' => array('label' => 'Last name', 'rules' => 'trim|ucfirst')
 		);
+
+		// admin context: only users with edit permission may set group, active, etc.
+		$this->core->privilegedUserFields = in_array('users_edit', (array)$this->permission->permissions);
 
 		// get values
 		$output['data'] = $this->core->get_values($this->table, $objectID);

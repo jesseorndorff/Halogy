@@ -185,6 +185,9 @@ class Auth {
 			return FALSE;
 		}
 		
+		// new session ID on privilege change, prevents session fixation
+		$this->CI->session->sess_regenerate();
+
 		// set session data
 		$this->CI->session->set_userdata($row);
 		
@@ -206,9 +209,15 @@ class Auth {
 		return array('logged_in', 'session_user', 'session_admin');
 	}
 
-	function _remember_signature($userID, $expiry, $sessionName, $passwordHash)
+	// site a remember me cookie is valid for (superusers are cross-site, so 0)
+	function _remember_scope($groupID)
 	{
-		return hash_hmac('sha256', $userID.'|'.$expiry.'|'.$sessionName.'|'.$passwordHash, (string)$this->CI->config->item('encryption_key'));
+		return ($groupID < 0) ? 0 : (int)$this->siteID;
+	}
+
+	function _remember_signature($userID, $expiry, $sessionName, $passwordHash, $scope)
+	{
+		return hash_hmac('sha256', $userID.'|'.$expiry.'|'.$sessionName.'|'.$scope.'|'.$passwordHash, (string)$this->CI->config->item('encryption_key'));
 	}
 
 	// set the signed remember me cookie for the user who just logged in
@@ -222,7 +231,7 @@ class Auth {
 		}
 
 		$expiry = time() + 604800;
-		$value = $userID.'|'.$expiry.'|'.$sessionName.'|'.$this->_remember_signature($userID, $expiry, $sessionName, $this->passwordHash);
+		$value = $userID.'|'.$expiry.'|'.$sessionName.'|'.$this->_remember_signature($userID, $expiry, $sessionName, $this->passwordHash, $this->_remember_scope($this->CI->session->userdata('groupID')));
 
 		return setcookie($this->CI->config->item('cookie_prefix').'halogy', $value, array(
 			'expires'  => $expiry,
@@ -246,13 +255,16 @@ class Auth {
 
 		list($userID, $expiry, $sessionName, $signature) = $parts;
 
-		$query = $this->CI->db->get_where($this->table, array('userID' => $userID));
+		// only this site's users, apart from superusers who are cross-site
+		$this->CI->db->where('userID', $userID);
+		$this->CI->db->where('(groupID < 0 OR siteID = '.(int)$this->siteID.')', NULL, FALSE);
+		$query = $this->CI->db->get($this->table);
 
 		if ($query->num_rows() > 0)
 		{
 			$row = $query->row_array();
 
-			if ($row['password'] && hash_equals($this->_remember_signature($userID, $expiry, $sessionName, $row['password']), $signature))
+			if ($row['password'] && hash_equals($this->_remember_signature($userID, $expiry, $sessionName, $row['password'], $this->_remember_scope($row['groupID'])), $signature))
 			{
 				return $this->start_session($row, $sessionName);
 			}

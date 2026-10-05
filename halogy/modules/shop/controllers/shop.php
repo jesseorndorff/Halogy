@@ -1011,25 +1011,11 @@ class Shop extends MX_Controller {
 			'phone' => array('label' => 'Phone', 'rules' => 'required|trim')
 		);	
 
-		// security check
-		if ($this->input->post('username')) $this->core->set['username'] = '';
-		if ($this->input->post('premium')) $this->core->set['premium'] = '';
-		if ($this->input->post('siteID')) $this->core->set['siteID'] = $this->siteID;
-		if ($this->input->post('userID')) $this->core->set['userID'] = '';
-		if ($this->input->post('resellerID')) $this->core->set['resellerID'] = '';
-		if ($this->input->post('kudos')) $this->core->set['kudos'] = '';
-		if ($this->input->post('posts')) $this->core->set['posts'] = '';		
+		// security check: privileged columns are never taken from POST (see Core::get_values)
+		$this->core->set['siteID'] = $this->siteID;
 
-		// set folder (making sure it's not an admin folder)
-		$permissionGroupsArray = $this->permission->get_groups('admin');
-		foreach(($permissionGroupsArray ?: array()) as $group)
-		{
-			$permissionGroups[$group['groupID']] = $group['groupName'];
-		}				
-		if ($this->input->post('groupID') > 0 && !in_array($this->input->post('groupID'), (@$permissionGroups ?: array())))
-		{
-			$this->core->set['groupID'] = $this->input->post('groupID');
-		}
+		// set group: only a plain non-admin group of this site may be chosen by the visitor
+		$this->core->set['groupID'] = $this->core->registration_group();
 
 		// set date
 		$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
