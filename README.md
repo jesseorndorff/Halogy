@@ -41,7 +41,7 @@ If not using Docker:
    - `HALOGY_DB_USER`: database user
    - `HALOGY_DB_PASS`: database password
    - `HALOGY_DB_NAME`: database name
-4. Set `HALOGY_ENCRYPTION_KEY` (used to sign session and remember-me cookies). Generate a key with `php -r "echo bin2hex(random_bytes(32));"` and set it as an environment variable, or make `halogy/config` writable by the web server so the app can create `halogy/config/encryption_key.php` on first request.
+4. Set `HALOGY_ENCRYPTION_KEY` (used to sign session and remember-me cookies). Generate a key with `php -r "echo bin2hex(random_bytes(32));"` and set it as an environment variable, or make `halogy/config` writable by the web server so the app can create `halogy/config/encryption_key.php` on first request. Behind a TLS-terminating proxy, see the proxy note in the CSRF section of halogy/config/config.php.
 5. Make `static/uploads` (and its subfolders) writable by the web server user: `chown -R www-data:www-data static/uploads`
 6. (Optional) For security, move `halogy/` outside the web root to a parent directory or code repository, then update the `$application_folder` variable in `index.php` to point to it using a full server path (e.g., `$application_folder = '/var/www/halogy'`)
 7. `HALOGY_ENV` defaults to `production` (hides PHP and database errors); set `HALOGY_ENV=development` to show them while developing
@@ -58,9 +58,10 @@ To upgrade an existing Halogy 1.x installation:
 6. Set `HALOGY_ENCRYPTION_KEY` or make `halogy/config` writable so the app can generate it. If you run more than one web server, set the same HALOGY_ENCRYPTION_KEY on all of them; changing or losing the key logs everyone out.
 7. All users are logged out once, including remember-me logins (cookie formats changed); they can log in with their existing passwords.
 8. Script execution in static/uploads is blocked by an Apache .htaccess; on other web servers (e.g. nginx) configure the equivalent yourself.
-9. Upload allow-lists were tightened (no js/swf; dangerous types are stripped from web form file types), so review your web form file type settings.
-10. Grant the pages_navigation permission to admin groups that need it. The SQL only adds the permission; tick 'Allow Navigation' for each admin group that needs it.
-11. HALOGY_ENV defaults to production, which hides errors; if the upgraded site shows a blank page or HTTP 500, set HALOGY_ENV=development temporarily to see the error. If you let the app create halogy/config/encryption_key.php, make halogy/config read-only again afterwards.
+9. Behind a TLS-terminating proxy or load balancer, PHP must see the request as HTTPS: set $_SERVER['HTTPS'] = 'on' in index.php only when your own proxy sets X-Forwarded-Proto (see the CSRF section of halogy/config/config.php), otherwise POSTs from browsers that do not send Sec-Fetch-Site may be refused and the __Host- cookie prefix is not used.
+10. Upload allow-lists were tightened (no js/swf; dangerous types are stripped from web form file types), so review your web form file type settings.
+11. Grant the pages_navigation permission to admin groups that need it. The SQL only adds the permission; tick 'Allow Navigation' for each admin group that needs it.
+12. HALOGY_ENV defaults to production, which hides errors; if the upgraded site shows a blank page or HTTP 500, set HALOGY_ENV=development temporarily to see the error. If you let the app create halogy/config/encryption_key.php, make halogy/config read-only again afterwards.
 
 See CHANGELOG.TXT for full upgrade details and known limitations.
 
@@ -75,7 +76,7 @@ See LICENSE.txt for details.
 ## What Changed in This Fork
 
 - PHP 8.1 or later (tested on 8.3) with MariaDB 10.x / MySQL 8
-- Security hardening: password_hash() with automatic upgrade of MD5 passwords, signed session and remember-me cookies, origin-checked CSRF protection for POST requests with same-origin verification and confirmation pages for state-changing links, HttpOnly/SameSite cookies, a per-install encryption key, escaping of member/visitor content (wiki, forum posts, blog comments, shop reviews, webform tickets), and a fix for a privilege escalation in public registration
+- Security hardening: password_hash() with automatic upgrade of MD5 passwords, signed session and remember-me cookies, CSRF protection that checks the request origin (Sec-Fetch-Site, Origin, Referer) or a token on POSTs, and a confirmation page for state-changing links, HttpOnly/SameSite cookies, a per-install encryption key, escaping of member/visitor content (wiki, forum posts, blog comments, shop reviews, webform tickets), and a fix for a privilege escalation in public registration
 - Fixed known PHP 8 fatal errors and deprecation warnings across the modules
 - Docker setup for one-command local development
 - Environment-based database configuration
