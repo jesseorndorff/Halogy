@@ -1,6 +1,22 @@
 # HALOGY CHANGE LOG
 --------------------
 
+## Version 2.0.0 (community fork)
+
+- **Runs on modern PHP and databases**: PHP 8.1-8.4 (tested on 8.3), MariaDB 10.x / MySQL 8; CodeIgniter 2.1 core and HMVC patched for PHP 8 (no fatals/deprecations); mysqli driver replaces removed mysql extension; permissive session sql_mode set on connect (dump uses zero dates); DB settings from HALOGY_DB_HOST/USER/PASS/NAME env vars; environment from HALOGY_ENV (defaults to production); ZipArchive replaces removed zip_* functions for image and template zip uploads; hundreds of PHP 8 runtime errors fixed across all modules (pages, blog, events, shop, forums, wiki, community, webforms, files, images, users, admin).
+
+- **Security**: passwords stored with password_hash(); existing MD5 passwords upgraded automatically on next login; remember-me cookie replaced with a signed token (the old one stored the plaintext password and was unserialized from the request); session cookies signed with HMAC-SHA256, random session IDs, regenerated on login, HttpOnly/SameSite; encryption key read from HALOGY_ENCRYPTION_KEY or generated per install (no more shared hard-coded key); fixed privilege escalation where public registration and account forms accepted a posted groupID (an anonymous visitor could make themselves an administrator); CSRF protection for all forms, AJAX requests and state-changing links (delete/approve/publish/revert/logout), with payment gateway callbacks exempted; production mode hides PHP and database errors; uploads directory blocks script execution; dangerous file types removed from upload allow-lists; security headers (nosniff, X-Frame-Options, Referrer-Policy); random reset keys and generated passwords; unserialize hardened; SQL injection hardening of admin list ordering; backup no longer leaks other sites' tags.
+
+- **Fixes**: missing "pages_navigation" permission added (navigation admin was inaccessible); backup works with tables lacking siteID; shop upsell rule, order sorting, cart quantity validation; forums/wiki/community fatals; events tag pages; template editor JS error with jQuery 2; webform account creation fatal.
+
+- **Docker**: Dockerfile (PHP 8.3 + Apache) and docker-compose.yml (MariaDB 10.11) for one-command local setup.
+
+- **Upgrading an existing install**: back up first; run halogy/sql/upgrade-2.0.sql (adds the pages_navigation permission and widens ha_users.password to 255 chars — check the file to describe accurately); set HALOGY_ENCRYPTION_KEY or make halogy/config writable on first request (the app writes halogy/config/encryption_key.php); everyone is logged out once (cookie formats changed); grant the new navigation permission to admin groups that need it; in the database config, switch to the mysqli driver (the new database.php reads env vars).
+
+- **Known limitations**: still CodeIgniter 2.1 underneath (end-of-life framework, patched, not upgraded); not recommended for production or internet-facing use; changing your password from the front-end account page does not ask for the current password (account forms are per-site templates); forgotten-password pages reveal whether an email is registered, and reset emails include a new plaintext password; reset keys don't expire; backups include only tables with a siteID column (plus tags) — custom tables without siteID are exported as schema only; a CSRF token rotated by logging in in one tab makes other open tabs show an error until reloaded.
+
+--------------------
+
 ## Version 1.2.0
 
 - Updated CodeIgniter to version 2.1
