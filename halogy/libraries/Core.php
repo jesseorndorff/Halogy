@@ -28,6 +28,9 @@ class Core {
 	var $where = array();
 	var $set = array();
 	var $required = array();
+	var $privilegedUserFields = FALSE;	// admin context: allow POST to set privileged users columns
+	var $postTable = '';			// table currently being written by update()
+	var $generatedPassword = '';	// last password generated for a new user
 	
 	function __construct()
 	{	
@@ -605,11 +608,11 @@ class Core {
 				// require password confirm?
 				if (isset($_POST['confirmPassword']))
 				{
-					$this->form_validation->set_rules('password', 'Password', 'required|matches[confirmPassword]');
+					$this->CI->form_validation->set_rules('password', 'Password', 'required|matches[confirmPassword]');
 				}
 				else
 				{
-					$this->form_validation->set_rules('password', 'Password', 'required');
+					$this->CI->form_validation->set_rules('password', 'Password', 'required');
 				}
 			}
 		}
@@ -651,7 +654,7 @@ class Core {
 				{
 					$this->CI->load->library('auth');
 					$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->CI->input->post('email'));
-					$password = ($this->CI->input->post('password')) ? $this->CI->input->post('password', TRUE) : substr(md5(time()),0,6);
+					$password = ($this->CI->input->post('password')) ? $this->CI->input->post('password', TRUE) : $this->generatedPassword;
 
 					// login or get error message
 					if (!$this->CI->auth->login($username, $password, 'session_user', FALSE))
@@ -789,7 +792,7 @@ class Core {
 				$body .= "Your login details are below:\n";
 				$body .= "---------------------------------------------\n\n";
 				$body .= "Your email: \t".$this->CI->input->post('email')."\n";
-				$body .= "Your password: \t".(($this->CI->input->post('password', TRUE)) ? $this->CI->input->post('password', TRUE) : substr(md5(time()),0,6))."\n\n";
+				$body .= "Your password: \t".(($this->CI->input->post('password', TRUE)) ? $this->CI->input->post('password', TRUE) : $this->generatedPassword)."\n\n";
 				$body .= "---------------------------------------------\n\n";
 			}
 			
@@ -831,31 +834,43 @@ class Core {
 		}
 	}
 
+	// works out which group a self-registering visitor may join
+	// returns a strictly validated, non-admin group ID of this site, or 0 (default member group)
+	function registration_group()
+	{
+		$groupID = $this->CI->input->post('groupID');
+
+		// strict positive integer string only (rejects -1, 1abc, 1.0, arrays, etc.)
+		if (!is_string($groupID) || !preg_match('/^[1-9][0-9]{0,9}$/', $groupID))
+		{
+			return 0;
+		}
+
+		// must be an existing group of this site with no admin permissions
+		$this->CI->load->library('permission');
+		$groups = $this->CI->permission->get_groups('normal');
+		foreach (($groups ?: array()) as $group)
+		{
+			if ((string)$group['groupID'] === $groupID && (int)$group['groupID'] > 0)
+			{
+				return (int)$groupID;
+			}
+		}
+
+		return 0;
+	}
+
 	function create_user()
 	{
 		// get values
 		$this->CI->core->get_values('users');	
 
-		// security check
-		if ($this->CI->input->post('username')) $this->CI->core->set['username'] = '';
+		// security check: privileged columns are never taken from POST (see get_values)
 		if ($this->CI->input->post('subscribed')) $this->CI->core->set['subscribed'] = '';
-		if ($this->CI->input->post('plan')) $this->CI->core->set['plan'] = '';
-		if ($this->CI->input->post('siteID')) $this->CI->core->set['siteID'] = $this->siteID;
-		if ($this->CI->input->post('userID')) $this->CI->core->set['userID'] = '';
-		if ($this->CI->input->post('kudos')) $this->CI->core->set['kudos'] = '';
-		if ($this->CI->input->post('posts')) $this->CI->core->set['posts'] = '';
+		$this->CI->core->set['siteID'] = $this->siteID;
 
-		// set folder (making sure it's not an admin folder)
-		$permissionGroups = array();
-		$permissionGroupsArray = $this->CI->permission->get_groups('admin');
-		foreach(($permissionGroupsArray) ? $permissionGroupsArray : array() as $group)
-		{
-			$permissionGroups[$group['groupID']] = $group['groupName'];
-		}				
-		if ($this->CI->input->post('groupID') > 0 && !in_array($this->CI->input->post('groupID'), (array)$permissionGroups))
-		{
-			$this->CI->core->set['groupID'] = $this->CI->input->post('groupID');
-		}
+		// set group: only a plain non-admin group of this site may be chosen by the visitor
+		$this->CI->core->set['groupID'] = $this->registration_group();
 
 		// set date
 		$this->CI->core->set['dateCreated'] = date("Y-m-d H:i:s");
@@ -893,15 +908,13 @@ class Core {
 		// generate password
 		if (!$this->CI->input->post('password'))
 		{
-			$password = md5(substr(md5(time()),0,6));
-			$this->CI->core->set['password'] = $password;
+			$password = $this->random_password();
+			$this->generatedPassword = $password;
+			$this->CI->core->set['password'] = $this->hash_password($password);
 		}
 
 		// set manual activation
-		if ($this->CI->site->config['activation'])
-		{
-			$this->CI->core->set['active'] = 0;
-		}
+		$this->CI->core->set['active'] = ($this->CI->site->config['activation']) ? 0 : 1;
 
 		// set email on flash data
 		$flashEmail = $this->CI->session->flashdata('email');
@@ -974,6 +987,31 @@ class Core {
 		}
 	}
 
+	// removes privileged and system users columns from posted data
+	function strip_user_fields($post)
+	{
+		// never settable from a form
+		$system = array('userID', 'siteID', 'resellerID', 'premium', 'dateCreated', 'dateModified', 'lastLogin', 'resetkey', 'bounced', 'posts');
+
+		// only settable by an admin controller that has set privilegedUserFields
+		$privileged = array('groupID', 'active', 'username', 'plan', 'kudos');
+
+		foreach ($system as $field)
+		{
+			unset($post[$field]);
+		}
+
+		if (!$this->privilegedUserFields)
+		{
+			foreach ($privileged as $field)
+			{
+				unset($post[$field]);
+			}
+		}
+
+		return $post;
+	}
+
 	// gets values from post and/or the row
 	function get_values($data = '', $id = '')
 	{
@@ -1004,9 +1042,18 @@ class Core {
 			}
 		}
 
+		// work out which table this is for (update() passes a row, so it sets postTable)
+		$valuesTable = (is_string($data) && $data != '') ? $data : $this->postTable;
+
 		// get post if there is any
 		if ($post = $this->get_post())
 		{
+			// never let POST set privileged/system columns of the users table
+			if ($valuesTable === 'users')
+			{
+				$post = $this->strip_user_fields($post);
+			}
+
 			// check posted data is in fields
 			foreach ($post as $field => $value)
 			{
@@ -1024,7 +1071,7 @@ class Core {
 						{
 							if ($value != '')
 							{
-								$values[$field] = md5($value);
+								$values[$field] = $this->hash_password($value);
 							}
 						}
 		
@@ -1213,7 +1260,9 @@ class Core {
 			}
 
 			// get values
+			$this->postTable = $table;
 			$values = @$this->get_values($row);
+			$this->postTable = '';
 
 			// check posted data is in fields
 			foreach ($values as $field => $value)
@@ -1363,6 +1412,34 @@ class Core {
 	}	
 
 	// encode url
+	// hash a password for storage
+	function hash_password($password)
+	{
+		$this->CI->load->library('auth');
+
+		return $this->CI->auth->hash_password($password);
+	}
+
+	// random token for reset keys etc (32 hex chars)
+	function random_key()
+	{
+		return bin2hex(random_bytes(16));
+	}
+
+	// random human friendly password, no look-alike characters
+	function random_password($length = 10)
+	{
+		$alphabet = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+		$password = '';
+
+		for ($i = 0; $i < $length; $i++)
+		{
+			$password .= $alphabet[random_int(0, strlen($alphabet) - 1)];
+		}
+
+		return $password;
+	}
+
 	function encode($data)
 	{
 		return strtr(rtrim(base64_encode($data), '='), '+/', '-_');

@@ -25,6 +25,12 @@ RUN echo 'ServerName localhost' > /etc/apache2/conf-available/servername.conf &&
 # Copy the application code
 COPY . /var/www/html
 
+# Generate a random encryption key at build time (HALOGY_ENCRYPTION_KEY overrides it).
+# halogy/config is not writable by www-data, so it cannot be created at runtime.
+RUN php -r "file_put_contents('/var/www/html/halogy/config/encryption_key.php', '<?php return '.var_export(bin2hex(random_bytes(32)), true).';'.PHP_EOL);" \
+    && chown www-data:www-data /var/www/html/halogy/config/encryption_key.php \
+    && chmod 600 /var/www/html/halogy/config/encryption_key.php
+
 # Fix permissions for uploads directory
 RUN chown -R www-data:www-data /var/www/html/static/uploads
 

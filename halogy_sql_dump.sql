@@ -1144,7 +1144,7 @@ CREATE TABLE `ha_tracking` (
 CREATE TABLE `ha_users` (
   `userID` int(11) NOT NULL auto_increment,
   `username` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-  `password` varchar(32) collate utf8_unicode_ci default NULL,
+  `password` varchar(255) collate utf8_unicode_ci default NULL,
   `groupID` int(11) NOT NULL default '0',
   `email` varchar(100) collate utf8_unicode_ci default NULL,
   `subscription` enum('Y','E','P','N') collate utf8_unicode_ci NOT NULL default 'Y',

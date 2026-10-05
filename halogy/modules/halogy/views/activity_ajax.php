@@ -7,7 +7,7 @@
 		<?php foreach($recentActivity as $visit): $style = ''; ?>
 		<?php
 			// get userdata
-			$userdata = @unserialize($visit['userdata']);
+			$userdata = @unserialize($visit['userdata'], ['allowed_classes' => false]);
 			$style = '';
 		?>	
 			<li style="background: #FFFCDF;">
@@ -38,7 +38,7 @@
 	<?php foreach($todaysActivity as $visit): $style = ''; ?>
 	<?php
 		// get userdata
-		$userdata = @unserialize($visit['userdata']);
+		$userdata = @unserialize($visit['userdata'], ['allowed_classes' => false]);
 	?>	
 		<li>
 			<?php if ($userdata): ?>
@@ -72,7 +72,7 @@
 	<?php foreach($yesterdaysActivity as $visit): $style = ''; ?>
 	<?php
 		// get userdata
-		$userdata = @unserialize($visit['userdata']);
+		$userdata = @unserialize($visit['userdata'], ['allowed_classes' => false]);
 	?>	
 		<li>
 			<?php if ($userdata): ?>
