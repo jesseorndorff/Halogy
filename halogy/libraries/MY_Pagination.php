@@ -39,6 +39,7 @@
 * $query = $this->db->get('my_table');
 *
 */
+#[\AllowDynamicProperties]
 class MY_Pagination extends CI_Pagination {
 
     var $offset = 0;

@@ -16,6 +16,7 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Auth {
 
 	// set defaults
@@ -26,7 +27,7 @@ class Auth {
 	var $sessionName = 'logged_in';			// name of session
 	var $error = '';						// error message
 	
-	function Auth()
+	function __construct()
 	{
 		$this->CI =& get_instance();
 

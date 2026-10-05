@@ -33,6 +33,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  **/
+#[\AllowDynamicProperties]
 class MX_Config extends CI_Config 
 {	
 	public function load($file = 'config', $use_sections = FALSE, $fail_gracefully = FALSE, $_module = '') {

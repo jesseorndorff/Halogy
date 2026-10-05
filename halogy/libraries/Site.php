@@ -16,6 +16,7 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Site {
 	
 	var $siteID;
@@ -23,7 +24,7 @@ class Site {
 	var $config = array();
 	var $plans = array();
 
-	function Site()
+	function __construct()
 	{
 		// init vars
 		$this->CI =& get_instance();

@@ -16,6 +16,7 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Permission {
 
 	// init vars
@@ -29,7 +30,7 @@ class Permission {
 	var $sitePermissions = array();
 	var $siteGroupID = '';
 
-	function Permission()
+	function __construct()
 	{
 		// init vars
 		$this->CI =& get_instance();

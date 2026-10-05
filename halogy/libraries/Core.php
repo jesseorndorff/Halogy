@@ -16,6 +16,7 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Core {
 	
 	var $CI;						// CI instance
@@ -28,7 +29,7 @@ class Core {
 	var $set = array();
 	var $required = array();
 	
-	function Core()
+	function __construct()
 	{	
 		// init vars
 		$this->CI =& get_instance();

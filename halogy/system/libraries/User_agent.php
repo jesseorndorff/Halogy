@@ -26,6 +26,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/user_agent.html
  */
+#[\AllowDynamicProperties]
 class CI_User_agent {
 
 	var $agent		= NULL;

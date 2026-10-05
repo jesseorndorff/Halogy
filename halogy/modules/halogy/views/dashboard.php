@@ -203,7 +203,7 @@ $(function(){
 				</td>
 				<td>
 					<?php
-						$difference = @round(100 / $numUsersYesterday * ($numUsersToday - $numUsersYesterday), 2);
+						$difference = ($numUsersYesterday) ? round(100 / $numUsersYesterday * ($numUsersToday - $numUsersYesterday), 2) : 0;
 						$polarity = ($difference < 0) ? '' : '+';
 					?>						
 					<?php if ($difference != 0): ?>
@@ -222,7 +222,7 @@ $(function(){
 				</td>
 				<td>
 					<?php
-						$difference = @round(100 / $numUsersLastWeek * ($numUsersWeek - $numUsersLastWeek), 2);
+						$difference = ($numUsersLastWeek) ? round(100 / $numUsersLastWeek * ($numUsersWeek - $numUsersLastWeek), 2) : 0;
 						$polarity = ($difference < 0) ? '' : '+';
 					?>				
 					<?php if ($difference != 0): ?>

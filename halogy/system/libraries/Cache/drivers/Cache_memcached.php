@@ -25,6 +25,7 @@
  * @link		
  */
 
+#[\AllowDynamicProperties]
 class CI_Cache_memcached extends CI_Driver {
 
 	private $_memcached;	// Holds the memcached object

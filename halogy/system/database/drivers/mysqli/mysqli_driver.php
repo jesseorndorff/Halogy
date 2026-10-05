@@ -28,6 +28,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
+#[\AllowDynamicProperties]
 class CI_DB_mysqli_driver extends CI_DB {
 
 	var $dbdriver = 'mysqli';
@@ -67,15 +68,28 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	function db_connect()
 	{
+		// PHP 8.1+ throws exceptions by default, CI handles errors itself
+		if (function_exists('mysqli_report'))
+		{
+			mysqli_report(MYSQLI_REPORT_OFF);
+		}
+
 		if ($this->port != '')
 		{
-			return @mysqli_connect($this->hostname, $this->username, $this->password, $this->database, $this->port);
+			$conn_id = @mysqli_connect($this->hostname, $this->username, $this->password, $this->database, $this->port);
 		}
 		else
 		{
-			return @mysqli_connect($this->hostname, $this->username, $this->password, $this->database);
+			$conn_id = @mysqli_connect($this->hostname, $this->username, $this->password, $this->database);
 		}
 
+		if ($conn_id)
+		{
+			// Halogy relies on non-strict behaviour (e.g. '0000-00-00' dates)
+			@mysqli_query($conn_id, "SET SESSION sql_mode = 'NO_ENGINE_SUBSTITUTION'");
+		}
+
+		return $conn_id;
 	}
 
 	// --------------------------------------------------------------------
@@ -104,7 +118,7 @@ class CI_DB_mysqli_driver extends CI_DB {
 	 */
 	function reconnect()
 	{
-		if (mysqli_ping($this->conn_id) === FALSE)
+		if ($this->conn_id === FALSE OR @mysqli_query($this->conn_id, 'SELECT 1') === FALSE)
 		{
 			$this->conn_id = FALSE;
 		}
@@ -313,7 +327,7 @@ class CI_DB_mysqli_driver extends CI_DB {
 
 		if (function_exists('mysqli_real_escape_string') AND is_object($this->conn_id))
 		{
-			$str = mysqli_real_escape_string($this->conn_id, $str);
+			$str = mysqli_real_escape_string($this->conn_id, (string) $str);
 		}
 		elseif (function_exists('mysql_escape_string'))
 		{

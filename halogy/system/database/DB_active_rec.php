@@ -26,6 +26,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
+#[\AllowDynamicProperties]
 class CI_DB_active_record extends CI_DB_driver {
 
 	var $ar_select				= array();
@@ -221,7 +222,8 @@ class CI_DB_active_record extends CI_DB_driver {
 	{
 		if (strpos($item, '.') !== FALSE)
 		{
-			return end(explode('.', $item));
+			$parts = explode('.', $item);
+			return end($parts);
 		}
 
 		return $item;

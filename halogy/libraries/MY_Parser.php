@@ -24,6 +24,7 @@
  * @author		Haloweb Ltd
  */
 
+#[\AllowDynamicProperties]
 class MY_Parser extends CI_Parser {
 	
 	/**

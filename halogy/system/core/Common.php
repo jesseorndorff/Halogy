@@ -187,7 +187,7 @@ if ( ! function_exists('load_class'))
 */
 if ( ! function_exists('is_loaded'))
 {
-	function is_loaded($class = '')
+	function &is_loaded($class = '')
 	{
 		static $_is_loaded = array();
 
@@ -254,7 +254,8 @@ if ( ! function_exists('get_config'))
 			}
 		}
 
-		return $_config[0] =& $config;
+		$_config[0] =& $config;
+		return $_config[0];
 	}
 }
 
@@ -346,7 +347,7 @@ if ( ! function_exists('show_404'))
 */
 if ( ! function_exists('log_message'))
 {
-	function log_message($level = 'error', $message, $php_error = FALSE)
+	function log_message($level, $message, $php_error = FALSE)
 	{
 		static $_log;
 
@@ -468,16 +469,6 @@ if ( ! function_exists('_exception_handler'))
 {
 	function _exception_handler($severity, $message, $filepath, $line)
 	{
-		 // We don't bother with "strict" notices since they tend to fill up
-		 // the log file with excess information that isn't normally very helpful.
-		 // For example, if you are running PHP 5 and you use version 4 style
-		 // class functions (without prefixes like "public", "private", etc.)
-		 // you'll get notices telling you that these have been deprecated.
-		if ($severity == E_STRICT)
-		{
-			return;
-		}
-
 		$_error =& load_class('Exceptions', 'core');
 
 		// Should we display the error? We'll get the current error_reporting
@@ -555,8 +546,36 @@ if ( ! function_exists('html_escape'))
 		}
 		else
 		{
-			return htmlspecialchars($var, ENT_QUOTES, config_item('charset'));
+			return htmlspecialchars((string) $var, ENT_QUOTES, config_item('charset'));
 		}
+	}
+}
+
+// ------------------------------------------------------------------------
+
+/**
+* each() polyfill
+*
+* each() was removed in PHP 8, the XML-RPC library still relies on it.
+*
+* @access	public
+* @param	array
+* @return	array|bool
+*/
+if ( ! function_exists('each'))
+{
+	function each(&$array)
+	{
+		if ( ! is_array($array) OR key($array) === NULL)
+		{
+			return FALSE;
+		}
+
+		$key = key($array);
+		$value = current($array);
+		next($array);
+
+		return array(1 => $value, 'value' => $value, 0 => $key, 'key' => $key);
 	}
 }
 

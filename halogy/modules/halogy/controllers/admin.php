@@ -490,14 +490,11 @@ class Admin extends MX_Controller {
 			$i = 0;
 			$field_str = '';
 			$is_int = array();
-			while ($field = mysql_fetch_field($query->result_id))
+			$int_types = array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_INT24, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG);
+			foreach (mysqli_fetch_fields($query->result_id) as $field)
 			{
 				// Most versions of MySQL store timestamp as a string
-				$is_int[$i] = (in_array(
-										strtolower(mysql_field_type($query->result_id, $i)),
-										array('tinyint', 'smallint', 'mediumint', 'int', 'bigint'), //, 'timestamp'), 
-										TRUE)
-										) ? TRUE : FALSE;
+				$is_int[$i] = in_array($field->type, $int_types, TRUE);
 										
 				// Create a string of field names
 				$field_str .= '`'.$field->name.'`, ';

@@ -225,6 +225,7 @@ class Admin extends MX_Controller {
 		}
 
 		// check that this is not the live version and then add page version
+		$versionIDs = array();
 		if ($output['versions'])
 		{
 			foreach ($output['versions'] as $version)
@@ -1091,8 +1092,8 @@ class Admin extends MX_Controller {
 				$body = str_replace('[!!ADDBLOCK!!]', '', $_POST['body']);
 	
 				// check character set
-				$body = htmlentities($body, NULL, 'UTF-8');
-				$body = html_entity_decode($body, NULL, 'UTF-8');
+				$body = htmlentities($body, ENT_COMPAT, 'UTF-8');
+				$body = html_entity_decode($body, ENT_COMPAT, 'UTF-8');
 	
 				// add block
 				@$this->core->add_block($body, $versionID, $block);

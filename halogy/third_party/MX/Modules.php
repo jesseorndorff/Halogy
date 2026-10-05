@@ -43,6 +43,7 @@ spl_autoload_register('Modules::autoload');
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  **/
+#[\AllowDynamicProperties]
 class Modules
 {
 	public static $routes, $registry, $locations;
@@ -77,10 +78,10 @@ class Modules
 	/** Load a module controller **/
 	public static function load($module) {
 		
-		(is_array($module)) ? list($module, $params) = each($module) : $params = NULL;	
+		(is_array($module)) ? list($module, $params) = array(key($module), current($module)) : $params = NULL;	
 		
 		/* get the requested controller class name */
-		$alias = strtolower(end(explode('/', $module)));
+		$alias = strtolower(substr(strrchr('/'.$module, '/'), 1));
 
 		/* return an existing controller from the registry */
 		if (isset(self::$registry[$alias])) return self::$registry[$alias];

@@ -25,6 +25,7 @@
  * @link		
  */
 
+#[\AllowDynamicProperties]
 class CI_Cache_apc extends CI_Driver {
 
 	/**

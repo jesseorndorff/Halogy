@@ -16,6 +16,7 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Uploads {
 
 	var $CI;
@@ -28,7 +29,7 @@ class Uploads {
 	var $maxHeight = '5000';
 	var $thumbSize = '300';
 		
-	function Uploads()
+	function __construct()
 	{	
 		$this->CI =& get_instance();
 

@@ -16,6 +16,7 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Template {
 
 	// set defaults
@@ -24,7 +25,7 @@ class Template {
 	var $moduleTemplates = array();
 	var $template = array();
 	
-	function Template()
+	function __construct()
 	{
 		$this->CI =& get_instance();
 		
@@ -456,12 +457,12 @@ class Template {
 		$this->template = $this->parse_modules($body, $this->template);	
 		
 		// site globals
-		$body = str_replace('{site:name}', $this->CI->site->config['siteName'], $body);
-		$body = str_replace('{site:domain}', $this->CI->site->config['siteDomain'], $body);
-		$body = str_replace('{site:url}', $this->CI->site->config['siteURL'], $body);
-		$body = str_replace('{site:email}', $this->CI->site->config['siteEmail'], $body);
-		$body = str_replace('{site:tel}', $this->CI->site->config['siteTel'], $body);		
-		$body = str_replace('{site:currency}', $this->CI->site->config['currency'], $body);
+		$body = str_replace('{site:name}', (string) $this->CI->site->config['siteName'], $body);
+		$body = str_replace('{site:domain}', (string) $this->CI->site->config['siteDomain'], $body);
+		$body = str_replace('{site:url}', (string) $this->CI->site->config['siteURL'], $body);
+		$body = str_replace('{site:email}', (string) $this->CI->site->config['siteEmail'], $body);
+		$body = str_replace('{site:tel}', (string) $this->CI->site->config['siteTel'], $body);		
+		$body = str_replace('{site:currency}', (string) $this->CI->site->config['currency'], $body);
 		$body = str_replace('{site:currency-symbol}', currency_symbol(), $body);
 
 		// logged in userdata
@@ -969,7 +970,7 @@ class Template {
 							{
 								$template['shop:categories'] .= 'last ';
 							}
-							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities($nav['catName'], NULL, 'UTF-8').'</a><ul class="subnav">';
+							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities($nav['catName'], ENT_COMPAT, 'UTF-8').'</a><ul class="subnav">';
 							
 							foreach($children as $child)
 							{
@@ -978,7 +979,7 @@ class Template {
 								{
 									$template['shop:categories'] .= 'active selected';
 								}
-								$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'/'.$child['catSafe'].'">'.htmlentities($child['catName'], NULL, 'UTF-8').'</a></li>';
+								$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'/'.$child['catSafe'].'">'.htmlentities($child['catName'], ENT_COMPAT, 'UTF-8').'</a></li>';
 							}
 							$template['shop:categories'] .= '</ul>';
 						}					
@@ -997,7 +998,7 @@ class Template {
 							{
 								$template['shop:categories'] .= 'last ';
 							}
-							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities($nav['catName'], NULL, 'UTF-8').'</a>';
+							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities($nav['catName'], ENT_COMPAT, 'UTF-8').'</a>';
 						}
 						
 						$template['shop:categories'] .= '</li>';					

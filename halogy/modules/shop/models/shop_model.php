@@ -57,7 +57,7 @@ class Shop_model extends CI_Model {
 
 		// get shop config
 		$shippingTable = $this->get_postages();
-		foreach ((array)$shippingTable as $postage)
+		foreach ((is_array($shippingTable) ? $shippingTable : array()) as $postage)
 		{
 			$this->shopShippingTable[] = array($postage['total'], $postage['cost']);
 		}
@@ -819,7 +819,7 @@ class Shop_model extends CI_Model {
 		}
 	}
 	
-	function get_similar_products($productID = '', $catID = '', $limit)
+	function get_similar_products($productID = '', $catID = '', $limit = 4)
 	{
 		if (!$catID || !$productID)
 		{
@@ -2026,7 +2026,7 @@ class Shop_model extends CI_Model {
 			fclose($fp); // close connection
 		}
 
-		if (eregi("VERIFIED",$this->response))
+		if (stripos($this->response, "VERIFIED") !== FALSE)
 		{
 			// check for cancellation
 			if ($this->response_date['txn_type'] == 'subscr_eot')
