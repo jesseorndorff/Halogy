@@ -51,12 +51,16 @@ If not using Docker:
 To upgrade an existing Halogy 1.x installation:
 
 1. Back up your database and files
-2. Replace your files with version 2.0.0
-3. Run `halogy/sql/upgrade-2.0.sql` against your database to add the new `pages_navigation` permission and widen the `password` column
-4. Set `HALOGY_ENCRYPTION_KEY` or make `halogy/config` writable so the app can generate it
-5. Update `halogy/config/database.php` to use the `mysqli` driver and environment variables
-6. All users will be logged out once (session and cookie formats have changed); they will log in again with their existing password
-7. Grant the new `pages_navigation` permission to admin groups that need access to the navigation editor
+2. Run `halogy/sql/upgrade-2.0.sql` against your database BEFORE starting the new code or logging in. It widens `ha_users.password` from 32 to 255 characters (without this, new password hashes are truncated and users cannot log in) and adds the `pages_navigation` permission. The script assumes the default `ha_` table prefix; edit the table names if you use another prefix.
+3. Replace your files with version 2.0.0, keeping your `static/uploads` folder.
+4. Check the requirements: PHP 8.1 or later with mysqli, gd, zip and mbstring, and a non-strict MySQL/MariaDB sql_mode (see Requirements).
+5. Configure the database. The new `halogy/config/database.php` reads HALOGY_DB_HOST/USER/PASS/NAME (defaults: localhost, halogy, halogy, halogy) and uses the mysqli driver. Set these variables, or edit that file and re-enter your credentials and table prefix (`dbprefix` is `ha_`). If you keep your old database.php instead, change `dbdriver` to `mysqli` (the old `mysql` extension was removed in PHP 7).
+6. Set `HALOGY_ENCRYPTION_KEY` or make `halogy/config` writable so the app can generate it. If you run more than one web server, set the same HALOGY_ENCRYPTION_KEY on all of them; changing or losing the key logs everyone out.
+7. All users are logged out once, including remember-me logins (cookie formats changed); they can log in with their existing passwords.
+8. Script execution in static/uploads is blocked by an Apache .htaccess; on other web servers (e.g. nginx) configure the equivalent yourself.
+9. Upload allow-lists were tightened (no js/swf; dangerous types are stripped from web form file types), so review your web form file type settings.
+10. Grant the pages_navigation permission to admin groups that need it. The SQL only adds the permission; tick 'Allow Navigation' for each admin group that needs it.
+11. HALOGY_ENV defaults to production, which hides errors; if the upgraded site shows a blank page or HTTP 500, set HALOGY_ENV=development temporarily to see the error. If you let the app create halogy/config/encryption_key.php, make halogy/config read-only again afterwards.
 
 See CHANGELOG.TXT for full upgrade details and known limitations.
 
@@ -70,10 +74,10 @@ See LICENSE.txt for details.
 
 ## What Changed in This Fork
 
-- PHP 8.1-8.4 support (tested on 8.3) with MariaDB 10.x / MySQL 8
-- Security hardening: password_hash() with auto-upgrade of MD5, signed session/remember-me tokens, CSRF protection, HttpOnly/SameSite cookies, signed encryption key
+- PHP 8.1 or later (tested on 8.3) with MariaDB 10.x / MySQL 8
+- Security hardening: password_hash() with automatic upgrade of MD5 passwords, signed session and remember-me cookies, CSRF protection for POST requests and state-changing links, HttpOnly/SameSite cookies, a per-install encryption key, and a fix for a privilege escalation in public registration
 - Fixed hundreds of PHP 8 runtime errors across all modules
 - Docker setup for one-command local development
 - Environment-based database configuration
 
-Full details, upgrade steps and known limitations: see CHANGELOG.TXT.
+Full details, upgrade steps and known limitations: see CHANGELOG.TXT. This fork is still not recommended for production or internet-facing use.
