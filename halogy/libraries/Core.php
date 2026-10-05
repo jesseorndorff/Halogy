@@ -558,6 +558,7 @@ class Core {
 		$required = $this->CI->input->post('required', TRUE);
 
 		// get optional required fields
+		$requiredArray = array();
 		if ($required)
 		{
 			$requiredArray = explode('|', $required);
@@ -624,7 +625,7 @@ class Core {
 			foreach($_FILES as $name => $file)
 			{
 				$this->CI->uploads->maxSize = '2000';
-				$this->CI->uploads->allowedTypes = implode('|', array_diff(explode('|', strtolower($webform['fileTypes'])), array('*', 'php', 'phtml', 'phar', 'html', 'htm', 'svg', 'js', 'shtml', 'cgi', 'pl', 'py', 'exe')));
+				$this->CI->uploads->allowedTypes = implode('|', array_diff(explode('|', strtolower($webform['fileTypes'])), array('*', 'php', 'phtml', 'phar', 'html', 'htm', 'svg', 'js', 'shtml', 'cgi', 'pl', 'py', 'exe', 'xhtml', 'xht', 'svgz', 'htaccess', 'htpasswd', 'jar', 'hta')));
 				
 				// check a file has actually been uploaded
 				if ($file['name'] != '')
@@ -1263,6 +1264,9 @@ class Core {
 			$this->postTable = $table;
 			$values = @$this->get_values($row);
 			$this->postTable = '';
+
+			// privileged users columns were only allowed for this one write
+			$this->privilegedUserFields = FALSE;
 
 			// check posted data is in fields
 			foreach ($values as $field => $value)

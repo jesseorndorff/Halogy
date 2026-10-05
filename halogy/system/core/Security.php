@@ -135,7 +135,15 @@ class CI_Security {
 		$method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
 		if (in_array($method, array('GET', 'HEAD', 'OPTIONS'), TRUE))
 		{
-			return $this->csrf_set_cookie();
+			// the cookie is only (re)issued when it is absent or malformed, so
+			// the token keeps a fixed lifetime and is rotated explicitly
+			// (login, logout) by csrf_regenerate()
+			if ( ! isset($_COOKIE[$this->_csrf_cookie_name]) OR ! is_string($_COOKIE[$this->_csrf_cookie_name]) OR ! preg_match('/^[a-f0-9]{32}$/', $_COOKIE[$this->_csrf_cookie_name]))
+			{
+				return $this->csrf_set_cookie();
+			}
+
+			return $this;
 		}
 
 		// Endpoints that are legitimately POSTed to by external servers
@@ -175,6 +183,60 @@ class CI_Security {
 		log_message('debug', "CSRF token verified ");
 
 		return $this;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Verify the token on a state-changing GET request
+	 *
+	 * Some actions are plain links (delete, approve, publish, logout...).
+	 * Once the router has resolved the controller method, requests that are
+	 * not POST but whose method name matches $config['csrf_protect_get_methods']
+	 * must carry the token in the query string. Tokenised links are produced
+	 * by the Security_output hook.
+	 *
+	 * @param	string	the routed controller method
+	 * @return	void
+	 */
+	public function csrf_verify_get($method)
+	{
+		$request = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
+		if ( ! in_array($request, array('GET', 'HEAD'), TRUE) OR $this->_csrf_uri_excluded())
+		{
+			return;
+		}
+
+		if ( ! $this->csrf_get_method_protected($method))
+		{
+			return;
+		}
+
+		$query = array();
+		parse_str(isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '', $query);
+
+		if ( ! isset($query[$this->_csrf_token_name]) OR ! is_string($query[$this->_csrf_token_name])
+			OR ! isset($_COOKIE[$this->_csrf_cookie_name]) OR ! is_string($_COOKIE[$this->_csrf_cookie_name])
+			OR $query[$this->_csrf_token_name] === ''
+			OR ! hash_equals($_COOKIE[$this->_csrf_cookie_name], $query[$this->_csrf_token_name]))
+		{
+			$this->csrf_show_error();
+		}
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Does this controller method name change state when requested by GET?
+	 *
+	 * @param	string
+	 * @return	bool
+	 */
+	public function csrf_get_method_protected($method)
+	{
+		$pattern = config_item('csrf_protect_get_methods');
+
+		return (is_string($pattern) && $pattern !== '' && $method !== '' && preg_match('#'.str_replace('#', '\\#', $pattern).'#i', (string) $method) === 1);
 	}
 
 	// --------------------------------------------------------------------
@@ -240,6 +302,30 @@ class CI_Security {
 		));
 
 		log_message('debug', "CRSF cookie Set");
+
+		return $this;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Rotate the CSRF token
+	 *
+	 * Called when the privilege level changes (login, logout). The new token
+	 * is used for everything rendered from now on, including pages shown
+	 * after a redirect, because the cookie is issued with this response.
+	 *
+	 * @return	object
+	 */
+	public function csrf_regenerate()
+	{
+		$this->_csrf_hash = bin2hex(random_bytes(16));
+
+		$result = $this->csrf_set_cookie();
+		if ($result !== FALSE)
+		{
+			$_COOKIE[$this->_csrf_cookie_name] = $this->_csrf_hash;
+		}
 
 		return $this;
 	}

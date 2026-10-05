@@ -363,6 +363,16 @@ $config['csrf_exclude_uris'] = array(
 );
 
 /*
+| 'csrf_protect_get_methods' = regular expression matched against the routed
+| controller method name. State-changing actions that are plain links (GET)
+| must carry the CSRF token in the query string (?csrf_test_name=...) when
+| their method matches; the Security_output hook adds it to the links in the
+| rendered pages. Name new state-changing GET actions so they match, or use POST.
+| Not matched on purpose: payment gateway return pages (shop/cancel, success).
+*/
+$config['csrf_protect_get_methods'] = '^((delete|approve|unapprove|publish|unpublish|revert|logout|remove|renew|activate|deactivate|subscribe|unsubscribe)|(lock|unlock|close|ban|unban)(_|$))';
+
+/*
 |--------------------------------------------------------------------------
 | Output Compression
 |--------------------------------------------------------------------------

@@ -188,6 +188,9 @@ class Auth {
 		// new session ID on privilege change, prevents session fixation
 		$this->CI->session->sess_regenerate();
 
+		// rotate the CSRF token too (password and remember me logins)
+		$this->CI->security->csrf_regenerate();
+
 		// set session data
 		$this->CI->session->set_userdata($row);
 		
@@ -293,6 +296,9 @@ class Auth {
 		
 		// destroy session
 		$this->CI->session->sess_destroy();
+
+		// the next visitor of this browser gets a fresh CSRF token
+		$this->CI->security->csrf_regenerate();
 
 		// redirect
 		redirect($redirect);

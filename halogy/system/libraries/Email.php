@@ -442,6 +442,8 @@ class CI_Email {
 	{
 		if ( ! is_array($email))
 		{
+			$email = (string) $email;
+
 			if (strpos($email, ',') !== FALSE)
 			{
 				$email = preg_split('/[\s,]/', $email, -1, PREG_SPLIT_NO_EMPTY);

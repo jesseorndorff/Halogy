@@ -18,6 +18,14 @@ $hook['pre_system'][] = array(
 	'filepath'	=> 'hooks'
 );
 
+// require the CSRF token on state-changing GET links, by routed method
+$hook['post_controller_constructor'][] = array(
+	'class'		=> 'Security_output',
+	'function'	=> 'check_get_csrf',
+	'filename'	=> 'Security_output.php',
+	'filepath'	=> 'hooks'
+);
+
 // inject the CSRF token into raw <form> tags and the csrf-token meta tag
 $hook['post_controller'][] = array(
 	'class'		=> 'Security_output',
