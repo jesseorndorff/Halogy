@@ -1290,6 +1290,12 @@ class Shop_model extends CI_Model {
 					$postage = 0;
 				}
 
+				// no shipping table set up, so no postage to charge
+				elseif (empty($this->shopShippingTable))
+				{
+					$postage = 0;
+				}
+
 				// last postage rate
 				elseif ($postageSubtotal >= $this->shopShippingTable[(sizeof($this->shopShippingTable)-1)][0])
 				{
@@ -1301,7 +1307,7 @@ class Shop_model extends CI_Model {
 				{
 					for ($x=0; $x<sizeof($this->shopShippingTable); $x++)
 					{
-						if (($postageSubtotal >= $this->shopShippingTable[$x][0]) && ($postageSubtotal < $this->shopShippingTable[$x+1][0]))
+						if (isset($this->shopShippingTable[$x+1]) && ($postageSubtotal >= $this->shopShippingTable[$x][0]) && ($postageSubtotal < $this->shopShippingTable[$x+1][0]))
 						{
 							$postage = $this->shopShippingTable[$x][1];
 						}
@@ -1401,10 +1407,18 @@ class Shop_model extends CI_Model {
 
 	function add_to_cart($productID, $quantity = 1, $variation1 = '', $variation2 = '', $variation3 = '')
 	{
-		if (!is_numeric($quantity) || $quantity < 1)
+		// no quantity given means one, anything else must be a positive whole number
+		if ($quantity === FALSE || $quantity === NULL || $quantity === '')
 		{
 			$quantity = 1;
 		}
+		
+		if (!ctype_digit((string)$quantity) || (int)$quantity < 1)
+		{
+			return FALSE;
+		}
+		
+		$quantity = (int)$quantity;
 		
 		if ($productID && $this->get_product($productID))
 		{
@@ -1451,12 +1465,13 @@ class Shop_model extends CI_Model {
 	
 	function update_cart($key, $quantity)
 	{	
-		if ($quantity && is_numeric($quantity))
+		// zero (or anything that isn't a positive whole number) leaves the cart line unchanged
+		if (ctype_digit((string)$quantity) && (int)$quantity > 0)
 		{
 			$cart = $this->session->userdata('cart');
 			if (!is_array($cart)) $cart = array();
 			$key = $this->core->decode($key);
-			$cart[$key] = $quantity;
+			$cart[$key] = (int)$quantity;
 			$this->session->set_userdata('cart', $cart);
 		}
 		return true;

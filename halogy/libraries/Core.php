@@ -846,6 +846,7 @@ class Core {
 		if ($this->CI->input->post('posts')) $this->CI->core->set['posts'] = '';
 
 		// set folder (making sure it's not an admin folder)
+		$permissionGroups = array();
 		$permissionGroupsArray = $this->CI->permission->get_groups('admin');
 		foreach(($permissionGroupsArray) ? $permissionGroupsArray : array() as $group)
 		{
@@ -1113,6 +1114,7 @@ class Core {
 		$uriArray = $this->CI->uri->uri_to_assoc($this->uri_assoc_segment);
 
 		// set order on order array
+		$orderApplied = FALSE;
 		if (count($uriArray))
 		{
 			foreach($uriArray as $key => $value)
@@ -1122,10 +1124,12 @@ class Core {
 					if ($key == 'orderasc')
 					{
 						$this->CI->db->order_by($value,'asc');
+						$orderApplied = TRUE;
 					}
 					elseif ($key == 'orderdesc')
 					{
 						$this->CI->db->order_by($value,'desc');
+						$orderApplied = TRUE;
 					}
 				}
 			}
@@ -1141,7 +1145,7 @@ class Core {
 			$this->CI->db->order_by($order[0], $order[1]);
 		}
 
-		if (!(isset($uriArray['orderasc']) || isset($uriArray['orderdesc'])) && in_array('dateCreated', $fields))
+		if (!$orderApplied && in_array('dateCreated', $fields))
 		{
 			$this->CI->db->order_by('dateCreated', 'desc');
 		}
@@ -1340,7 +1344,7 @@ class Core {
 	function order($table = '', $field = '')
 	{
 		// for each posted item, order it with new row id
-		if ($table && $field)
+		if ($table && $field && isset($_POST[$table]) && is_array($_POST[$table]))
 		{
 			foreach ($_POST[$table] as $key => $value)
 			{

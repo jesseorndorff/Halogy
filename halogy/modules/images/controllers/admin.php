@@ -110,6 +110,7 @@ class Admin extends CI_Controller {
 						for ($zipIndex = 0; $zipIndex < $zip->numFiles; $zipIndex++)
 						{
 							$zip_entry = $zip->statIndex($zipIndex);
+							if ($zip_entry === FALSE) continue;
 							if (!preg_match('/(\_)+MACOSX/', $zip_entry['name']) && preg_match('/\.(jpg|gif|png)$/i', $zip_entry['name']))
 							{
 								if ($zip_entry['size'] > 300000)
@@ -127,7 +128,8 @@ class Admin extends CI_Controller {
 									$imageRef = url_title(trim(strtolower($filename)));
 		
 									// check ref is unique and upload
-									if ($this->form_validation->unique($imageRef, 'images.imageRef'))
+									$buf = $zip->getFromIndex($zipIndex);
+									if ($buf !== FALSE && $this->form_validation->unique($imageRef, 'images.imageRef'))
 									{																
 										// set stuff
 										$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
@@ -143,7 +145,6 @@ class Admin extends CI_Controller {
 																				
 										// upload file
 										$fp = fopen('.'.$uploadsPath.'/'.md5($filename).'.'.$extension, "w+");				
-										$buf = $zip->getFromIndex($zipIndex);
 										fwrite($fp, (string)$buf);
 										fclose($fp);
 										

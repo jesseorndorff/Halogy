@@ -25,7 +25,7 @@ $(function(){
 });
 </script>
 
-<h1 class="headingleft">Orders <?php if ($trackingStatus) echo '('.(isset($statusArray[$trackingStatus]) ? $statusArray[$trackingStatus] : $trackingStatus).')'?></h1>
+<h1 class="headingleft">Orders <?php if ($trackingStatus) echo '('.(isset($statusArray[$trackingStatus]) ? $statusArray[$trackingStatus] : '').')'?></h1>
 
 <div class="headingright">
 

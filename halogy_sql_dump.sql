@@ -677,7 +677,8 @@ VALUES
 	('Add /edit emails','emailer_edit','Emailer',0),
 	('Delete emails','emailer_delete','Emailer',0),
 	('Add / edit templates','emailer_templates','Emailer',0),
-	('Add / edit lists','emailer_lists','Emailer',0);
+	('Add / edit lists','emailer_lists','Emailer',0),
+	('Allow Navigation','pages_navigation','Pages',0);
 
 	
 /*!40000 ALTER TABLE `ha_permissions` ENABLE KEYS */;

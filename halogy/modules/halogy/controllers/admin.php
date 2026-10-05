@@ -477,8 +477,20 @@ class Admin extends MX_Controller {
 
 			// Grab all the data from the current table
 			// (some tables, e.g. ha_tags, have no siteID column)
-			$where = ($this->db->field_exists('siteID', $table)) ? ' WHERE siteID = '.(int)$this->siteID : '';
-			$query = $this->db->query("SELECT * FROM `$table`".$where);
+			if ($this->db->field_exists('siteID', $table))
+			{
+				$query = $this->db->query("SELECT * FROM `$table` WHERE siteID = ".(int)$this->siteID);
+			}
+			elseif ($table == $this->db->dbprefix('tags'))
+			{
+				// tags are scoped to this site via the tags_ref table
+				$query = $this->db->query("SELECT DISTINCT t.* FROM `$table` t INNER JOIN `".$this->db->dbprefix('tags_ref')."` r ON r.tag_id = t.id WHERE r.siteID = ".(int)$this->siteID);
+			}
+			else
+			{
+				// no way of telling which site the rows belong to, so dump the schema only
+				continue;
+			}
 			
 			if ($query->num_rows() == 0)
 			{

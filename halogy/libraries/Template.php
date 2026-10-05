@@ -149,7 +149,7 @@ class Template {
 		else
 		{
 			$templateData = $this->CI->core->get_template($pagedata['templateID']);
-			$templateBody = $templateData['body'];
+			$templateBody = ($templateData) ? $templateData['body'] : '';
 		}
 
 		// parse it for everything else
