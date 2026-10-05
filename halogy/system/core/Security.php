@@ -135,13 +135,10 @@ class CI_Security {
 		$method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
 		if (in_array($method, array('GET', 'HEAD', 'OPTIONS'), TRUE))
 		{
-			// the cookie is only (re)issued when it is absent or malformed, so
-			// the token keeps a fixed lifetime and is rotated explicitly
-			// (login, logout) by csrf_regenerate()
-			if ( ! isset($_COOKIE[$this->_csrf_cookie_name]) OR ! is_string($_COOKIE[$this->_csrf_cookie_name]) OR ! preg_match('/^[a-f0-9]{32}$/', $_COOKIE[$this->_csrf_cookie_name]))
-			{
-				return $this->csrf_set_cookie();
-			}
+			// the cookie is re-sent with every page view, always carrying the
+			// same hash (sliding expiry, so forms left open stay valid); the
+			// token is only rotated explicitly (login, logout) by csrf_regenerate()
+			$this->csrf_set_cookie();
 
 			return $this;
 		}
@@ -319,13 +316,18 @@ class CI_Security {
 	 */
 	public function csrf_regenerate()
 	{
+		$previous = $this->_csrf_hash;
 		$this->_csrf_hash = bin2hex(random_bytes(16));
 
-		$result = $this->csrf_set_cookie();
-		if ($result !== FALSE)
+		if ($this->csrf_set_cookie() === FALSE)
 		{
-			$_COOKIE[$this->_csrf_cookie_name] = $this->_csrf_hash;
+			// the browser never got the new token, so keep the old one
+			$this->_csrf_hash = $previous;
+
+			return $this;
 		}
+
+		$_COOKIE[$this->_csrf_cookie_name] = $this->_csrf_hash;
 
 		return $this;
 	}

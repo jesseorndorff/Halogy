@@ -270,8 +270,8 @@ class Blog extends MX_Controller {
 			$output['post:allow-comments'] = ($post['allowComments']) ? TRUE : FALSE;
 			$output['form:name'] = set_value('fullName', $this->session->userdata('firstName').' '.$this->session->userdata('lastName'));
 			$output['form:email'] = set_value('email', $this->session->userdata('email'));
-			$output['form:website'] = $this->input->post('website');
-			$output['form:comment'] = $this->input->post('comment');
+			$output['form:website'] = html_escape($this->input->post('website'));
+			$output['form:comment'] = html_escape($this->input->post('comment'));
 
 			// get cats
 			if ($cats = $this->blog->get_cats_for_post($post['postID']))

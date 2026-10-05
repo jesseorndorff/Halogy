@@ -374,11 +374,6 @@ class Admin extends MX_Controller {
 		$this->load->view($this->includes_path.'/footer');
 	}
 	
-	function setup()
-	{
-		echo 'tset';
-	}
-	
 	function backup()
 	{
 		// check permissions for this page

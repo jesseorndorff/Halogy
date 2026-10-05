@@ -321,7 +321,11 @@ class Forums extends MX_Controller {
 
 	function viewpost($postID)
 	{
-		$post = $this->forums->get_post($postID);
+		// the post may be gone (deleted)
+		if ( ! $post = $this->forums->get_post($postID))
+		{
+			redirect('/forums');
+		}
 
 		// find out how many pages the topic has
 		if ($topicSize = $this->forums->get_topic_size($post['topicID']))
@@ -412,8 +416,8 @@ class Forums extends MX_Controller {
 		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
-		$output['form:title'] = ($this->input->post('title')) ? $this->input->post('title') : '';
-		$output['form:body'] = ($this->input->post('body')) ? $this->input->post('body') : '';
+		$output['form:title'] = html_escape(($this->input->post('title')) ? $this->input->post('title') : '');
+		$output['form:body'] = html_escape(($this->input->post('body')) ? $this->input->post('body') : '');
 
 		// set breadcrumb
 		$output['breadcrumb'] = ((isset($data['forum']['catName'])) ? anchor('/forums', $data['forum']['catName']) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$data['forum']['forumID'], $data['forum']['forumName']);
@@ -546,7 +550,7 @@ class Forums extends MX_Controller {
 		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
-		$output['form:body'] = ($this->input->post('body')) ? $this->input->post('body') : @$quote;
+		$output['form:body'] = html_escape(($this->input->post('body')) ? $this->input->post('body') : (string) @$quote);
 
 		// load errors
 		$output['errors'] = (validation_errors()) ? validation_errors() : FALSE;
@@ -605,7 +609,7 @@ class Forums extends MX_Controller {
 
 		// populate template
 		$output['topic:title'] = $post['topicTitle'];
-		$output['form:body'] = ($this->input->post('body')) ? $this->input->post('body') : $post['body'];
+		$output['form:body'] = html_escape(($this->input->post('body')) ? $this->input->post('body') : $post['body']);
 
 		// load errors
 		$output['errors'] = (validation_errors()) ? validation_errors() : FALSE;

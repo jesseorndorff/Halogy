@@ -370,7 +370,7 @@ $config['csrf_exclude_uris'] = array(
 | rendered pages. Name new state-changing GET actions so they match, or use POST.
 | Not matched on purpose: payment gateway return pages (shop/cancel, success).
 */
-$config['csrf_protect_get_methods'] = '^((delete|approve|unapprove|publish|unpublish|revert|logout|remove|renew|activate|deactivate|subscribe|unsubscribe)|(lock|unlock|close|ban|unban)(_|$))';
+$config['csrf_protect_get_methods'] = '^(delete|approve|unapprove|publish|unpublish|revert|logout|remove|renew|activate|deactivate|subscribe|unsubscribe|lock|unlock|close|ban|unban|deletepost)(_|$)';
 
 /*
 |--------------------------------------------------------------------------

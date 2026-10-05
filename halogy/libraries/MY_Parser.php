@@ -80,7 +80,7 @@ class MY_Parser extends CI_Parser {
 			{
 				if ($postValue = $CI->input->post($value))
 				{
-					$template = str_replace('{form:'.$value.'}', $postValue, $template);
+					$template = str_replace('{form:'.$value.'}', html_escape($postValue), $template);
 				}
 				else
 				{

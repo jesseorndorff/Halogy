@@ -580,7 +580,10 @@ class Admin extends MX_Controller {
 		$output['data'] = $this->core->get_values('shop_transactions', $objectID);
 
 		// grab data and display
-		$output['order'] = $this->shop->get_order($transactionID);
+		if ( ! $output['order'] = $this->shop->get_order($transactionID))
+		{
+			redirect('/admin/shop/orders');
+		}
 		$output['transactionID'] = $transactionID;
 		
 		if (count($_POST))

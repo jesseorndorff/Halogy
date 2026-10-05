@@ -70,10 +70,27 @@ class Security_output {
 	}
 
 	/**
+	 * Resolve a URL attribute the way a browser does before parsing it: decode
+	 * HTML entities, drop tab/CR/LF anywhere, trim, turn backslashes into
+	 * slashes (so "/\\evil.com" is seen as the protocol relative "//evil.com").
+	 */
+	protected function _normalise_url($url)
+	{
+		$url = html_entity_decode((string) $url, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+		$url = preg_replace('/[\t\r\n]+/', '', $url);
+		$url = str_replace('\\', '/', $url);
+
+		// leading C0 controls and spaces are stripped too
+		return trim($url, "\x00..\x20");
+	}
+
+	/**
 	 * Is this URL relative, or absolute to the very same host and port?
 	 */
 	protected function _same_origin($url, $origin)
 	{
+		$url = $this->_normalise_url($url);
+
 		if ( ! preg_match('#^(?:[a-z][a-z0-9+.-]*:|//)#i', $url))
 		{
 			return TRUE;
@@ -96,6 +113,8 @@ class Security_output {
 	 */
 	protected function _is_action_link($url, $security)
 	{
+		$url = $this->_normalise_url($url);
+
 		$path = parse_url(strpos($url, '//') === 0 ? 'http:'.$url : $url, PHP_URL_PATH);
 		if ( ! is_string($path) OR $path === '')
 		{
@@ -116,9 +135,33 @@ class Security_output {
 			array_shift($segments);
 		}
 
-		foreach (array_slice($segments, 0, 3) as $segment)
+		// which segments can be the routed method: "method" or "controller/method"
+		// (index 0 and 1), "admin/module/method" (1 and 2) and the full
+		// "module/controller/method" when that controller really exists
+		// ("shop/cart/remove" is cart() with an argument, not a remove() call)
+		$segments = array_map('rawurldecode', $segments);
+		if (count($segments) == 0)
 		{
-			if ($security->csrf_get_method_protected(rawurldecode($segment)))
+			return FALSE;
+		}
+
+		if ($segments[0] === 'admin')
+		{
+			$candidates = array_slice($segments, 1, 2);
+		}
+		else
+		{
+			$candidates = array_slice($segments, 0, 2);
+			if (isset($segments[2]) && preg_match('/^[a-z0-9_]+$/i', $segments[0]) && isset($segments[1]) && preg_match('/^[a-z0-9_]+$/i', $segments[1])
+				&& is_file(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1].EXT))
+			{
+				$candidates[] = $segments[2];
+			}
+		}
+
+		foreach ($candidates as $segment)
+		{
+			if ($security->csrf_get_method_protected($segment))
 			{
 				return TRUE;
 			}
@@ -163,6 +206,26 @@ class Security_output {
 		$input = '<input type="hidden" name="'.$name.'" value="'.$hash.'" />';
 		$origin = $this->_origin();
 
+		// Content that is not live markup must be left untouched, otherwise a
+		// token ends up inside the text of an editor and is saved with it:
+		// textareas, scripts, styles and comments are masked while rewriting
+		$masked = array();
+		$salt = bin2hex(random_bytes(8));
+		$result = preg_replace_callback('~<textarea\b.*?</textarea\s*>|<script\b.*?</script\s*>|<style\b.*?</style\s*>|<!--.*?-->~is', function($m) use (&$masked, $salt)
+		{
+			$key = 'csrfmask'.$salt.'x'.count($masked).'x';
+			$masked[$key] = $m[0];
+
+			return $key;
+		}, $output);
+		if ( ! is_string($result))
+		{
+			// regex failure (backtrack limit): leave the page as it is
+			log_message('error', 'Security_output: could not mask page content');
+			return;
+		}
+		$output = $result;
+
 		// forms
 		if (stripos($output, '<form') !== FALSE)
 		{
@@ -177,8 +240,7 @@ class Security_output {
 				// relative or same host actions only
 				if (preg_match('/\baction\s*=\s*(?:"([^"]*)"|\'([^\']*)\'|([^\s>]+))/i', $m[1][0], $a))
 				{
-					$action = trim(html_entity_decode(end($a)));
-					if ( ! $this->_same_origin($action, $origin))
+					if ( ! $this->_same_origin(end($a), $origin))
 					{
 						return $m[0][0];
 					}
@@ -205,11 +267,11 @@ class Security_output {
 			$output = preg_replace_callback('/(<a\b(?:[^>"\']|"[^"]*"|\'[^\']*\')*?\bhref\s*=\s*)(?:"([^"]*)"|\'([^\']*)\'|([^\s"\'>]+))/i', function($m) use ($security, $name, $query, $origin)
 			{
 				$value = (isset($m[4]) && $m[4] !== '') ? $m[4] : ((isset($m[3]) && $m[3] !== '') ? $m[3] : $m[2]);
-				$url = trim(html_entity_decode($value));
+				$url = $this->_normalise_url($value);
 
 				if ($url === '' OR $url[0] === '#' OR strpos($url, $name.'=') !== FALSE
-					OR ! $this->_same_origin($url, $origin)
-					OR ! $this->_is_action_link($url, $security))
+					OR ! $this->_same_origin($value, $origin)
+					OR ! $this->_is_action_link($value, $security))
 				{
 					return $m[0];
 				}
@@ -232,6 +294,12 @@ class Security_output {
 
 				return $m[1].$quote.$value.$quote;
 			}, $output);
+		}
+
+		// put the masked content back
+		if (count($masked) > 0)
+		{
+			$output = strtr($output, $masked);
 		}
 
 		// meta tag

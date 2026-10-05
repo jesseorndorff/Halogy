@@ -250,6 +250,12 @@ class Users extends MX_Controller {
 		// set object ID
 		$objectID = array('userID' => $this->session->userdata('userID'));		
 
+		// the account may have been deleted while the session lives on
+		if ( ! $this->users->get_user($this->session->userdata('userID')))
+		{
+			$this->auth->logout('/users/login');
+		}
+
 		// get values
 		$data = $this->core->get_values('users', $objectID);
 

@@ -204,7 +204,7 @@ class Messages extends MX_Controller {
 		}
 
 		// populate template
-		$output['form:to'] = ($this->input->post('to')) ? $this->input->post('to') : $data['user']['firstName'].' '.$data['user']['lastName'];
+		$output['form:to'] = html_escape(($this->input->post('to')) ? $this->input->post('to') : $data['user']['firstName'].' '.$data['user']['lastName']);
 		$output['form:recipient-id'] = $data['user']['userID'];		
 		$output['form:subject'] = set_value('subject', $this->input->post('subject'));
 		$output['form:message'] = set_value('mesage', $this->input->post('message'));	

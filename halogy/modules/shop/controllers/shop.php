@@ -437,7 +437,7 @@ class Shop extends MX_Controller {
 		
 		$output['form:name'] = set_value('fullName', $this->session->userdata('firstName').' '.$this->session->userdata('lastName'));
 		$output['form:email'] = set_value('email', $this->session->userdata('email'));
-		$output['form:review'] = $this->input->post('review');
+		$output['form:review'] = html_escape($this->input->post('review'));
 
 		// get reviews
 		if ($reviews = $this->shop->get_reviews($product['productID']))
@@ -649,7 +649,7 @@ class Shop extends MX_Controller {
 		$output['cart:items'] = @$this->parser->parse('partials/cart', $data, TRUE);
 		$output['cart:bands'] = @$this->parser->parse('partials/bands', $data, TRUE);
 		$output['cart:modifiers'] = @$this->parser->parse('partials/modifiers', $data, TRUE);
-		$output['form:discount-code'] = $this->session->userdata('discountCode');
+		$output['form:discount-code'] = html_escape($this->session->userdata('discountCode'));
 		$output['form:donation'] = ($this->session->userdata('cart_donation')) ? number_format($this->session->userdata('cart_donation'), 2, '.', '') : '';	
 		
 		// set default upsell vars
@@ -1605,11 +1605,11 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['product:id'] = $product['productID'];		
-		$output['form:name'] = $this->input->post('fullName');
-		$output['form:email'] = $this->input->post('email');		
-		$output['form:to-name'] = $this->input->post('toName');
-		$output['form:to-email'] = $this->input->post('toEmail');		
-		$output['form:message'] = $this->input->post('message');	
+		$output['form:name'] = html_escape($this->input->post('fullName'));
+		$output['form:email'] = html_escape($this->input->post('email'));		
+		$output['form:to-name'] = html_escape($this->input->post('toName'));
+		$output['form:to-email'] = html_escape($this->input->post('toEmail'));		
+		$output['form:message'] = html_escape($this->input->post('message'));	
 
 		// set title
 		$output['page:title'] = 'Recommend Product'.(($this->site->config['siteName']) ? ' - '.$this->site->config['siteName'] : '');

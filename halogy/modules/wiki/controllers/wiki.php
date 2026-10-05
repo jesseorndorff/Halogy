@@ -168,10 +168,10 @@ class Wiki extends MX_Controller {
 
 		// populate template
 		$output['wikipage:link'] = site_url('/wiki/'.$wikipage['uri']);
-		$output['form:title'] = $wikipage['pageName'];
+		$output['form:title'] = html_escape($wikipage['pageName']);
 		$output['select:categories'] = @form_dropdown('catID',$options,set_value('catID', $wikipage['catID']),'id="category" class="formelement"');
-		$output['form:body'] = $wikipage['body'];
-		$output['form:notes'] = $this->input->post('notes');
+		$output['form:body'] = html_escape($wikipage['body']);
+		$output['form:notes'] = html_escape($this->input->post('notes'));
 		
 		// set title
 		$output['page:title'] = $this->site->config['siteName'].' | Edit Wiki';
