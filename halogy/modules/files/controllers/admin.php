@@ -86,7 +86,7 @@ class Admin extends MX_Controller {
 			// upload file
 			if ($oldFileName = @$_FILES['file']['name'])
 			{
-				$this->uploads->allowedTypes = 'pdf|doc|mp3|zip|js|swf|flv|mp4|js|css|ico|txt|xls|ppt|ttf|cff|svg|woff|eot';
+				$this->uploads->allowedTypes = 'pdf|doc|mp3|zip|js|flv|mp4|js|css|ico|txt|xls|ppt|ttf|cff|svg|woff|eot';
 				
 				if ($fileData = $this->uploads->upload_file())
 				{

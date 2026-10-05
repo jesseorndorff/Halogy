@@ -131,37 +131,81 @@ class CI_Security {
 	 */
 	public function csrf_verify()
 	{
-		// If no POST data exists we will set the CSRF cookie
-		if (count($_POST) == 0)
+		// Safe methods never carry a state change: just make sure the cookie is set
+		$method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
+		if (in_array($method, array('GET', 'HEAD', 'OPTIONS'), TRUE))
 		{
 			return $this->csrf_set_cookie();
 		}
 
-		// Do the tokens exist in both the _POST and _COOKIE arrays?
-		if ( ! isset($_POST[$this->_csrf_token_name]) OR
-			 ! isset($_COOKIE[$this->_csrf_cookie_name]))
+		// Endpoints that are legitimately POSTed to by external servers
+		if ($this->_csrf_uri_excluded())
+		{
+			return $this;
+		}
+
+		// The token may arrive as a form field or (AJAX) as a request header
+		$token = '';
+		if (isset($_POST[$this->_csrf_token_name]) && is_string($_POST[$this->_csrf_token_name]))
+		{
+			$token = $_POST[$this->_csrf_token_name];
+		}
+		elseif (isset($_SERVER['HTTP_X_CSRF_TOKEN']))
+		{
+			$token = (string) $_SERVER['HTTP_X_CSRF_TOKEN'];
+		}
+
+		// Do the token and cookie exist?
+		if ($token === '' OR ! isset($_COOKIE[$this->_csrf_cookie_name]) OR ! is_string($_COOKIE[$this->_csrf_cookie_name]))
 		{
 			$this->csrf_show_error();
 		}
 
 		// Do the tokens match?
-		if ($_POST[$this->_csrf_token_name] != $_COOKIE[$this->_csrf_cookie_name])
+		if ( ! hash_equals($_COOKIE[$this->_csrf_cookie_name], $token))
 		{
 			$this->csrf_show_error();
 		}
 
 		// We kill this since we're done and we don't want to
-		// polute the _POST array
+		// polute the _POST array. The token itself is deliberately kept
+		// for its lifetime so multiple tabs and AJAX calls keep working.
 		unset($_POST[$this->_csrf_token_name]);
-
-		// Nothing should last forever
-		unset($_COOKIE[$this->_csrf_cookie_name]);
-		$this->_csrf_set_hash();
-		$this->csrf_set_cookie();
 
 		log_message('debug', "CSRF token verified ");
 
 		return $this;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Is the current URI exempt from CSRF verification?
+	 *
+	 * Entries of $config['csrf_exclude_uris'] are matched exactly against
+	 * the URI string or as a regular expression.
+	 *
+	 * @return	bool
+	 */
+	protected function _csrf_uri_excluded()
+	{
+		$list = config_item('csrf_exclude_uris');
+		if ( ! is_array($list) OR count($list) == 0)
+		{
+			return FALSE;
+		}
+
+		$uri = trim(load_class('URI', 'core')->uri_string(), '/');
+
+		foreach ($list as $pattern)
+		{
+			if ($uri === trim($pattern, '/') OR @preg_match('#^'.str_replace('#', '\\#', $pattern).'$#i', $uri) === 1)
+			{
+				return TRUE;
+			}
+		}
+
+		return FALSE;
 	}
 
 	// --------------------------------------------------------------------
@@ -173,20 +217,27 @@ class CI_Security {
 	 */
 	public function csrf_set_cookie()
 	{
-		$expire = time() + $this->_csrf_expire;
-		$secure_cookie = (config_item('cookie_secure') === TRUE) ? 1 : 0;
+		$https = ( ! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+		$secure_cookie = ($https OR config_item('cookie_secure') === TRUE);
 
-		if ($secure_cookie)
+		if ($secure_cookie && ! $https)
 		{
-			$req = isset($_SERVER['HTTPS']) ? $_SERVER['HTTPS'] : FALSE;
-
-			if ( ! $req OR $req == 'off')
-			{
-				return FALSE;
-			}
+			return FALSE;
 		}
 
-		setcookie($this->_csrf_cookie_name, $this->_csrf_hash, $expire, config_item('cookie_path'), config_item('cookie_domain'), $secure_cookie);
+		if (headers_sent())
+		{
+			return FALSE;
+		}
+
+		setcookie($this->_csrf_cookie_name, $this->_csrf_hash, array(
+			'expires'	=> time() + $this->_csrf_expire,
+			'path'		=> config_item('cookie_path'),
+			'domain'	=> config_item('cookie_domain'),
+			'secure'	=> $secure_cookie,
+			'httponly'	=> TRUE,
+			'samesite'	=> 'Lax'
+		));
 
 		log_message('debug', "CRSF cookie Set");
 
@@ -202,7 +253,11 @@ class CI_Security {
 	 */
 	public function csrf_show_error()
 	{
-		show_error('The action you have requested is not allowed.');
+		// the error template forces a 404 header, so set the status afterwards
+		$html = load_class('Exceptions', 'core')->show_error('An Error Was Encountered', 'The action you have requested is not allowed.', 'error_general', 403);
+		set_status_header(403);
+		echo $html;
+		exit;
 	}
 
 	// --------------------------------------------------------------------
@@ -849,12 +904,13 @@ class CI_Security {
 			// each page load since a page could contain embedded
 			// sub-pages causing this feature to fail
 			if (isset($_COOKIE[$this->_csrf_cookie_name]) &&
-				$_COOKIE[$this->_csrf_cookie_name] != '')
+				is_string($_COOKIE[$this->_csrf_cookie_name]) &&
+				preg_match('/^[a-f0-9]{32}$/', $_COOKIE[$this->_csrf_cookie_name]))
 			{
 				return $this->_csrf_hash = $_COOKIE[$this->_csrf_cookie_name];
 			}
 
-			return $this->_csrf_hash = md5(uniqid(rand(), TRUE));
+			return $this->_csrf_hash = bin2hex(random_bytes(16));
 		}
 
 		return $this->_csrf_hash;

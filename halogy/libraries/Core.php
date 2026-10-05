@@ -621,7 +621,7 @@ class Core {
 			foreach($_FILES as $name => $file)
 			{
 				$this->CI->uploads->maxSize = '2000';
-				$this->CI->uploads->allowedTypes = $webform['fileTypes'];
+				$this->CI->uploads->allowedTypes = implode('|', array_diff(explode('|', strtolower($webform['fileTypes'])), array('*', 'php', 'phtml', 'phar', 'html', 'htm', 'svg', 'js', 'shtml', 'cgi', 'pl', 'py', 'exe')));
 				
 				// check a file has actually been uploaded
 				if ($file['name'] != '')

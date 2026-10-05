@@ -91,7 +91,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 
 /*
@@ -293,10 +293,25 @@ $config['global_xss_filtering'] = FALSE;
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
-$config['csrf_protection'] = FALSE;
+$config['csrf_protection'] = TRUE;
 $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
+
+/*
+| 'csrf_exclude_uris' = URIs (exact match or regular expression, matched against
+| the whole URI string) that are exempt from CSRF verification. Only list
+| endpoints that are POSTed to by external servers or by a gateway sending the
+| customer back to the site:
+|	shop/ipn, shop/response	= PayPal IPN / RBS Worldpay server-to-server callbacks
+|	shop/success, shop/donation	= payment gateway return pages (browser POSTed from the gateway)
+*/
+$config['csrf_exclude_uris'] = array(
+	'shop/ipn',
+	'shop/response',
+	'shop/success(/.*)?',
+	'shop/donation(/.*)?'
+);
 
 /*
 |--------------------------------------------------------------------------

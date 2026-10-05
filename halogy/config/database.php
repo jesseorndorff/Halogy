@@ -48,7 +48,7 @@ $db['default']['database'] = getenv('HALOGY_DB_NAME') ?: 'halogy';
 $db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = 'ha_';
 $db['default']['pconnect'] = FALSE;
-$db['default']['db_debug'] = TRUE;
+$db['default']['db_debug'] = (ENVIRONMENT !== 'production');
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';

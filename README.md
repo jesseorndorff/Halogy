@@ -41,7 +41,7 @@ If not using Docker:
    - `HALOGY_DB_NAME`: database name
 4. Make `static/uploads` (and its subfolders) writable by the web server user: `chown -R www-data:www-data static/uploads`
 5. (Optional) For security, move `halogy/` outside the web root to a parent directory or code repository, then update the `$application_folder` variable in `index.php` to point to it using a full server path (e.g., `$application_folder = '/var/www/halogy'`)
-6. Set `HALOGY_ENV=production` for production use (hides errors); `development` shows all errors
+6. `HALOGY_ENV` defaults to `production` (hides PHP and database errors); set `HALOGY_ENV=development` to show them while developing
 
 ## Extending
 

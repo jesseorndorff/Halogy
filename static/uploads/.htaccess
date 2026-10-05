@@ -1,0 +1,18 @@
+# Uploaded files must never be executed as scripts (Apache 2.4)
+Options -ExecCGI -Includes
+RemoveHandler .php .phtml .phar .php3 .php4 .php5 .php7 .php8 .pl .py .cgi .shtml
+RemoveType .php .phtml .phar .php3 .php4 .php5 .php7 .php8 .pl .py .cgi .shtml
+
+<IfModule mod_php.c>
+	php_flag engine off
+</IfModule>
+<IfModule mod_php7.c>
+	php_flag engine off
+</IfModule>
+<IfModule mod_php8.c>
+	php_flag engine off
+</IfModule>
+
+<FilesMatch "\.(php|phtml|phar|php\d|pl|py|cgi|shtml)(\..*)?$">
+	Require all denied
+</FilesMatch>
