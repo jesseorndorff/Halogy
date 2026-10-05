@@ -664,7 +664,10 @@ class CI_Security {
 		if (isset($_SERVER['HTTP_REFERER']) && $this->_header_is_same_origin($_SERVER['HTTP_REFERER']))
 		{
 			$referer = @parse_url((string) $_SERVER['HTTP_REFERER']);
-			if (is_array($referer) && isset($referer['path']) && $referer['path'] !== '' && $referer['path'][0] === '/')
+			// same rule as Core::local_path(): a single leading slash, no
+			// backslashes or control characters, so "//host/x" and "/\\host"
+			// can never become a protocol-relative (off-site) link
+			if (is_array($referer) && isset($referer['path']) && preg_match('#^/(?!/)[^\\\\[:cntrl:]\s]*$#', $referer['path']) === 1)
 			{
 				$cancel = $referer['path'].(isset($referer['query']) ? '?'.$referer['query'] : '');
 			}

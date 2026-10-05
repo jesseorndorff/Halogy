@@ -9,8 +9,11 @@
 </style>
 
 <script language="javascript" type="text/javascript">
+function esc(text) {
+	return $('<div/>').text(text).html();
+}
 function formatItem(row) {
-	if (row[0].length) return row[1]+'<br /><span class="email">(#'+row[0]+')</span>';
+	if (row[0].length) return esc(row[1])+'<br /><span class="email">(#'+esc(row[0])+')</span>';
 	else return 'No results';
 }
 $(function(){
@@ -73,7 +76,7 @@ $(function(){
 	<tr <?php echo $class ?>>
 		<td><?php echo anchor('/admin/shop/view_order/'.$order['transactionID'], $order['transactionCode']); ?></td>
 		<td><?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?></td>
-		<td><?php echo $order['firstName']; ?> <?php echo $order['lastName']; ?></td>
+		<td><?php echo html_escape($order['firstName']); ?> <?php echo html_escape($order['lastName']); ?></td>
 		<td><?php echo $order['numItems']; ?></td>
 		<td><?php echo currency_symbol().number_format($order['amount'],2); ?></td>
 		<td>

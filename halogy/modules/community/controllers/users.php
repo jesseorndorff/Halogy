@@ -505,7 +505,7 @@ class Users extends MX_Controller {
 			if ($data['user'] = $this->users->get_user($userID))
 			{			
 				// set title
-				$output['page:title'] = $this->site->config['siteName'].' | '.$data['user']['firstName'].'\'s Profile';
+				$output['page:title'] = $this->site->config['siteName'].' | '.html_escape($data['user']['firstName']).'\'s Profile';
 
 				// set view file (based on privacy)
 				if ($data['user']['privacy'] == 'H' && $data['user']['userID'] != $this->session->userdata('userID'))
@@ -525,7 +525,7 @@ class Users extends MX_Controller {
 
 		// populate template
 		$output['user:id'] = $userID;
-		$output['user:name'] = ($data['user']['displayName']) ? $data['user']['displayName'] : $data['user']['firstName'].' '.$data['user']['lastName'];
+		$output['user:name'] = html_escape(($data['user']['displayName']) ? $data['user']['displayName'] : $data['user']['firstName'].' '.$data['user']['lastName']);
 		$output['user:avatar'] = anchor('/users/profile/'.$data['user']['userID'], display_image($this->users->get_avatar($data['user']['avatar']), 'User Avatar', 100, 'class="bordered"', $this->config->item('staticPath').'/images/noavatar.gif'));
 		$output['user:country'] = lookup_country($data['user']['country']);
 
@@ -534,8 +534,8 @@ class Users extends MX_Controller {
 		$output['user:bio'] = (($data['user']['privacy'] == 'V' || $data['user']['userID'] == $this->session->userdata('userID')) && $data['user']['bio']) ? bbcode($data['user']['bio']) : FALSE;
 
 		// load company
-		$output['user:company'] = ($data['user']['companyName']) ? $data['user']['companyName'] : '';
-		$output['user:company-website'] = ($data['user']['companyWebsite']) ? $data['user']['companyWebsite'] : '';
+		$output['user:company'] = ($data['user']['companyName']) ? html_escape($data['user']['companyName']) : '';
+		$output['user:company-website'] = ($data['user']['companyWebsite']) ? safe_url($data['user']['companyWebsite']) : '';
 		$data['user']['companyDescription'] .= ($userID == $this->session->userdata('userID')) ? ' [[url=/users/account#changework]Update[/url]]' : '';
 		$output['user:company-description'] = (($data['user']['privacy'] == 'V' || $data['user']['userID'] == $this->session->userdata('userID')) && $data['user']['companyDescription']) ? bbcode($data['user']['companyDescription']) : FALSE;
 
@@ -543,7 +543,7 @@ class Users extends MX_Controller {
 		$output['profile:navigation'] = $this->parser->parse('partials/profile_navigation', $data, TRUE);
 
 		// set page heading
-		$output['page:heading'] = $data['user']['firstName'].' '.$data['user']['lastName'] . (($data['user']['displayName']) ? ' <small>('.$data['user']['displayName'].')</small>' : '');		
+		$output['page:heading'] = html_escape($data['user']['firstName'].' '.$data['user']['lastName']) . (($data['user']['displayName']) ? ' <small>('.html_escape($data['user']['displayName']).')</small>' : '');		
 
 		// display with cms layer
 		$this->pages->view($viewFile, $output, 'community');
@@ -566,7 +566,7 @@ class Users extends MX_Controller {
 				{
 					$output['members'][] = array(
 						'member:avatar' => anchor('/users/profile/'.$user['userID'], display_image($this->users->get_avatar($user['avatar']), 'User Avatar', 80, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),
-						'member:name' => ($user['displayName']) ? $user['displayName'] : $user['firstName'].' '.$user['lastName'],
+						'member:name' => html_escape(($user['displayName']) ? $user['displayName'] : $user['firstName'].' '.$user['lastName']),
 						'member:link' => site_url('/users/profile/'.$user['userID'])
 					);
 				}
@@ -574,8 +574,8 @@ class Users extends MX_Controller {
 		}
 
 		// set title
-		$output['page:title'] = $this->site->config['siteName'].' | Searching Users for "'.$query.'"';
-		$output['page:heading'] = 'Search Users for: "'.$query.'"';	
+		$output['page:title'] = $this->site->config['siteName'].' | Searching Users for "'.html_escape($query).'"';
+		$output['page:heading'] = 'Search Users for: "'.html_escape($query).'"';	
 
 		// set pagination
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
@@ -611,7 +611,8 @@ class Users extends MX_Controller {
 					{
 						echo "$key|$id|$name\n";
 					}*/
-					$this->output->set_output("$key|$id|$name\n");
+					$this->output->set_content_type('text/plain');
+					$this->output->set_output(str_replace(array("\r", "\n", '|'), ' ', "$key|$id|$name")."\n");
 				}
 			}
 		}

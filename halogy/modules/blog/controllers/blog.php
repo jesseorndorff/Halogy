@@ -310,9 +310,9 @@ class Blog extends MX_Controller {
 					$output['post:comments'][$i]['comment:class'] = ($i % 2) ? ' alt ' : '';
 					$output['post:comments'][$i]['comment:id'] = $comment['commentID'];
 					$output['post:comments'][$i]['comment:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$comment['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
-					$output['post:comments'][$i]['comment:author'] = (!empty($comment['website'])) ? anchor(prep_url($comment['website']), $comment['fullName']) : $comment['fullName'];
+					$output['post:comments'][$i]['comment:author'] = (!empty($comment['website']) && ($website = safe_url($comment['website'])) !== '') ? '<a href="'.$website.'" rel="nofollow noopener">'.html_escape($comment['fullName']).'</a>' : html_escape($comment['fullName']);
 					$output['post:comments'][$i]['comment:date'] = dateFmt($comment['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y' : 'jS M Y');
-					$output['post:comments'][$i]['comment:body'] = nl2br(auto_link(strip_tags((string)$comment['comment'])));
+					$output['post:comments'][$i]['comment:body'] = nl2br(auto_link(html_escape((string)$comment['comment'])));
 					
 					$i++;
 				}
@@ -540,7 +540,8 @@ class Blog extends MX_Controller {
 					{
 						echo "$key|$id|$name\n";
 					}*/
-					$this->output->set_output("$key|$id|$name\n");
+					$this->output->set_content_type('text/plain');
+					$this->output->set_output(str_replace(array("\r", "\n"), ' ', "$key|$id|$name")."\n");
 				}
 			}
 		}

@@ -12,11 +12,11 @@
 	</tr>
 <?php foreach ($changes as $change): ?>
 	<tr>
-		<td><?php echo (in_array('wiki_edit', $this->permission->permissions)) ? anchor('/admin/wiki/edit_page/'.$change['pageID'], $change['pageName']) : $change['pageName']; ?></td>	
-		<td><?php echo $change['notes']; ?></td>
+		<td><?php echo (in_array('wiki_edit', $this->permission->permissions)) ? anchor('/admin/wiki/edit_page/'.$change['pageID'], html_escape($change['pageName'])) : html_escape($change['pageName']); ?></td>	
+		<td><?php echo html_escape($change['notes']); ?></td>
 		<td><?php echo dateFmt($change['dateCreated']); ?></td>
-		<td><?php echo $this->wiki->lookup_user($change['userID'], TRUE); ?></td>
-		<td><?php echo anchor('/wiki/'.$change['uri'], 'View'); ?></td>
+		<td><?php echo html_escape($this->wiki->lookup_user($change['userID'], TRUE)); ?></td>
+		<td><?php echo anchor('/wiki/'.html_escape($change['uri']), 'View'); ?></td>
 	</tr>
 <?php endforeach; ?>
 </table>

@@ -348,7 +348,8 @@ class Admin extends MX_Controller {
 			{
 				echo "$key|$id|$name\n";
 			}*/
-			$this->output->set_output("$key|$value\n");
+			$this->output->set_content_type('text/plain');
+			$this->output->set_output(str_replace(array("\r", "\n"), ' ', "$key|$value")."\n");
         }
 	}
 

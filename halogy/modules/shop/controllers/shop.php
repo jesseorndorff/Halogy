@@ -449,9 +449,9 @@ class Shop extends MX_Controller {
 				$output['product:reviews'][$i]['review:class'] = ($i % 2) ? ' alt ' : '';
 				$output['product:reviews'][$i]['review:id'] = $review['reviewID'];
 				$output['product:reviews'][$i]['review:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($review['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
-				$output['product:reviews'][$i]['review:author'] = $review['fullName'];
+				$output['product:reviews'][$i]['review:author'] = html_escape($review['fullName']);
 				$output['product:reviews'][$i]['review:date'] = dateFmt($review['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y' : 'jS M Y');
-				$output['product:reviews'][$i]['review:body'] = nl2br(strip_tags($review['review']));
+				$output['product:reviews'][$i]['review:body'] = nl2br(html_escape((string)$review['review']));
 				$output['product:reviews'][$i]['review:rating'] = $review['rating'];
 				
 				$i++;
@@ -722,27 +722,27 @@ class Shop extends MX_Controller {
 		$user = $this->shop->get_user();
 		
 		// get user data
-		$output['user:email'] = @$user['email'];
-		$output['user:name'] = @trim($user['firstName'].' '.$user['lastName']);
-		$output['user:first-name'] = @$user['firstName'];
-		$output['user:last-name'] = @$user['lastName'];
-		$output['user:address1'] = @$user['address1'];
-		$output['user:address2'] = @$user['address2'];
-		$output['user:address3'] = @$user['address3'];
-		$output['user:city'] = @$user['city'];
+		$output['user:email'] = html_escape(@$user['email']);
+		$output['user:name'] = html_escape(@trim($user['firstName'].' '.$user['lastName']));
+		$output['user:first-name'] = html_escape(@$user['firstName']);
+		$output['user:last-name'] = html_escape(@$user['lastName']);
+		$output['user:address1'] = html_escape(@$user['address1']);
+		$output['user:address2'] = html_escape(@$user['address2']);
+		$output['user:address3'] = html_escape(@$user['address3']);
+		$output['user:city'] = html_escape(@$user['city']);
 		$output['user:state'] = @lookup_state($user['state']);
-		$output['user:postcode'] = @$user['postcode'];
+		$output['user:postcode'] = html_escape(@$user['postcode']);
 		$output['user:country'] = @lookup_country($user['country']);
 		$output['user:country-code'] = @$user['country'];
-		$output['user:phone'] = @$user['phone'];
+		$output['user:phone'] = html_escape(@$user['phone']);
 		
 		// get user data
-		$output['user:billing-address1'] = @$user['billingAddress1'];
-		$output['user:billing-address2'] = @$user['billingAddress2'];
-		$output['user:billing-address3'] = @$user['billingAddress3'];
-		$output['user:billing-city'] = @$user['billingCity'];
+		$output['user:billing-address1'] = html_escape(@$user['billingAddress1']);
+		$output['user:billing-address2'] = html_escape(@$user['billingAddress2']);
+		$output['user:billing-address3'] = html_escape(@$user['billingAddress3']);
+		$output['user:billing-city'] = html_escape(@$user['billingCity']);
 		$output['user:billing-state'] = @lookup_state($user['billingState']);
-		$output['user:billing-postcode'] = @$user['billingPostcode'];
+		$output['user:billing-postcode'] = html_escape(@$user['billingPostcode']);
 		$output['user:billing-country'] = @lookup_country($user['billingCountry']);
 		$output['user:billing-country-code'] = @$user['billingCountry'];			
 		
@@ -884,27 +884,27 @@ class Shop extends MX_Controller {
 			$data['currency'] = $this->site->config['currency'];
 
 			// get user data
-			$output['user:email'] = @$user['email'];
-			$output['user:name'] = @trim($user['firstName'].' '.$user['lastName']);
-			$output['user:first-name'] = @$user['firstName'];
-			$output['user:last-name'] = @$user['lastName'];
-			$output['user:address1'] = @$user['address1'];
-			$output['user:address2'] = @$user['address2'];
-			$output['user:address3'] = @$user['address3'];
-			$output['user:city'] = @$user['city'];
+			$output['user:email'] = html_escape(@$user['email']);
+			$output['user:name'] = html_escape(@trim($user['firstName'].' '.$user['lastName']));
+			$output['user:first-name'] = html_escape(@$user['firstName']);
+			$output['user:last-name'] = html_escape(@$user['lastName']);
+			$output['user:address1'] = html_escape(@$user['address1']);
+			$output['user:address2'] = html_escape(@$user['address2']);
+			$output['user:address3'] = html_escape(@$user['address3']);
+			$output['user:city'] = html_escape(@$user['city']);
 			$output['user:state'] = @lookup_state($user['state']);
-			$output['user:postcode'] = @$user['postcode'];
+			$output['user:postcode'] = html_escape(@$user['postcode']);
 			$output['user:country'] = @lookup_country($user['country']);
 			$output['user:country-code'] = @$user['country'];
-			$output['user:phone'] = @$user['phone'];
+			$output['user:phone'] = html_escape(@$user['phone']);
 			
 			// get user data
-			$output['user:billing-address1'] = @$user['billingAddress1'];
-			$output['user:billing-address2'] = @$user['billingAddress2'];
-			$output['user:billing-address3'] = @$user['billingAddress3'];
-			$output['user:billing-city'] = @$user['billingCity'];
+			$output['user:billing-address1'] = html_escape(@$user['billingAddress1']);
+			$output['user:billing-address2'] = html_escape(@$user['billingAddress2']);
+			$output['user:billing-address3'] = html_escape(@$user['billingAddress3']);
+			$output['user:billing-city'] = html_escape(@$user['billingCity']);
 			$output['user:billing-state'] = @lookup_state($user['billingState']);
-			$output['user:billing-postcode'] = @$user['billingPostcode'];
+			$output['user:billing-postcode'] = html_escape(@$user['billingPostcode']);
 			$output['user:billing-country'] = @lookup_country($user['billingCountry']);
 			$output['user:billing-country-code'] = @$user['billingCountry'];			
 
@@ -1328,23 +1328,23 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['order:id'] = $order['transactionCode'];
-		$output['order:first-name'] = ($order['firstName']) ? $order['firstName'] : '';
-		$output['order:last-name'] = ($order['lastName']) ? $order['lastName'] : '';
-		$output['order:address1'] = ($order['address1']) ? $order['address1'] : '';
-		$output['order:address2'] = ($order['address2']) ? $order['address2'] : '';
-		$output['order:address3'] = ($order['address3']) ? $order['address3'] : '';
-		$output['order:city'] = ($order['city']) ? $order['city'] : '';
+		$output['order:first-name'] = ($order['firstName']) ? html_escape($order['firstName']) : '';
+		$output['order:last-name'] = ($order['lastName']) ? html_escape($order['lastName']) : '';
+		$output['order:address1'] = ($order['address1']) ? html_escape($order['address1']) : '';
+		$output['order:address2'] = ($order['address2']) ? html_escape($order['address2']) : '';
+		$output['order:address3'] = ($order['address3']) ? html_escape($order['address3']) : '';
+		$output['order:city'] = ($order['city']) ? html_escape($order['city']) : '';
 		$output['order:country'] = ($order['country']) ? lookup_country($order['country']) : '';
-		$output['order:postcode'] = ($order['postcode']) ? $order['postcode'] : '';
-		$output['order:phone'] = ($order['phone']) ? $order['phone'] : 'N/A';
-		$output['order:email'] = ($order['email']) ? $order['email'] : 'N/A';
+		$output['order:postcode'] = ($order['postcode']) ? html_escape($order['postcode']) : '';
+		$output['order:phone'] = ($order['phone']) ? html_escape($order['phone']) : 'N/A';
+		$output['order:email'] = ($order['email']) ? html_escape($order['email']) : 'N/A';
 		$output['order:discounts'] = ($order['discounts'] > 0) ? currency_symbol().number_format($order['discounts'], 2) : '';		
 		$output['order:subtotal'] = currency_symbol().number_format($order['amount'] - $order['postage'] - $order['tax'], 2);
 		$output['order:postage'] = currency_symbol().number_format($order['postage'], 2);
 		$output['order:tax'] = ($order['tax'] > 0) ? currency_symbol().number_format($order['tax'], 2) : '';
 		$output['order:total'] = currency_symbol().number_format($order['amount'], 2);
 		$output['order:status'] = $order['trackingStatus'];		
-		$output['order:notes'] = ($order['notes']) ? nl2br($order['notes']) : FALSE;
+		$output['order:notes'] = ($order['notes']) ? nl2br(html_escape((string)$order['notes'])) : FALSE;
 
 		// set pagination and breadcrumb
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';

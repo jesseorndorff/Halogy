@@ -29,9 +29,9 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "
 			<link><?php echo site_url('forums/viewpost/'.$entry['lastPostID']); ?></link>
 			<guid><?php echo site_url('forums/viewpost/'.$entry['lastPostID']); ?></guid>
 			<description><![CDATA[
-			<?php echo (strlen(bbcode($entry['body']) > 200)) ? substr(bbcode($entry['body']), 0, 200) : bbcode($entry['body']); ?>
+			<?php echo (mb_strlen((string)$entry['body']) > 200) ? bbcode(mb_substr((string)$entry['body'], 0, 200)).'...' : bbcode($entry['body']); ?>
 			]]></description>
-			<author><?php echo ($entry['displayName']) ? $entry['displayName'] : $entry['firstName'].' '.$entry['lastName']; ?></author>
+			<author><?php echo xml_convert(($entry['displayName']) ? $entry['displayName'] : $entry['firstName'].' '.$entry['lastName']); ?></author>
 			<pubDate><?php echo dateFmt($entry['dateCreated'], 'r');?></pubDate>
 		</item>
 

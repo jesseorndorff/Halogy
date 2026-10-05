@@ -77,12 +77,12 @@ class Messages extends MX_Controller {
 				$output['messages'][] = array(
 					'message:class' => ($message['unread'] && $message['userID'] != $this->session->userdata('userID')) ? ' unread ' : '',
 					'user:avatar' => anchor('/users/profile/'.$message['userID'], display_image($this->users->get_avatar($message['avatar']), 'User Avatar', 40, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),
-					'user:name' => ($message['displayName']) ? $message['displayName'] : $message['firstName'].' '.$message['lastName'],
+					'user:name' => html_escape(($message['displayName']) ? $message['displayName'] : $message['firstName'].' '.$message['lastName']),
 					'user:link' => site_url('/users/profile/'.$message['userID']),
 					'message:link' => site_url('/messages/read/'.(($message['parentID'] > 0) ? $message['parentID'].'#reply'.$message['lastMessageID'] : $message['messageID'])),
-					'message:title' => $message['subject'],
+					'message:title' => html_escape($message['subject']),
 					'message:date' => dateFmt($message['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y, H:i' : 'jS M Y, H:i'),
-					'message:body' => (strlen(bbcode($message['message'])) > 80) ? substr(bbcode($message['message']), 0, 100).'...' : bbcode($message['message']),
+					'message:body' => (mb_strlen((string)$message['message']) > 100) ? bbcode(mb_substr((string)$message['message'], 0, 100)).'...' : bbcode($message['message']),
 					'message:id' => $message['messageID']
 				);
 			}
@@ -121,8 +121,8 @@ class Messages extends MX_Controller {
 					'reply:id' => $reply['messageID'],
 					'reply:avatar' => anchor('/users/profile/'.$reply['userID'], display_image($this->users->get_avatar($reply['avatar']), 'User Avatar', 60, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),
 					'reply:link' => site_url('/users/profile/'.$reply['userID']),
-					'reply:name' => ($reply['displayName']) ? $reply['displayName'] : $reply['firstName'].' '.$reply['lastName'],
-					'reply:title' => $reply['subject'],
+					'reply:name' => html_escape(($reply['displayName']) ? $reply['displayName'] : $reply['firstName'].' '.$reply['lastName']),
+					'reply:title' => html_escape($reply['subject']),
 					'reply:date' => dateFmt($reply['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y, H:i' : 'jS M Y, H:i'),
 					'reply:body' => bbcode($reply['message'])
 				);
@@ -131,11 +131,11 @@ class Messages extends MX_Controller {
 
 		// get user details
 		$output['user:avatar'] = anchor('/users/profile/'.$message['userID'], display_image($this->users->get_avatar($message['avatar']), 'User Avatar', 80, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif'));
-		$output['user:name'] = (($message['displayName']) ? $message['displayName'] : $message['firstName'].' '.$message['lastName']);
+		$output['user:name'] = html_escape(($message['displayName']) ? $message['displayName'] : $message['firstName'].' '.$message['lastName']);
 		$output['user:link'] = site_url('/users/profile/'.$message['userID']);
 
 		// populate template
-		$output['message:title'] = $message['subject'];
+		$output['message:title'] = html_escape($message['subject']);
 		$output['message:body'] = bbcode($message['message']);
 		$output['message:id'] = $message['messageID'];
 		
@@ -322,12 +322,12 @@ class Messages extends MX_Controller {
 				$output['messages'][] = array(
 					'message:class' => ($message['unread'] && $message['userID'] != $this->session->userdata('userID')) ? ' unread ' : '',
 					'user:avatar' => anchor('/users/profile/'.$message['userID'], display_image($this->users->get_avatar($message['avatar']), 'User Avatar', 40, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),
-					'user:name' => ($message['displayName']) ? $message['displayName'] : $message['firstName'].' '.$message['lastName'],
+					'user:name' => html_escape(($message['displayName']) ? $message['displayName'] : $message['firstName'].' '.$message['lastName']),
 					'user:link' => site_url('/users/profile/'.$message['userID']),
 					'message:link' => site_url('/messages/read/'.(($message['parentID'] > 0) ? $message['parentID'].'#reply'.$message['lastMessageID'] : $message['messageID'])),
-					'message:title' => $message['subject'],
+					'message:title' => html_escape($message['subject']),
 					'message:date' => dateFmt($message['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y, H:i' : 'jS M Y, H:i'),
-					'message:body' => (strlen(bbcode($message['message'])) > 80) ? substr(bbcode($message['message']), 0, 100).'...' : bbcode($message['message']),
+					'message:body' => (mb_strlen((string)$message['message']) > 100) ? bbcode(mb_substr((string)$message['message'], 0, 100)).'...' : bbcode($message['message']),
 					'message:id' => $message['messageID']
 				);
 			}
@@ -337,8 +337,8 @@ class Messages extends MX_Controller {
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
 
 		// set title
-		$output['page:title'] = $this->site->config['siteName'].' - Searching Messages for "'.$data['query'].'"';
-		$output['page:heading'] = 'Search Messages for: "'.$data['query'].'"';	
+		$output['page:title'] = $this->site->config['siteName'].' - Searching Messages for "'.html_escape($data['query']).'"';
+		$output['page:heading'] = 'Search Messages for: "'.html_escape($data['query']).'"';	
 
 		// display with cms layer	
 		$this->pages->view('community_messages', $output, 'community');
@@ -385,7 +385,8 @@ class Messages extends MX_Controller {
 				{
 					echo "$key|$id|$name\n";
 				}*/
-				$this->output->set_output("$key|$id|$name\n");
+				$this->output->set_content_type('text/plain');
+				$this->output->set_output(str_replace(array("\r", "\n"), ' ', "$key|$id|$name")."\n");
 			}
 		}
 	}	

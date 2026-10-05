@@ -475,11 +475,11 @@ class Template {
 
 		// logged in userdata
 		$body = str_replace('{userdata:id}', ($this->CI->session->userdata('userID')) ? $this->CI->session->userdata('userID') : '', $body);
-		$body = str_replace('{userdata:email}', ($this->CI->session->userdata('email')) ? $this->CI->session->userdata('email') : '', $body);
-		$body = str_replace('{userdata:username}', ($this->CI->session->userdata('username')) ? $this->CI->session->userdata('username') : '', $body);
-		$body = str_replace('{userdata:name}', ($this->CI->session->userdata('firstName') && $this->CI->session->userdata('lastName')) ? $this->CI->session->userdata('firstName').' '.$this->CI->session->userdata('lastName') : '', $body);		
-		$body = str_replace('{userdata:first-name}', ($this->CI->session->userdata('firstName')) ? $this->CI->session->userdata('firstName') : '', $body);
-		$body = str_replace('{userdata:last-name}', ($this->CI->session->userdata('lastName')) ? $this->CI->session->userdata('lastName') : '', $body);
+		$body = str_replace('{userdata:email}', ($this->CI->session->userdata('email')) ? html_escape($this->CI->session->userdata('email')) : '', $body);
+		$body = str_replace('{userdata:username}', ($this->CI->session->userdata('username')) ? html_escape($this->CI->session->userdata('username')) : '', $body);
+		$body = str_replace('{userdata:name}', ($this->CI->session->userdata('firstName') && $this->CI->session->userdata('lastName')) ? html_escape($this->CI->session->userdata('firstName').' '.$this->CI->session->userdata('lastName')) : '', $body);		
+		$body = str_replace('{userdata:first-name}', ($this->CI->session->userdata('firstName')) ? html_escape($this->CI->session->userdata('firstName')) : '', $body);
+		$body = str_replace('{userdata:last-name}', ($this->CI->session->userdata('lastName')) ? html_escape($this->CI->session->userdata('lastName')) : '', $body);
 
 		// other useful stuff
 		$body = str_replace('{date}', dateFmt(date("Y-m-d H:i:s"), ($this->CI->site->config['dateOrder'] == 'MD') ? 'M jS Y' : 'jS M Y'), $body);
@@ -735,8 +735,8 @@ class Template {
 				{
 					
 					$template[$headlineID][$i] = array(
-						'headline:link' => site_url('wiki/' .$headline['uri']),
-						'headline:title' => $headline['pageName'],
+						'headline:link' => html_escape(site_url('wiki/' .$headline['uri'])),
+						'headline:title' => html_escape($headline['pageName']),
 					);
 
 					$i++;

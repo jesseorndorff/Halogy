@@ -62,12 +62,12 @@ $(function(){
 	$i++;
 ?>
 	<tr<?php echo $class; ?><?php echo $style; ?>>
-		<td><?php echo anchor('/admin/webforms/view_ticket/'.$ticket['ticketID'], '[#'.$ticket['ticketID'].']: '.$ticket['subject']); ?></td>	
+		<td><?php echo anchor('/admin/webforms/view_ticket/'.$ticket['ticketID'], '[#'.$ticket['ticketID'].']: '.html_escape($ticket['subject'])); ?></td>	
 		<td><?php echo dateFmt($ticket['dateCreated'], '', '', TRUE); ?></td>
-		<td><?php echo ($ticket['formName']) ? anchor('/admin/webforms/viewall', $ticket['formName']) : ''; ?></td>
+		<td><?php echo ($ticket['formName']) ? anchor('/admin/webforms/viewall', html_escape($ticket['formName'])) : ''; ?></td>
 		<td><?php echo ($ticket['closed']) ? 'Closed' : 'Open'; ?></td>
-		<td><?php echo $ticket['fullName']; ?></td>
-		<td><?php echo $ticket['email']; ?></td>		
+		<td><?php echo html_escape($ticket['fullName']); ?></td>
+		<td><?php echo html_escape($ticket['email']); ?></td>		
 		<td class="tiny">
 			<?php echo anchor('/admin/webforms/view_ticket/'.$ticket['ticketID'], 'Edit'); ?>
 		</td>

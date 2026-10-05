@@ -8,8 +8,11 @@
 if(defined('BASEPATH')) {
 	#[\AllowDynamicProperties]
     class Mkdn {
-        function translate($text) {
-            return Markdown($text);
+        # $untrusted = TRUE for member-authored content: raw HTML is escaped
+        # and link/image URLs are limited to http, https, mailto and
+        # scheme-less (relative) targets
+        function translate($text, $untrusted = FALSE) {
+            return Markdown($text, $untrusted);
         }
     }
 }
@@ -64,7 +67,7 @@ define( 'MARKDOWNEXTRA_VERSION',  "1.2.3" ); # Wed 31 Dec 2008
 
 @define( 'MARKDOWN_PARSER_CLASS',  'MarkdownExtra_Parser' );
 
-function Markdown($text) {
+function Markdown($text, $untrusted = FALSE) {
 #
 # Initialize the parser and return the result of its transform method.
 #
@@ -74,6 +77,9 @@ function Markdown($text) {
 		$parser_class = MARKDOWN_PARSER_CLASS;
 		$parser = new $parser_class;
 	}
+
+	# Untrusted text: no raw HTML, only safe link and image URLs.
+	$parser->no_markup = (bool) $untrusted;
 
 	# Transform text using parser.
 	return $parser->transform($text);
@@ -765,7 +771,7 @@ class Markdown_Parser {
 		$link_id = strtolower($link_id);
 		$link_id = preg_replace('{[ ]?\n}', ' ', $link_id);
 
-		if (isset($this->urls[$link_id])) {
+		if (isset($this->urls[$link_id]) && !$this->unsafeUrl($this->urls[$link_id])) {
 			$url = $this->urls[$link_id];
 			$url = $this->encodeAttribute($url);
 			
@@ -790,6 +796,11 @@ class Markdown_Parser {
 		$link_text		=  $this->runSpanGamut($matches[2]);
 		$url			=  $matches[3] == '' ? $matches[4] : $matches[3];
 		$title			=& $matches[7];
+
+		if ($this->unsafeUrl($url)) {
+			# not a safe target: keep the text, drop the link
+			return $this->hashPart($link_text);
+		}
 
 		$url = $this->encodeAttribute($url);
 
@@ -871,7 +882,11 @@ class Markdown_Parser {
 		}
 
 		$alt_text = $this->encodeAttribute($alt_text);
-		if (isset($this->urls[$link_id])) {
+		if (isset($this->urls[$link_id]) && $this->unsafeUrl($this->urls[$link_id])) {
+			# not a safe source: show the alt text only
+			$result = $this->hashPart($alt_text);
+		}
+		else if (isset($this->urls[$link_id])) {
 			$url = $this->encodeAttribute($this->urls[$link_id]);
 			$result = "<img src=\"$url\" alt=\"$alt_text\"";
 			if (isset($this->titles[$link_id])) {
@@ -896,6 +911,10 @@ class Markdown_Parser {
 		$title			=& $matches[7];
 
 		$alt_text = $this->encodeAttribute($alt_text);
+		if ($this->unsafeUrl($url)) {
+			# not a safe source: show the alt text only
+			return $this->hashPart($alt_text);
+		}
 		$url = $this->encodeAttribute($url);
 		$result = "<img src=\"$url\" alt=\"$alt_text\"";
 		if (isset($title)) {
@@ -1411,6 +1430,37 @@ class Markdown_Parser {
 	}
 
 
+	function unsafeUrl($url) {
+	#
+	# In untrusted (no_markup) mode, is this a link or image target that
+	# could run script? Only http, https, mailto and scheme-less targets
+	# (/path, #anchor, ?query, page) pass. Entities are decoded and
+	# whitespace/control characters removed first, the way a browser reads
+	# the attribute ("java&#115;cript:", "java\tscript:").
+	#
+		if (!$this->no_markup) {
+			return false;
+		}
+
+		$url = (string) $url;
+		for ($i = 0; $i < 3; $i++) {
+			$decoded = html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			if ($decoded === $url) break;
+			$url = $decoded;
+		}
+		$url = preg_replace('/[\x00-\x20\x7f-\x9f\x{a0}\x{1680}\x{2000}-\x{200f}\x{2028}-\x{202f}\x{205f}-\x{2064}\x{3000}\x{feff}]+/u', '', $url);
+		if ($url === null) {
+			return true;
+		}
+
+		if (preg_match('/^[^\/?#]*:/', $url)) {
+			return !preg_match('/^(https?|mailto):/i', $url);
+		}
+
+		return false;
+	}
+
+
 	function encodeAttribute($text) {
 	#
 	# Encode text for a double-quoted HTML attribute. This function
@@ -1795,6 +1845,11 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 	#  _HashHTMLBlocks_InMarkdown to handle the Markdown syntax within the tag.
 	# These two functions are calling each other. It's recursive!
 	#
+		# Untrusted text: leave HTML alone here, it is escaped as plain text.
+		if ($this->no_markup) {
+			return $text;
+		}
+
 		#
 		# Call the HTML-in-Markdown hasher.
 		#

@@ -625,7 +625,7 @@ class Core {
 			foreach($_FILES as $name => $file)
 			{
 				$this->CI->uploads->maxSize = '2000';
-				$this->CI->uploads->allowedTypes = implode('|', array_diff(explode('|', strtolower($webform['fileTypes'])), array('*', 'php', 'phtml', 'phar', 'html', 'htm', 'svg', 'js', 'shtml', 'cgi', 'pl', 'py', 'exe', 'xhtml', 'xht', 'svgz', 'htaccess', 'htpasswd', 'jar', 'hta')));
+				$this->CI->uploads->allowedTypes = implode('|', array_diff(explode('|', strtolower($webform['fileTypes'])), array('*', 'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phps', 'pht', 'phtml', 'phar', 'inc', 'html', 'htm', 'shtm', 'shtml', 'svg', 'svgz', 'js', 'cgi', 'pl', 'py', 'exe', 'xhtml', 'xht', 'xml', 'xsl', 'xslt', 'xsd', 'dtd', 'rdf', 'rss', 'atom', 'mht', 'mhtml', 'swf', 'asp', 'aspx', 'jsp', 'jspx', 'htaccess', 'htpasswd', 'jar', 'hta')));
 				
 				// check a file has actually been uploaded
 				if ($file['name'] != '')
@@ -724,10 +724,11 @@ class Core {
 			if ($files)
 			{
 				$message .= "\tFiles: ".count($files).((count($files) != 1) ? ' files' : ' file')." uploaded\n\n";
-				$filepaths .= '<br />';
+				// plain text only: the ticket is escaped when it is shown, the addresses become links then
+				$filepaths .= "\n";
 				foreach($files as $name => $fileData)
 				{
-					$filepaths .= '<br /><a href="'.site_url($this->CI->uploads->uploadsPath.'/'.$fileData['file_name']).'">'.$fileData['client_name'].'</a>';
+					$filepaths .= "\n".$fileData['client_name'].': '.site_url($this->CI->uploads->uploadsPath.'/'.$fileData['file_name']);
 				}
 			}
 			

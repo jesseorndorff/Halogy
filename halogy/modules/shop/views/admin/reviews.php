@@ -18,10 +18,10 @@
 <?php foreach ($reviews as $review): ?>
 	<tr>
 		<td><?php echo dateFmt($review['dateCreated']); ?></td>
-		<td><?php echo anchor('/shop/viewproduct/'.$review['productID'], $review['productName']); ?></td>
-		<td><?php echo $review['fullName']; ?></td>
-		<td><?php echo $review['email']; ?></td>
-		<td><?php echo (strlen($review['review'] > 50)) ? substr($review['review'], 0, 50).'...' : $review['review']; ?></td>
+		<td><?php echo anchor('/shop/viewproduct/'.$review['productID'], html_escape($review['productName'])); ?></td>
+		<td><?php echo html_escape($review['fullName']); ?></td>
+		<td><?php echo html_escape($review['email']); ?></td>
+		<td><?php echo (mb_strlen((string)$review['review']) > 50) ? html_escape(mb_substr((string)$review['review'], 0, 50)).'...' : html_escape((string)$review['review']); ?></td>
 		<td><?php echo ($review['active']) ? '<span style="color:green;">Active</span>' : '<span style="color:orange;">Pending</span>'; ?></td>		
 		<td><?php echo (!$review['active']) ? anchor('/admin/shop/approve_review/'.$review['reviewID'], 'Approve') : ''; ?></td>
 		<td>

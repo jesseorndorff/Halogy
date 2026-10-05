@@ -12,8 +12,11 @@
 <script type="text/javascript">
 $(function(){
     $('#searchbox').fieldreplace();
+	function esc(text) {
+		return $('<div/>').text(text).html();
+	}
 	function formatItem(row) {
-		if (row[0].length) return row[1]+'<br /><span class="email">('+row[0]+')</span>';
+		if (row[0].length) return esc(row[1])+'<br /><span class="email">('+esc(row[0])+')</span>';
 		else return 'No results';
 	}
 	$('#searchbox').autocomplete("<?php echo site_url('/admin/users/ac_users'); ?>", { delay: "0", selectFirst: false, matchContains: true, formatItem: formatItem, minChars: 2 });
@@ -66,15 +69,15 @@ $(function(){
 	if ($user['groupID'] == $this->site->config['groupID'] || $user['groupID'] < 0) $class = 'class="blue"';
 	elseif (in_array($user['groupID'], (array)$adminGroups)) $class = 'class="orange"';
 
-	$username = ($user['username']) ? $user['username'] : '(not set)';
+	$username = ($user['username']) ? html_escape($user['username']) : '(not set)';
 	$userlink = (in_array('users_edit', $this->permission->permissions)) ? anchor('/admin/users/edit/'.$user['userID'], $username) : $username;
 	
 ?>
 	<tr <?php echo $class; ?>>
 		<td><?php echo $userlink; ?></td>
 		<td><?php echo dateFmt($user['dateCreated'], '', '', TRUE); ?></td>
-		<td><?php echo trim($user['firstName'].' '.$user['lastName']); ?></td>
-		<td><?php echo $user['email']; ?></td>
+		<td><?php echo html_escape(trim($user['firstName'].' '.$user['lastName'])); ?></td>
+		<td><?php echo html_escape($user['email']); ?></td>
 		<td>
 			<?php
 				if ($user['groupID'] == $this->site->config['groupID'] || $user['groupID'] < 0) echo 'Administrator';

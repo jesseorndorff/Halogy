@@ -75,9 +75,9 @@ class Community extends MX_Controller {
 				$output['members'][] = array(
 					'member:id' => $user['userID'],
 					'member:avatar' => anchor('/users/profile/'.$user['userID'], display_image($this->users->get_avatar($user['avatar']), 'User Avatar', 80, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),
-					'member:name' => ($user['displayName']) ? $user['displayName'] : $user['firstName'].' '.$user['lastName'],
-					'member:email' => $user['email'],
-					'member:group' => ($user['groupName']) ? $user['groupName'] : '',
+					'member:name' => html_escape(($user['displayName']) ? $user['displayName'] : $user['firstName'].' '.$user['lastName']),
+					'member:email' => html_escape($user['email']),
+					'member:group' => ($user['groupName']) ? html_escape($user['groupName']) : '',
 					'member:link' => site_url('/users/profile/'.$user['userID'])
 				);
 			}

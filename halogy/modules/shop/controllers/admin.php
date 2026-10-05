@@ -1391,6 +1391,7 @@ class Admin extends MX_Controller {
 			$output .= "$key|$value\n";
 		}
 		
+		$this->output->set_content_type('text/plain');
 		$this->output->set_output($output);
 	}
 	
@@ -1416,6 +1417,7 @@ class Admin extends MX_Controller {
 			$output .= "$key|$value\n";
 		}
 		
+		$this->output->set_content_type('text/plain');
 		$this->output->set_output($output);
 	}
 	
