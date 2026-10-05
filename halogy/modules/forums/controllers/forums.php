@@ -69,26 +69,26 @@ class Forums extends MX_Controller {
 				if ($forums = $this->forums->get_forums($category['catID']))
 				{
 					// get category name
-					$output['categories'][$category['catID']]['category:title'] = $category['catName'];
+					$output['categories'][$category['catID']]['category:title'] = html_escape($category['catName']);
 					
 					foreach($forums as $forum)
 					{
-						if ($forum['groupID'] > 0 && @!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID'))
+						if ($forum['groupID'] > 0 && !in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID'))
 						{
 							$output['categories'][$category['catID']]['category:forums'] = array();
 						}
 						else
 						{
 							$output['categories'][$category['catID']]['category:forums'][] = array(
-								'forum:title' => $forum['forumName'],
+								'forum:title' => html_escape($forum['forumName']),
 								'forum:link' => site_url('/forums/viewforum/'.$forum['forumID']),
-								'forum:description' => $forum['description'],
+								'forum:description' => html_escape($forum['description']),
 								'forum:topics' => $forum['topics'],
 								'forum:replies' => $forum['replies'],
 								'forum:latest-post' => ($latestPost = $this->forums->get_post($forum['lastPostID'])) ? 
-									'<small>'.anchor('/forums/viewpost/'.$latestPost['postID'], $latestPost['topicTitle']).'<br />
+									'<small>'.anchor('/forums/viewpost/'.$latestPost['postID'], html_escape($latestPost['topicTitle'])).'<br />
 									Posted: '.dateFmt($latestPost['dateCreated']).' by '. anchor('/users/profile/'.$latestPost['userID'], 
-									(($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName'])).
+									html_escape(($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName'])).
 									'</small>' : ''
 							);
 						}
@@ -105,22 +105,22 @@ class Forums extends MX_Controller {
 			{
 				foreach($forums as $forum)
 				{
-					if ($forum['groupID'] > 0 && @!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID'))
+					if ($forum['groupID'] > 0 && !in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID'))
 					{
 						$output['forums'][] = array();
 					}
 					else
 					{					
 						$output['forums'][] = array(
-							'forum:title' => $forum['forumName'],
+							'forum:title' => html_escape($forum['forumName']),
 							'forum:link' => site_url('/forums/viewforum/'.$forum['forumID']),
-							'forum:description' => $forum['description'],
+							'forum:description' => html_escape($forum['description']),
 							'forum:topics' => $forum['topics'],
 							'forum:replies' => $forum['replies'],
 							'forum:latest-post' => ($latestPost = $this->forums->get_post($forum['lastPostID'])) ? 
-								'<small>'.anchor('/forums/viewpost/'.$latestPost['postID'], $latestPost['topicTitle']).'<br />
+								'<small>'.anchor('/forums/viewpost/'.$latestPost['postID'], html_escape($latestPost['topicTitle'])).'<br />
 								Posted: '.dateFmt($latestPost['dateCreated']).' by '. anchor('/users/profile/'.$latestPost['userID'], 
-								(($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName'])).
+								html_escape(($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName'])).
 								'</small>' : ''
 						);
 					}
@@ -148,7 +148,7 @@ class Forums extends MX_Controller {
 		}
 
 		// check its not a private forum
-		if ($forum['groupID'] > 0 && (@!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID')))
+		if ($forum['groupID'] > 0 && (!in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID')))
 		{
 			redirect('/forums');
 		}	
@@ -159,31 +159,31 @@ class Forums extends MX_Controller {
 			foreach($topics as $topic)
 			{
 				$output['topics'][] = array(
-					'topic:title' => (($topic['sticky']) ? '<small>Sticky:</small> ' : '').$topic['topicTitle'],
+					'topic:title' => (($topic['sticky']) ? '<small>Sticky:</small> ' : '').html_escape($topic['topicTitle']),
 					'topic:link' => site_url('/forums/viewtopic/'.$topic['topicID']),
-					'topic:user' => anchor('/users/profile/'.$topic['userID'], ($this->forums->lookup_user($topic['userID'], TRUE))),
+					'topic:user' => anchor('/users/profile/'.$topic['userID'], html_escape($this->forums->lookup_user($topic['userID'], TRUE))),
 					'topic:class' => ($topic['sticky']) ? 'sticky' : '',
 					'topic:replies' => $topic['replies'],
 					'topic:views' => $topic['views'],
 					'topic:latest-post' => ($latestPost = $this->forums->get_post($topic['lastPostID'])) ? 
-						'<small>Posted: '.dateFmt($latestPost['dateCreated']).' by '.anchor('/users/profile/'.$latestPost['userID'], ($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName']).'</small>' : ''
+						'<small>Posted: '.dateFmt($latestPost['dateCreated']).' by '.anchor('/users/profile/'.$latestPost['userID'], html_escape(($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName'])).'</small>' : ''
 				);
 			}
 		}
 
 		// populate template
-		$output['forum:title'] = $forum['forumName'];
+		$output['forum:title'] = html_escape($forum['forumName']);
 		$output['forum:id'] = $forum['forumID'];
 		
 		// set title
-		$output['page:title'] = $forum['forumName'].' | Community Forums';
+		$output['page:title'] = html_escape($forum['forumName']).' | Community Forums';
 
 		// set feed
 		$output['page:feed'] = '<link rel="alternate" type="application/rss+xml" title="RSS" href="/forums/viewforum/'.$this->uri->segment(3).'/feed" />';
 
 		// set pagination and breadcrumb
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
-		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', $forum['catName']) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], $forum['forumName']);
+		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', html_escape($forum['catName'])) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], html_escape($forum['forumName']));
 		
 		// display with cms layer
 		$this->pages->view('forums_forum', $output, TRUE);
@@ -197,11 +197,14 @@ class Forums extends MX_Controller {
 			redirect('/forums');
 		}
 		
-		// get forum info
-		$forum = $this->forums->get_forum($topic['forumID']);
+		// get forum info, the forum may be gone too
+		if (!$forum = $this->forums->get_forum($topic['forumID']))
+		{
+			redirect('/forums');
+		}
 
 		// check its not a private forum
-		if ($forum['groupID'] > 0 && (@!in_array('forums', $this->permission->permissions) && $forum['groupID'] != $this->session->userdata('groupID')))
+		if ($forum['groupID'] > 0 && (!in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID')))
 		{
 			redirect('/forums');
 		}
@@ -215,12 +218,12 @@ class Forums extends MX_Controller {
 					'post:id' => $post['postID'],
 					'post:date' => dateFmt($post['dateCreated']),
 					'post:links' => anchor('/forums/addreply/'.$post['topicID'].'/'.$post['postID'], 'Quote').' | '.
-					(($this->session->userdata('userID') == $post['userID'] || @in_array('forums', $this->permission->permissions)) ? 
+					(($this->session->userdata('userID') == $post['userID'] || in_array('forums', ($this->permission->permissions ?: array()))) ? 
 						anchor('/forums/editpost/'.$post['postID'], 'Edit').' | '.anchor('/forums/deletepost/'.$post['postID'], 'Delete') : ''
 					),
 					'post:body' => bbcode($post['body']),
-					'user:name' => anchor('/users/profile/'.$post['userID'], (($post['displayName']) ? $post['displayName'] : $post['firstName'].' '.$post['lastName'])),
-					'user:group' => ($post['groupName']) ? $post['groupName'] : '',
+					'user:name' => anchor('/users/profile/'.$post['userID'], html_escape(($post['displayName']) ? $post['displayName'] : $post['firstName'].' '.$post['lastName'])),
+					'user:group' => ($post['groupName']) ? html_escape($post['groupName']) : '',
 					'user:avatar' => anchor('/users/profile/'.$post['userID'], display_image($this->forums->get_avatar($post['avatar']), 'post Avatar', 80, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),					
 					'user:posts' => $post['posts'],
 					'user:kudos' => $post['kudos'],
@@ -233,7 +236,7 @@ class Forums extends MX_Controller {
 		$subscriptions = $this->forums->get_subscriptions($topicID);
 
 		// load add topic form
-		if ($this->session->userdata('session_user') && @in_array('forums', $this->permission->permissions))
+		if ($this->session->userdata('session_user') && in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			// move topic
 			if (count($_POST) && $this->input->post('moveTopic') && intval($this->input->post('forumID')))
@@ -270,12 +273,12 @@ class Forums extends MX_Controller {
 		$this->forums->add_view($topicID);
 
 		// populate template
-		$output['forum:title'] = $forum['forumName'];
+		$output['forum:title'] = html_escape($forum['forumName']);
 		$output['forum:id'] = $forum['forumID'];
-		$output['topic:title'] = $topic['topicTitle'] . (($topic['userID'] == $this->session->userdata('userID') || @in_array('forums', @$this->permission->permissions)) ?
+		$output['topic:title'] = html_escape($topic['topicTitle']) . (($topic['userID'] == $this->session->userdata('userID') || in_array('forums', ($this->permission->permissions ?: array()))) ?
 			anchor('/forums/edittopic/'.$topic['topicID'], ' <small>(edit)</small>') : '');
 		$output['topic:id'] = $topic['topicID'];			
-		$output['topic:subscribed'] = (@in_array($this->session->userdata('userID'), $subscriptions)) ? TRUE : FALSE;
+		$output['topic:subscribed'] = (in_array($this->session->userdata('userID'), ($subscriptions ?: array()))) ? TRUE : FALSE;
 		$output['topic:locked'] = ($topic['locked']) ? TRUE : FALSE;
 
 		// get categories
@@ -285,7 +288,7 @@ class Forums extends MX_Controller {
 			{
 				$options['C'.$category['catID']] = '**'.$category['catName'].'**';
 				$catforums = $this->forums->get_forums($category['catID']);
-				foreach ($catforums as $catforum)
+				foreach (($catforums ?: array()) as $catforum)
 				{
 					$options[$catforum['forumID']] = $catforum['forumName'];
 				}
@@ -303,17 +306,17 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 				
 		// set title
-		$output['page:title'] = $topic['topicTitle'].' | Community Forums';		
+		$output['page:title'] = html_escape($topic['topicTitle']).' | Community Forums';		
 
 		// set feed
 		$output['page:feed'] = '<link rel="alternate" type="application/rss+xml" title="RSS" href="/forums/viewtopic/'.$this->uri->segment(3).'/feed" />';
 
 		// set pagination and breadcrumb
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
-		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', $forum['catName']) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], $forum['forumName']).' &gt; '.$topic['topicTitle'];
+		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', html_escape($forum['catName'])) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], html_escape($forum['forumName'])).' &gt; '.html_escape($topic['topicTitle']);
 				
 		// display with cms layer
 		$this->pages->view('forums_topic', $output, TRUE);		
@@ -321,7 +324,11 @@ class Forums extends MX_Controller {
 
 	function viewpost($postID)
 	{
-		$post = $this->forums->get_post($postID);
+		// the post may be gone (deleted)
+		if ( ! $post = $this->forums->get_post($postID))
+		{
+			redirect('/forums');
+		}
 
 		// find out how many pages the topic has
 		if ($topicSize = $this->forums->get_topic_size($post['topicID']))
@@ -409,14 +416,14 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
-		$output['form:title'] = ($this->input->post('title')) ? $this->input->post('title') : '';
-		$output['form:body'] = ($this->input->post('body')) ? $this->input->post('body') : '';
+		$output['form:title'] = html_escape(($this->input->post('title')) ? $this->input->post('title') : '');
+		$output['form:body'] = html_escape(($this->input->post('body')) ? $this->input->post('body') : '');
 
 		// set breadcrumb
-		$output['breadcrumb'] = ((isset($data['forum']['catName'])) ? anchor('/forums', $data['forum']['catName']) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$data['forum']['forumID'], $data['forum']['forumName']);
+		$output['breadcrumb'] = ((isset($data['forum']['catName'])) ? anchor('/forums', html_escape($data['forum']['catName'])) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$data['forum']['forumID'], html_escape($data['forum']['forumName']));
 
 		// load errors
 		$output['errors'] = (validation_errors()) ? validation_errors() : FALSE;
@@ -435,11 +442,12 @@ class Forums extends MX_Controller {
 		{
 			redirect('/users/login/'.$this->core->encode($this->uri->uri_string()));
 		}		
+		// the topic may be gone (deleted)
 		if (!$topicID || !$topic = $this->forums->get_topic($topicID))
 		{
-			show_error('Please make sure you post in a valid topic.');
+			redirect('/forums');
 		}
-		if ($topic['locked'] && (@!in_array('forums', @$this->permission->permissions)))
+		if ($topic['locked'] && (!in_array('forums', ($this->permission->permissions ?: array()))))
 		{
 			show_error('You cannot reply to this topic as it is locked.');
 		}
@@ -453,8 +461,11 @@ class Forums extends MX_Controller {
 		// get user info
 		$user = $this->forums->get_user($topic['userID']);
 
-		// get forum info
-		$forum = $this->forums->get_forum($topic['forumID']);		
+		// get forum info, the forum may be gone too
+		if (!$forum = $this->forums->get_forum($topic['forumID']))
+		{
+			redirect('/forums');
+		}
 
 		// get post for quotes
 		if ($postID && $post = $this->forums->get_post($postID))
@@ -472,8 +483,8 @@ class Forums extends MX_Controller {
 					'post:date' => dateFmt($post['dateCreated']),
 					'post:links' => anchor('/forums/addreply/'.$post['topicID'].'/'.$post['postID'], 'Quote'),
 					'post:body' => bbcode($post['body']),
-					'user:name' => anchor('/users/profile/'.$post['userID'], (($post['displayName']) ? $post['displayName'] : $post['firstName'].' '.$post['lastName'])),
-					'user:group' => ($post['groupName']) ? $post['groupName'] : '',
+					'user:name' => anchor('/users/profile/'.$post['userID'], html_escape(($post['displayName']) ? $post['displayName'] : $post['firstName'].' '.$post['lastName'])),
+					'user:group' => ($post['groupName']) ? html_escape($post['groupName']) : '',
 					'user:avatar' => anchor('/users/profile/'.$post['userID'], display_image($this->forums->get_avatar($post['avatar']), 'post Avatar', 80, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),					
 					'user:posts' => $post['posts'],
 					'user:kudos' => $post['kudos'],
@@ -510,7 +521,7 @@ class Forums extends MX_Controller {
 				$subscribers = $this->forums->get_subscriptions($topicID);				
 
 				// subscribe to topic
-				if (@!in_array($this->session->userdata('userID'), $subscribers))
+				if (!in_array($this->session->userdata('userID'), ($subscribers ?: array())))
 				{
 					$this->forums->add_subscription($topicID, $this->session->userdata('userID'));
 				}
@@ -521,12 +532,12 @@ class Forums extends MX_Controller {
 					foreach($users as $sub)
 					{
 						// set header and footer
-						$emailHeader = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], $this->site->config['emailHeader']);
+						$emailHeader = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], (string)$this->site->config['emailHeader']);
 						$emailHeader = str_replace('{email}', $sub['email'], $emailHeader );
-						$emailFooter = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], $this->site->config['emailFooter']);
+						$emailFooter = str_replace('{name}', $sub['firstName'].' '.$sub['lastName'], (string)$this->site->config['emailFooter']);
 						$emailFooter = str_replace('{email}', $sub['email'], $emailFooter);
 						
-						$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+						$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 						$this->email->to($sub['email']);			
 						$this->email->subject('Subscription Notification for '.$topic['topicTitle']);
 						$this->email->message($emailHeader."\n\nSomeone replied to a topic you are subscribed to titled \"".$topic['topicTitle']."\".\n\nYou can view this topic by clicking on the link below:\n\n".site_url('/forums/viewpost/'.$postID)."\n\nThey said:\n\"".$this->input->post('body')."\"\n\n".$emailFooter);
@@ -543,17 +554,17 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
-		$output['form:body'] = ($this->input->post('body')) ? $this->input->post('body') : @$quote;
+		$output['form:body'] = html_escape(($this->input->post('body')) ? $this->input->post('body') : (string) @$quote);
 
 		// load errors
 		$output['errors'] = (validation_errors()) ? validation_errors() : FALSE;
 
 		// set title and breadcrumb
 		$output['page:title'] = $this->site->config['siteName'].' | Post Reply';
-		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', $forum['catName']) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], $forum['forumName']).' &gt; '.anchor('/forums/viewtopic/'.$topicID, $topic['topicTitle']);
+		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', html_escape($forum['catName'])) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], html_escape($forum['forumName'])).' &gt; '.anchor('/forums/viewtopic/'.$topicID, html_escape($topic['topicTitle']));
 		
 		// display with cms layer
 		$this->pages->view('forums_post_reply', $output, TRUE);
@@ -570,7 +581,7 @@ class Forums extends MX_Controller {
 		{
 			show_error('Please make sure you edit a valid post.');
 		}
-		if ($post['userID'] != $this->session->userdata('userID') && @!in_array('forums', $this->permission->permissions))
+		if ($post['userID'] != $this->session->userdata('userID') && !in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			show_error('You are not authorised to edit this post.');
 		}
@@ -601,11 +612,11 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
-		$output['topic:title'] = $post['topicTitle'];
-		$output['form:body'] = ($this->input->post('body')) ? $this->input->post('body') : $post['body'];
+		$output['topic:title'] = html_escape($post['topicTitle']);
+		$output['form:body'] = html_escape(($this->input->post('body')) ? $this->input->post('body') : $post['body']);
 
 		// load errors
 		$output['errors'] = (validation_errors()) ? validation_errors() : FALSE;
@@ -628,7 +639,7 @@ class Forums extends MX_Controller {
 		{
 			show_error('Please make sure you edit a valid topic.');
 		}
-		if ($topic['userID'] != $this->session->userdata('userID') && @!in_array('forums', $this->permission->permissions))
+		if ($topic['userID'] != $this->session->userdata('userID') && !in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			show_error('You are not authorised to edit this topic.');
 		}
@@ -659,10 +670,10 @@ class Forums extends MX_Controller {
 		}
 
 		// set permissions
-		$output['moderator'] = (@in_array('forums', @$this->permission->permissions)) ? TRUE : FALSE;
+		$output['moderator'] = (in_array('forums', ($this->permission->permissions ?: array()))) ? TRUE : FALSE;
 
 		// populate template
-		$output['form:title'] = htmlentities($topic['topicTitle']);
+		$output['form:title'] = html_escape($topic['topicTitle']);
 
 		// load errors
 		$output['errors'] = (validation_errors()) ? validation_errors() : FALSE;
@@ -685,7 +696,7 @@ class Forums extends MX_Controller {
 		{
 			show_error('Please make sure you delete a valid post.');
 		}
-		if ($post['userID'] != $this->session->userdata('userID') && @!in_array('forums', $this->permission->permissions))
+		if ($post['userID'] != $this->session->userdata('userID') && !in_array('forums', ($this->permission->permissions ?: array())))
 		{
 			show_error('You are not authorised to delete this post.');
 		}
@@ -747,16 +758,8 @@ class Forums extends MX_Controller {
 
 	function tag($tag = '')
 	{
-		// get partials
-		$output = $this->partials;	
-				
-		$data['posts'] = $this->forums->get_posts_by_tag($tag);
-
-		// set content
-		$output['forum-content'] = $this->parser->parse('read', $data, TRUE);		
-		
-		// display with cms layer
-		$this->pages->view('forum', $output, TRUE);
+		// tag browsing is not supported by the forums model, so send them to the forums index
+		redirect('/forums');
 	}
 
 	function search($forumID, $tag = '')
@@ -781,30 +784,30 @@ class Forums extends MX_Controller {
 				foreach($topics as $topic)
 				{
 					$output['topics'][] = array(
-						'topic:title' => $topic['topicTitle'],
+						'topic:title' => html_escape($topic['topicTitle']),
 						'topic:link' => site_url('/forums/viewtopic/'.$topic['topicID']),
-						'topic:user' => anchor('/users/profile/'.$topic['userID'], ($this->forums->lookup_user($topic['userID'], TRUE))),
+						'topic:user' => anchor('/users/profile/'.$topic['userID'], html_escape($this->forums->lookup_user($topic['userID'], TRUE))),
 						'topic:class' => ($topic['sticky']) ? 'sticky' : '',
 						'topic:replies' => $topic['replies'],
 						'topic:views' => $topic['views'],
 						'topic:latest-post' => ($latestPost = $this->forums->get_post($topic['lastPostID'])) ? 
-							'<small>Posted: '.dateFmt($latestPost['dateCreated']).' by '.anchor('/users/profile/'.$latestPost['userID'], ($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName']).'</small>' : ''
+							'<small>Posted: '.dateFmt($latestPost['dateCreated']).' by '.anchor('/users/profile/'.$latestPost['userID'], html_escape(($latestPost['displayName']) ? $latestPost['displayName'] : $latestPost['firstName'].' '.$latestPost['lastName'])).'</small>' : ''
 					);
 				}
 			}
 		}
 
 		// populate template
-		$output['forum:title'] = $forum['forumName'];
+		$output['forum:title'] = html_escape($forum['forumName']);
 		$output['forum:id'] = $forum['forumID'];
 
 		// set title
-		$output['page:title'] = $this->site->config['siteName'].' | Searching forums for "'.$query.'"';
-		$output['page:heading'] = 'Search forum for: "'.$query.'"';	
+		$output['page:title'] = $this->site->config['siteName'].' | Searching forums for "'.html_escape($query).'"';
+		$output['page:heading'] = 'Search forum for: "'.html_escape($query).'"';	
 
 		// set pagination and breadcrumb
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
-		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', $forum['catName']) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], $forum['forumName']);
+		$output['breadcrumb'] = ((isset($forum['catName'])) ? anchor('/forums', html_escape($forum['catName'])) : anchor('/forums', 'Forums')).' &gt; '.anchor('/forums/viewforum/'.$forum['forumID'], html_escape($forum['forumName']));
 	
 		// display with cms layer
 		$this->pages->view('forums_search', $output, TRUE);		
@@ -812,35 +815,32 @@ class Forums extends MX_Controller {
 
 	function ac_search($forumID)
 	{
-		$tags = strtolower($_POST["q"]);
-        if (!$tags)
-        {
-        	return FALSE;
-        }
+		$tags = strtolower((string)$this->input->get_post('q'));
+		if (!$tags)
+		{
+			return FALSE;
+		}
+
+		$output = '';
 
 		if ($objectIDs = $this->forums->search_forums($tags))
-		{		
-			// form dropdown and myql get countries
+		{
 			if ($searches = $this->forums->get_topics($forumID, 10, $objectIDs))
 			{
-				// go foreach
+				$items = array();
 				foreach($searches as $search)
 				{
 					$items[$search['topicTitle']] = array('id' => $search['topicID'], 'name' => $search['topicTitle']);
 				}
-				foreach ($items as $key=>$value)
+				foreach ($items as $key => $value)
 				{
-					$id = $value['id'];
-					$name = $value['name'];
-					/* If you want to force the results to the query
-					if (strpos(strtolower($key), $tags) !== false)
-					{
-						echo "$key|$id|$name\n";
-					}*/
-					$this->output->set_output("$key|$id|$name\n");
+					$output .= str_replace(array("\r", "\n", '|'), ' ', $key).'|'.$value['id'].'|'.str_replace(array("\r", "\n", '|'), ' ', $value['name'])."\n";
 				}
 			}
 		}
+
+		$this->output->set_content_type('text/plain');
+		$this->output->set_output($output);
 	}
 
 	function captcha_check()
@@ -872,11 +872,11 @@ class Forums extends MX_Controller {
 		$data['feed_url'] = site_url('/forum');
 		$data['page_description'] = 'Topics RSS feed for '.$this->site->config['siteName'].'.';
 		$data['page_language'] = 'en';
-		$data['creator_email'] = $this->site->config['siteEmail'];
-		$data['posts'] = $this->forums->get_topics($forumID, $limit);
+		$data['creator_email'] = (string)$this->site->config['siteEmail'];
+		$data['posts'] = ($posts = $this->forums->get_topics($forumID, $limit)) ? $posts : array();
 		
 		$this->output->set_header('Content-Type: application/rss+xml');
-		$this->load->view('forum/rss', $data);
+		$this->load->view('rss', $data);
 	}
 
 	function posts_feed($topicID, $limit = 10)
@@ -888,11 +888,11 @@ class Forums extends MX_Controller {
 		$data['feed_url'] = site_url('/forum');
 		$data['page_description'] = 'Posts RSS feed for '.$this->site->config['siteName'].'.';
 		$data['page_language'] = 'en';
-		$data['creator_email'] = $this->site->config['siteEmail'];
-		$data['posts'] = $this->forums->get_posts($topicID, $limit);
+		$data['creator_email'] = (string)$this->site->config['siteEmail'];
+		$data['posts'] = ($posts = $this->forums->get_posts($topicID, $limit)) ? $posts : array();
 		
 		$this->output->set_header('Content-Type: application/rss+xml');
-		$this->load->view('forum/rss', $data);
+		$this->load->view('rss', $data);
 	}
 
 	function subscribe($topicID = '')
@@ -913,7 +913,7 @@ class Forums extends MX_Controller {
 		$subs = $this->forums->get_subscriptions($topicID);
 
 		// check this user against subs
-		if (@!in_array($this->session->userdata('userID'), $subs))
+		if (!in_array($this->session->userdata('userID'), ($subs ?: array())))
 		{
 			// add subscription
 			$this->forums->add_subscription($topicID, $this->session->userdata('userID'));

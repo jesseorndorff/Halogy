@@ -24,6 +24,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/form_validation.html
  */
+#[\AllowDynamicProperties]
 class CI_Form_validation {
 
 	protected $CI;
@@ -344,10 +345,10 @@ class CI_Form_validation {
 		// Did we end up with any errors?
 		$total_errors = count($this->_error_array);
 
-		if ($total_errors > 0)
-		{
-			$this->_safe_form_data = TRUE;
-		}
+		// Note: unlike the original CI 2 code this no longer sets
+		// _safe_form_data when there are errors, so $_POST is not rewritten
+		// with HTML-escaped values: views escape once with set_value() or
+		// html_escape(). (CodeIgniter 3 made the same change.)
 
 		// Now we need to re-set the POST data with the new, processed data
 		$this->_reset_post_array();

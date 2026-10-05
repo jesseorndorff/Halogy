@@ -10,10 +10,10 @@
 
 	<div class="message">
 		<p>
-			<strong>Subject:</strong> [#<?php echo $data['ticketID']; ?>]:</strong> <?php echo $data['subject']; ?><br />
+			<strong>Subject:</strong> [#<?php echo $data['ticketID']; ?>]:</strong> <?php echo html_escape($data['subject']); ?><br />
 			<strong>Date sent:</strong> <?php echo dateFmt($data['dateCreated']); ?><br />
 			<?php if ($data['formName']): ?>
-				<strong>Web Form:</strong> <?php echo $data['formName']; ?>
+				<strong>Web Form:</strong> <?php echo html_escape($data['formName']); ?>
 			<?php endif; ?>
 		</p>
 	</div>
@@ -24,15 +24,15 @@
 		
 			<h2 class="underline">Body</h2>
 		
-			<p><?php echo nl2br(auto_link($data['body'])); ?></p>
+			<p><?php echo nl2br(auto_link(html_escape((string)$data['body']))); ?></p>
 			
 		</div>
 		<div class="col2">
 		
 			<h2 class="underline">User Details</h2>
 		
-			<p><strong>Full name:</strong> <?php echo $data['fullName']; ?></p>
-			<p><strong>Email:</strong> <a href="mailto:<?php echo $data['email']; ?>?subject=Re: [#<?php echo $data['ticketID']; ?>]: <?php echo $data['subject']; ?>"><?php echo $data['email']; ?></a></p>
+			<p><strong>Full name:</strong> <?php echo html_escape($data['fullName']); ?></p>
+			<p><strong>Email:</strong> <a href="mailto:<?php echo html_escape(rawurlencode((string)$data['email'])); ?>?subject=<?php echo html_escape(rawurlencode('Re: [#'.$data['ticketID'].']: '.$data['subject'])); ?>"><?php echo html_escape($data['email']); ?></a></p>
 			
 		</div>
 		<div class="clear"></div>

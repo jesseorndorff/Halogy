@@ -16,19 +16,19 @@
 		?>
 		<?php
 			// get userdata
-			$userdata = @unserialize($visit['userdata']);
+			$userdata = @unserialize($visit['userdata'], ['allowed_classes' => false]);
 		?>
 			<tr class="<?php echo $class; ?>" style="<?php echo $style; ?>">
 				<td><small><?php echo dateFmt($visit['date'], '', '', TRUE); ?></small></td>
 				<td>
 					<?php if ($visit['userdata']): ?>
-						<?php echo anchor('/admin/users/edit/'.$userdata['userID'], $userdata['firstName'].' '.$userdata['lastName']); ?>
+						<?php echo anchor('/admin/users/edit/'.$userdata['userID'], html_escape($userdata['firstName'].' '.$userdata['lastName'])); ?>
 					<?php else: ?>
 						Guest
 					<?php endif; ?>
 				</td>
-				<td><?php echo ($visit['referer']) ? anchor($visit['referer'], htmlentities($visit['referer'])) : 'Direct (no referrer)'; ?></td>
-				<td><?php echo $visit['lastPage']; ?></td>
+				<td><?php echo ($visit['referer']) ? safe_link($visit['referer']) : 'Direct (no referrer)'; ?></td>
+				<td><?php echo html_escape($visit['lastPage']); ?></td>
 				<td><?php echo $visit['views']+1; ?></td>
 			</tr>
 		<?php endforeach; ?>

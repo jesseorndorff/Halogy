@@ -21,7 +21,7 @@
 		<label for="templateID">Parent:</label>
 		<?php
 		if ($parents):
-			$options = '';		
+			$options = array();		
 			$options[0] = 'Top Level';		
 			foreach ($parents as $parent):
 				if ($parent['navID'] != @$data['navID']) $options[$parent['navID']] = $parent['navName'];

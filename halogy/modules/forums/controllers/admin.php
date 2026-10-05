@@ -208,11 +208,11 @@ class Admin extends MX_Controller {
 
 		// go through post and edit each list item
 		$listArray = $this->core->get_post();
-		if (count($listArray))
+		if (is_array($listArray) && count($listArray))
 		{
 			foreach($listArray as $ID => $value)
 			{
-				if ($ID != '' && sizeof($value) > 0)
+				if ($ID != '' && is_array($value) && sizeof($value) > 0)
 				{	
 					// set object ID
 					$objectID = array('catID' => $ID);

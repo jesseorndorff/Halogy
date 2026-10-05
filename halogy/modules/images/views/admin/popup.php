@@ -16,8 +16,8 @@
 <?php
 	$image = $this->uploads->load_image($data['imageRef']);
 	$thumb = $this->uploads->load_image($data['imageRef'], true);
-	$imagePath = $image['src'];
-	$imageThumbPath = $thumb['src'];
+	$imagePath = ($image) ? $image['src'] : '';
+	$imageThumbPath = ($thumb) ? $thumb['src'] : '';
 ?>	
 <?php echo ($thumb = display_image($imageThumbPath, $data['imageName'], 100, 'class="pic" ')) ? $thumb : display_image($imagePath, $data['imageName'], 100, 'class="pic"'); ?>
 

@@ -24,6 +24,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/ftp.html
  */ 
+#[\AllowDynamicProperties]
 class MY_FTP extends CI_FTP {
 	
 	/**

@@ -1,3 +1,4 @@
+(function(){var $=window.jQuery;if(!$||!$.ajaxPrefilter)return;$.ajaxPrefilter(function(o,p,x){if(o.crossDomain||/^(GET|HEAD|OPTIONS)$/i.test(o.type))return;var m=document.querySelector('meta[name="csrf-token"]');if(m&&m.content)x.setRequestHeader('X-CSRF-Token',m.content)})})();
 (function(){
 	$(function(){
 		$('select, input:not(.button), textarea').focus(function () {

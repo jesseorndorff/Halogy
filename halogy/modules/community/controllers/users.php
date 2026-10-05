@@ -62,7 +62,7 @@ class Users extends MX_Controller {
 
 	function login($redirect = '')
 	{
-		$output = '';
+		$output = array();
 
 		// set redirect to default if not given
 		if ($redirect == '')
@@ -71,7 +71,9 @@ class Users extends MX_Controller {
 		}
 		else
 		{
-			$redirect = $this->core->decode($redirect);
+			// only a path on this site: a planted link must not send the user
+			// elsewhere, or straight into an action, after logging in
+			$redirect = $this->core->local_path($this->core->decode($redirect), $this->redirect);
 		}
 
 		if (!$this->session->userdata('session_user'))
@@ -82,7 +84,7 @@ class Users extends MX_Controller {
 				$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 			
 				// set admin session name, if given
-				if ($output = $this->auth->login($username, $this->input->post('password'), 'session_user', FALSE, $this->input->post('remember')))
+				if ($this->auth->login($username, $this->input->post('password'), 'session_user', FALSE, $this->input->post('remember')))
 				{
 					// for use with ce
 					if ($this->session->userdata('groupID') > 0 && $this->permission->get_group_permissions($this->session->userdata('groupID')))
@@ -128,7 +130,7 @@ class Users extends MX_Controller {
 		}
 		else
 		{
-			$redirect = $this->core->decode($redirect);
+			$redirect = $this->core->local_path($this->core->decode($redirect), '');
 		}
 		$this->auth->logout($redirect);
 	}
@@ -176,17 +178,17 @@ class Users extends MX_Controller {
 			$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 
 			// set header and footer
-			$emailHeader = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailHeader']);
+			$emailHeader = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailHeader']);
 			$emailHeader = str_replace('{email}', $this->input->post('email'), $emailHeader);
-			$emailFooter = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailFooter']);
+			$emailFooter = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailFooter']);
 			$emailFooter = str_replace('{email}', $this->input->post('email'), $emailFooter);
-			$emailAccount = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailAccount']);
+			$emailAccount = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailAccount']);
 			$emailAccount = str_replace('{email}', $this->input->post('email'), $emailAccount);
 			$emailAccount = str_replace('{password}', $this->input->post('password'), $emailAccount);
 			
 		
 			// send email			
-			$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+			$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 			$this->email->to($this->input->post('email'));			
 			$this->email->subject('New account set up on '.$this->site->config['siteName']);
 			$this->email->message($emailHeader."\n\n".$emailAccount."\n\n".$emailFooter);
@@ -196,7 +198,7 @@ class Users extends MX_Controller {
 			if (!$this->site->config['activation'])
 			{
 				$this->load->library('auth');
-				$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->decode($redirect));
+				$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->local_path($this->core->decode($redirect), ''));
 			}
 			else
 			{
@@ -205,7 +207,7 @@ class Users extends MX_Controller {
 				$this->session->set_userdata('firstName', $this->input->post('firstName'));
 				$this->session->set_userdata('lastName', $this->input->post('lastName'));			
 				
-				redirect($this->core->decode($redirect));
+				redirect($this->core->local_path($this->core->decode($redirect), $this->redirect));
 			}
 		}
 
@@ -249,6 +251,12 @@ class Users extends MX_Controller {
 
 		// set object ID
 		$objectID = array('userID' => $this->session->userdata('userID'));		
+
+		// the account may have been deleted while the session lives on
+		if ( ! $this->users->get_user($this->session->userdata('userID')))
+		{
+			$this->auth->logout('/users/login');
+		}
 
 		// get values
 		$data = $this->core->get_values('users', $objectID);
@@ -497,7 +505,7 @@ class Users extends MX_Controller {
 			if ($data['user'] = $this->users->get_user($userID))
 			{			
 				// set title
-				$output['page:title'] = $this->site->config['siteName'].' | '.$data['user']['firstName'].'\'s Profile';
+				$output['page:title'] = $this->site->config['siteName'].' | '.html_escape($data['user']['firstName']).'\'s Profile';
 
 				// set view file (based on privacy)
 				if ($data['user']['privacy'] == 'H' && $data['user']['userID'] != $this->session->userdata('userID'))
@@ -517,7 +525,7 @@ class Users extends MX_Controller {
 
 		// populate template
 		$output['user:id'] = $userID;
-		$output['user:name'] = ($data['user']['displayName']) ? $data['user']['displayName'] : $data['user']['firstName'].' '.$data['user']['lastName'];
+		$output['user:name'] = html_escape(($data['user']['displayName']) ? $data['user']['displayName'] : $data['user']['firstName'].' '.$data['user']['lastName']);
 		$output['user:avatar'] = anchor('/users/profile/'.$data['user']['userID'], display_image($this->users->get_avatar($data['user']['avatar']), 'User Avatar', 100, 'class="bordered"', $this->config->item('staticPath').'/images/noavatar.gif'));
 		$output['user:country'] = lookup_country($data['user']['country']);
 
@@ -526,8 +534,8 @@ class Users extends MX_Controller {
 		$output['user:bio'] = (($data['user']['privacy'] == 'V' || $data['user']['userID'] == $this->session->userdata('userID')) && $data['user']['bio']) ? bbcode($data['user']['bio']) : FALSE;
 
 		// load company
-		$output['user:company'] = ($data['user']['companyName']) ? $data['user']['companyName'] : '';
-		$output['user:company-website'] = ($data['user']['companyWebsite']) ? $data['user']['companyWebsite'] : '';
+		$output['user:company'] = ($data['user']['companyName']) ? html_escape($data['user']['companyName']) : '';
+		$output['user:company-website'] = ($data['user']['companyWebsite']) ? safe_url($data['user']['companyWebsite']) : '';
 		$data['user']['companyDescription'] .= ($userID == $this->session->userdata('userID')) ? ' [[url=/users/account#changework]Update[/url]]' : '';
 		$output['user:company-description'] = (($data['user']['privacy'] == 'V' || $data['user']['userID'] == $this->session->userdata('userID')) && $data['user']['companyDescription']) ? bbcode($data['user']['companyDescription']) : FALSE;
 
@@ -535,7 +543,7 @@ class Users extends MX_Controller {
 		$output['profile:navigation'] = $this->parser->parse('partials/profile_navigation', $data, TRUE);
 
 		// set page heading
-		$output['page:heading'] = $data['user']['firstName'].' '.$data['user']['lastName'] . (($data['user']['displayName']) ? ' <small>('.$data['user']['displayName'].')</small>' : '');		
+		$output['page:heading'] = html_escape($data['user']['firstName'].' '.$data['user']['lastName']) . (($data['user']['displayName']) ? ' <small>('.html_escape($data['user']['displayName']).')</small>' : '');		
 
 		// display with cms layer
 		$this->pages->view($viewFile, $output, 'community');
@@ -558,7 +566,7 @@ class Users extends MX_Controller {
 				{
 					$output['members'][] = array(
 						'member:avatar' => anchor('/users/profile/'.$user['userID'], display_image($this->users->get_avatar($user['avatar']), 'User Avatar', 80, 'class="avatar"', $this->config->item('staticPath').'/images/noavatar.gif')),
-						'member:name' => ($user['displayName']) ? $user['displayName'] : $user['firstName'].' '.$user['lastName'],
+						'member:name' => html_escape(($user['displayName']) ? $user['displayName'] : $user['firstName'].' '.$user['lastName']),
 						'member:link' => site_url('/users/profile/'.$user['userID'])
 					);
 				}
@@ -566,8 +574,8 @@ class Users extends MX_Controller {
 		}
 
 		// set title
-		$output['page:title'] = $this->site->config['siteName'].' | Searching Users for "'.$query.'"';
-		$output['page:heading'] = 'Search Users for: "'.$query.'"';	
+		$output['page:title'] = $this->site->config['siteName'].' | Searching Users for "'.html_escape($query).'"';
+		$output['page:heading'] = 'Search Users for: "'.html_escape($query).'"';	
 
 		// set pagination
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
@@ -578,7 +586,7 @@ class Users extends MX_Controller {
 
 	function ac_search()
 	{
-		$tags = strtolower($_POST["q"]);
+		$tags = strtolower((string)@$_POST["q"]);
         if (!$tags)
         {
         	return FALSE;
@@ -603,7 +611,8 @@ class Users extends MX_Controller {
 					{
 						echo "$key|$id|$name\n";
 					}*/
-					$this->output->set_output("$key|$id|$name\n");
+					$this->output->set_content_type('text/plain');
+					$this->output->set_output(str_replace(array("\r", "\n", '|'), ' ', "$key|$id|$name")."\n");
 				}
 			}
 		}
@@ -621,17 +630,17 @@ class Users extends MX_Controller {
 			if ($user = $this->users->get_user_by_email($this->input->post('email')))
 			{
 				// set key
-				$key = md5($user['userID'].time());
+				$key = $this->core->random_key();
 				$this->users->set_reset_key($user['userID'], $key);
 
 				// set header and footer
-				$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailHeader']);
+				$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailHeader']);
 				$emailHeader = str_replace('{email}', $user['email'], $emailHeader);
-				$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailFooter']);
+				$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailFooter']);
 				$emailFooter = str_replace('{email}', $user['email'], $emailFooter);
 				
 				// send email			
-				$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+				$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 				$this->email->to($user['email']);			
 				$this->email->subject('Password reset request on '.$this->site->config['siteName']);
 				$this->email->message($emailHeader."\n\nA password reset request has been submitted on ".$this->site->config['siteName'].". If you did not request to have your password reset please ignore this email.\n\nIf you did want to reset your password please click on the link below.\n\n".site_url('users/reset/'.$key)."\n\n".$emailFooter);
@@ -695,13 +704,13 @@ class Users extends MX_Controller {
 				if ($this->core->update('users', $objectID))
 				{	
 					// set header and footer
-					$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailHeader']);
+					$emailHeader = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailHeader']);
 					$emailHeader = str_replace('{email}', $user['email'], $emailHeader);
-					$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], $this->site->config['emailFooter']);
+					$emailFooter = str_replace('{name}', $user['firstName'].' '.$user['lastName'], (string)$this->site->config['emailFooter']);
 					$emailFooter = str_replace('{email}', $user['email'], $emailFooter);
 								
 					// send email			
-					$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+					$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 					$this->email->to($user['email']);			
 					$this->email->subject('Your password was reset on '.$this->site->config['siteName']);
 					$this->email->message($emailHeader."\n\nYour password for ".$this->site->config['siteName']." has been reset!\n\n".$emailFooter);

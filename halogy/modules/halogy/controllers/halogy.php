@@ -155,6 +155,7 @@ class Halogy extends MX_Controller {
 				$this->core->set['groupID'] = $groupID;	
 				$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
 				$this->core->set['email'] = $this->input->post('adminEmail');
+				$this->core->privilegedUserFields = TRUE;	// superuser-only controller
 				$this->core->update('users');
 							
 				// where to redirect to
@@ -182,9 +183,15 @@ class Halogy extends MX_Controller {
 		// get values
 		$output['data'] = $this->core->get_values('sites', $objectID);
 
+		// site not found
+		if (!isset($output['data']['groupID']))
+		{
+			redirect('/halogy/sites');
+		}
+
 		// populate permissions
 		$perms = $this->permission->get_permission_map($output['data']['groupID']);
-		foreach ((array)$perms as $perm)
+		foreach(($perms) ? $perms : array() as $perm)
 		{
 			$output['data']['perm'.$perm['permissionID']] = 1;
 		}
@@ -249,14 +256,15 @@ class Halogy extends MX_Controller {
 		// load site lib
 		$this->load->model('sites_model', 'sites');
 	
-		$q = strtolower($_POST["q"]);
+		$q = strtolower((isset($_POST["q"])) ? $_POST["q"] : '');
         if (!$q) return;
 
         // form dropdown
         $results = $this->sites->get_sites($q);
 
         // go foreach
-        foreach((array)$results as $row)
+        $items = array();
+        foreach(($results) ? $results : array() as $row)
         {
             $items[$row['siteDomain']] = $row['siteName'];
         }
@@ -267,7 +275,8 @@ class Halogy extends MX_Controller {
 			{
 				echo "$key|$id|$name\n";
 			}*/
-			$this->output->set_output("$key|$value\n");
+			$this->output->set_content_type('text/plain');
+			$this->output->set_output(str_replace(array("\r", "\n"), ' ', "$key|$value")."\n");
         }
 	}	
 

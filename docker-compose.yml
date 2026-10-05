@@ -1,0 +1,40 @@
+services:
+  web:
+    build: .
+    container_name: halogy-web
+    ports:
+      - "8080:80"
+    environment:
+      HALOGY_DB_HOST: db
+      HALOGY_DB_USER: halogy
+      HALOGY_DB_PASS: halogy
+      HALOGY_DB_NAME: halogy
+      HALOGY_ENV: development
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - uploads:/var/www/html/static/uploads
+
+  db:
+    image: mariadb:10.11
+    container_name: halogy-db
+    environment:
+      MARIADB_DATABASE: halogy
+      MARIADB_USER: halogy
+      MARIADB_PASSWORD: halogy
+      MARIADB_ROOT_PASSWORD: root_password
+    command: --sql-mode=NO_ENGINE_SUBSTITUTION
+    volumes:
+      - ./halogy_sql_dump.sql:/docker-entrypoint-initdb.d/halogy.sql:ro
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      start_period: 30s
+      retries: 20
+
+volumes:
+  db_data:
+  uploads:

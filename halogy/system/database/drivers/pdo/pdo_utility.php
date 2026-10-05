@@ -22,6 +22,7 @@
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/database/
  */
+#[\AllowDynamicProperties]
 class CI_DB_pdo_utility extends CI_DB_utility {
 
 	/**

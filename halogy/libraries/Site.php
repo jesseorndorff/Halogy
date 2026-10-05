@@ -16,6 +16,7 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Site {
 	
 	var $siteID;
@@ -23,7 +24,7 @@ class Site {
 	var $config = array();
 	var $plans = array();
 
-	function Site()
+	function __construct()
 	{
 		// init vars
 		$this->CI =& get_instance();
@@ -154,12 +155,8 @@ class Site {
 		{
 			if ($cookie = get_cookie('halogy'))
 			{
-				// get cookie
-				$cookie = get_cookie('halogy');
-				$session = unserialize(base64_decode(strtr($cookie, '-_', '+/')));
-
-				// set admin session name, if given
-				if ($this->CI->auth->do_login($session[0], $session[1], $session[2], TRUE))
+				// log in from the signed cookie
+				if ($this->CI->auth->login_from_cookie($cookie))
 				{
 					// for use with ce
 					if ($this->CI->session->userdata('groupID') > 0 && $this->CI->permission->get_group_permissions($this->CI->session->userdata('groupID')))
@@ -169,7 +166,7 @@ class Site {
 				}
 
 				// get error message
-				else
+				elseif ($this->CI->auth->error)
 				{
 					$this->CI->form_validation->set_error($this->CI->auth->error);
 				}

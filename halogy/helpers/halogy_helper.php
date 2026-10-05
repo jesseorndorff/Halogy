@@ -297,7 +297,7 @@ function lookup_country($country)
 {
 	$countries = get_country_codes();
 
-	return ucwords(strtolower(@$countries[$country]));
+	return ucwords(strtolower((string)@$countries[$country]));
 }
 
 // helper for displaying countries (no ID)
@@ -391,7 +391,7 @@ function lookup_state($state)
 {
 	$states = get_state_codes();
 
-	return ucwords(strtolower(@$states[$state]));
+	return ucwords(strtolower((string)@$states[$state]));
 }
 
 // helper for displaying countries (no ID)
@@ -447,6 +447,9 @@ function display_image($path, $alt, $size = '', $extras = '', $nopic = FALSE)
 	{
 		$imageHTML = '<img src="'.$path.'" alt="'.$alt.'" ';
 	}
+
+	// image may not exist (getimagesize failed), e.g. when falling back to a no-picture image
+	if (!is_array($imageSize)) $imageSize = array(0, 0);
 
 	if ($size)
 	{
@@ -768,11 +771,74 @@ function expiry_years_dropdown($name, $selected = '', $html = '')
 	return form_dropdown($name, $options, $selected, $html);
 }
 
-function mkdn($text)
+function mkdn($text, $untrusted = FALSE)
 {
 	$CI =& get_instance();
 
 	$CI->load->library('mkdn');
 			
-	return $CI->mkdn->translate($text);
-}	
+	return $CI->mkdn->translate($text, $untrusted);
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * Safe web address
+ *
+ * For links typed in by members and visitors (website fields). Only http
+ * and https addresses are accepted, a bare domain gets http:// in front;
+ * anything else (javascript:, data:, mailto:, relative paths) gives an
+ * empty string, so the caller can leave the link out.
+ *
+ * @param	string
+ * @return	string	the address, escaped for use in an attribute, or ''
+ */
+function safe_url($url)
+{
+	$url = trim((string)$url);
+
+	// no spaces, control characters, quotes or angle brackets in a web address
+	if ($url === '' || preg_match('/[\x00-\x20\x7f-\x9f"\'<>\\\\]|\p{Z}/u', $url))
+	{
+		return '';
+	}
+
+	// something that looks like a scheme must be http(s), a leading slash is no domain
+	if (preg_match('~^(?:[a-z][a-z0-9+.\-]*:(?!\d+(?:[/?#]|$))|/)~i', $url) && !preg_match('~^https?://~i', $url))
+	{
+		return '';
+	}
+
+	if (!preg_match('#^https?://#i', $url))
+	{
+		$url = 'http://'.$url;
+	}
+
+	// there has to be a host
+	if (!preg_match('#^https?://[^/?\#]+#i', $url))
+	{
+		return '';
+	}
+
+	return html_escape($url);
+}
+
+// ------------------------------------------------------------------------
+
+/**
+ * Safe link to an address that came from a visitor (referrer, website)
+ *
+ * The text is escaped; when the address is not a plain http(s) address the
+ * text is returned without a link.
+ *
+ * @param	string	address
+ * @param	string	link text (plain text, escaped here)
+ * @return	string
+ */
+function safe_link($url, $text = '')
+{
+	$text = ($text !== '') ? $text : $url;
+
+	return (($href = safe_url($url)) !== '') ? '<a href="'.$href.'" rel="nofollow noopener">'.html_escape($text).'</a>' : html_escape($text);
+}
+

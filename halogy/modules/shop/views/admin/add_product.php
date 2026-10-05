@@ -122,7 +122,7 @@ $(function(){
 	
 	<label for="price">Price:</label>
 	<span class="price"><strong><?php echo currency_symbol(); ?></strong></span>
-	<?php echo @form_input('price',number_format(set_value('price', $data['price']),2,'.',''), 'id="price" class="formelement small"'); ?>
+	<?php echo @form_input('price',number_format((float)set_value('price', $data['price']),2,'.',''), 'id="price" class="formelement small"'); ?>
 	<br class="clear" />
 
 	<label for="image">Image:</label>
@@ -238,7 +238,7 @@ $(function(){
 
 	<label for="files">File:</label>
 	<?php
-		$options = '';
+		$options = array();
 		$options[0] = 'This product is not a file';			
 		if ($files):
 			foreach ($files as $file):
@@ -253,7 +253,7 @@ $(function(){
 
 	<label for="bands">Shipping Band:</label>
 	<?php
-		$options = '';
+		$options = array();
 		$options[0] = 'No product is not restricted';			
 		if ($bands):
 			foreach ($bands as $band):
@@ -277,7 +277,7 @@ $(function(){
 			<?php foreach (range(1,5) as $x): $i = $x-1; ?>
 				
 			<label for="variation1-<?php echo $x; ?>"><?php echo $this->site->config['shopVariation1']; ?> <?php echo $x; ?>:</label>
-			<?php echo @form_input('variation1-'.$x,set_value('variation1-'.$x, $variation1[$i]['variation']), 'id="variation1-'.$x.'" class="formelement"'); ?><span class="price"><strong><?php echo currency_symbol(); ?></strong></span><?php echo @form_input('variation1_price-'.$x,number_format(set_value('variation1_price-'.$x, $variation1[$i]['price']),2), 'class="formelement small"'); ?>
+			<?php echo @form_input('variation1-'.$x,set_value('variation1-'.$x, $variation1[$i]['variation']), 'id="variation1-'.$x.'" class="formelement"'); ?><span class="price"><strong><?php echo currency_symbol(); ?></strong></span><?php echo @form_input('variation1_price-'.$x,number_format((float)set_value('variation1_price-'.$x, $variation1[$i]['price']),2), 'class="formelement small"'); ?>
 			<br class="clear" />		
 
 			<?php endforeach; ?>		
@@ -296,7 +296,7 @@ $(function(){
 			<?php foreach (range(1,5) as $x): $i = $x-1; ?>
 				
 			<label for="variation2-<?php echo $x; ?>"><?php echo $this->site->config['shopVariation2']; ?> <?php echo $x; ?>:</label>
-			<?php echo @form_input('variation2-'.$x,set_value('variation2-'.$x, $variation2[$i]['variation']), 'id="variation2-'.$x.'" class="formelement"'); ?><span class="price"><strong><?php echo currency_symbol(); ?></strong></span><?php echo @form_input('variation2_price-'.$x,number_format(set_value('variation2_price-'.$x, $variation2[$i]['price']),2), 'class="formelement small"'); ?>
+			<?php echo @form_input('variation2-'.$x,set_value('variation2-'.$x, $variation2[$i]['variation']), 'id="variation2-'.$x.'" class="formelement"'); ?><span class="price"><strong><?php echo currency_symbol(); ?></strong></span><?php echo @form_input('variation2_price-'.$x,number_format((float)set_value('variation2_price-'.$x, $variation2[$i]['price']),2), 'class="formelement small"'); ?>
 			<br class="clear" />		
 
 			<?php endforeach; ?>
@@ -314,7 +314,7 @@ $(function(){
 			<?php foreach (range(1,5) as $x): $i = $x-1; ?>
 				
 			<label for="variation3-<?php echo $x; ?>"><?php echo $this->site->config['shopVariation3']; ?> <?php echo $x; ?>:</label>
-			<?php echo @form_input('variation3-'.$x,set_value('variation3-'.$x, $variation3[$i]['variation']), 'id="variation3-'.$x.'" class="formelement"'); ?><span class="price"><strong><?php echo currency_symbol(); ?></strong></span><?php echo @form_input('variation3_price-'.$x,number_format(set_value('variation3_price-'.$x, $variation3[$i]['price']),2), 'class="formelement small"'); ?>
+			<?php echo @form_input('variation3-'.$x,set_value('variation3-'.$x, $variation3[$i]['variation']), 'id="variation3-'.$x.'" class="formelement"'); ?><span class="price"><strong><?php echo currency_symbol(); ?></strong></span><?php echo @form_input('variation3_price-'.$x,number_format((float)set_value('variation3_price-'.$x, $variation3[$i]['price']),2), 'class="formelement small"'); ?>
 			<br class="clear" />		
 
 			<?php endforeach; ?>

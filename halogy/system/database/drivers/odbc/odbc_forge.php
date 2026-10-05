@@ -22,6 +22,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/database/
  */
+#[\AllowDynamicProperties]
 class CI_DB_odbc_forge extends CI_DB_forge {
 
 	/**

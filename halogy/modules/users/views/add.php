@@ -63,9 +63,9 @@ $(function(){
 
 <ul class="innernav clear">
 	<li class="selected"><a href="#tab1" class="showtab">Details</a></li>
-	<?php if (@in_array('shop', $this->permission->sitePermissions) || @in_array('community', $this->permission->sitePermissions)): ?>	
+	<?php if (in_array('shop', (array)$this->permission->sitePermissions) || in_array('community', (array)$this->permission->sitePermissions)): ?>	
 		<li><a href="#tab2" class="showtab">Address</a></li>
-		<?php if (@in_array('community', $this->permission->sitePermissions)): ?>
+		<?php if (in_array('community', (array)$this->permission->sitePermissions)): ?>
 			<li><a href="#tab3" class="showtab">Community</a></li>
 			<li><a href="#tab4" class="showtab">Company</a></li>
 		<?php endif; ?>
@@ -86,7 +86,7 @@ $(function(){
 	<?php echo @form_password('password','', 'id="password" class="formelement"'); ?>
 	<br class="clear" />
 
-<?php if (@in_array('users_groups', $this->permission->permissions)): ?>
+<?php if (in_array('users_groups', (array)$this->permission->permissions)): ?>
 	<label for="permissions">Group:</label>
 	<?php 
 		$values = array(
@@ -144,7 +144,7 @@ $(function(){
 
 <div id="tab2" class="tab">
 
-<?php if (@in_array('shop', $this->permission->sitePermissions) || @in_array('community', $this->permission->sitePermissions)): ?>	
+<?php if (in_array('shop', (array)$this->permission->sitePermissions) || in_array('community', (array)$this->permission->sitePermissions)): ?>	
 	<h2>Delivery Address</h2>
 
 	<label for="address1">Address 1:</label>
@@ -203,7 +203,7 @@ $(function(){
 		<br class="clear" />
 
 		<label for="billingState">State:</label>
-		<?php echo display_states('billingState', $data['billingState'], 'id="billingState" class="formelement"'); ?>
+		<?php echo display_states('billingState', @$data['billingState'], 'id="billingState" class="formelement"'); ?>
 		<br class="clear" />
 	
 		<label for="billingPostcode">Post /ZIP Code:</label>
@@ -211,7 +211,7 @@ $(function(){
 		<br class="clear" />
 	
 		<label for="billingCountry">Country:</label>
-		<?php echo display_countries('billingCountry', $data['billingCountry'], 'id="billingCountry" class="formelement"'); ?>
+		<?php echo display_countries('billingCountry', @$data['billingCountry'], 'id="billingCountry" class="formelement"'); ?>
 		<br class="clear" />
 
 	</div>
@@ -223,7 +223,7 @@ $(function(){
 
 <div id="tab3" class="tab">
 
-<?php if (@in_array('community', $this->permission->permissions)): ?>
+<?php if (in_array('community', (array)$this->permission->permissions)): ?>
 
 	<h2>Community</h2>
 
@@ -263,7 +263,7 @@ $(function(){
 
 </div>
 
-<?php if (@in_array('community', $this->permission->sitePermissions)): ?>	
+<?php if (in_array('community', (array)$this->permission->sitePermissions)): ?>	
 
 <div id="tab4" class="tab">
 

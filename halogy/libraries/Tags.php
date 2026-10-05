@@ -99,6 +99,7 @@ CREATE TABLE IF NOT EXISTS `ci_tags_ref` (
 ****************************************** 
  */
 
+#[\AllowDynamicProperties]
 class Tags {
 
 	//The names of the tables
@@ -109,7 +110,7 @@ class Tags {
 	var $tags_ref_prefix	= null;
 	var $siteID				= null;
 	
-	function Tags() {
+	function __construct() {
 		
 		$this->CI =& get_instance();
 		

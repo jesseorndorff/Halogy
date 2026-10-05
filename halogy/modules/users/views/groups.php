@@ -17,7 +17,7 @@
 
 <table class="default clear">
 	<tr>
-		<th><?php echo order_link('/admin/users/viewall','groupName','Group name'); ?></th>
+		<th><?php echo order_link('/admin/users/groups','groupName','Group name'); ?></th>
 		<th class="tiny">&nbsp;</th>
 		<th class="tiny">&nbsp;</th>		
 	</tr>

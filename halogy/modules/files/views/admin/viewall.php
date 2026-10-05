@@ -63,9 +63,9 @@ $(function(){
 	</label> 
 
 	<?php
-		$options = '';
+		$options = array();
 		$options['me'] = 'My Files';
-		if (@in_array('files_all', $this->permission->permissions)):
+		if (in_array('files_all', (array)$this->permission->permissions)):
 			$options['all'] = 'View All Files';
 
 			if ($folders):
@@ -102,7 +102,7 @@ $(function(){
 
 		<label for="fileFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/files/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
 		<?php
-			$options = '';		
+			$options = array();		
 			$options[0] = 'No Folder';
 			if ($folders):
 				foreach ($folders as $folderID):

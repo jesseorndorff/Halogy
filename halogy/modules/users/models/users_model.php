@@ -105,7 +105,7 @@ class Users_model extends CI_Model {
 		if ($handle)
 		{ 
 			$allowedExtensions = array("txt", "csv");
-			if (!in_array(end(explode(".", $file['name'])), $allowedExtensions))
+			if (!in_array(strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)), $allowedExtensions))
 			{
 				$this->form_validation->set_error('The file was not a CSV.');
 				
@@ -122,7 +122,7 @@ class Users_model extends CI_Model {
 					
 				foreach ($array as $row)
 				{
-					$data = explode(",", $row);
+					$data = array_pad(explode(",", $row), 3, '');
 					
 					if ($data[0] != '')
 					{	
@@ -160,7 +160,7 @@ class Users_model extends CI_Model {
 	
 							$this->db->set('dateCreated', date("Y-m-d H:i:s"));
 							$this->db->set('username', substr($username,0,6).$i.rand(100,999));
-							$this->db->set('password', md5(rand(19999,49999)));
+							$this->db->set('password', $this->core->hash_password($this->core->random_password()));
 							$this->db->set('email', trim($data[0]));
 							$this->db->set('firstName', trim($data[1]));
 							$this->db->set('lastName', trim($data[2]));

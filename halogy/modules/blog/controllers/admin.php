@@ -104,11 +104,12 @@ class Admin extends MX_Controller {
 			$tags = '';
 			if ($this->input->post('tags'))
 			{
+				$tagsArray = array();
 				foreach (explode(',', $this->input->post('tags')) as $tag)
 				{
-					$tags[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
+					$tagsArray[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
 				}
-				$tags = implode(', ', $tags);
+				$tags = implode(', ', $tagsArray);
 			}
 		
 			// set date
@@ -178,11 +179,12 @@ class Admin extends MX_Controller {
 			$tags = '';
 			if ($this->input->post('tags'))
 			{
+				$tagsArray = array();
 				foreach (explode(',', $this->input->post('tags')) as $tag)
 				{
-					$tags[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
+					$tagsArray[] = ucwords(trim(strtolower(str_replace('-', ' ', $tag))));
 				}
-				$tags = implode(', ', $tags);
+				$tags = implode(', ', $tagsArray);
 			}
 
 			// set stuff
@@ -336,11 +338,11 @@ class Admin extends MX_Controller {
 
 		// go through post and edit each list item
 		$listArray = $this->core->get_post();
-		if (count($listArray))
+		if (is_array($listArray) && count($listArray))
 		{
 			foreach($listArray as $ID => $value)
 			{
-				if ($ID != '' && sizeof($value) > 0 && $value['catName'])
+				if ($ID != '' && is_array($value) && sizeof($value) > 0 && $value['catName'])
 				{	
 					// set object ID
 					$objectID = array('catID' => $ID);

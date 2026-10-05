@@ -21,10 +21,10 @@
 	</tr>
 <?php foreach ($wiki as $page): ?>
 	<tr>
-		<td><?php echo (in_array('wiki_edit', $this->permission->permissions)) ? anchor('/admin/wiki/edit_page/'.$page['pageID'], $page['pageName']) : $page['pageName']; ?></td>	
-		<td><?php echo $page['uri']; ?></td>
+		<td><?php echo (in_array('wiki_edit', $this->permission->permissions)) ? anchor('/admin/wiki/edit_page/'.$page['pageID'], html_escape($page['pageName'])) : html_escape($page['pageName']); ?></td>	
+		<td><?php echo html_escape($page['uri']); ?></td>
 		<td><?php echo dateFmt($page['dateCreated']); ?></td>
-		<td><?php echo anchor('/wiki/'.$page['uri'], 'View'); ?></td>		
+		<td><?php echo anchor('/wiki/'.html_escape($page['uri']), 'View'); ?></td>		
 		<td class="tiny">
 			<?php if (in_array('wiki_edit', $this->permission->permissions)): ?>
 				<?php echo anchor('/admin/wiki/edit_page/'.$page['pageID'], 'Edit'); ?>

@@ -42,7 +42,7 @@ div.content h2.underline, div.content h3.underline { border: none; }
 			<strong>Order ID #:</strong> <?php echo $order['transactionCode']; ?><br /> 
 			<strong>Date:</strong> <?php echo dateFmt($order['dateCreated'], '', '', TRUE); ?><br />
 			<?php if ($order['discountCode']): ?>
-				<strong>Discount Code:</strong> <?php echo $order['discountCode']; ?>
+				<strong>Discount Code:</strong> <?php echo html_escape($order['discountCode']); ?>
 			<?php endif; ?>
 		</p>
 	</div>
@@ -84,7 +84,7 @@ div.content h2.underline, div.content h3.underline { border: none; }
 				?>
 				<tr>
 					<td>
-						<a href="/shop/viewproduct/<?php echo $item['productID']; ?>"><?php echo $item['productName']; ?></a>
+						<a href="/shop/viewproduct/<?php echo $item['productID']; ?>"><?php echo html_escape($item['productName']); ?></a>
 						<small><?php echo $variationHTML; ?><?php echo $downloadHTML; ?></small>
 					</td>
 					<td><?php echo $item['quantity']; ?></td>
@@ -139,18 +139,18 @@ div.content h2.underline, div.content h3.underline { border: none; }
 		
 			<p>
 				<?php if ($order['firstName'] && $order['lastName']): ?>
-					<?php echo $order['firstName'] ?> <?php echo $order['lastName']; ?><br />
+					<?php echo html_escape($order['firstName']) ?> <?php echo html_escape($order['lastName']); ?><br />
 				<?php else: ?>
 					<em>No name set</em>
 				<?php endif; ?>
-				<?php echo ($order['address1']) ? $order['address1'].'<br />' : ''; ?>
-				<?php echo ($order['address2']) ? $order['address2'].'<br />' : ''; ?>
-				<?php echo ($order['address3']) ? $order['address3'].'<br />' : ''; ?>
-				<?php echo ($order['city']) ? $order['city'].'<br />' : ''; ?>
+				<?php echo ($order['address1']) ? html_escape($order['address1']).'<br />' : ''; ?>
+				<?php echo ($order['address2']) ? html_escape($order['address2']).'<br />' : ''; ?>
+				<?php echo ($order['address3']) ? html_escape($order['address3']).'<br />' : ''; ?>
+				<?php echo ($order['city']) ? html_escape($order['city']).'<br />' : ''; ?>
 				<?php echo ($order['country']) ? lookup_country($order['country']).'<br />' : ''; ?>
-				<?php echo ($order['postcode']) ? $order['postcode'].'<br />' : ''; ?>
-				<?php echo ($order['phone']) ? $order['phone'] : ''; ?>
-				<?php echo ($order['email']) ? mailto($order['email']) : ''; ?>
+				<?php echo ($order['postcode']) ? html_escape($order['postcode']).'<br />' : ''; ?>
+				<?php echo ($order['phone']) ? html_escape($order['phone']) : ''; ?>
+				<?php echo ($order['email']) ? '<a href="mailto:'.html_escape($order['email']).'">'.html_escape($order['email']).'</a>' : ''; ?>
 			</p>
 			
 		</div>
@@ -161,13 +161,13 @@ div.content h2.underline, div.content h3.underline { border: none; }
 		
 			<p>
 				<?php if ($order['billingAddress1'] || $order['billingAddress2'] || $order['billingCity'] || $order['billingPostcode']): ?>
-					<?php echo ($order['firstName']) ? $order['firstName'] : '(no firstname)'; ?> <?php echo ($order['lastName']) ? $order['lastName'] : '(no surname)'; ?><br />
-					<?php echo ($order['billingAddress1']) ? $order['billingAddress1'].'<br />' : ''; ?>
-					<?php echo ($order['billingAddress2']) ? $order['billingAddress2'].'<br />' : ''; ?>
-					<?php echo ($order['billingAddress3']) ? $order['billingAddress3'].'<br />' : ''; ?>
-					<?php echo ($order['billingCity']) ? $order['billingCity'].'<br />' : ''; ?>
+					<?php echo ($order['firstName']) ? html_escape($order['firstName']) : '(no firstname)'; ?> <?php echo ($order['lastName']) ? html_escape($order['lastName']) : '(no surname)'; ?><br />
+					<?php echo ($order['billingAddress1']) ? html_escape($order['billingAddress1']).'<br />' : ''; ?>
+					<?php echo ($order['billingAddress2']) ? html_escape($order['billingAddress2']).'<br />' : ''; ?>
+					<?php echo ($order['billingAddress3']) ? html_escape($order['billingAddress3']).'<br />' : ''; ?>
+					<?php echo ($order['billingCity']) ? html_escape($order['billingCity']).'<br />' : ''; ?>
 					<?php echo ($order['billingCountry']) ? lookup_country($order['billingCountry']).'<br />' : ''; ?>
-					<?php echo ($order['billingPostcode']) ? $order['billingPostcode'].'<br />' : ''; ?>
+					<?php echo ($order['billingPostcode']) ? html_escape($order['billingPostcode']).'<br />' : ''; ?>
 				<?php else: ?>
 					<small><em>Same as Shipping Address</em></small>
 				<?php endif; ?>

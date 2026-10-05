@@ -373,7 +373,7 @@ class Blog_Model extends CI_Model {
 			{
 				if ($cat)
 				{
-					$cat = trim(htmlentities($cat));
+					$cat = trim(htmlentities((string)$cat));
 					
 					$query = $this->db->get_where('blog_cats', array('catName' => $cat, 'siteID' => $this->siteID));
 					

@@ -54,6 +54,12 @@ class Pages extends MX_Controller {
 	
 	function view($page, $sendthru = '', $module = FALSE, $return = FALSE)
 	{	
+		// make sure sendthru is an array
+		if (!is_array($sendthru))
+		{
+			$sendthru = array();
+		}
+
 		// set default parse file
 		$parseFile = 'default';
 		
@@ -100,8 +106,8 @@ class Pages extends MX_Controller {
 				
 				if ($metadata['active'] ||
 					(!$metadata['active'] && $this->session->userdata('session_admin') &&
-						((@in_array('pages_edit', $this->permission->permissions) && in_array('pages_all', $this->permission->permissions)) ||
-						(!@in_array('pages_all', $this->permission->permissions) && $this->session->userdata('groupID') && $metadata['groupID'] == $this->session->userdata('groupID')))
+						((in_array('pages_edit', (array)$this->permission->permissions) && in_array('pages_all', $this->permission->permissions)) ||
+						(!in_array('pages_all', (array)$this->permission->permissions) && $this->session->userdata('groupID') && $metadata['groupID'] == $this->session->userdata('groupID')))
 					)
 				)
 				{
@@ -190,8 +196,8 @@ class Pages extends MX_Controller {
 			}
 			
 			// show cms with admin functions
-			if ((@in_array('pages_edit', $this->permission->permissions) && in_array('pages_all', $this->permission->permissions)) ||
-			(!@in_array('pages_all', $this->permission->permissions) && $this->session->userdata('groupID') && $pagedata['groupID'] == $this->session->userdata('groupID')))
+			if ((in_array('pages_edit', (array)$this->permission->permissions) && in_array('pages_all', $this->permission->permissions)) ||
+			(!in_array('pages_all', (array)$this->permission->permissions) && $this->session->userdata('groupID') && $pagedata['groupID'] == $this->session->userdata('groupID')))
 			{
 				$versionIDs = array();
 				
@@ -203,7 +209,7 @@ class Pages extends MX_Controller {
 						$versionIDs[] = $version['versionID'];
 					}
 				}
-				if ((!$pagedata['versionID'] && !$pagedata['draftID']) || @in_array($pagedata['draftID'], $versionIDs))
+				if ((!$pagedata['versionID'] && !$pagedata['draftID']) || in_array($pagedata['draftID'], (array)$versionIDs))
 				{
 					$this->core->add_draft($pagedata['pageID']);
 					redirect($this->uri->uri_string());
@@ -220,8 +226,8 @@ class Pages extends MX_Controller {
 				$output = (is_array($sendthru)) ? array_merge($output, $sendthru) : $output;
 
 				// output images
-				$where = '';
-				if (!@in_array('images_all', $this->permission->permissions))
+				$where = array();
+				if (!in_array('images_all', (array)$this->permission->permissions))
 				{
 					$where['userID'] = $this->session->userdata('userID');
 				}

@@ -105,22 +105,22 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$this->partials['rowpad:featured'] = '';
-		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products)); $x++)
+		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products ?: array())); $x++)
 		{
 			$this->partials['rowpad:featured'] .= '<td width="'.floor((1 / $this->shop->siteVars['shopItemsPerRow']) * 100).'%">&nbsp;</td>';
 		}
 		$this->partials['rowpad:latest'] = '';
-		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($latestProducts)); $x++)
+		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($latestProducts ?: array())); $x++)
 		{
 			$this->partials['rowpad:latest'] .= '<td width="'.floor((1 / $this->shop->siteVars['shopItemsPerRow']) * 100).'%">&nbsp;</td>';
 		}
 		$this->partials['rowpad:popular'] = '';
-		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($popularProducts)); $x++)
+		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($popularProducts ?: array())); $x++)
 		{
 			$this->partials['rowpad:popular'] .= '<td width="'.floor((1 / $this->shop->siteVars['shopItemsPerRow']) * 100).'%">&nbsp;</td>';
 		}
 		$this->partials['rowpad:mostviewed'] = '';
-		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($mostViewedProducts)); $x++)
+		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($mostViewedProducts ?: array())); $x++)
 		{
 			$this->partials['rowpad:mostviewed'] .= '<td width="'.floor((1 / $this->shop->siteVars['shopItemsPerRow']) * 100).'%">&nbsp;</td>';
 		}
@@ -184,7 +184,7 @@ class Shop extends MX_Controller {
 			
 			// populate template
 			$output['rowpad'] = '';
-			for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products)); $x++)
+			for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products ?: array())); $x++)
 			{
 				$output['rowpad'] .= '<td width="'.floor((1 / $this->shop->siteVars['shopItemsPerRow']) * 100).'%">&nbsp;</td>';
 			}
@@ -194,7 +194,7 @@ class Shop extends MX_Controller {
 			// populate categories
 			$output['category:id'] = $category['catID'];
 			$output['category:title'] = $category['catName'];
-			$output['category:description'] = $this->template->parse_body($category['description']);
+			$output['category:description'] = $this->template->parse_body((string)$category['description']);
 			$output['category:link'] = ($category['parentID']) ? '/shop/'.$category['parentSafe'].'/'.$category['catSafe'] : '/shop/'.$category['catSafe'];
 			$output['category:parent:id'] = ($category['parentID']) ? $category['parentID'] : '';
 			$output['category:parent:title'] = ($category['parentID']) ? $category['parentName'] : '';
@@ -243,7 +243,7 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['rowpad'] = '';
-		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products)); $x++)
+		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products ?: array())); $x++)
 		{
 			$output['rowpad'] .= '<td width="'.floor((1 / $this->shop->siteVars['shopItemsPerRow']) * 100).'%">&nbsp;</td>';
 		}			
@@ -295,7 +295,7 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['rowpad'] = '';
-		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products)); $x++)
+		for ($x = 0; $x < ($this->shop->siteVars['shopItemsPerRow'] - sizeof($products ?: array())); $x++)
 		{
 			$output['rowpad'] .= '<td width="'.floor((1 / $this->shop->siteVars['shopItemsPerRow']) * 100).'%">&nbsp;</td>';
 		}			
@@ -332,10 +332,10 @@ class Shop extends MX_Controller {
 
 		// get data
 		$image = $this->uploads->load_image($productID, false, true);
-		$output['product:image-path'] = $image['src'];
+		$output['product:image-path'] = ($image) ? $image['src'] : $this->config->item('staticPath').'/images/nopicture.jpg';
 
 		$image = $this->uploads->load_image($productID, true, true);
-		$output['product:thumb-path'] = $image['src'];
+		$output['product:thumb-path'] = ($image) ? $image['src'] : $this->config->item('staticPath').'/images/nopicture.jpg';
 
 		// get category data
 		if ($categories = $this->shop->get_cat_ids_for_product($productID))
@@ -346,11 +346,11 @@ class Shop extends MX_Controller {
 			// filter through getting last element
 			foreach($categories as $catID)
 			{
-				$category = $this->shop->get_category($catID);
+				if (!$category = $this->shop->get_category($catID)) continue;
 
 				$output['category:id'] = $category['catID'];
 				$output['category:title'] = $category['catName'];
-				$output['category:description'] = $this->template->parse_body($category['description']);
+				$output['category:description'] = $this->template->parse_body((string)$category['description']);
 				$output['category:link'] = ($category['parentID']) ? '/shop/'.$category['parentSafe'].'/'.$category['catSafe'] : '/shop/'.$category['catSafe'];
 				$output['category:parent:id'] = ($category['parentID']) ? $category['parentID'] : '';
 				$output['category:parent:title'] = ($category['parentID']) ? $category['parentName'] : '';
@@ -372,13 +372,13 @@ class Shop extends MX_Controller {
 				// get images
 				if (!$similarProductImage = $this->uploads->load_image($similarProduct['productID'], false, true))
 				{
-					$similarProductImage['src'] = $this->config->item('staticPath').'/images/nopicture.jpg';
+					$similarProductImage = array('src' => $this->config->item('staticPath').'/images/nopicture.jpg');
 				}	
 
 				// get images
 				if (!$similarProductThumb = $this->uploads->load_image($similarProduct['productID'], true, true))
 				{
-					$similarProductThumb['src'] = $this->config->item('staticPath').'/images/nopicture.jpg';
+					$similarProductThumb = array('src' => $this->config->item('staticPath').'/images/nopicture.jpg');
 				}
 				
 				// populate template
@@ -414,9 +414,9 @@ class Shop extends MX_Controller {
 		$output['product:link'] = '/shop/'.$product['productID'].'/'.strtolower(url_title($product['productName']));
 		$output['product:title'] = $product['productName'];
 		$output['product:subtitle'] = $product['subtitle'];
-		$output['product:body'] = $this->template->parse_body($product['description']);
+		$output['product:body'] = $this->template->parse_body((string)$product['description']);
 		$output['product:price'] = currency_symbol().number_format($product['price'],2);
-		$output['product:excerpt'] = $this->template->parse_body($product['excerpt']);
+		$output['product:excerpt'] = $this->template->parse_body((string)$product['excerpt']);
 		$output['product:stock'] = $product['stock'];
 		$output['product:category'] = (isset($category) && $category) ? $category['catName'] : '';
 		
@@ -437,7 +437,7 @@ class Shop extends MX_Controller {
 		
 		$output['form:name'] = set_value('fullName', $this->session->userdata('firstName').' '.$this->session->userdata('lastName'));
 		$output['form:email'] = set_value('email', $this->session->userdata('email'));
-		$output['form:review'] = $this->input->post('review');
+		$output['form:review'] = html_escape($this->input->post('review'));
 
 		// get reviews
 		if ($reviews = $this->shop->get_reviews($product['productID']))
@@ -449,9 +449,9 @@ class Shop extends MX_Controller {
 				$output['product:reviews'][$i]['review:class'] = ($i % 2) ? ' alt ' : '';
 				$output['product:reviews'][$i]['review:id'] = $review['reviewID'];
 				$output['product:reviews'][$i]['review:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($review['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
-				$output['product:reviews'][$i]['review:author'] = $review['fullName'];
+				$output['product:reviews'][$i]['review:author'] = html_escape($review['fullName']);
 				$output['product:reviews'][$i]['review:date'] = dateFmt($review['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y' : 'jS M Y');
-				$output['product:reviews'][$i]['review:body'] = nl2br(strip_tags($review['review']));
+				$output['product:reviews'][$i]['review:body'] = nl2br(html_escape((string)$review['review']));
 				$output['product:reviews'][$i]['review:rating'] = $review['rating'];
 				
 				$i++;
@@ -511,7 +511,7 @@ class Shop extends MX_Controller {
 			// remove products
 			if ($upsell['remove'])
 			{
-				foreach((array)$this->session->userdata('cart') as $key => $quantity)
+				foreach(($this->session->userdata('cart') ?: array()) as $key => $quantity)
 				{
 					$cartProduct = $this->shop->unpack_item($key, $quantity);
 					$key = $this->core->encode($key);					
@@ -543,11 +543,11 @@ class Shop extends MX_Controller {
 			}
 			if ($quantity == 'update')
 			{
-				foreach((array)$this->session->userdata('cart') as $key => $quantity)
+				foreach(($this->session->userdata('cart') ?: array()) as $key => $quantity)
 				{				
 					$key = $this->core->encode($key);
 					$updateItem = $this->input->post('quantity');
-					$this->shop->update_cart($key, $updateItem[$key]);
+					$this->shop->update_cart($key, @$updateItem[$key]);
 				}
 			}
 			if ($quantity == 'remove_donation')
@@ -594,12 +594,12 @@ class Shop extends MX_Controller {
 		if ($this->session->userdata('shippingBand') > 1 || $this->session->userdata('shippingModifier'))
 		{
 			$shippingBand = $this->shop->get_band_by_multiplier($this->session->userdata('shippingBand'));
-			$shippingNotes = 'Shipping method: '.$shippingBand['bandName'];
+			$shippingNotes = 'Shipping method: '.@$shippingBand['bandName'];
 			
 			if ($this->session->userdata('shippingModifier'))
 			{
 				$shippingModifier = $this->shop->get_modifier_by_multiplier($this->session->userdata('shippingModifier'));
-				$shippingNotes .= ' ('.$shippingModifier['modifierName'].')';
+				$shippingNotes .= ' ('.@$shippingModifier['modifierName'].')';
 			}
 
 			$this->session->set_userdata('shippingNotes', $shippingNotes);
@@ -616,7 +616,10 @@ class Shop extends MX_Controller {
 		}
 
 		// load cart
-		$data = $this->shop->load_cart();
+		if (!$data = $this->shop->load_cart())
+		{
+			$data = array('cart' => array(), 'multiplier' => 1, 'discounts' => 0, 'subtotal' => 0, 'postage' => 0, 'donation' => 0, 'tax' => 0);
+		}
 		
 		// populate template
 		$output['cart:discounts'] = ($data['discounts'] > 0) ? currency_symbol().number_format(@$data['discounts'], 2) : '';
@@ -646,7 +649,7 @@ class Shop extends MX_Controller {
 		$output['cart:items'] = @$this->parser->parse('partials/cart', $data, TRUE);
 		$output['cart:bands'] = @$this->parser->parse('partials/bands', $data, TRUE);
 		$output['cart:modifiers'] = @$this->parser->parse('partials/modifiers', $data, TRUE);
-		$output['form:discount-code'] = $this->session->userdata('discountCode');
+		$output['form:discount-code'] = html_escape($this->session->userdata('discountCode'));
 		$output['form:donation'] = ($this->session->userdata('cart_donation')) ? number_format($this->session->userdata('cart_donation'), 2, '.', '') : '';	
 		
 		// set default upsell vars
@@ -673,7 +676,7 @@ class Shop extends MX_Controller {
 				// get upsell based on the number of products
 				elseif ($row['type'] == 'N')
 				{
-					if (sizeof($data['cart']) > $upsell['numProducts'])
+					if (sizeof($data['cart']) > $row['numProducts'])
 					{
 						$upsell = $this->shop->get_product($row['productID']);
 						$upsell['upsellID'] = $row['upsellID'];
@@ -706,9 +709,9 @@ class Shop extends MX_Controller {
 		$output['upsell:link'] = ($upsell) ? '/shop/'.$upsell['productID'].'/'.strtolower(url_title($upsell['productName'])) : '';
 		$output['upsell:title'] = ($upsell) ? $upsell['productName'] : '';
 		$output['upsell:subtitle'] = ($upsell) ? $upsell['subtitle'] : '';
-		$output['upsell:body'] = ($upsell) ? $this->template->parse_body($upsell['description']) : '';
+		$output['upsell:body'] = ($upsell) ? $this->template->parse_body((string)$upsell['description']) : '';
 		$output['upsell:price'] = ($upsell) ? currency_symbol().number_format($upsell['price'],2) : '';
-		$output['upsell:excerpt'] = ($upsell) ? $this->template->parse_body($upsell['excerpt']) : '';
+		$output['upsell:excerpt'] = ($upsell) ? $this->template->parse_body((string)$upsell['excerpt']) : '';
 		$output['upsell:stock'] = ($upsell) ? $upsell['stock'] : '';
 		$image = ($upsell) ? $this->uploads->load_image($upsell['productID'], false, true) : '';
 		$output['upsell:image-path'] = ($image) ? $image['src'] : $this->config->item('staticPath').'/images/nopicture.jpg';
@@ -719,27 +722,27 @@ class Shop extends MX_Controller {
 		$user = $this->shop->get_user();
 		
 		// get user data
-		$output['user:email'] = @$user['email'];
-		$output['user:name'] = @trim($user['firstName'].' '.$user['lastName']);
-		$output['user:first-name'] = @$user['firstName'];
-		$output['user:last-name'] = @$user['lastName'];
-		$output['user:address1'] = @$user['address1'];
-		$output['user:address2'] = @$user['address2'];
-		$output['user:address3'] = @$user['address3'];
-		$output['user:city'] = @$user['city'];
+		$output['user:email'] = html_escape(@$user['email']);
+		$output['user:name'] = html_escape(@trim($user['firstName'].' '.$user['lastName']));
+		$output['user:first-name'] = html_escape(@$user['firstName']);
+		$output['user:last-name'] = html_escape(@$user['lastName']);
+		$output['user:address1'] = html_escape(@$user['address1']);
+		$output['user:address2'] = html_escape(@$user['address2']);
+		$output['user:address3'] = html_escape(@$user['address3']);
+		$output['user:city'] = html_escape(@$user['city']);
 		$output['user:state'] = @lookup_state($user['state']);
-		$output['user:postcode'] = @$user['postcode'];
+		$output['user:postcode'] = html_escape(@$user['postcode']);
 		$output['user:country'] = @lookup_country($user['country']);
 		$output['user:country-code'] = @$user['country'];
-		$output['user:phone'] = @$user['phone'];
+		$output['user:phone'] = html_escape(@$user['phone']);
 		
 		// get user data
-		$output['user:billing-address1'] = @$user['billingAddress1'];
-		$output['user:billing-address2'] = @$user['billingAddress2'];
-		$output['user:billing-address3'] = @$user['billingAddress3'];
-		$output['user:billing-city'] = @$user['billingCity'];
+		$output['user:billing-address1'] = html_escape(@$user['billingAddress1']);
+		$output['user:billing-address2'] = html_escape(@$user['billingAddress2']);
+		$output['user:billing-address3'] = html_escape(@$user['billingAddress3']);
+		$output['user:billing-city'] = html_escape(@$user['billingCity']);
 		$output['user:billing-state'] = @lookup_state($user['billingState']);
-		$output['user:billing-postcode'] = @$user['billingPostcode'];
+		$output['user:billing-postcode'] = html_escape(@$user['billingPostcode']);
 		$output['user:billing-country'] = @lookup_country($user['billingCountry']);
 		$output['user:billing-country-code'] = @$user['billingCountry'];			
 		
@@ -881,27 +884,27 @@ class Shop extends MX_Controller {
 			$data['currency'] = $this->site->config['currency'];
 
 			// get user data
-			$output['user:email'] = @$user['email'];
-			$output['user:name'] = @trim($user['firstName'].' '.$user['lastName']);
-			$output['user:first-name'] = @$user['firstName'];
-			$output['user:last-name'] = @$user['lastName'];
-			$output['user:address1'] = @$user['address1'];
-			$output['user:address2'] = @$user['address2'];
-			$output['user:address3'] = @$user['address3'];
-			$output['user:city'] = @$user['city'];
+			$output['user:email'] = html_escape(@$user['email']);
+			$output['user:name'] = html_escape(@trim($user['firstName'].' '.$user['lastName']));
+			$output['user:first-name'] = html_escape(@$user['firstName']);
+			$output['user:last-name'] = html_escape(@$user['lastName']);
+			$output['user:address1'] = html_escape(@$user['address1']);
+			$output['user:address2'] = html_escape(@$user['address2']);
+			$output['user:address3'] = html_escape(@$user['address3']);
+			$output['user:city'] = html_escape(@$user['city']);
 			$output['user:state'] = @lookup_state($user['state']);
-			$output['user:postcode'] = @$user['postcode'];
+			$output['user:postcode'] = html_escape(@$user['postcode']);
 			$output['user:country'] = @lookup_country($user['country']);
 			$output['user:country-code'] = @$user['country'];
-			$output['user:phone'] = @$user['phone'];
+			$output['user:phone'] = html_escape(@$user['phone']);
 			
 			// get user data
-			$output['user:billing-address1'] = @$user['billingAddress1'];
-			$output['user:billing-address2'] = @$user['billingAddress2'];
-			$output['user:billing-address3'] = @$user['billingAddress3'];
-			$output['user:billing-city'] = @$user['billingCity'];
+			$output['user:billing-address1'] = html_escape(@$user['billingAddress1']);
+			$output['user:billing-address2'] = html_escape(@$user['billingAddress2']);
+			$output['user:billing-address3'] = html_escape(@$user['billingAddress3']);
+			$output['user:billing-city'] = html_escape(@$user['billingCity']);
 			$output['user:billing-state'] = @lookup_state($user['billingState']);
-			$output['user:billing-postcode'] = @$user['billingPostcode'];
+			$output['user:billing-postcode'] = html_escape(@$user['billingPostcode']);
 			$output['user:billing-country'] = @lookup_country($user['billingCountry']);
 			$output['user:billing-country-code'] = @$user['billingCountry'];			
 
@@ -909,14 +912,14 @@ class Shop extends MX_Controller {
 			if ($this->site->config['shopStockControl'])
 			{
 				// check they aren't ordering more than there is stock
-				foreach((array)$this->session->userdata('cart') as $key => $quantity)
+				foreach(($this->session->userdata('cart') ?: array()) as $key => $quantity)
 				{
 					// check there is stock for all items in cart
 					if ($this->site->config['shopStockControl'])
 					{
 						// get ordered products
 						$product = $this->shop->unpack_item($key, $quantity);
-						if ($quantity > $product['stock'])
+						if (isset($product['stock']) && $quantity > $product['stock'])
 						{
 							$this->form_validation->set_error('You cannot add any more of this product ("'.$product['productName'].'"). Please remove this item, or adjust the quantity.');
 						}
@@ -1008,25 +1011,11 @@ class Shop extends MX_Controller {
 			'phone' => array('label' => 'Phone', 'rules' => 'required|trim')
 		);	
 
-		// security check
-		if ($this->input->post('username')) $this->core->set['username'] = '';
-		if ($this->input->post('premium')) $this->core->set['premium'] = '';
-		if ($this->input->post('siteID')) $this->core->set['siteID'] = $this->siteID;
-		if ($this->input->post('userID')) $this->core->set['userID'] = '';
-		if ($this->input->post('resellerID')) $this->core->set['resellerID'] = '';
-		if ($this->input->post('kudos')) $this->core->set['kudos'] = '';
-		if ($this->input->post('posts')) $this->core->set['posts'] = '';		
+		// security check: privileged columns are never taken from POST (see Core::get_values)
+		$this->core->set['siteID'] = $this->siteID;
 
-		// set folder (making sure it's not an admin folder)
-		$permissionGroupsArray = $this->permission->get_groups('admin');
-		foreach((array)$permissionGroupsArray as $group)
-		{
-			$permissionGroups[$group['groupID']] = $group['groupName'];
-		}				
-		if ($this->input->post('groupID') > 0 && !@in_array($this->input->post('groupID'), $permissionGroups))
-		{
-			$this->core->set['groupID'] = $this->input->post('groupID');
-		}
+		// set group: only a plain non-admin group of this site may be chosen by the visitor
+		$this->core->set['groupID'] = $this->core->registration_group();
 
 		// set date
 		$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
@@ -1052,22 +1041,22 @@ class Shop extends MX_Controller {
 			}
 			
 			// set header and footer
-			$emailHeader = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailHeader']);
+			$emailHeader = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailHeader']);
 			$emailHeader = str_replace('{first-name}', $this->input->post('firstName'), $emailHeader);
 			$emailHeader = str_replace('{last-name}', $this->input->post('lastName'), $emailHeader);
 			$emailHeader = str_replace('{email}', $this->input->post('email'), $emailHeader);
-			$emailFooter = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailFooter']);
+			$emailFooter = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailFooter']);
 			$emailFooter = str_replace('{first-name}', $this->input->post('firstName'), $emailFooter);
 			$emailFooter = str_replace('{last-name}', $this->input->post('lastName'), $emailFooter);
 			$emailFooter = str_replace('{email}', $this->input->post('email'), $emailFooter);
-			$emailAccount = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), $this->site->config['emailAccount']);
+			$emailAccount = str_replace('{name}', trim($this->input->post('firstName').' '.$this->input->post('lastName')), (string)$this->site->config['emailAccount']);
 			$emailAccount = str_replace('{first-name}', $this->input->post('firstName'), $emailAccount);
 			$emailAccount = str_replace('{last-name}', $this->input->post('lastName'), $emailAccount);
 			$emailAccount = str_replace('{email}', $this->input->post('email'), $emailAccount);			
 		
 			// send email
 			$this->load->library('email');
-			$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+			$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 			$this->email->to($this->input->post('email'));			
 			$this->email->subject('New account set up on '.$this->site->config['siteName']);
 			$this->email->message($emailHeader."\n\n".$emailAccount."\n\n----------------------------------\nYour email: ".$this->input->post('email')."\nYour password: ".$this->input->post('password')."\n----------------------------------\n\n".$emailFooter);
@@ -1077,7 +1066,7 @@ class Shop extends MX_Controller {
 			$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 
 			// set admin session name, if given
-			if (!$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->decode($redirect)))
+			if (!$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->local_path($this->core->decode($redirect), '')))
 			{
 				$this->form_validation->set_error($this->auth->error);
 			}
@@ -1339,23 +1328,23 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['order:id'] = $order['transactionCode'];
-		$output['order:first-name'] = ($order['firstName']) ? $order['firstName'] : '';
-		$output['order:last-name'] = ($order['lastName']) ? $order['lastName'] : '';
-		$output['order:address1'] = ($order['address1']) ? $order['address1'] : '';
-		$output['order:address2'] = ($order['address2']) ? $order['address2'] : '';
-		$output['order:address3'] = ($order['address3']) ? $order['address3'] : '';
-		$output['order:city'] = ($order['city']) ? $order['city'] : '';
+		$output['order:first-name'] = ($order['firstName']) ? html_escape($order['firstName']) : '';
+		$output['order:last-name'] = ($order['lastName']) ? html_escape($order['lastName']) : '';
+		$output['order:address1'] = ($order['address1']) ? html_escape($order['address1']) : '';
+		$output['order:address2'] = ($order['address2']) ? html_escape($order['address2']) : '';
+		$output['order:address3'] = ($order['address3']) ? html_escape($order['address3']) : '';
+		$output['order:city'] = ($order['city']) ? html_escape($order['city']) : '';
 		$output['order:country'] = ($order['country']) ? lookup_country($order['country']) : '';
-		$output['order:postcode'] = ($order['postcode']) ? $order['postcode'] : '';
-		$output['order:phone'] = ($order['phone']) ? $order['phone'] : 'N/A';
-		$output['order:email'] = ($order['email']) ? $order['email'] : 'N/A';
+		$output['order:postcode'] = ($order['postcode']) ? html_escape($order['postcode']) : '';
+		$output['order:phone'] = ($order['phone']) ? html_escape($order['phone']) : 'N/A';
+		$output['order:email'] = ($order['email']) ? html_escape($order['email']) : 'N/A';
 		$output['order:discounts'] = ($order['discounts'] > 0) ? currency_symbol().number_format($order['discounts'], 2) : '';		
 		$output['order:subtotal'] = currency_symbol().number_format($order['amount'] - $order['postage'] - $order['tax'], 2);
 		$output['order:postage'] = currency_symbol().number_format($order['postage'], 2);
 		$output['order:tax'] = ($order['tax'] > 0) ? currency_symbol().number_format($order['tax'], 2) : '';
 		$output['order:total'] = currency_symbol().number_format($order['amount'], 2);
 		$output['order:status'] = $order['trackingStatus'];		
-		$output['order:notes'] = ($order['notes']) ? nl2br($order['notes']) : FALSE;
+		$output['order:notes'] = ($order['notes']) ? nl2br(html_escape((string)$order['notes'])) : FALSE;
 
 		// set pagination and breadcrumb
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
@@ -1383,7 +1372,7 @@ class Shop extends MX_Controller {
 				$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 			
 				// set admin session name, if given
-				if (!$this->auth->login($username, $this->input->post('password'), $sessionName, $this->core->decode($redirect)))
+				if (!$this->auth->login($username, $this->input->post('password'), $sessionName, $this->core->local_path($this->core->decode($redirect), '/shop/cart')))
 				{
 					$this->form_validation->set_error($this->auth->error);
 				}
@@ -1410,7 +1399,7 @@ class Shop extends MX_Controller {
 		}
 		else
 		{
-			redirect($this->core->decode($redirect));
+			redirect($this->core->local_path($this->core->decode($redirect), '/shop/cart'));
 		}
 
 		// load errors
@@ -1452,21 +1441,21 @@ class Shop extends MX_Controller {
 			if ($user = $this->shop->get_user_by_email($this->input->post('email')))
 			{
 				// set key
-				$key = md5($user['userID'].time());
+				$key = $this->core->random_key();
 				$this->shop->set_reset_key($user['userID'], $key);
 
 				// set header and footer
-				$emailHeader = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), $this->site->config['emailHeader']);
+				$emailHeader = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), (string)$this->site->config['emailHeader']);
 				$emailHeader = str_replace('{first-name}', $user['firstName'], $emailHeader);
 				$emailHeader = str_replace('{last-name}', $user['lastName'], $emailHeader);
 				$emailHeader = str_replace('{email}', $user['email'], $emailHeader);
-				$emailFooter = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), $this->site->config['emailFooter']);
+				$emailFooter = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), (string)$this->site->config['emailFooter']);
 				$emailFooter = str_replace('{first-name}', $user['firstName'], $emailFooter);
 				$emailFooter = str_replace('{last-name}', $user['lastName'], $emailFooter);
 				$emailFooter = str_replace('{email}', $user['email'], $emailFooter);
 				
 				// send email			
-				$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+				$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 				$this->email->to($user['email']);			
 				$this->email->subject('Password reset request on '.$this->site->config['siteName']);
 				$this->email->message($emailHeader."\n\nA password reset request has been submitted on ".$this->site->config['siteName'].". If you did not request to have your password reset please ignore this email.\n\nIf you did want to reset your password please click on the link below.\n\n".site_url('shop/reset/'.$key)."\n\n".$emailFooter);
@@ -1533,17 +1522,17 @@ class Shop extends MX_Controller {
 				if ($this->core->update('users', $objectID))
 				{
 					// set header and footer
-					$emailHeader = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), $this->site->config['emailHeader']);
+					$emailHeader = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), (string)$this->site->config['emailHeader']);
 					$emailHeader = str_replace('{first-name}', $user['firstName'], $emailHeader);
 					$emailHeader = str_replace('{last-name}', $user['lastName'], $emailHeader);
 					$emailHeader = str_replace('{email}', $user['email'], $emailHeader);
-					$emailFooter = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), $this->site->config['emailFooter']);
+					$emailFooter = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), (string)$this->site->config['emailFooter']);
 					$emailFooter = str_replace('{first-name}', $user['firstName'], $emailFooter);
 					$emailFooter = str_replace('{last-name}', $user['lastName'], $emailFooter);
 					$emailFooter = str_replace('{email}', $user['email'], $emailFooter);
 										
 					// send email			
-					$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+					$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 					$this->email->to($user['email']);			
 					$this->email->subject('Your password was reset on '.$this->site->config['siteName']);
 					$this->email->message($emailHeader."\n\nYour password for ".$this->site->config['siteName']." has been reset, please keep this information safe.\n\nYour new password is: ".$this->input->post('password')."\n\n".$emailFooter);
@@ -1593,14 +1582,14 @@ class Shop extends MX_Controller {
 			if ($this->core->check_errors())
 			{
 				// set header and footer
-				$emailHeader = str_replace('{name}', $this->input->post('fullName'), $this->site->config['emailHeader']);
+				$emailHeader = str_replace('{name}', $this->input->post('fullName'), (string)$this->site->config['emailHeader']);
 				$emailHeader = str_replace('{email}', $this->input->post('email'), $emailHeader);
-				$emailFooter = str_replace('{name}', $this->input->post('toName'), $this->site->config['emailFooter']);
+				$emailFooter = str_replace('{name}', $this->input->post('toName'), (string)$this->site->config['emailFooter']);
 				$emailFooter = str_replace('{email}', $this->input->post('toEmail'), $emailFooter);
 									
 				// send email
 				$this->load->library('email');
-				$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+				$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 				$this->email->to($this->input->post('toEmail'));			
 				$this->email->subject('A Friend Has Recommended a Product on '.$this->site->config['siteName']);
 				$this->email->message($emailHeader."\n\nA friend thinks that you might be interested in a product on ".$this->site->config['siteName'].".\n\nYou can view the product by clicking on the link below:\n\n".site_url('shop/'.$productID.'/'.strtolower(url_title($product['productName']))).(($this->input->post('messages')) ? "They sent you a message as well:\n\n".$this->input->post('message') : '')."\n\n".$emailFooter);
@@ -1616,11 +1605,11 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['product:id'] = $product['productID'];		
-		$output['form:name'] = $this->input->post('fullName');
-		$output['form:email'] = $this->input->post('email');		
-		$output['form:to-name'] = $this->input->post('toName');
-		$output['form:to-email'] = $this->input->post('toEmail');		
-		$output['form:message'] = $this->input->post('message');	
+		$output['form:name'] = html_escape($this->input->post('fullName'));
+		$output['form:email'] = html_escape($this->input->post('email'));		
+		$output['form:to-name'] = html_escape($this->input->post('toName'));
+		$output['form:to-email'] = html_escape($this->input->post('toEmail'));		
+		$output['form:message'] = html_escape($this->input->post('message'));	
 
 		// set title
 		$output['page:title'] = 'Recommend Product'.(($this->site->config['siteName']) ? ' - '.$this->site->config['siteName'] : '');
@@ -1679,24 +1668,24 @@ class Shop extends MX_Controller {
 				// get details on product owner
 				if (!$user = $this->shop->get_user($product['userID']))
 				{
-					$user['email'] = $this->site->config['siteEmail'];
+					$user['email'] = (string)$this->site->config['siteEmail'];
 				}
 				
 				if ($user['notifications'])
 				{
 					// set header and footer
-					$emailHeader = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), $this->site->config['emailHeader']);
+					$emailHeader = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), (string)$this->site->config['emailHeader']);
 					$emailHeader = str_replace('{first-name}', $user['firstName'], $emailHeader);
 					$emailHeader = str_replace('{last-name}', $user['lastName'], $emailHeader);
 					$emailHeader = str_replace('{email}', $user['email'], $emailHeader);
-					$emailFooter = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), $this->site->config['emailFooter']);
+					$emailFooter = str_replace('{name}', trim($user['firstName'].' '.$user['lastName']), (string)$this->site->config['emailFooter']);
 					$emailFooter = str_replace('{first-name}', $user['firstName'], $emailFooter);
 					$emailFooter = str_replace('{last-name}', $user['lastName'], $emailFooter);
 					$emailFooter = str_replace('{email}', $user['email'], $emailFooter);
 					
 					// send email
 					$this->load->library('email');						
-					$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+					$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);
 					$this->email->to($user['email']);			
 					$this->email->subject('New Product Review on '.$this->site->config['siteName']);
 					$this->email->message($emailHeader."\n\nSomeone has just reviewed your product titled \"".$product['productName']."\".\n\nYou can view and approve this review by clicking on the following URL:\n\n".site_url('/admin/shop/reviews')."\n\nThey said:\n\"".$this->input->post('review')."\"\n\n".$emailFooter);
@@ -1713,9 +1702,9 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['product:id'] = $product['productID'];		
-		$output['form:name'] = $this->input->post('fullName');
-		$output['form:email'] = $this->input->post('email');		
-		$output['form:review'] = $this->input->post('review');	
+		$output['form:name'] = html_escape($this->input->post('fullName'));
+		$output['form:email'] = html_escape($this->input->post('email'));
+		$output['form:review'] = html_escape($this->input->post('review'));
 
 		// set title
 		$output['page:title'] = 'Review Product'.(($this->site->config['siteName']) ? ' - '.$this->site->config['siteName'] : '');
@@ -1946,15 +1935,15 @@ class Shop extends MX_Controller {
 		$itemOrders = $this->shop->get_item_orders($transactionID);
 
 		// set header and footer
-		$emailHeader = str_replace('{name}', trim($orderRow['firstName'].' '.$orderRow['lastName']), $this->site->config['emailHeader']);
+		$emailHeader = str_replace('{name}', trim($orderRow['firstName'].' '.$orderRow['lastName']), (string)$this->site->config['emailHeader']);
 		$emailHeader = str_replace('{first-name}', $orderRow['firstName'], $emailHeader);
 		$emailHeader = str_replace('{last-name}', $orderRow['lastName'], $emailHeader);
 		$emailHeader = str_replace('{email}', $orderRow['email'], $emailHeader);
-		$emailFooter = str_replace('{name}', trim($orderRow['firstName'].' '.$orderRow['lastName']), $this->site->config['emailFooter']);
+		$emailFooter = str_replace('{name}', trim($orderRow['firstName'].' '.$orderRow['lastName']), (string)$this->site->config['emailFooter']);
 		$emailFooter = str_replace('{first-name}', $orderRow['firstName'], $emailFooter);
 		$emailFooter = str_replace('{last-name}', $orderRow['lastName'], $emailFooter);
 		$emailFooter = str_replace('{email}', $orderRow['email'], $emailFooter);
-		$emailOrder = str_replace('{name}', trim($orderRow['firstName'].' '.$orderRow['lastName']), $this->site->config['emailOrder']);
+		$emailOrder = str_replace('{name}', trim($orderRow['firstName'].' '.$orderRow['lastName']), (string)$this->site->config['emailOrder']);
 		$emailOrder = str_replace('{first-name}', $orderRow['firstName'], $emailOrder);
 		$emailOrder = str_replace('{last-name}', $orderRow['lastName'], $emailOrder);
 		$emailOrder = str_replace('{email}', $orderRow['email'], $emailOrder);
@@ -2080,15 +2069,15 @@ class Shop extends MX_Controller {
 		$this->email->to($orderRow['email']);
 		$this->email->subject('Thank you for your order (#'.$orderID.')');
 		$this->email->message($userBody.$orderBody.$dispatchBody.$notesBody.$footerBody);
-		$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+		$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 		$this->email->send();
 
 		$this->email->clear();
 
-		$this->email->to($this->site->config['siteEmail']);
+		$this->email->to((string)$this->site->config['siteEmail']);
 		$this->email->subject('Someone has placed an order (#'.$orderID.')');
 		$this->email->message($adminBody.$orderBody.$dispatchBody.$notesBody.$footerBody);
-		$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+		$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 		$this->email->send();
 
 		return TRUE;
@@ -2099,15 +2088,15 @@ class Shop extends MX_Controller {
 		$orderID = $this->shop->response_data['orderID'];
 		
 		// set header and footer
-		$emailHeader = str_replace('{name}', $this->shop->response_data['fullName'], $this->site->config['emailHeader']);
+		$emailHeader = str_replace('{name}', $this->shop->response_data['fullName'], (string)$this->site->config['emailHeader']);
 		$emailHeader = str_replace('{first-name}', $this->shop->response_data['firstName'], $emailHeader);
 		$emailHeader = str_replace('{last-name}', $this->shop->response_data['lastName'], $emailHeader);
 		$emailHeader = str_replace('{email}', $this->shop->response_data['email'], $emailHeader);
-		$emailFooter = str_replace('{name}', $this->shop->response_data['fullName'], $this->site->config['emailFooter']);
+		$emailFooter = str_replace('{name}', $this->shop->response_data['fullName'], (string)$this->site->config['emailFooter']);
 		$emailFooter = str_replace('{first-name}', $this->shop->response_data['firstName'], $emailFooter);
 		$emailFooter = str_replace('{last-name}', $this->shop->response_data['lastName'], $emailFooter);
 		$emailFooter = str_replace('{email}', $this->shop->response_data['email'], $emailFooter);
-		$emailDonation = str_replace('{name}', $this->shop->response_data['fullName'], $this->site->config['emailDonation']);
+		$emailDonation = str_replace('{name}', $this->shop->response_data['fullName'], (string)$this->site->config['emailDonation']);
 		$emailDonation = str_replace('{first-name}', $this->shop->response_data['firstName'], $emailDonation);
 		$emailDonation = str_replace('{last-name}', $this->shop->response_data['lastName'], $emailDonation);
 		$emailDonation = str_replace('{email}', $this->shop->response_data['email'], $emailDonation);
@@ -2127,15 +2116,15 @@ class Shop extends MX_Controller {
 		//$this->email->to($this->shop->response_data['email']);
 		//$this->email->subject('Thank you for your donation');
 		//$this->email->message($userBody.$footerBody);
-		//$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+		//$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 		//$this->email->send();
 
 		//$this->email->clear();
 
-		$this->email->to($this->site->config['siteEmail']);
+		$this->email->to((string)$this->site->config['siteEmail']);
 		$this->email->subject('Someone has made a donation (#'.$orderID.')');
 		$this->email->message($adminBody.$footerBody);
-		$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+		$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 		$this->email->send();
 
 		return TRUE;
@@ -2148,15 +2137,15 @@ class Shop extends MX_Controller {
 		$email = $this->shop->response_data['email'];
 
 		// set header and footer
-		$emailHeader = str_replace('{name}', $this->shop->response_data['fullName'], $this->site->config['emailHeader']);
+		$emailHeader = str_replace('{name}', $this->shop->response_data['fullName'], (string)$this->site->config['emailHeader']);
 		$emailHeader = str_replace('{first-name}', $this->shop->response_data['firstName'], $emailHeader);
 		$emailHeader = str_replace('{last-name}', $this->shop->response_data['lastName'], $emailHeader);
 		$emailHeader = str_replace('{email}', $this->shop->response_data['email'], $emailHeader);
-		$emailFooter = str_replace('{name}', $this->shop->response_data['fullName'], $this->site->config['emailFooter']);
+		$emailFooter = str_replace('{name}', $this->shop->response_data['fullName'], (string)$this->site->config['emailFooter']);
 		$emailFooter = str_replace('{first-name}', $this->shop->response_data['firstName'], $emailFooter);
 		$emailFooter = str_replace('{last-name}', $this->shop->response_data['lastName'], $emailFooter);
 		$emailFooter = str_replace('{email}', $this->shop->response_data['email'], $emailFooter);
-		$emailSubscription = str_replace('{name}', $this->shop->response_data['fullName'], $this->site->config['emailSubscription']);
+		$emailSubscription = str_replace('{name}', $this->shop->response_data['fullName'], (string)$this->site->config['emailSubscription']);
 		$emailSubscription = str_replace('{first-name}', $this->shop->response_data['firstName'], $emailSubscription);
 		$emailSubscription = str_replace('{last-name}', $this->shop->response_data['lastName'], $emailSubscription);
 		$emailSubscription = str_replace('{email}', $this->shop->response_data['email'], $emailSubscription);
@@ -2193,15 +2182,15 @@ class Shop extends MX_Controller {
 		$this->email->to($email);
 		$this->email->subject('New subscription set up on '.$this->site->config['siteName']);
 		$this->email->message($userBody.$orderBody.$footerBody);
-		$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+		$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 		$this->email->send();
 
 		$this->email->clear();
 
-		$this->email->to($this->site->config['siteEmail']);
+		$this->email->to((string)$this->site->config['siteEmail']);
 		$this->email->subject('New subscription set up on '.$this->site->config['siteName']);
 		$this->email->message($adminBody.$orderBody.$footerBody);
-		$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+		$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 		$this->email->send();
 
 		return TRUE;
@@ -2225,11 +2214,11 @@ class Shop extends MX_Controller {
 				// get images
 				if (!$image = $this->uploads->load_image($product['productID'], false, true))
 				{
-					$image['src'] = $this->config->item('staticPath').'/images/nopicture.jpg';
+					$image = array('src' => $this->config->item('staticPath').'/images/nopicture.jpg');
 				}
 				if (!$thumb = $this->uploads->load_image($product['productID'], true, true))
 				{
-					$thumb['src'] = $this->config->item('staticPath').'/images/nopicture.jpg';
+					$thumb = array('src' => $this->config->item('staticPath').'/images/nopicture.jpg');
 				}
 				
 				// populate template array
@@ -2286,7 +2275,7 @@ class Shop extends MX_Controller {
 	
 	function _strip_markdown($string)
 	{
-		return preg_replace('/([*\-#]+)/i', '', preg_replace('/{(.*)}/i', '', $string));
+		return preg_replace('/([*\-#]+)/i', '', preg_replace('/{(.*)}/i', '', (string)$string));
 	}
 		
 }

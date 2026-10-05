@@ -41,14 +41,14 @@
 $active_group = 'default';
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = "user";
-$db['default']['password'] = "password";
-$db['default']['database'] = "halogy";
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['hostname'] = getenv('HALOGY_DB_HOST') ?: 'localhost';
+$db['default']['username'] = getenv('HALOGY_DB_USER') ?: 'halogy';
+$db['default']['password'] = getenv('HALOGY_DB_PASS') ?: 'halogy';
+$db['default']['database'] = getenv('HALOGY_DB_NAME') ?: 'halogy';
+$db['default']['dbdriver'] = 'mysqli';
 $db['default']['dbprefix'] = 'ha_';
-$db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = TRUE;
+$db['default']['pconnect'] = FALSE;
+$db['default']['db_debug'] = (ENVIRONMENT !== 'production');
 $db['default']['cache_on'] = FALSE;
 $db['default']['cachedir'] = '';
 $db['default']['char_set'] = 'utf8';

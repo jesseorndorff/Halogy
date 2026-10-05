@@ -34,6 +34,7 @@ if ( ! class_exists('CI_Xmlrpc'))
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/xmlrpc.html
  */
+#[\AllowDynamicProperties]
 class CI_Xmlrpcs extends CI_Xmlrpc
 {
 	var $methods		= array();	//array of methods mapped to function names and signatures
@@ -536,8 +537,8 @@ class CI_Xmlrpcs extends CI_Xmlrpc
 	 */
 	function multicall_error($err)
 	{
-		$str  = is_string($err) ? $this->xmlrpcstr["multicall_${err}"] : $err->faultString();
-		$code = is_string($err) ? $this->xmlrpcerr["multicall_${err}"] : $err->faultCode();
+		$str  = is_string($err) ? $this->xmlrpcstr["multicall_{$err}"] : $err->faultString();
+		$code = is_string($err) ? $this->xmlrpcerr["multicall_{$err}"] : $err->faultCode();
 
 		$struct['faultCode'] = new XML_RPC_Values($code, 'int');
 		$struct['faultString'] = new XML_RPC_Values($str, 'string');

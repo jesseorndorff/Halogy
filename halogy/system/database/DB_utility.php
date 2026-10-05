@@ -22,6 +22,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
+#[\AllowDynamicProperties]
 class CI_DB_utility extends CI_DB_forge {
 
 	var $db;
@@ -221,7 +222,7 @@ class CI_DB_utility extends CI_DB_forge {
 		{
 			foreach ($row as $item)
 			{
-				$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, $item).$enclosure.$delim;
+				$out .= $enclosure.str_replace($enclosure, $enclosure.$enclosure, (string) $item).$enclosure.$delim;
 			}
 			$out = rtrim($out);
 			$out .= $newline;

@@ -677,7 +677,8 @@ VALUES
 	('Add /edit emails','emailer_edit','Emailer',0),
 	('Delete emails','emailer_delete','Emailer',0),
 	('Add / edit templates','emailer_templates','Emailer',0),
-	('Add / edit lists','emailer_lists','Emailer',0);
+	('Add / edit lists','emailer_lists','Emailer',0),
+	('Allow Navigation','pages_navigation','Pages',0);
 
 	
 /*!40000 ALTER TABLE `ha_permissions` ENABLE KEYS */;
@@ -1143,7 +1144,7 @@ CREATE TABLE `ha_tracking` (
 CREATE TABLE `ha_users` (
   `userID` int(11) NOT NULL auto_increment,
   `username` varchar(100) collate utf8_unicode_ci NOT NULL default '',
-  `password` varchar(32) collate utf8_unicode_ci default NULL,
+  `password` varchar(255) collate utf8_unicode_ci default NULL,
   `groupID` int(11) NOT NULL default '0',
   `email` varchar(100) collate utf8_unicode_ci default NULL,
   `subscription` enum('Y','E','P','N') collate utf8_unicode_ci NOT NULL default 'Y',

@@ -60,7 +60,7 @@ if ( ! function_exists('read_file'))
 		$data = '';
 		if (filesize($file) > 0)
 		{
-			$data =& fread($fp, filesize($file));
+			$data = fread($fp, filesize($file));
 		}
 
 		flock($fp, LOCK_UN);

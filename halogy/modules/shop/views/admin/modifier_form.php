@@ -18,7 +18,7 @@
 
 		<label for="templateID">Band:</label>
 		<?php
-			$options = '';
+			$options = array();
 			foreach ($bands as $band):
 				$options[$band['bandID']] = $band['bandName'];
 			endforeach;

@@ -79,7 +79,7 @@ class Admin extends MX_Controller {
 		}		
 
 		// get new orders
-		if (@in_array('shop', $this->permission->sitePermissions))
+		if (in_array('shop', (array)$this->permission->sitePermissions))
 		{
 			$this->load->model('shop/shop_model', 'shop');
 
@@ -101,7 +101,8 @@ class Admin extends MX_Controller {
 		{
 			// set error if default password is still used
 			$user = $this->core->lookup_user($this->session->userdata('userID'));
-			if ($user['password'] == 'f35364bc808b079853de5a1e343e7159')
+			$this->load->library('auth');
+			if ($this->auth->verify_password('super123', $user['password']))
 			{
 				$this->form_validation->set_error('You are still using the default Superuser password. Click on My Account to change your password.');
 			}
@@ -246,7 +247,9 @@ class Admin extends MX_Controller {
 				}
 				else
 				{
-					$redirect = $this->core->decode($redirect);
+					// only a path on this site: a planted link must not send the
+					// user elsewhere, or straight into an action, after logging in
+					$redirect = $this->core->local_path($this->core->decode($redirect), $this->redirect);
 				}
 				
 				// set admin session name, if given
@@ -299,7 +302,7 @@ class Admin extends MX_Controller {
 		}
 		else
 		{
-			$redirect = $this->core->decode($redirect);
+			$redirect = $this->core->local_path($this->core->decode($redirect), '');
 		}
 		$this->auth->logout($redirect);
 	}
@@ -373,11 +376,6 @@ class Admin extends MX_Controller {
 		$this->load->view($this->includes_path.'/footer');
 	}
 	
-	function setup()
-	{
-		echo 'tset';
-	}
-	
 	function backup()
 	{
 		// check permissions for this page
@@ -434,7 +432,7 @@ class Admin extends MX_Controller {
 	
 		// Build the output
 		$output = '';
-		foreach ((array)$tables as $table)
+		foreach(($tables) ? $tables : array() as $table)
 		{
 			// Is the table in the "ignore" list?
 			if (in_array($table, (array)$ignore, TRUE))
@@ -476,7 +474,21 @@ class Admin extends MX_Controller {
 			}
 
 			// Grab all the data from the current table
-			$query = $this->db->query("SELECT * FROM $table WHERE siteID = ".$this->siteID);
+			// (some tables, e.g. ha_tags, have no siteID column)
+			if ($this->db->field_exists('siteID', $table))
+			{
+				$query = $this->db->query("SELECT * FROM `$table` WHERE siteID = ".(int)$this->siteID);
+			}
+			elseif ($table == $this->db->dbprefix('tags'))
+			{
+				// tags are scoped to this site via the tags_ref table
+				$query = $this->db->query("SELECT DISTINCT t.* FROM `$table` t INNER JOIN `".$this->db->dbprefix('tags_ref')."` r ON r.tag_id = t.id WHERE r.siteID = ".(int)$this->siteID);
+			}
+			else
+			{
+				// no way of telling which site the rows belong to, so dump the schema only
+				continue;
+			}
 			
 			if ($query->num_rows() == 0)
 			{
@@ -490,14 +502,11 @@ class Admin extends MX_Controller {
 			$i = 0;
 			$field_str = '';
 			$is_int = array();
-			while ($field = mysql_fetch_field($query->result_id))
+			$int_types = array(MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_INT24, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG);
+			foreach (mysqli_fetch_fields($query->result_id) as $field)
 			{
 				// Most versions of MySQL store timestamp as a string
-				$is_int[$i] = (in_array(
-										strtolower(mysql_field_type($query->result_id, $i)),
-										array('tinyint', 'smallint', 'mediumint', 'int', 'bigint'), //, 'timestamp'), 
-										TRUE)
-										) ? TRUE : FALSE;
+				$is_int[$i] = in_array($field->type, $int_types, TRUE);
 										
 				// Create a string of field names
 				$field_str .= '`'.$field->name.'`, ';

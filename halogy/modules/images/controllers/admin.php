@@ -66,7 +66,7 @@ class Admin extends CI_Controller {
 
 		// get preset selections for this module
 		$selections = $this->session->userdata('selections');
-		$this->selections = (is_array($selections)) ? @$selections[$this->uri->segment(2)] : '';
+		$this->selections = (is_array($selections) && isset($selections[$this->uri->segment(2)])) ? $selections[$this->uri->segment(2)] : array();
 
 		// get siteID, if available
 		if (defined('SITEID'))
@@ -103,22 +103,24 @@ class Admin extends CI_Controller {
 					// unzip files
 					$uploadsPath = $this->uploads->uploadsPath;
 					
-					$zip = zip_open($_FILES['zip']['tmp_name']);
-					if ($zip)
+					$zip = new ZipArchive();
+					if ($zip->open($_FILES['zip']['tmp_name']) === TRUE)
 					{
 						// cycle through the zip
-						while ($zip_entry = zip_read($zip))
+						for ($zipIndex = 0; $zipIndex < $zip->numFiles; $zipIndex++)
 						{
-							if (!preg_match('/(\_)+MACOSX/', zip_entry_name($zip_entry)) && preg_match('/\.(jpg|gif|png)$/i', zip_entry_name($zip_entry)))
+							$zip_entry = $zip->statIndex($zipIndex);
+							if ($zip_entry === FALSE) continue;
+							if (!preg_match('/(\_)+MACOSX/', $zip_entry['name']) && preg_match('/\.(jpg|gif|png)$/i', $zip_entry['name']))
 							{
-								if (zip_entry_filesize($zip_entry) > 300000)
+								if ($zip_entry['size'] > 300000)
 								{
 									$this->form_validation->set_error('<p>Some files were too big to upload. Please only use small gfx files under 300kb.</p>');
 								}
 								else
 								{
 									// format filename
-									$filenames = explode('.', zip_entry_name($zip_entry));
+									$filenames = explode('.', $zip_entry['name']);
 									$filename = trim(basename($filenames[0]));
 									$extension = end($filenames);
 									
@@ -126,14 +128,15 @@ class Admin extends CI_Controller {
 									$imageRef = url_title(trim(strtolower($filename)));
 		
 									// check ref is unique and upload
-									if ($this->form_validation->unique($imageRef, 'images.imageRef'))
+									$buf = $zip->getFromIndex($zipIndex);
+									if ($buf !== FALSE && $this->form_validation->unique($imageRef, 'images.imageRef'))
 									{																
 										// set stuff
 										$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
 										$this->core->set['imageName'] = 'Graphic';
 										$this->core->set['filename'] = md5($filename).'.'.$extension;
 										$this->core->set['imageRef'] = $imageRef;
-										$this->core->set['filesize'] = floor(zip_entry_filesize($zip_entry) / 1024);
+										$this->core->set['filesize'] = floor($zip_entry['size'] / 1024);
 										$this->core->set['groupID'] = 1;
 										$this->core->set['userID'] = $this->session->userdata('userID');
 
@@ -142,19 +145,14 @@ class Admin extends CI_Controller {
 																				
 										// upload file
 										$fp = fopen('.'.$uploadsPath.'/'.md5($filename).'.'.$extension, "w+");				
-										if (zip_entry_open($zip, $zip_entry, "r"))
-										{
-											$buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-											zip_entry_close($zip_entry);
-										}
-										fwrite($fp, $buf);
+										fwrite($fp, (string)$buf);
 										fclose($fp);
 										
 										// get image size
 										$imageSize = @getimagesize('.'.$uploadsPath.'/'.md5($filename).'.'.$extension);
 
 										// make a thumbnail
-										if ($imageSize[0] > $this->uploads->thumbSize || $imageSize[1] > $this->uploads->thumbSize)
+										if ($imageSize && ($imageSize[0] > $this->uploads->thumbSize || $imageSize[1] > $this->uploads->thumbSize))
 										{
 											$config['image_library'] = 'gd2';
 											$config['source_image'] = '.'.$uploadsPath.'/'.md5($filename).'.'.$extension;
@@ -172,7 +170,7 @@ class Admin extends CI_Controller {
 								}
 							}
 						}
-						zip_close($zip);
+						$zip->close();
 					}
 	
 					// redirect
@@ -248,7 +246,7 @@ class Admin extends CI_Controller {
 			$where = array('siteID' => $this->siteID, 'deleted' => 0);
 			
 			// get preset selections for this dropdown
-			if ($folderID == '' && @array_key_exists('folderID', $this->selections))
+			if ($folderID == '' && array_key_exists('folderID', (array)$this->selections))
 			{
 				$folderID = $this->selections['folderID'];
 			}
@@ -273,7 +271,7 @@ class Admin extends CI_Controller {
 			}
 	
 			// check they have permissions to see all images
-			if (!@in_array('images_all', $this->permission->permissions))
+			if (!in_array('images_all', (array)$this->permission->permissions))
 			{
 				$where['userID'] = $this->session->userdata('userID');
 			}
@@ -308,6 +306,12 @@ class Admin extends CI_Controller {
 
 		// get values
 		$output['data'] = $this->core->get_values($this->table, $objectID);
+
+		// image not found
+		if (!isset($output['data']['imageRef']))
+		{
+			redirect($this->redirect);
+		}
 
 		// handle post
 		if (count($_POST))
@@ -350,7 +354,7 @@ class Admin extends CI_Controller {
 					// if its not coming from ajax then just go to admin
 					if ($redirect && !$popup)
 					{						
-						$redirect = $this->core->decode($redirect);
+						$redirect = $this->core->local_path($this->core->decode($redirect), $this->redirect);
 					}
 					elseif (!$redirect && !$popup)
 					{						
@@ -386,7 +390,7 @@ class Admin extends CI_Controller {
 		
 		if ($this->core->delete($this->table, array($this->objectID => $objectID)));
 		{	
-			$redirect = ($redirect) ? $this->core->decode($redirect) : $this->redirect;
+			$redirect = ($redirect) ? $this->core->local_path($this->core->decode($redirect), $this->redirect) : $this->redirect;
 		
 			// where to redirect to
 			redirect($redirect);
@@ -410,7 +414,7 @@ class Admin extends CI_Controller {
 		$where = array('siteID' => $this->siteID, 'deleted' => 0);
 
 		// check they have permissions to see all images
-		if (!@in_array('images_all', $this->permission->permissions))
+		if (!in_array('images_all', (array)$this->permission->permissions))
 		{
 			$where['userID'] = $this->session->userdata('userID');
 		}
@@ -475,11 +479,11 @@ class Admin extends CI_Controller {
 
 		// go through post and edit each list item
 		$listArray = $this->core->get_post();
-		if (count($listArray))
+		if (is_array($listArray) && count($listArray))
 		{
 			foreach($listArray as $ID => $value)
 			{
-				if ($ID != '' && sizeof($value) > 0)
+				if ($ID != '' && is_array($value) && sizeof($value) > 0)
 				{	
 					// set object ID
 					$objectID = array('folderID' => $ID);
@@ -522,14 +526,15 @@ class Admin extends CI_Controller {
 	
 	function ac_images()
 	{	
-		$q = strtolower($_GET["q"]);
+		$q = strtolower((isset($_GET["q"])) ? $_GET["q"] : '');
 		if (!$q) return;
 		
 		// form dropdown
 		$results = $this->images->search_images($q);
 		
 		// go foreach
-		foreach((array)$results as $row)
+		$items = array();
+		foreach(($results) ? $results : array() as $row)
 		{
 			$items[$row['imageRef']] = $row['imageName'];
 		}

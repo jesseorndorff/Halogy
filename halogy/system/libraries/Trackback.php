@@ -26,6 +26,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/trackback.html
  */
+#[\AllowDynamicProperties]
 class CI_Trackback {
 
 	var $time_format	= 'local';

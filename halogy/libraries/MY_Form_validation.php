@@ -12,6 +12,7 @@
  * form_validation library introduced in CI 1.7.0
  */
  
+#[\AllowDynamicProperties]
 class MY_Form_validation extends CI_Form_validation {
 
 	function __construct()

@@ -24,6 +24,7 @@
  * @author		EllisLab Dev Team
  * @link		http://codeigniter.com/user_guide/database/
  */
+#[\AllowDynamicProperties]
 class CI_DB_pdo_result extends CI_DB_result {
 
 	/**

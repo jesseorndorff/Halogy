@@ -225,6 +225,7 @@ class Admin extends MX_Controller {
 		}
 
 		// check that this is not the live version and then add page version
+		$versionIDs = array();
 		if ($output['versions'])
 		{
 			foreach ($output['versions'] as $version)
@@ -232,7 +233,7 @@ class Admin extends MX_Controller {
 				$versionIDs[] = $version['versionID'];
 			}
 		}
-		if ((!$pagedata['versionID'] && !$pagedata['draftID']) || @in_array($pagedata['draftID'], $versionIDs))
+		if ((!$pagedata['versionID'] && !$pagedata['draftID']) || in_array($pagedata['draftID'], (array)$versionIDs))
 		{
 			$this->core->add_draft($pageID);
 			
@@ -397,41 +398,40 @@ class Admin extends MX_Controller {
 					$this->load->library('zip');
 					$this->load->library('encrypt');
 					
-					$zip = zip_open($_FILES['zip']['tmp_name']);
-					if ($zip)
+					$zip = new ZipArchive();
+					if ($zip->open($_FILES['zip']['tmp_name']) === TRUE)
 					{
 						// cycle through the zip
-						while ($zip_entry = zip_read($zip))
+						for ($zipIndex = 0; $zipIndex < $zip->numFiles; $zipIndex++)
 						{
-							if (!preg_match('/(\_)+MACOSX/', zip_entry_name($zip_entry)))
+							$zip_entry = $zip->statIndex($zipIndex);
+							if ($zip_entry === FALSE) continue;
+							if (!preg_match('/(\_)+MACOSX/', $zip_entry['name']))
 							{
-								if (zip_entry_filesize($zip_entry) > 200000)
+								if ($zip_entry['size'] > 200000)
 								{
 									$this->form_validation->set_error('<p>Some files were too big to upload. Please only use files under 200kb.</p>');
 								}
 								else
 								{
-									if (preg_match('/\.(html|html|css|js)$/i', zip_entry_name($zip_entry)))
+									if (preg_match('/\.(html|html|css|js)$/i', $zip_entry['name']))
 									{
 										// get filename
-										$filename = basename(zip_entry_name($zip_entry));
+										$filename = basename($zip_entry['name']);
 
 										// read template
 										$content = '';
-										if (zip_entry_open($zip, $zip_entry, "r"))
+										if (($body = $zip->getFromIndex($zipIndex)) !== FALSE)
 										{
-											$body = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-											zip_entry_close($zip_entry);
-	
 											$this->pages->import_template($filename, $body);
 
 											$success = TRUE;											
 										}
 									}
-									elseif (preg_match('/\.(jpg|gif|png)$/i', zip_entry_name($zip_entry)))
+									elseif (preg_match('/\.(jpg|gif|png)$/i', $zip_entry['name']))
 									{
 										// format filename
-										$filenames = explode('.', zip_entry_name($zip_entry));
+										$filenames = explode('.', $zip_entry['name']);
 										$filename = trim(basename($filenames[0]));
 										$extension = end($filenames);
 										
@@ -439,14 +439,15 @@ class Admin extends MX_Controller {
 										$imageRef = url_title(trim(strtolower($filename)));
 			
 										// check ref is unique and upload
-										if ($this->form_validation->unique($imageRef, 'images.imageRef'))
+										$buf = $zip->getFromIndex($zipIndex);
+										if ($buf !== FALSE && $this->form_validation->unique($imageRef, 'images.imageRef'))
 										{																				
 											// set stuff
 											$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
 											$this->core->set['imageName'] = 'Graphic';
 											$this->core->set['filename'] = md5($filename).'.'.$extension;
 											$this->core->set['imageRef'] = $imageRef;
-											$this->core->set['filesize'] = floor(zip_entry_filesize($zip_entry) / 1024);
+											$this->core->set['filesize'] = floor($zip_entry['size'] / 1024);
 											$this->core->set['groupID'] = 1;
 											$this->core->set['userID'] = $this->session->userdata('userID');
 	
@@ -455,12 +456,7 @@ class Admin extends MX_Controller {
 											
 											// upload file
 											$fp = fopen('.'.$this->uploads->uploadsPath.'/'.md5($filename).'.'.$extension, "w+");					
-											if (zip_entry_open($zip, $zip_entry, "r"))
-											{
-												$buf = zip_entry_read($zip_entry, zip_entry_filesize($zip_entry));
-												zip_entry_close($zip_entry);
-											}
-											fwrite($fp, $buf);
+											fwrite($fp, (string)$buf);
 											fclose($fp);
 		
 											$success = TRUE;
@@ -469,7 +465,7 @@ class Admin extends MX_Controller {
 								}
 							}
 						}
-						zip_close($zip);
+						$zip->close();
 					}
 	
 					// redirect
@@ -777,7 +773,10 @@ class Admin extends MX_Controller {
 		$objectID = array('includeID' => $includeID);	
 
 		// get values from version
-		$row = $this->pages->get_include(NULL, $includeID);
+		if (!$row = $this->pages->get_include(NULL, $includeID))
+		{
+			redirect('/admin/pages/includes');
+		}
 
 		// populate form
 		$output['data'] = $this->core->get_values($row);
@@ -1091,8 +1090,8 @@ class Admin extends MX_Controller {
 				$body = str_replace('[!!ADDBLOCK!!]', '', $_POST['body']);
 	
 				// check character set
-				$body = htmlentities($body, NULL, 'UTF-8');
-				$body = html_entity_decode($body, NULL, 'UTF-8');
+				$body = htmlentities((string)$body, ENT_COMPAT, 'UTF-8');
+				$body = html_entity_decode((string)$body, ENT_COMPAT, 'UTF-8');
 	
 				// add block
 				@$this->core->add_block($body, $versionID, $block);

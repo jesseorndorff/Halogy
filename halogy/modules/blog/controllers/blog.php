@@ -42,6 +42,8 @@ class Blog extends MX_Controller {
 			show_error('You do not have permission to view this page');
 		}
 
+		$this->load->helper('bbcode');
+
 		// load models and modules
 		$this->load->library('tags');		
 		$this->load->model('blog_model', 'blog');
@@ -218,7 +220,7 @@ class Blog extends MX_Controller {
 							
 							// send email
 							$this->load->library('email');						
-							$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+							$this->email->from((string)$this->site->config['siteEmail'], (string)$this->site->config['siteName']);
 							$this->email->to($user['email']);			
 							$this->email->subject('New Blog Comment on '.$this->site->config['siteName']);
 							$this->email->message($emailHeader."\n\nSomeone has just commented on your blog post titled \"".$post['postTitle']."\".\n\nYou can either approve or delete this comment by clicking on the following URL:\n\n".site_url('/admin/blog/comments')."\n\nThey said:\n\"".$this->input->post('comment')."\"\n\n".$emailFooter);
@@ -246,6 +248,12 @@ class Blog extends MX_Controller {
 			// get author details
 			$author = $this->blog->lookup_user($post['userID']);
 
+			// default author details
+			if (!$author)
+			{
+				$author = array('userID' => '', 'displayName' => '', 'firstName' => '', 'lastName' => '', 'email' => '', 'bio' => '');
+			}
+
 			// populate template
 			$output['post:title'] = $post['postTitle'];
 			$output['post:link'] = site_url('blog/'.dateFmt($post['dateCreated'], 'Y/m').'/'.$post['uri']);
@@ -256,16 +264,16 @@ class Blog extends MX_Controller {
 			$output['post:body'] = $this->template->parse_body($post['body']);
 			$output['post:excerpt'] = $this->template->parse_body($post['excerpt']);
 			$output['post:comments-count'] = $post['numComments'];
-			$output['post:author'] = (($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']);
+			$output['post:author'] = html_escape(($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']);
 			$output['post:author-id'] = $author['userID'];
 			$output['post:author-email'] = $author['email'];
-			$output['post:author-gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
-			$output['post:author-bio'] = $author['bio'];
+			$output['post:author-gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
+			$output['post:author-bio'] = bbcode((string)$author['bio']);
 			$output['post:allow-comments'] = ($post['allowComments']) ? TRUE : FALSE;
 			$output['form:name'] = set_value('fullName', $this->session->userdata('firstName').' '.$this->session->userdata('lastName'));
 			$output['form:email'] = set_value('email', $this->session->userdata('email'));
-			$output['form:website'] = $this->input->post('website');
-			$output['form:comment'] = $this->input->post('comment');
+			$output['form:website'] = html_escape($this->input->post('website'));
+			$output['form:comment'] = html_escape($this->input->post('comment'));
 
 			// get cats
 			if ($cats = $this->blog->get_cats_for_post($post['postID']))
@@ -303,10 +311,10 @@ class Blog extends MX_Controller {
 				{
 					$output['post:comments'][$i]['comment:class'] = ($i % 2) ? ' alt ' : '';
 					$output['post:comments'][$i]['comment:id'] = $comment['commentID'];
-					$output['post:comments'][$i]['comment:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($comment['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
-					$output['post:comments'][$i]['comment:author'] = (!empty($comment['website'])) ? anchor(prep_url($comment['website']), $comment['fullName']) : $comment['fullName'];
+					$output['post:comments'][$i]['comment:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$comment['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
+					$output['post:comments'][$i]['comment:author'] = (!empty($comment['website']) && ($website = safe_url($comment['website'])) !== '') ? '<a href="'.$website.'" rel="nofollow noopener">'.html_escape($comment['fullName']).'</a>' : html_escape($comment['fullName']);
 					$output['post:comments'][$i]['comment:date'] = dateFmt($comment['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y' : 'jS M Y');
-					$output['post:comments'][$i]['comment:body'] = nl2br(auto_link(strip_tags($comment['comment'])));
+					$output['post:comments'][$i]['comment:body'] = nl2br(auto_link(html_escape((string)$comment['comment'])));
 					
 					$i++;
 				}
@@ -509,7 +517,7 @@ class Blog extends MX_Controller {
 
 	function ac_search()
 	{
-		$tags = strtolower($_GET["q"]);
+		$tags = strtolower((isset($_GET["q"])) ? $_GET["q"] : '');
         if (!$tags)
         {
         	return FALSE;
@@ -534,7 +542,8 @@ class Blog extends MX_Controller {
 					{
 						echo "$key|$id|$name\n";
 					}*/
-					$this->output->set_output("$key|$id|$name\n");
+					$this->output->set_content_type('text/plain');
+					$this->output->set_output(str_replace(array("\r", "\n"), ' ', "$key|$id|$name")."\n");
 				}
 			}
 		}
@@ -563,6 +572,12 @@ class Blog extends MX_Controller {
 			{
 				// get author details
 				$author = $this->blog->lookup_user($post['userID']);				
+
+				// default author details
+				if (!$author)
+				{
+					$author = array('userID' => '', 'displayName' => '', 'firstName' => '', 'lastName' => '', 'email' => '', 'bio' => '');
+				}
 				
 				// populate template array
 				$data[$x] = array(
@@ -574,11 +589,11 @@ class Blog extends MX_Controller {
 					'post:year' => dateFmt($post['dateCreated'], 'y'),										
 					'post:body' => $this->template->parse_body($post['body'], TRUE, site_url('blog/'.dateFmt($post['dateCreated'], 'Y/m').'/'.$post['uri'])),
 					'post:excerpt' => $this->template->parse_body($post['excerpt'], TRUE, site_url('blog/'.dateFmt($post['dateCreated'], 'Y/m').'/'.$post['uri'])),
-					'post:author' => (($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']),
+					'post:author' => html_escape(($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']),
 					'post:author-id' => $author['userID'],
 					'post:author-email' => $author['email'],
-					'post:author-gravatar' => 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif')),
-					'post:author-bio' => $author['bio'],
+					'post:author-gravatar' => 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif')),
+					'post:author-bio' => bbcode((string)$author['bio']),
 					'post:comments-count' => $post['numComments']
 				);
 	

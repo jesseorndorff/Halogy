@@ -70,7 +70,7 @@ $(function(){
 	<div style="display: none;" id="categories">
 		<label for="catID">Category:</label>
 		<?php
-			$options = '';
+			$options = array();
 			$options[0] = 'Select a Category...';			
 			if ($categories):
 				foreach ($categories as $category):
@@ -85,7 +85,7 @@ $(function(){
 	<div style="display: none;" id="products">
 		<label for="productID">Product:</label>
 		<?php
-			$options = '';		
+			$options = array();		
 			if ($products):
 				foreach ($products as $product):
 					$options[$product['productID']] = $product['productName'];

@@ -67,9 +67,9 @@
 					<h3>Invoiced to:</h3>
 			
 					<p>
-						ATTN: <?php echo $fullName; ?><br />
-						<?php echo nl2br(trim($address)); ?><br />
-						<?php echo $postcode; ?>
+						ATTN: <?php echo html_escape($fullName); ?><br />
+						<?php echo nl2br(html_escape(trim($address))); ?><br />
+						<?php echo html_escape($postcode); ?>
 					</p>
 				</td>
 			</tr>			

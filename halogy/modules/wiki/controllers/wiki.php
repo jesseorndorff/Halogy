@@ -91,17 +91,21 @@ class Wiki extends MX_Controller {
 		// load wiki page
 		$wikipage = $this->wiki->get_page(FALSE, $page);
 
+		// default for pages that don't exist yet
+		if (!$wikipage) $wikipage = array('pageID' => 0, 'versionID' => 0, 'catID' => 0, 'uri' => $page, 'pageName' => '', 'body' => '');
+
 		// get versions
-		$versions = $this->wiki->get_versions($page['pageID']);
+		$versions = $this->wiki->get_versions($wikipage['pageID']);
 
 		// get page
-		$output['wikipage'] = $wikipage;
+		// (member-authored: everything is escaped, the body is rendered as untrusted markdown)
+		$output['wikipage'] = array_map(function ($value) { return is_string($value) ? html_escape($value) : $value; }, $wikipage);
 		$output['wikipage:link'] = site_url('/wiki/edit/'.$this->core->encode($page));
-		$output['wikipage:body'] = mkdn($wikipage['body']);
+		$output['wikipage:body'] = mkdn((string)$wikipage['body'], TRUE);
 
 		// set title
-		$output['page:title'] = $this->site->config['siteName'].' | Wiki - '.$wikipage['pageName'];
-		$output['page:heading'] = $wikipage['pageName'];
+		$output['page:title'] = html_escape($this->site->config['siteName'].' | Wiki - '.$wikipage['pageName']);
+		$output['page:heading'] = html_escape($wikipage['pageName']);
 		
 		// display with cms layer
 		$this->pages->view('wiki_page', $output, TRUE);
@@ -130,6 +134,9 @@ class Wiki extends MX_Controller {
 		// load wiki page
 		$wikipage = $this->wiki->get_page(FALSE, $uri);
 
+		// default for pages that don't exist yet
+		if (!$wikipage) $wikipage = array('pageID' => 0, 'versionID' => 0, 'catID' => 0, 'uri' => $uri, 'pageName' => '', 'body' => '');
+
 		// get versions
 		if ($versions = $this->wiki->get_versions($wikipage['pageID']))
 		{
@@ -138,12 +145,12 @@ class Wiki extends MX_Controller {
 				$output['versions'][] = array(
 					'version' => ($wikipage['versionID'] == $version['versionID']) ?
 						'<strong>'.dateFmt($version['dateCreated']).
-							(($user = $this->wiki->lookup_user($version['userID'], TRUE)) ? ', by '.$user : '').
-							(($notes = $version['notes']) ? ' <em>('.$notes.')</em>' : '').
+							(($user = $this->wiki->lookup_user($version['userID'], TRUE)) ? ', by '.html_escape($user) : '').
+							(($notes = $version['notes']) ? ' <em>('.html_escape($notes).')</em>' : '').
 						'</strong>' :
 						dateFmt($version['dateCreated']).
-							(($user = $this->wiki->lookup_user($version['userID'], TRUE)) ? ', by '.$user : '').
-							(($notes = $version['notes']) ? ' <em>('.$notes.')</em>' : '').							
+							(($user = $this->wiki->lookup_user($version['userID'], TRUE)) ? ', by '.html_escape($user) : '').
+							(($notes = $version['notes']) ? ' <em>('.html_escape($notes).')</em>' : '').							
 						' | '.anchor('/wiki/revert/'.$this->core->encode($uri).'/'.$version['versionID'], 'Revert', 'onclick="return confirm(\'You will lose unsaved changes. Continue?\');"')
 				);
 			}
@@ -161,15 +168,15 @@ class Wiki extends MX_Controller {
 				
 
 		// populate template
-		$output['wikipage:link'] = site_url('/wiki/'.$wikipage['uri']);
-		$output['form:title'] = $wikipage['pageName'];
+		$output['wikipage:link'] = html_escape(site_url('/wiki/'.$wikipage['uri']));
+		$output['form:title'] = html_escape($wikipage['pageName']);
 		$output['select:categories'] = @form_dropdown('catID',$options,set_value('catID', $wikipage['catID']),'id="category" class="formelement"');
-		$output['form:body'] = $wikipage['body'];
-		$output['form:notes'] = $this->input->post('notes');
+		$output['form:body'] = html_escape($wikipage['body']);
+		$output['form:notes'] = html_escape($this->input->post('notes'));
 		
 		// set title
 		$output['page:title'] = $this->site->config['siteName'].' | Edit Wiki';
-		$output['page:heading'] = 'Edit Page - "'.$uri.'"';
+		$output['page:heading'] = 'Edit Page - "'.html_escape($uri).'"';
 		
 		// display with cms layer
 		$this->pages->view('wiki_form', $output, TRUE);
@@ -205,7 +212,8 @@ class Wiki extends MX_Controller {
 	function pages($catID = '')
 	{
 		// get category or fail
-		$category = ($catID && $row = $this->wiki->get_categories($catID)) ? $row['catName'] : 'Uncategorized';
+		$row = ($catID) ? $this->wiki->get_categories($catID) : FALSE;
+		$category = ($row) ? html_escape($row['catName']) : 'Uncategorized';
 		
 		// get partials
 		$output = $this->partials;
@@ -217,8 +225,8 @@ class Wiki extends MX_Controller {
 			foreach($pages as $page)
 			{
 				$output['wikipages'][] = array(
-					'wikipage:title' => $page['pageName'],
-					'wikipage:link' => site_url('/wiki/'.$page['uri'])
+					'wikipage:title' => html_escape($page['pageName']),
+					'wikipage:link' => html_escape(site_url('/wiki/'.$page['uri']))
 				);
 			}
 		}
@@ -226,7 +234,7 @@ class Wiki extends MX_Controller {
 		// set title
 		$output['page:title'] = $this->site->config['siteName'].' | Wiki - '.$category;
 		$output['page:heading'] = $category;
-		$output['page:description'] = mkdn($row['description']);
+		$output['page:description'] = mkdn(($row) ? (string)$row['description'] : '', TRUE);
 		
 		// display with cms layer
 		$this->pages->view('wiki', $output, TRUE);	
@@ -247,8 +255,8 @@ class Wiki extends MX_Controller {
 				foreach($pages as $page)
 				{
 					$output['wikipages'][] = array(
-						'wikipage:title' => $page['pageName'],
-						'wikipage:link' => site_url('/wiki/'.$page['uri'])
+						'wikipage:title' => html_escape($page['pageName']),
+						'wikipage:link' => html_escape(site_url('/wiki/'.$page['uri']))
 					);
 				}
 			}
@@ -258,8 +266,8 @@ class Wiki extends MX_Controller {
 		$output['pagination'] = ($pagination = $this->pagination->create_links()) ? $pagination : '';
 
 		// set title
-		$output['page:title'] = $this->site->config['siteName'].' | Searching wiki for "'.$query.'"';
-		$output['page:heading'] = 'Search wiki for: "'.$query.'"';	
+		$output['page:title'] = $this->site->config['siteName'].' | Searching wiki for "'.html_escape($query).'"';
+		$output['page:heading'] = 'Search wiki for: "'.html_escape($query).'"';	
 		
 		// display with cms layer
 		$this->pages->view('wiki_search', $output, TRUE);	

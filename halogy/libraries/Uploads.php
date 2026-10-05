@@ -16,19 +16,20 @@
 
 // ------------------------------------------------------------------------
 
+#[\AllowDynamicProperties]
 class Uploads {
 
 	var $CI;
 	var $errors;
 	var $siteID;
 	var $uploadsPath;
-	var $allowedTypes = 'gif|jpg|png|pdf|zip|mp3|mp4|js';
+	var $allowedTypes = 'gif|jpg|png|pdf|zip|mp3|mp4';
 	var $maxSize = '5000';
 	var $maxWidth = '5000';
 	var $maxHeight = '5000';
 	var $thumbSize = '300';
 		
-	function Uploads()
+	function __construct()
 	{	
 		$this->CI =& get_instance();
 

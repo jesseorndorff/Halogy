@@ -57,7 +57,7 @@ class Shop_model extends CI_Model {
 
 		// get shop config
 		$shippingTable = $this->get_postages();
-		foreach ((array)$shippingTable as $postage)
+		foreach ((is_array($shippingTable) ? $shippingTable : array()) as $postage)
 		{
 			$this->shopShippingTable[] = array($postage['total'], $postage['cost']);
 		}
@@ -522,7 +522,7 @@ class Shop_model extends CI_Model {
 		}
 		
 		// only select products for this admin user
-		if ($this->session->userdata('session_admin') && !@in_array('shop_all', $this->permission->permissions))
+		if ($this->session->userdata('session_admin') && !in_array('shop_all', ($this->permission->permissions ?: array())))
 		{
 			$this->db->where('userID', $this->session->userdata('userID'));
 		}
@@ -819,7 +819,7 @@ class Shop_model extends CI_Model {
 		}
 	}
 	
-	function get_similar_products($productID = '', $catID = '', $limit)
+	function get_similar_products($productID = '', $catID = '', $limit = 4)
 	{
 		if (!$catID || !$productID)
 		{
@@ -1115,14 +1115,21 @@ class Shop_model extends CI_Model {
 	function unpack_item($key, $quantity)
 	{
 		// get the master array (unserialize) then get the info from db
-		$keys = unserialize($key);
-		$product = $this->get_product($keys['productID']);				
-		$variation1 = @$this->get_variation($keys['variation1']);
-		$variation2 = @$this->get_variation($keys['variation2']);
-		$variation3 = @$this->get_variation($keys['variation3']);
+		$keys = unserialize($key, ['allowed_classes' => false]);
+		$product = $this->get_product($keys['productID']);
+
+		// product no longer exists
+		if (!$product)
+		{
+			return array('productID' => $keys['productID']);
+		}
+
+		$variation1 = $this->get_variation($keys['variation1']) ?: array('variation' => NULL, 'price' => NULL);
+		$variation2 = $this->get_variation($keys['variation2']) ?: array('variation' => NULL, 'price' => NULL);
+		$variation3 = $this->get_variation($keys['variation3']) ?: array('variation' => NULL, 'price' => NULL);
 
 		// create new cart array, based on serial
-		$item = @array('productID' => $keys['productID'], 'catID' => $product['catID'], 'catalogueID' => $product['catalogueID'], 'productName' => $product['productName'], 'price' => $product['price'], 'quantity' => $quantity, 'variation1' => $variation1['variation'], 'variation1Price' => $variation1['price'], 'variation2' => $variation2['variation'], 'variation2Price' => $variation2['price'], 'variation3' => $variation3['variation'], 'variation3Price' => $variation3['price'], 'fileID' => $product['fileID'], 'bandID' => $product['bandID'], 'freePostage' => $product['freePostage'], 'stock' => $product['stock']);
+		$item = array('productID' => $keys['productID'], 'catID' => @$product['catID'], 'catalogueID' => $product['catalogueID'], 'productName' => $product['productName'], 'price' => $product['price'], 'quantity' => $quantity, 'variation1' => $variation1['variation'], 'variation1Price' => $variation1['price'], 'variation2' => $variation2['variation'], 'variation2Price' => $variation2['price'], 'variation3' => $variation3['variation'], 'variation3Price' => $variation3['price'], 'fileID' => $product['fileID'], 'bandID' => $product['bandID'], 'freePostage' => $product['freePostage'], 'stock' => $product['stock']);
 
 		// add variation1 price modifier
 		if ($variation1['price'])
@@ -1176,13 +1183,24 @@ class Shop_model extends CI_Model {
 			if ($this->session->userdata('discountCode'))
 			{
 				$discount = $this->get_discounts($this->session->userdata('discountCode'));
+
+				// unset if the code is invalid or expired
+				if (!$discount) unset($discount);
 			}
 						
 			// create new unserialized array
+			$cart = array();
 			foreach ($cartSession as $key => $quantity)
 			{
 				// get product info
 				$cart[$key] = $this->unpack_item($key, $quantity);
+
+				// skip products that no longer exist
+				if (!isset($cart[$key]['productName']))
+				{
+					unset($cart[$key]);
+					continue;
+				}
 
 				// get price
 				$productPrice = $cart[$key]['price'];
@@ -1206,7 +1224,7 @@ class Shop_model extends CI_Model {
 					if ($discount['type'] == 'P')
 					{	
 						$objectArray = explode(',', $discount['objectID']);
-						if (@in_array($cart[$key]['productID'], $objectArray))
+						if (in_array($cart[$key]['productID'], $objectArray))
 						{
 							$productDiscount = ($discount['modifier'] == 'A') ? $discount['discount'] : round($productPrice * $discount['discount'] / 100, 2);
 
@@ -1272,6 +1290,12 @@ class Shop_model extends CI_Model {
 					$postage = 0;
 				}
 
+				// no shipping table set up, so no postage to charge
+				elseif (empty($this->shopShippingTable))
+				{
+					$postage = 0;
+				}
+
 				// last postage rate
 				elseif ($postageSubtotal >= $this->shopShippingTable[(sizeof($this->shopShippingTable)-1)][0])
 				{
@@ -1283,7 +1307,7 @@ class Shop_model extends CI_Model {
 				{
 					for ($x=0; $x<sizeof($this->shopShippingTable); $x++)
 					{
-						if (($postageSubtotal >= $this->shopShippingTable[$x][0]) && ($postageSubtotal < $this->shopShippingTable[$x+1][0]))
+						if (isset($this->shopShippingTable[$x+1]) && ($postageSubtotal >= $this->shopShippingTable[$x][0]) && ($postageSubtotal < $this->shopShippingTable[$x+1][0]))
 						{
 							$postage = $this->shopShippingTable[$x][1];
 						}
@@ -1353,10 +1377,18 @@ class Shop_model extends CI_Model {
 			$productIDs = array();
 			
 			// create new unserialized array
+			$cart = array();
 			foreach ($cartSession as $key => $quantity)
 			{
 				// get product info
 				$cart[$key] = $this->unpack_item($key, $quantity);
+
+				// skip products that no longer exist
+				if (!isset($cart[$key]['productName']))
+				{
+					unset($cart[$key]);
+					continue;
+				}
 				
 				// make sure quantity is not greater than 1
 				if ($quantity == 1)
@@ -1375,14 +1407,23 @@ class Shop_model extends CI_Model {
 
 	function add_to_cart($productID, $quantity = 1, $variation1 = '', $variation2 = '', $variation3 = '')
 	{
-		if ($quantity < 1)
+		// no quantity given means one, anything else must be a positive whole number
+		if ($quantity === FALSE || $quantity === NULL || $quantity === '')
 		{
 			$quantity = 1;
 		}
 		
-		if ($productID)
+		if (!ctype_digit((string)$quantity) || (int)$quantity < 1)
+		{
+			return FALSE;
+		}
+		
+		$quantity = (int)$quantity;
+		
+		if ($productID && $this->get_product($productID))
 		{
 			$cart = $this->session->userdata('cart');
+			if (!is_array($cart)) $cart = array();
 	
 			$variation1 = ($variation1) ? $variation1 : $this->input->post('variation1');
 			$variation2 = ($variation2) ? $variation2 : $this->input->post('variation2');
@@ -1414,6 +1455,7 @@ class Shop_model extends CI_Model {
 		$cart = $this->session->userdata('cart');
 
 		$key = $this->core->decode($key);		
+		if (!is_array($cart)) $cart = array();
 		unset($cart[$key]);
 		
 		$this->session->set_userdata('cart', $cart);
@@ -1423,11 +1465,13 @@ class Shop_model extends CI_Model {
 	
 	function update_cart($key, $quantity)
 	{	
-		if ($quantity)
+		// zero (or anything that isn't a positive whole number) leaves the cart line unchanged
+		if (ctype_digit((string)$quantity) && (int)$quantity > 0)
 		{
 			$cart = $this->session->userdata('cart');
+			if (!is_array($cart)) $cart = array();
 			$key = $this->core->decode($key);
-			$cart[$key] = $quantity;
+			$cart[$key] = (int)$quantity;
 			$this->session->set_userdata('cart', $cart);
 		}
 		return true;
@@ -1502,7 +1546,7 @@ class Shop_model extends CI_Model {
 		// insert products ordered
 		foreach($cartSession as $key => $quantity)
 		{
-			$keys = unserialize($key);						
+			$keys = unserialize($key, ['allowed_classes' => false]);						
 			
 			$set = array(
 				'`dateCreated`' => date("Y-m-d H:i:s"),
@@ -1611,11 +1655,11 @@ class Shop_model extends CI_Model {
 		{
 			if ($key == 'orderasc')
 			{
-				$this->db->orderby($value,'asc');
+				$this->db->order_by($value,'asc');
 			}
 			elseif ($key == 'orderdesc')
 			{
-				$this->db->orderby($value,'desc');
+				$this->db->order_by($value,'desc');
 			}
 		}
 		$this->db->order_by('dateCreated', 'desc');
@@ -2026,7 +2070,7 @@ class Shop_model extends CI_Model {
 			fclose($fp); // close connection
 		}
 
-		if (eregi("VERIFIED",$this->response))
+		if (stripos($this->response, "VERIFIED") !== FALSE)
 		{
 			// check for cancellation
 			if ($this->response_date['txn_type'] == 'subscr_eot')
@@ -2036,10 +2080,10 @@ class Shop_model extends CI_Model {
 
 				// load email lib and email admin
 				$this->load->library('email');
-				$this->email->to($this->site->config['siteEmail']);
+				$this->email->to((string)$this->site->config['siteEmail']);
 				$this->email->subject('A Subscription Expired on '.$this->site->config['siteName']);
 				$this->email->message("Dear Administrator,\n\nA user's subscription has expired on ".$this->site->config['siteName'].".\n\nTheir reference ID is:\t#".$this->response_data['subscr_id']."\n\n".$this->site->config['siteURL']);
-				$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+				$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 				$this->email->send();				
 
 				return FALSE;
@@ -2285,10 +2329,10 @@ class Shop_model extends CI_Model {
 				
 				// load email lib and email admin
 				$this->load->library('email');
-				$this->email->to($this->site->config['siteEmail']);
+				$this->email->to((string)$this->site->config['siteEmail']);
 				$this->email->subject('subscriber Cancellation on '.$this->site->config['siteName']);
 				$this->email->message("Dear Administrator,\n\nA user has cancelled their subscriber on ".$this->site->config['siteName'].".\n\nTheir reference ID is:\t#".$this->response_data['futurePayId']."\n\n".$this->site->config['siteURL']);
-				$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);			
+				$this->email->from((string)$this->site->config['siteEmail'], $this->site->config['siteName']);			
 				$this->email->send();
 
 				return FALSE;

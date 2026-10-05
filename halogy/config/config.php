@@ -91,7 +91,7 @@ $config['charset'] = 'UTF-8';
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = TRUE;
 
 
 /*
@@ -223,8 +223,57 @@ $config['cache_path'] = '';
 | If you use the Encryption class or the Session class you
 | MUST set an encryption key.  See the user guide for info.
 |
+| The key is also used to sign the session and remember me cookies.
+| Set the HALOGY_ENCRYPTION_KEY environment variable, otherwise a random
+| key is generated once and stored in halogy/config/encryption_key.php.
+|
 */
-$config['encryption_key'] = '12a8c863c9f7effa92bca14bd3a9c055';
+$config['encryption_key'] = getenv('HALOGY_ENCRYPTION_KEY');
+
+if ( ! $config['encryption_key'])
+{
+	$keyFile = dirname(__FILE__).'/encryption_key.php';
+
+	if (is_file($keyFile))
+	{
+		$config['encryption_key'] = include $keyFile;
+	}
+	else
+	{
+		$newKey = bin2hex(random_bytes(32));
+		$config['encryption_key'] = '';
+
+		// write to a temp file first so a concurrent request never reads a partial key
+		$tmpFile = $keyFile.'.'.bin2hex(random_bytes(4)).'.tmp';
+		if (@file_put_contents($tmpFile, "<?php return '".$newKey."';\n") !== FALSE)
+		{
+			@chmod($tmpFile, 0600);
+			if ( ! @rename($tmpFile, $keyFile))
+			{
+				@unlink($tmpFile);
+			}
+			elseif (is_file($keyFile))
+			{
+				// use whichever key won the race
+				$config['encryption_key'] = include $keyFile;
+			}
+		}
+	}
+
+	// fail closed: a throwaway per-request key would silently break every session
+	if ( ! is_string($config['encryption_key']) OR $config['encryption_key'] === '')
+	{
+		if ( ! headers_sent())
+		{
+			header('HTTP/1.1 503 Service Unavailable');
+			header('Content-Type: text/plain; charset=utf-8');
+		}
+		exit("Halogy cannot start: no encryption key is configured and one could not be saved.\n\n"
+			."Set the HALOGY_ENCRYPTION_KEY environment variable to a long random string, or make the\n"
+			."halogy/config directory writable by the web server for the first request so a key file\n"
+			."(halogy/config/encryption_key.php) can be generated.\n");
+	}
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -247,7 +296,7 @@ $config['encryption_key'] = '12a8c863c9f7effa92bca14bd3a9c055';
 $config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 14400;
 $config['sess_expire_on_close']	= FALSE;
-$config['sess_encrypt_cookie']	= TRUE;
+$config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= TRUE;
 $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;
@@ -285,18 +334,89 @@ $config['global_xss_filtering'] = FALSE;
 |--------------------------------------------------------------------------
 | Cross Site Request Forgery
 |--------------------------------------------------------------------------
-| Enables a CSRF cookie token to be set. When set to TRUE, token will be
-| checked on a submitted form. If you are accepting user data, it is strongly
-| recommended CSRF protection be enabled.
+| When TRUE, every POST must prove that it was made from this site, and
+| state-changing actions reached by a link (methods matching
+| 'csrf_protect_get_methods') never run on a GET at all.
+|
+| POST verification, in this order:
+|
+|	1. Sec-Fetch-Site present and not "same-origin" -> refused
+|	2. Origin present and "null" or not this scheme, host and port -> refused
+|	3. a token matching the CSRF cookie: POST field or X-CSRF-Token header
+|	   (form_open() forms, the confirmation page, the jQuery ajax prefilter in
+|	   the static JS reading <meta name="csrf-token">, scripts) -> accepted
+|	4. Sec-Fetch-Site: same-origin -> accepted
+|	5. Origin names this exact scheme, host and port -> accepted
+|	6. neither header, and Referer names this exact scheme, host and port
+|	   -> accepted
+|	7. anything else -> refused (403)
+|
+| The browser's own statement (1, 2) wins over a token, so a cookie planted by
+| a sibling subdomain or over plain http does not authorise a cross-site POST.
+| Over HTTPS the cookie is named with the __Host- prefix (Secure, Path=/, no
+| Domain), which browsers only accept from this exact host.
+|
+| Any other request method (OPTIONS, PUT, DELETE, PATCH, ...) is answered with
+| 405 before routing: the router would otherwise run the controller method for
+| any verb.
+|
+| Pages are not rewritten to carry tokens: raw <form> tags in views and DB
+| templates work because the browser identifies the request origin.
+|
+| HTTPS behind a proxy: the Origin/Referer comparison and the cookie prefix use
+| $_SERVER['HTTPS']. When TLS is terminated by a trusted proxy or load balancer,
+| PHP sees plain http and the comparison with an https Origin fails for the
+| browsers that do not send Sec-Fetch-Site. Set $_SERVER['HTTPS'] = 'on' in
+| index.php when the request carries the proxy's header, e.g.
+|	if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') $_SERVER['HTTPS'] = 'on';
+| and only do so when that header is set by your own proxy (strip it there for
+| requests coming from the outside), otherwise anyone can claim https.
 |
 | 'csrf_token_name' = The token name
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
-$config['csrf_protection'] = FALSE;
+$config['csrf_protection'] = TRUE;
 $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
+
+/*
+| 'csrf_exclude_uris' = URIs (exact match or regular expression, matched against
+| the whole URI string) that are exempt from CSRF verification. Only list
+| endpoints that are POSTed to by external servers or by a gateway sending the
+| customer back to the site:
+|	shop/ipn, shop/response	= PayPal IPN / RBS Worldpay server-to-server callbacks
+|	shop/success, shop/donation	= payment gateway return pages (browser POSTed from the gateway)
+*/
+$config['csrf_exclude_uris'] = array(
+	'shop/ipn',
+	'shop/response',
+	'shop/success(/.*)?',
+	'shop/donation(/.*)?'
+);
+
+/*
+| 'csrf_protect_get_methods' = regular expression matched against the routed
+| controller method name. State-changing actions that are plain links (delete,
+| publish, approve...) only run on a verified POST when their method matches.
+| A GET to them renders a confirmation page (halogy/errors/csrf_confirm.php)
+| whose form POSTs the token back to the same URL; no action is performed by
+| following the link, wherever it was planted (user content shown to an
+| admin, a mail, a login redirect). HEAD and other verbs get 405.
+| Name new state-changing GET actions so they match, or use POST.
+| Not matched on purpose: payment gateway return pages (shop/cancel, success).
+|
+| 'csrf_get_passthrough_methods' = regular expression for the protected methods
+| that may still run on a GET when the browser itself says the request is
+| same-origin (Sec-Fetch-Site: same-origin, or without it a same-origin Origin
+| or Referer). Only logout: a one-click logout link is expected, and the worst
+| a same-origin <img> planted in user content can do is log the viewer out.
+| Links from mail clients or typed URLs (Sec-Fetch-Site: none) still get the
+| confirmation page.
+*/
+$config['csrf_protect_get_methods'] = '^(delete|approve|unapprove|publish|unpublish|revert|logout|remove|renew|activate|deactivate|subscribe|unsubscribe|lock|unlock|close|ban|unban|deletepost)(_|$)';
+$config['csrf_get_passthrough_methods'] = '^logout$';
 
 /*
 |--------------------------------------------------------------------------

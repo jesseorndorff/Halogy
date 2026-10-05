@@ -18,7 +18,7 @@
 	
 		<script type="text/javascript">
 		$(function(){
-			$("#searchbox").autocomplete('/forums/ac_search/{forum:id}', { delay: '0', selectFirst: false, matchContains: true });
+			$("#searchbox").autocomplete('/forums/ac_search/{forum:id}', { delay: '0', selectFirst: false, matchContains: true, formatItem: function(row){ return $('<div/>').text(row[0]).html(); } });
 			$("#searchbox").result(function(event, data, formatted){
 				window.location.replace('/forums/viewtopic/'+data[1]);
 			});	

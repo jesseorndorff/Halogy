@@ -1,0 +1,12 @@
+.git
+.gitignore
+docker-compose.yml
+Dockerfile
+.dockerignore
+*.md
+*.txt
+.DS_Store
+.env
+.env.local
+halogy_sql_dump.sql
+halogy/config/encryption_key.php

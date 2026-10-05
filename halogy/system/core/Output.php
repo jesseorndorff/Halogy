@@ -26,6 +26,7 @@
  * @author		ExpressionEngine Dev Team
  * @link		http://codeigniter.com/user_guide/libraries/output.html
  */
+#[\AllowDynamicProperties]
 class CI_Output {
 
 	/**
@@ -34,7 +35,7 @@ class CI_Output {
 	 * @var string
 	 * @access 	protected
 	 */
-	protected $final_output;
+	protected $final_output = '';
 	/**
 	 * Cache expiration time
 	 *

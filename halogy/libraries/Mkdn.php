@@ -6,9 +6,13 @@
 # $this->load->library('mkdn');
 # $this->mkdn->translate($text);
 if(defined('BASEPATH')) {
+	#[\AllowDynamicProperties]
     class Mkdn {
-        function translate($text) {
-            return Markdown($text);
+        # $untrusted = TRUE for member-authored content: raw HTML is escaped
+        # and link/image URLs are limited to http, https, mailto and
+        # scheme-less (relative) targets
+        function translate($text, $untrusted = FALSE) {
+            return Markdown($text, $untrusted);
         }
     }
 }
@@ -63,7 +67,7 @@ define( 'MARKDOWNEXTRA_VERSION',  "1.2.3" ); # Wed 31 Dec 2008
 
 @define( 'MARKDOWN_PARSER_CLASS',  'MarkdownExtra_Parser' );
 
-function Markdown($text) {
+function Markdown($text, $untrusted = FALSE) {
 #
 # Initialize the parser and return the result of its transform method.
 #
@@ -73,6 +77,9 @@ function Markdown($text) {
 		$parser_class = MARKDOWN_PARSER_CLASS;
 		$parser = new $parser_class;
 	}
+
+	# Untrusted text: no raw HTML, only safe link and image URLs.
+	$parser->no_markup = (bool) $untrusted;
 
 	# Transform text using parser.
 	return $parser->transform($text);
@@ -205,6 +212,7 @@ if (strcasecmp(substr(__FILE__, -16), "classTextile.php") == 0) {
 	# Try to include PHP SmartyPants. Should be in the same directory.
 	@include_once 'smartypants.php';
 	# Fake Textile class. It calls Markdown instead.
+	#[\AllowDynamicProperties]
 	class Textile {
 		function TextileThis($text, $lite='', $encode='') {
 			if ($lite == '' && $encode == '')    $text = Markdown($text);
@@ -226,6 +234,7 @@ if (strcasecmp(substr(__FILE__, -16), "classTextile.php") == 0) {
 # Markdown Parser Class
 #
 
+#[\AllowDynamicProperties]
 class Markdown_Parser {
 
 	# Regex to match balanced [brackets].
@@ -253,7 +262,7 @@ class Markdown_Parser {
 	var $predef_titles = array();
 
 
-	function Markdown_Parser() {
+	function __construct() {
 	#
 	# Constructor function. Initialize appropriate member variables.
 	#
@@ -762,7 +771,7 @@ class Markdown_Parser {
 		$link_id = strtolower($link_id);
 		$link_id = preg_replace('{[ ]?\n}', ' ', $link_id);
 
-		if (isset($this->urls[$link_id])) {
+		if (isset($this->urls[$link_id]) && !$this->unsafeUrl($this->urls[$link_id])) {
 			$url = $this->urls[$link_id];
 			$url = $this->encodeAttribute($url);
 			
@@ -787,6 +796,11 @@ class Markdown_Parser {
 		$link_text		=  $this->runSpanGamut($matches[2]);
 		$url			=  $matches[3] == '' ? $matches[4] : $matches[3];
 		$title			=& $matches[7];
+
+		if ($this->unsafeUrl($url)) {
+			# not a safe target: keep the text, drop the link
+			return $this->hashPart($link_text);
+		}
 
 		$url = $this->encodeAttribute($url);
 
@@ -868,7 +882,11 @@ class Markdown_Parser {
 		}
 
 		$alt_text = $this->encodeAttribute($alt_text);
-		if (isset($this->urls[$link_id])) {
+		if (isset($this->urls[$link_id]) && $this->unsafeUrl($this->urls[$link_id])) {
+			# not a safe source: show the alt text only
+			$result = $this->hashPart($alt_text);
+		}
+		else if (isset($this->urls[$link_id])) {
 			$url = $this->encodeAttribute($this->urls[$link_id]);
 			$result = "<img src=\"$url\" alt=\"$alt_text\"";
 			if (isset($this->titles[$link_id])) {
@@ -893,6 +911,10 @@ class Markdown_Parser {
 		$title			=& $matches[7];
 
 		$alt_text = $this->encodeAttribute($alt_text);
+		if ($this->unsafeUrl($url)) {
+			# not a safe source: show the alt text only
+			return $this->hashPart($alt_text);
+		}
 		$url = $this->encodeAttribute($url);
 		$result = "<img src=\"$url\" alt=\"$alt_text\"";
 		if (isset($title)) {
@@ -940,7 +962,7 @@ class Markdown_Parser {
 		if ($matches[2] == '-' && preg_match('{^-(?: |$)}', $matches[1]))
 			return $matches[0];
 		
-		$level = $matches[2]{0} == '=' ? 1 : 2;
+		$level = $matches[2][0] == '=' ? 1 : 2;
 		$block = "<h$level>".$this->runSpanGamut($matches[1])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
 	}
@@ -1227,7 +1249,7 @@ class Markdown_Parser {
 				} else {
 					# Other closing marker: close one em or strong and
 					# change current token state to match the other
-					$token_stack[0] = str_repeat($token{0}, 3-$token_len);
+					$token_stack[0] = str_repeat($token[0], 3-$token_len);
 					$tag = $token_len == 2 ? "strong" : "em";
 					$span = $text_stack[0];
 					$span = $this->runSpanGamut($span);
@@ -1252,7 +1274,7 @@ class Markdown_Parser {
 				} else {
 					# Reached opening three-char emphasis marker. Push on token 
 					# stack; will be handled by the special condition above.
-					$em = $token{0};
+					$em = $token[0];
 					$strong = "$em$em";
 					array_unshift($token_stack, $token);
 					array_unshift($text_stack, '');
@@ -1405,6 +1427,37 @@ class Markdown_Parser {
 		}
 
 		return implode("\n\n", $grafs);
+	}
+
+
+	function unsafeUrl($url) {
+	#
+	# In untrusted (no_markup) mode, is this a link or image target that
+	# could run script? Only http, https, mailto and scheme-less targets
+	# (/path, #anchor, ?query, page) pass. Entities are decoded and
+	# whitespace/control characters removed first, the way a browser reads
+	# the attribute ("java&#115;cript:", "java\tscript:").
+	#
+		if (!$this->no_markup) {
+			return false;
+		}
+
+		$url = (string) $url;
+		for ($i = 0; $i < 3; $i++) {
+			$decoded = html_entity_decode($url, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+			if ($decoded === $url) break;
+			$url = $decoded;
+		}
+		$url = preg_replace('/[\x00-\x20\x7f-\x9f\x{a0}\x{1680}\x{2000}-\x{200f}\x{2028}-\x{202f}\x{205f}-\x{2064}\x{3000}\x{feff}]+/u', '', $url);
+		if ($url === null) {
+			return true;
+		}
+
+		if (preg_match('/^[^\/?#]*:/', $url)) {
+			return !preg_match('/^(https?|mailto):/i', $url);
+		}
+
+		return false;
 	}
 
 
@@ -1573,9 +1626,9 @@ class Markdown_Parser {
 	# Handle $token provided by parseSpan by determining its nature and 
 	# returning the corresponding value that should replace it.
 	#
-		switch ($token{0}) {
+		switch ($token[0]) {
 			case "\\":
-				return $this->hashPart("&#". ord($token{1}). ";");
+				return $this->hashPart("&#". ord($token[1]). ";");
 			case "`":
 				# Search for end marker in remaining text.
 				if (preg_match('/^(.*?[^`])'.preg_quote($token).'(?!`)(.*)$/sm', 
@@ -1641,10 +1694,10 @@ class Markdown_Parser {
 	# function that will loosely count the number of UTF-8 characters with a
 	# regular expression.
 	#
-		if (function_exists($this->utf8_strlen)) return;
-		$this->utf8_strlen = create_function('$text', 'return preg_match_all(
-			"/[\\\\x00-\\\\xBF]|[\\\\xC0-\\\\xFF][\\\\x80-\\\\xBF]*/", 
-			$text, $m);');
+		if (!is_string($this->utf8_strlen) || function_exists($this->utf8_strlen)) return;
+		$this->utf8_strlen = function($text) {
+			return preg_match_all("/[\\x00-\\xBF]|[\\xC0-\\xFF][\\x80-\\xBF]*/", $text, $m);
+		};
 	}
 
 
@@ -1666,6 +1719,7 @@ class Markdown_Parser {
 # Markdown Extra Parser Class
 #
 
+#[\AllowDynamicProperties]
 class MarkdownExtra_Parser extends Markdown_Parser {
 
 	# Prefix for footnote ids.
@@ -1683,7 +1737,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 	var $predef_abbr = array();
 
 
-	function MarkdownExtra_Parser() {
+	function __construct() {
 	#
 	# Constructor function. Initialize the parser object.
 	#
@@ -1709,7 +1763,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 			"doAbbreviations"    => 70,
 			);
 		
-		parent::Markdown_Parser();
+		parent::__construct();
 	}
 	
 	
@@ -1791,6 +1845,11 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 	#  _HashHTMLBlocks_InMarkdown to handle the Markdown syntax within the tag.
 	# These two functions are calling each other. It's recursive!
 	#
+		# Untrusted text: leave HTML alone here, it is escaped as plain text.
+		if ($this->no_markup) {
+			return $text;
+		}
+
 		#
 		# Call the HTML-in-Markdown hasher.
 		#
@@ -1923,7 +1982,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 			#
 			# Check for: Code span marker
 			#
-			if ($tag{0} == "`") {
+			if ($tag[0] == "`") {
 				# Find corresponding end marker.
 				$tag_re = preg_quote($tag);
 				if (preg_match('{^(?>.+?|\n(?!\n))*?(?<!`)'.$tag_re.'(?!`)}',
@@ -1941,8 +2000,8 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 			#
 			# Check for: Indented code block or fenced code block marker.
 			#
-			else if ($tag{0} == "\n" || $tag{0} == "~") {
-				if ($tag{1} == "\n" || $tag{1} == " ") {
+			else if ($tag[0] == "\n" || $tag[0] == "~") {
+				if ($tag[1] == "\n" || $tag[1] == " ") {
 					# Indented code block: pass it unchanged, will be handled 
 					# later.
 					$parsed .= $tag;
@@ -1986,7 +2045,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 			#            HTML Comments, processing instructions.
 			#
 			else if (preg_match('{^<(?:'.$this->clean_tags_re.')\b}', $tag) ||
-				$tag{1} == '!' || $tag{1} == '?')
+				$tag[1] == '!' || $tag[1] == '?')
 			{
 				# Need to parse tag and following text using the HTML parser.
 				# (don't check for markdown attribute)
@@ -2005,8 +2064,8 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 				#
 				# Increase/decrease nested tag count.
 				#
-				if ($tag{1} == '/')						$depth--;
-				else if ($tag{strlen($tag)-2} != '/')	$depth++;
+				if ($tag[1] == '/')						$depth--;
+				else if ($tag[strlen($tag)-2] != '/')	$depth++;
 
 				if ($depth < 0) {
 					#
@@ -2110,7 +2169,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 				# first character as filtered to prevent an infinite loop in the 
 				# parent function.
 				#
-				return array($original_text{0}, substr($original_text, 1));
+				return array($original_text[0], substr($original_text, 1));
 			}
 			
 			$block_text .= $parts[0]; # Text before current tag.
@@ -2122,7 +2181,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 			#			 Comments and Processing Instructions.
 			#
 			if (preg_match('{^</?(?:'.$this->auto_close_tags_re.')\b}', $tag) ||
-				$tag{1} == '!' || $tag{1} == '?')
+				$tag[1] == '!' || $tag[1] == '?')
 			{
 				# Just add the tag to the block as if it was text.
 				$block_text .= $tag;
@@ -2133,8 +2192,8 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 				# the tag's name match base tag's.
 				#
 				if (preg_match('{^</?'.$base_tag_name_re.'\b}', $tag)) {
-					if ($tag{1} == '/')						$depth--;
-					else if ($tag{strlen($tag)-2} != '/')	$depth++;
+					if ($tag[1] == '/')						$depth--;
+					else if ($tag[strlen($tag)-2] != '/')	$depth++;
 				}
 				
 				#
@@ -2258,7 +2317,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 	function _doHeaders_callback_setext($matches) {
 		if ($matches[3] == '-' && preg_match('{^- }', $matches[1]))
 			return $matches[0];
-		$level = $matches[3]{0} == '=' ? 1 : 2;
+		$level = $matches[3][0] == '=' ? 1 : 2;
 		$attr  = $this->_doHeaders_attr($id =& $matches[2]);
 		$block = "<h$level$attr>".$this->runSpanGamut($matches[1])."</h$level>";
 		return "\n" . $this->hashBlock($block) . "\n\n";
