@@ -42,6 +42,8 @@ class Blog extends MX_Controller {
 			show_error('You do not have permission to view this page');
 		}
 
+		$this->load->helper('bbcode');
+
 		// load models and modules
 		$this->load->library('tags');		
 		$this->load->model('blog_model', 'blog');
@@ -262,11 +264,11 @@ class Blog extends MX_Controller {
 			$output['post:body'] = $this->template->parse_body($post['body']);
 			$output['post:excerpt'] = $this->template->parse_body($post['excerpt']);
 			$output['post:comments-count'] = $post['numComments'];
-			$output['post:author'] = (($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']);
+			$output['post:author'] = html_escape(($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']);
 			$output['post:author-id'] = $author['userID'];
 			$output['post:author-email'] = $author['email'];
 			$output['post:author-gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
-			$output['post:author-bio'] = $author['bio'];
+			$output['post:author-bio'] = bbcode((string)$author['bio']);
 			$output['post:allow-comments'] = ($post['allowComments']) ? TRUE : FALSE;
 			$output['form:name'] = set_value('fullName', $this->session->userdata('firstName').' '.$this->session->userdata('lastName'));
 			$output['form:email'] = set_value('email', $this->session->userdata('email'));
@@ -587,11 +589,11 @@ class Blog extends MX_Controller {
 					'post:year' => dateFmt($post['dateCreated'], 'y'),										
 					'post:body' => $this->template->parse_body($post['body'], TRUE, site_url('blog/'.dateFmt($post['dateCreated'], 'Y/m').'/'.$post['uri'])),
 					'post:excerpt' => $this->template->parse_body($post['excerpt'], TRUE, site_url('blog/'.dateFmt($post['dateCreated'], 'Y/m').'/'.$post['uri'])),
-					'post:author' => (($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']),
+					'post:author' => html_escape(($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']),
 					'post:author-id' => $author['userID'],
 					'post:author-email' => $author['email'],
 					'post:author-gravatar' => 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif')),
-					'post:author-bio' => $author['bio'],
+					'post:author-bio' => bbcode((string)$author['bio']),
 					'post:comments-count' => $post['numComments']
 				);
 	

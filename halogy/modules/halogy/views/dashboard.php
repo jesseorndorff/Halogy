@@ -21,7 +21,7 @@ $(function(){
 	
 	<div class="col1">
 
-		<h1><strong><?php echo ($this->session->userdata('firstName')) ? ucfirst($this->session->userdata('firstName')) : $this->session->userdata('username'); ?>'s</strong> Dashboard</h1>
+		<h1><strong><?php echo ($this->session->userdata('firstName')) ? html_escape(ucfirst($this->session->userdata('firstName'))) : html_escape($this->session->userdata('username')); ?>'s</strong> Dashboard</h1>
 		
 		<?php if ($errors = validation_errors()): ?>
 			<div class="error">

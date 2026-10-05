@@ -815,36 +815,32 @@ class Forums extends MX_Controller {
 
 	function ac_search($forumID)
 	{
-		$tags = strtolower((string)@$_POST["q"]);
-        if (!$tags)
-        {
-        	return FALSE;
-        }
+		$tags = strtolower((string)$this->input->get_post('q'));
+		if (!$tags)
+		{
+			return FALSE;
+		}
+
+		$output = '';
 
 		if ($objectIDs = $this->forums->search_forums($tags))
-		{		
-			// form dropdown and myql get countries
+		{
 			if ($searches = $this->forums->get_topics($forumID, 10, $objectIDs))
 			{
-				// go foreach
+				$items = array();
 				foreach($searches as $search)
 				{
 					$items[$search['topicTitle']] = array('id' => $search['topicID'], 'name' => $search['topicTitle']);
 				}
-				foreach ($items as $key=>$value)
+				foreach ($items as $key => $value)
 				{
-					$id = $value['id'];
-					$name = $value['name'];
-					/* If you want to force the results to the query
-					if (strpos(strtolower($key), $tags) !== false)
-					{
-						echo "$key|$id|$name\n";
-					}*/
-					$this->output->set_content_type('text/plain');
-					$this->output->set_output(str_replace(array("\r", "\n", '|'), ' ', "$key|$id|$name")."\n");
+					$output .= str_replace(array("\r", "\n", '|'), ' ', $key).'|'.$value['id'].'|'.str_replace(array("\r", "\n", '|'), ' ', $value['name'])."\n";
 				}
 			}
 		}
+
+		$this->output->set_content_type('text/plain');
+		$this->output->set_output($output);
 	}
 
 	function captcha_check()
@@ -877,10 +873,10 @@ class Forums extends MX_Controller {
 		$data['page_description'] = 'Topics RSS feed for '.$this->site->config['siteName'].'.';
 		$data['page_language'] = 'en';
 		$data['creator_email'] = (string)$this->site->config['siteEmail'];
-		$data['posts'] = $this->forums->get_topics($forumID, $limit);
+		$data['posts'] = ($posts = $this->forums->get_topics($forumID, $limit)) ? $posts : array();
 		
 		$this->output->set_header('Content-Type: application/rss+xml');
-		$this->load->view('forum/rss', $data);
+		$this->load->view('rss', $data);
 	}
 
 	function posts_feed($topicID, $limit = 10)
@@ -893,10 +889,10 @@ class Forums extends MX_Controller {
 		$data['page_description'] = 'Posts RSS feed for '.$this->site->config['siteName'].'.';
 		$data['page_language'] = 'en';
 		$data['creator_email'] = (string)$this->site->config['siteEmail'];
-		$data['posts'] = $this->forums->get_posts($topicID, $limit);
+		$data['posts'] = ($posts = $this->forums->get_posts($topicID, $limit)) ? $posts : array();
 		
 		$this->output->set_header('Content-Type: application/rss+xml');
-		$this->load->view('forum/rss', $data);
+		$this->load->view('rss', $data);
 	}
 
 	function subscribe($topicID = '')

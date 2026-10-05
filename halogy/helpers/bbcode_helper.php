@@ -44,6 +44,34 @@ function bbcode($str = '', $max_images = 0)
 		return "\x1a".(count($parts) - 1)."\x1a";
 	};
 
+	// inline formatting for link text (the text is already entity encoded)
+	$inline = function ($text)
+	{
+		return preg_replace(
+			array(
+				"'\[b\](.*?)\[/b\]'is",
+				"'\[i\](.*?)\[/i\]'is",
+				"'\[u\](.*?)\[/u\]'is",
+				"'\[s\](.*?)\[/s\]'is",
+				"'\[size=small\](.*?)\[/size\]'is",
+				"'\[size=normal\](.*?)\[/size\]'is",
+				"'\[size=medium\](.*?)\[/size\]'is",
+				"'\[size=big\](.*?)\[/size\]'is"
+			),
+			array(
+				'<strong>\\1</strong>',
+				'<em>\\1</em>',
+				'<u>\\1</u>',
+				'<s>\\1</s>',
+				'<span style="font-size:0.9em;">\\1</span>',
+				'<span style="font-size:1em;">\\1</span>',
+				'<span style="font-size:1.2em;">\\1</span>',
+				'<span style="font-size:1.4em;">\\1</span>'
+			),
+			$text
+		);
+	};
+
 	// [img]url[/img]
 	$str = preg_replace_callback("'\[img\](.*?)\[/img\]'i", function ($m) use ($set_aside)
 	{
@@ -55,24 +83,24 @@ function bbcode($str = '', $max_images = 0)
 	}, $str);
 
 	// [url]url[/url], [link]url[/link]
-	$str = preg_replace_callback("'\[(url|link)\](.*?)\[/\\1\]'i", function ($m) use ($set_aside)
+	$str = preg_replace_callback("'\[(url|link)\](.*?)\[/\\1\]'i", function ($m) use ($set_aside, $inline)
 	{
 		if (($url = _bbcode_url($m[2])) === FALSE)
 		{
 			return $m[0];
 		}
-		return $set_aside('<a href="'.$url.'" rel="nofollow noopener">'.$m[2].'</a>');
+		return $set_aside('<a href="'.$url.'" rel="nofollow noopener">'.$inline($m[2]).'</a>');
 	}, $str);
 
 	// [url=url]text[/url], [link=url]text[/link]
-	$str = preg_replace_callback("'\[(url|link)=(.*?)\](.*?)\[/\\1\]'i", function ($m) use ($set_aside)
+	$str = preg_replace_callback("'\[(url|link)=(.*?)\](.*?)\[/\\1\]'i", function ($m) use ($set_aside, $inline)
 	{
 		if (($url = _bbcode_url($m[2])) === FALSE)
 		{
 			// not a safe target: the text is kept, the link is dropped
 			return $m[3];
 		}
-		return $set_aside('<a href="'.$url.'" rel="nofollow noopener">'.$m[3].'</a>');
+		return $set_aside('<a href="'.$url.'" rel="nofollow noopener">'.$inline($m[3]).'</a>');
 	}, $str);
 
 	// bare addresses become links
@@ -128,10 +156,15 @@ function bbcode($str = '', $max_images = 0)
 	$str = preg_replace($find, $replace, $str);
 
 	// put the finished links and images back
-	$str = preg_replace_callback("/\x1a(\d+)\x1a/", function ($m) use (&$parts)
+	// (an image inside link text sits inside a finished link, so go round
+	// until no marker is left; each pass only ever meets earlier parts)
+	for ($i = 0; $i <= count($parts) && strpos($str, "\x1a") !== FALSE; $i++)
 	{
-		return (isset($parts[$m[1]])) ? $parts[$m[1]] : '';
-	}, $str);
+		$str = preg_replace_callback("/\x1a(\d+)\x1a/", function ($m) use (&$parts)
+		{
+			return (isset($parts[$m[1]])) ? $parts[$m[1]] : '';
+		}, $str);
+	}
 
 	return '<p>'.$str.'</p>';
 

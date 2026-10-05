@@ -714,7 +714,6 @@ class Core {
 				{
 					if (!in_array($post, $fields) && !preg_match('/^submit$|^submit\_x$|^submit\_y|^x|^y/i', $post))
 					{
-						$postValue = $this->CI->input->post($post, TRUE);
 						$message .= "\t".ucfirst($post) . ": ".$value."\n\n";
 					}
 				}

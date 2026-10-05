@@ -11,12 +11,12 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "
 
 	<channel>
 
-	<title><?php echo $feed_name; ?></title>
+	<title><?php echo xml_convert((string)$feed_name); ?></title>
 
-	<link><?php echo $feed_url; ?></link>
-	<description><?php echo $page_description; ?></description>
-	<dc:language><?php echo $page_language; ?></dc:language>
-	<dc:creator><?php echo $creator_email; ?></dc:creator>
+	<link><?php echo xml_convert((string)$feed_url); ?></link>
+	<description><?php echo xml_convert((string)$page_description); ?></description>
+	<dc:language><?php echo xml_convert((string)$page_language); ?></dc:language>
+	<dc:creator><?php echo xml_convert((string)$creator_email); ?></dc:creator>
 
 	<dc:rights>Copyright <?php echo gmdate("Y", time()); ?></dc:rights>
 	<admin:generatorAgent rdf:resource="http://www.halogy.com/" />
