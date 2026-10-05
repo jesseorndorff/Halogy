@@ -1702,9 +1702,9 @@ class Shop extends MX_Controller {
 
 		// populate template
 		$output['product:id'] = $product['productID'];		
-		$output['form:name'] = $this->input->post('fullName');
-		$output['form:email'] = $this->input->post('email');		
-		$output['form:review'] = $this->input->post('review');	
+		$output['form:name'] = html_escape($this->input->post('fullName'));
+		$output['form:email'] = html_escape($this->input->post('email'));
+		$output['form:review'] = html_escape($this->input->post('review'));
 
 		// set title
 		$output['page:title'] = 'Review Product'.(($this->site->config['siteName']) ? ' - '.$this->site->config['siteName'] : '');

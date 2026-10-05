@@ -127,6 +127,9 @@ class CI_Security {
 	/**
 	 * Verify Cross Site Request Forgery Protection
 	 *
+	 * Every request that is not GET, HEAD or OPTIONS must prove that it was
+	 * made by this site: see _request_allowed() for the decision table.
+	 *
 	 * @return	object
 	 */
 	public function csrf_verify()
@@ -149,25 +152,7 @@ class CI_Security {
 			return $this;
 		}
 
-		// The token may arrive as a form field or (AJAX) as a request header
-		$token = '';
-		if (isset($_POST[$this->_csrf_token_name]) && is_string($_POST[$this->_csrf_token_name]))
-		{
-			$token = $_POST[$this->_csrf_token_name];
-		}
-		elseif (isset($_SERVER['HTTP_X_CSRF_TOKEN']))
-		{
-			$token = (string) $_SERVER['HTTP_X_CSRF_TOKEN'];
-		}
-
-		// Do the token and cookie exist?
-		if ($token === '' OR ! isset($_COOKIE[$this->_csrf_cookie_name]) OR ! is_string($_COOKIE[$this->_csrf_cookie_name]))
-		{
-			$this->csrf_show_error();
-		}
-
-		// Do the tokens match?
-		if ( ! hash_equals($_COOKIE[$this->_csrf_cookie_name], $token))
+		if ( ! $this->_request_allowed(FALSE))
 		{
 			$this->csrf_show_error();
 		}
@@ -177,7 +162,7 @@ class CI_Security {
 		// for its lifetime so multiple tabs and AJAX calls keep working.
 		unset($_POST[$this->_csrf_token_name]);
 
-		log_message('debug', "CSRF token verified ");
+		log_message('debug', "CSRF request verified");
 
 		return $this;
 	}
@@ -185,13 +170,13 @@ class CI_Security {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Verify the token on a state-changing GET request
+	 * Verify a state-changing GET request
 	 *
 	 * Some actions are plain links (delete, approve, publish, logout...).
 	 * Once the router has resolved the controller method, requests that are
 	 * not POST but whose method name matches $config['csrf_protect_get_methods']
-	 * must carry the token in the query string. Tokenised links are produced
-	 * by the Security_output hook.
+	 * must prove they were made from this site, exactly like a POST, except
+	 * that a navigation the user started (Sec-Fetch-Site: none) is allowed too.
 	 *
 	 * @param	string	the routed controller method
 	 * @return	void
@@ -209,16 +194,175 @@ class CI_Security {
 			return;
 		}
 
-		$query = array();
-		parse_str(isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '', $query);
-
-		if ( ! isset($query[$this->_csrf_token_name]) OR ! is_string($query[$this->_csrf_token_name])
-			OR ! isset($_COOKIE[$this->_csrf_cookie_name]) OR ! is_string($_COOKIE[$this->_csrf_cookie_name])
-			OR $query[$this->_csrf_token_name] === ''
-			OR ! hash_equals($_COOKIE[$this->_csrf_cookie_name], $query[$this->_csrf_token_name]))
+		if ( ! $this->_request_allowed(TRUE))
 		{
 			$this->csrf_show_error();
 		}
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Was this request made by this site?
+	 *
+	 * The request passes if any of the following holds, tested in this order:
+	 *
+	 *  1. a valid token is supplied: POST field or X-CSRF-Token header, or the
+	 *     query string parameter for GET/HEAD (form_open() forms, AJAX, scripts)
+	 *  2. Sec-Fetch-Site is present (every current browser sends it) and says
+	 *     "same-origin", or "none" for a navigation (typed URL, bookmark) when
+	 *     $navigation is TRUE. Any other value (cross-site, same-site) fails:
+	 *     the browser has already told us where the request came from.
+	 *  3. Sec-Fetch-Site is absent and Origin is present and names this exact
+	 *     scheme, host and port. "null" or another origin fails.
+	 *  4. Both are absent and Referer is present with this scheme, host and port.
+	 *
+	 * Anything else fails: requests without any of these headers and without a
+	 * token can be forged, so they are refused.
+	 *
+	 * @param	bool	GET/HEAD navigation (TRUE) or a non-safe method (FALSE)
+	 * @return	bool
+	 */
+	protected function _request_allowed($navigation)
+	{
+		if ($this->_token_valid($navigation))
+		{
+			return TRUE;
+		}
+
+		if (isset($_SERVER['HTTP_SEC_FETCH_SITE']))
+		{
+			$site = strtolower(trim((string) $_SERVER['HTTP_SEC_FETCH_SITE']));
+
+			return ($site === 'same-origin' OR ($navigation && $site === 'none'));
+		}
+
+		if (isset($_SERVER['HTTP_ORIGIN']))
+		{
+			return $this->_header_is_same_origin($_SERVER['HTTP_ORIGIN']);
+		}
+
+		if (isset($_SERVER['HTTP_REFERER']))
+		{
+			return $this->_header_is_same_origin($_SERVER['HTTP_REFERER']);
+		}
+
+		return FALSE;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Does the request carry a token matching the CSRF cookie?
+	 *
+	 * @param	bool	read the token from the query string (GET) instead of
+	 *			the POST field / request header
+	 * @return	bool
+	 */
+	protected function _token_valid($navigation)
+	{
+		$token = '';
+
+		if ($navigation)
+		{
+			$query = array();
+			parse_str(isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '', $query);
+			if (isset($query[$this->_csrf_token_name]) && is_string($query[$this->_csrf_token_name]))
+			{
+				$token = $query[$this->_csrf_token_name];
+			}
+		}
+		elseif (isset($_POST[$this->_csrf_token_name]) && is_string($_POST[$this->_csrf_token_name]))
+		{
+			$token = $_POST[$this->_csrf_token_name];
+		}
+		elseif (isset($_SERVER['HTTP_X_CSRF_TOKEN']))
+		{
+			$token = (string) $_SERVER['HTTP_X_CSRF_TOKEN'];
+		}
+
+		if ($token === '' OR ! isset($_COOKIE[$this->_csrf_cookie_name]) OR ! is_string($_COOKIE[$this->_csrf_cookie_name]))
+		{
+			return FALSE;
+		}
+
+		return hash_equals($_COOKIE[$this->_csrf_cookie_name], $token);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Does an Origin or Referer header value name this site?
+	 *
+	 * Only scheme, host and port count. The value comes straight from the
+	 * browser, so it is parsed as is: anything parse_url() rejects, a value
+	 * with user information, a non http(s) scheme or a missing host fails.
+	 *
+	 * @param	string	the header value
+	 * @return	bool
+	 */
+	protected function _header_is_same_origin($value)
+	{
+		$value = trim((string) $value);
+		if ($value === '' OR strtolower($value) === 'null')
+		{
+			return FALSE;
+		}
+
+		$theirs = $this->_origin_parts($value);
+		$ours = $this->_request_origin();
+
+		return ($theirs !== FALSE && $ours !== FALSE && $theirs === $ours);
+	}
+
+	/**
+	 * Scheme, host and port of the current request
+	 *
+	 * @return	array|FALSE
+	 */
+	protected function _request_origin()
+	{
+		if ( ! isset($_SERVER['HTTP_HOST']) OR trim((string) $_SERVER['HTTP_HOST']) === '')
+		{
+			return FALSE;
+		}
+
+		$https = (( ! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+			|| (isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] === 443));
+
+		return $this->_origin_parts(($https ? 'https' : 'http').'://'.trim((string) $_SERVER['HTTP_HOST']));
+	}
+
+	/**
+	 * Normalised scheme, host and port of a URL
+	 *
+	 * @param	string
+	 * @return	array|FALSE	array('scheme', 'host', 'port') or FALSE if unusable
+	 */
+	protected function _origin_parts($url)
+	{
+		$parts = @parse_url($url);
+
+		if ( ! is_array($parts) OR ! isset($parts['scheme'], $parts['host']) OR isset($parts['user']) OR isset($parts['pass']))
+		{
+			return FALSE;
+		}
+
+		$scheme = strtolower($parts['scheme']);
+		if ($scheme !== 'http' && $scheme !== 'https')
+		{
+			return FALSE;
+		}
+
+		$host = strtolower($parts['host']);
+		if ($host === '' OR preg_match('/^[a-z0-9\-._\[\]:]+$/', $host) !== 1)
+		{
+			return FALSE;
+		}
+
+		$port = isset($parts['port']) ? (int) $parts['port'] : (($scheme === 'https') ? 443 : 80);
+
+		return array($scheme, $host, $port);
 	}
 
 	// --------------------------------------------------------------------
@@ -287,6 +431,29 @@ class CI_Security {
 		if (headers_sent())
 		{
 			return FALSE;
+		}
+
+		// Only one Set-Cookie for this cookie per response: the sliding refresh
+		// at the start of the request may already have queued one when the
+		// token is rotated (login, logout). Other cookies (session, remember
+		// me) queued so far are kept.
+		$others = array();
+		foreach (headers_list() as $header)
+		{
+			if (stripos($header, 'Set-Cookie:') !== 0)
+			{
+				continue;
+			}
+
+			if (stripos(ltrim(substr($header, 11)), $this->_csrf_cookie_name.'=') !== 0)
+			{
+				$others[] = $header;
+			}
+		}
+		header_remove('Set-Cookie');
+		foreach ($others as $header)
+		{
+			header($header, FALSE);
 		}
 
 		setcookie($this->_csrf_cookie_name, $this->_csrf_hash, array(

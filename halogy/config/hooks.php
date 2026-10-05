@@ -18,7 +18,7 @@ $hook['pre_system'][] = array(
 	'filepath'	=> 'hooks'
 );
 
-// require the CSRF token on state-changing GET links, by routed method
+// state-changing GET links (by routed method) must come from this site
 $hook['post_controller_constructor'][] = array(
 	'class'		=> 'Security_output',
 	'function'	=> 'check_get_csrf',
@@ -26,10 +26,10 @@ $hook['post_controller_constructor'][] = array(
 	'filepath'	=> 'hooks'
 );
 
-// inject the CSRF token into raw <form> tags and the csrf-token meta tag
+// add the csrf-token meta tag (read by the AJAX prefilter in the static JS)
 $hook['post_controller'][] = array(
 	'class'		=> 'Security_output',
-	'function'	=> 'inject_csrf',
+	'function'	=> 'csrf_meta',
 	'filename'	=> 'Security_output.php',
 	'filepath'	=> 'hooks'
 );

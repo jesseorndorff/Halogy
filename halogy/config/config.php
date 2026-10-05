@@ -334,9 +334,23 @@ $config['global_xss_filtering'] = FALSE;
 |--------------------------------------------------------------------------
 | Cross Site Request Forgery
 |--------------------------------------------------------------------------
-| Enables a CSRF cookie token to be set. When set to TRUE, token will be
-| checked on a submitted form. If you are accepting user data, it is strongly
-| recommended CSRF protection be enabled.
+| When TRUE, every request that is not GET/HEAD/OPTIONS, and every GET/HEAD
+| to a method matching 'csrf_protect_get_methods', must prove that it was made
+| from this site. A request is accepted when any of these holds:
+|
+|	1. it carries a token matching the CSRF cookie: a POST field or an
+|	   X-CSRF-Token header (form_open() forms, the jQuery ajax prefilter in
+|	   the static JS reading <meta name="csrf-token">), or the query string
+|	   parameter for GET links. Scripts can keep using this.
+|	2. the browser sent Sec-Fetch-Site: same-origin (or "none", a navigation
+|	   the user started, for the protected GET links). Every other value
+|	   (cross-site, same-site) is refused.
+|	3. no Sec-Fetch-Site, and Origin names this exact scheme, host and port.
+|	4. neither, and Referer names this exact scheme, host and port.
+|
+| Pages are no longer rewritten to carry tokens: raw <form> tags in views and
+| DB templates and plain action links work because the browser identifies the
+| request origin. Requests with none of the headers and no token are refused.
 |
 | 'csrf_token_name' = The token name
 | 'csrf_cookie_name' = The cookie name
@@ -365,9 +379,9 @@ $config['csrf_exclude_uris'] = array(
 /*
 | 'csrf_protect_get_methods' = regular expression matched against the routed
 | controller method name. State-changing actions that are plain links (GET)
-| must carry the CSRF token in the query string (?csrf_test_name=...) when
-| their method matches; the Security_output hook adds it to the links in the
-| rendered pages. Name new state-changing GET actions so they match, or use POST.
+| are verified like a POST (origin headers or ?csrf_test_name=... in the query
+| string) when their method matches. Name new state-changing GET actions so
+| they match, or use POST.
 | Not matched on purpose: payment gateway return pages (shop/cancel, success).
 */
 $config['csrf_protect_get_methods'] = '^(delete|approve|unapprove|publish|unpublish|revert|logout|remove|renew|activate|deactivate|subscribe|unsubscribe|lock|unlock|close|ban|unban|deletepost)(_|$)';

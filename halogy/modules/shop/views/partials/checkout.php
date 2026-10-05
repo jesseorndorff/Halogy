@@ -70,25 +70,25 @@
 	
 	<div class="formrow ccfirstname-row">
 		<label for="ccfirstname">First Name:</label>
-		<input type="text" name="FIRSTNAME" id="ccfirstname" class="formelement" value="<?php echo ($this->input->post('FIRSTNAME')) ? $this->input->post('FIRSTNAME') : @$user['firstName']; ?>" />
+		<input type="text" name="FIRSTNAME" id="ccfirstname" class="formelement" value="<?php echo html_escape(($this->input->post('FIRSTNAME')) ? $this->input->post('FIRSTNAME') : @$user['firstName']); ?>" />
 		<br class="clear" />
 	</div>
 	
 	<div class="formrow cclastname-row">
 		<label for="cclastname">Last Name:</label>
-		<input type="text" name="LASTNAME" id="cclastname" class="formelement" value="<?php echo ($this->input->post('LASTNAME')) ? $this->input->post('LASTNAME') : @$user['lastName']; ?>" />
+		<input type="text" name="LASTNAME" id="cclastname" class="formelement" value="<?php echo html_escape(($this->input->post('LASTNAME')) ? $this->input->post('LASTNAME') : @$user['lastName']); ?>" />
 		<br class="clear" />
 	</div>
 
 	<div class="formrow ccstreet-row">
 		<label for="cccity">Street:</label>
-		<input type="text" name="STREET" id="ccstreet" class="formelement" value="<?php echo ($this->input->post('STREET')) ? $this->input->post('STREET') : @$user['billingAddress1']; ?>" />
+		<input type="text" name="STREET" id="ccstreet" class="formelement" value="<?php echo html_escape(($this->input->post('STREET')) ? $this->input->post('STREET') : @$user['billingAddress1']); ?>" />
 		<br class="clear" />
 	</div>
 	
 	<div class="formrow cccity-row">
 		<label for="cccity">City:</label>
-		<input type="text" name="CITY" id="cccity" class="formelement" value="<?php echo ($this->input->post('CITY')) ? $this->input->post('CITY') : @$user['billingCity']; ?>" />
+		<input type="text" name="CITY" id="cccity" class="formelement" value="<?php echo html_escape(($this->input->post('CITY')) ? $this->input->post('CITY') : @$user['billingCity']); ?>" />
 		<br class="clear" />
 	</div>
 	
@@ -100,7 +100,7 @@
 	
 	<div class="formrow cczip-row">
 		<label for="cczip">Zip/Post Code:</label>
-		<input type="text" name="ZIP" id="cczip" class="formelement" value="<?php echo ($this->input->post('ZIP')) ? $this->input->post('ZIP') : @$user['billingPostcode']; ?>" />
+		<input type="text" name="ZIP" id="cczip" class="formelement" value="<?php echo html_escape(($this->input->post('ZIP')) ? $this->input->post('ZIP') : @$user['billingPostcode']); ?>" />
 		<br class="clear" />
 	</div>
 	
@@ -155,19 +155,19 @@
 	
 	<div class="formrow ccfirstname-row">
 		<label for="ccfirstname">First Name:</label>
-		<input type="text" name="x_first_name" id="ccfirstname" class="formelement" value="<?php echo ($this->input->post('x_first_name')) ? $this->input->post('x_first_name') : @$user['firstName']; ?>" />
+		<input type="text" name="x_first_name" id="ccfirstname" class="formelement" value="<?php echo html_escape(($this->input->post('x_first_name')) ? $this->input->post('x_first_name') : @$user['firstName']); ?>" />
 		<br class="clear" />
 	</div>
 	
 	<div class="formrow cclastname-row">
 		<label for="cclastname">Last Name:</label>
-		<input type="text" name="x_last_name" id="cclastname" class="formelement" value="<?php echo ($this->input->post('x_last_name')) ? $this->input->post('x_last_name') : @$user['lastName']; ?>" />
+		<input type="text" name="x_last_name" id="cclastname" class="formelement" value="<?php echo html_escape(($this->input->post('x_last_name')) ? $this->input->post('x_last_name') : @$user['lastName']); ?>" />
 		<br class="clear" />
 	</div>
 
 	<div class="formrow ccstreet-row">
 		<label for="cccity">Address:</label>
-		<textarea name="x_address" id="address" class="formelement small"><?php echo ($this->input->post('x_address')) ? $this->input->post('x_address') : @$user['billingAddress1']."\n".@$user['billingCity']; ?></textarea>
+		<textarea name="x_address" id="address" class="formelement small"><?php echo html_escape(($this->input->post('x_address')) ? $this->input->post('x_address') : @$user['billingAddress1']."\n".@$user['billingCity']); ?></textarea>
 		<br class="clear" />
 	</div>
 	
@@ -179,7 +179,7 @@
 	
 	<div class="formrow cczip-row">
 		<label for="cczip">Zip/Post Code:</label>
-		<input type="text" name="x_zip" id="cczip" class="formelement" value="<?php echo ($this->input->post('x_zip')) ? $this->input->post('x_zip') : @$user['billingPostcode']; ?>" />
+		<input type="text" name="x_zip" id="cczip" class="formelement" value="<?php echo html_escape(($this->input->post('x_zip')) ? $this->input->post('x_zip') : @$user['billingPostcode']); ?>" />
 		<br class="clear" />
 	</div>
 	

@@ -197,8 +197,11 @@ class Forums extends MX_Controller {
 			redirect('/forums');
 		}
 		
-		// get forum info
-		$forum = $this->forums->get_forum($topic['forumID']);
+		// get forum info, the forum may be gone too
+		if (!$forum = $this->forums->get_forum($topic['forumID']))
+		{
+			redirect('/forums');
+		}
 
 		// check its not a private forum
 		if ($forum['groupID'] > 0 && (!in_array('forums', ($this->permission->permissions ?: array())) && $forum['groupID'] != $this->session->userdata('groupID')))
@@ -439,9 +442,10 @@ class Forums extends MX_Controller {
 		{
 			redirect('/users/login/'.$this->core->encode($this->uri->uri_string()));
 		}		
+		// the topic may be gone (deleted)
 		if (!$topicID || !$topic = $this->forums->get_topic($topicID))
 		{
-			show_error('Please make sure you post in a valid topic.');
+			redirect('/forums');
 		}
 		if ($topic['locked'] && (!in_array('forums', ($this->permission->permissions ?: array()))))
 		{
@@ -457,8 +461,11 @@ class Forums extends MX_Controller {
 		// get user info
 		$user = $this->forums->get_user($topic['userID']);
 
-		// get forum info
-		$forum = $this->forums->get_forum($topic['forumID']);		
+		// get forum info, the forum may be gone too
+		if (!$forum = $this->forums->get_forum($topic['forumID']))
+		{
+			redirect('/forums');
+		}
 
 		// get post for quotes
 		if ($postID && $post = $this->forums->get_post($postID))
