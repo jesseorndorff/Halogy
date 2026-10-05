@@ -228,6 +228,12 @@ class Admin extends MX_Controller {
 		// get values
 		$output['data'] = $this->core->get_values('tickets', $objectID);
 
+		// ticket not found
+		if (!isset($output['data']['ticketID']))
+		{
+			redirect($this->redirect);
+		}
+
 		// set date
 		$this->core->set['dateModified'] = date("Y-m-d H:i:s");
 
@@ -239,7 +245,7 @@ class Admin extends MX_Controller {
 		}
 
 		// set view flag
-		if (!$output['data']['viewed'])
+		if (!isset($output['data']['viewed']) || !$output['data']['viewed'])
 		{
 			$this->tickets->view_ticket($ticketID);
 		}

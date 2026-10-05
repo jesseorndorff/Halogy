@@ -182,9 +182,15 @@ class Halogy extends MX_Controller {
 		// get values
 		$output['data'] = $this->core->get_values('sites', $objectID);
 
+		// site not found
+		if (!isset($output['data']['groupID']))
+		{
+			redirect('/halogy/sites');
+		}
+
 		// populate permissions
 		$perms = $this->permission->get_permission_map($output['data']['groupID']);
-		foreach ((array)$perms as $perm)
+		foreach(($perms) ? $perms : array() as $perm)
 		{
 			$output['data']['perm'.$perm['permissionID']] = 1;
 		}
@@ -249,14 +255,15 @@ class Halogy extends MX_Controller {
 		// load site lib
 		$this->load->model('sites_model', 'sites');
 	
-		$q = strtolower($_POST["q"]);
+		$q = strtolower((isset($_POST["q"])) ? $_POST["q"] : '');
         if (!$q) return;
 
         // form dropdown
         $results = $this->sites->get_sites($q);
 
         // go foreach
-        foreach((array)$results as $row)
+        $items = array();
+        foreach(($results) ? $results : array() as $row)
         {
             $items[$row['siteDomain']] = $row['siteName'];
         }

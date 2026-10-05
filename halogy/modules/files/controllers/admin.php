@@ -24,6 +24,7 @@ class Admin extends MX_Controller {
 	var $redirect = '/admin/files/viewall';			// default redirect
 	var $objectID = 'fileID';							// default unique ID									
 	var $permissions = array();
+	var $selections = array();
 	
 	function __construct()
 	{
@@ -58,6 +59,10 @@ class Admin extends MX_Controller {
 				redirect('/admin/dashboard/permissions');
 			}
 		}
+
+		// get preset selections for this module
+		$selections = $this->session->userdata('selections');
+		$this->selections = (is_array($selections) && isset($selections[$this->uri->segment(2)])) ? $selections[$this->uri->segment(2)] : array();
 
 		// get siteID, if available
 		if (defined('SITEID'))
@@ -138,7 +143,7 @@ class Admin extends MX_Controller {
 			$where = array('siteID' => $this->siteID, 'deleted' => 0);
 	
 			// get preset selections for this dropdown
-			if ($folderID == '' && @array_key_exists('folderID', $this->selections))
+			if ($folderID == '' && array_key_exists('folderID', (array)$this->selections))
 			{
 				$folderID = $this->selections['folderID'];
 			}
@@ -163,7 +168,7 @@ class Admin extends MX_Controller {
 			}
 	
 			// check they have permissions to see all files
-			if (!@in_array('files_all', $this->permission->permissions))
+			if (!in_array('files_all', (array)$this->permission->permissions))
 			{
 				$where['userID'] = $this->session->userdata('userID');
 			}
@@ -254,7 +259,7 @@ class Admin extends MX_Controller {
 		$where = array('siteID' => $this->siteID, 'deleted' => 0);
 
 		// check they have permissions to see all files
-		if (!@in_array('files_all', $this->permission->permissions))
+		if (!in_array('files_all', (array)$this->permission->permissions))
 		{
 			$where['userID'] = $this->session->userdata('userID');
 		}
@@ -318,11 +323,11 @@ class Admin extends MX_Controller {
 
 		// go through post and edit each list item
 		$listArray = $this->core->get_post();
-		if (count($listArray))
+		if (is_array($listArray) && count($listArray))
 		{
 			foreach($listArray as $ID => $value)
 			{
-				if ($ID != '' && sizeof($value) > 0)
+				if ($ID != '' && is_array($value) && sizeof($value) > 0)
 				{	
 					// set object ID
 					$objectID = array('folderID' => $ID);
@@ -364,14 +369,15 @@ class Admin extends MX_Controller {
 	
 	function ac_files()
 	{	
-		$q = strtolower($_GET["q"]);
+		$q = strtolower((isset($_GET["q"])) ? $_GET["q"] : '');
 		if (!$q) return;
 		
 		// form dropdown
 		$results = $this->files->search_files($q);
 		
 		// go foreach
-		foreach((array)$results as $row)
+		$items = array();
+		foreach(($results) ? $results : array() as $row)
 		{
 			$items[$row['fileRef']] = $row['fileRef'];
 		}

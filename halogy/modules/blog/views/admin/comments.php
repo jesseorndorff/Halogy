@@ -21,7 +21,7 @@
 		<td><?php echo anchor('/blog/'.dateFmt($comment['uriDate'], 'Y/m/').$comment['uri'], $comment['postTitle']); ?></td>
 		<td><?php echo $comment['fullName']; ?></td>
 		<td><?php echo $comment['email']; ?></td>
-		<td><small><?php echo (strlen($comment['comment'] > 50)) ? htmlentities(substr($comment['comment'], 0, 50)).'...' : htmlentities($comment['comment']); ?></small></td>						
+		<td><small><?php echo (strlen($comment['comment'] > 50)) ? htmlentities(substr((string)$comment['comment'], 0, 50)).'...' : htmlentities((string)$comment['comment']); ?></small></td>						
 		<td><?php echo ($comment['active']) ? '<span style="color:green;">Active</span>' : '<span style="color:orange;">Pending</span>'; ?></td>		
 		<td><?php echo (!$comment['active']) ? anchor('/admin/blog/approve_comment/'.$comment['commentID'], 'Approve') : ''; ?></td>
 		<td>

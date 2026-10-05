@@ -66,9 +66,9 @@ $(function(){
 	</label> 
 
 	<?php
-		$options = '';
+		$options = array();
 		$options['me'] = 'My Images';
-		if (@in_array('images_all', $this->permission->permissions)):
+		if (in_array('images_all', (array)$this->permission->permissions)):
 			$options['all'] = 'View All Images';
 
 			if ($folders):
@@ -134,7 +134,7 @@ $(function(){
 
 		<label for="imageFolderID">Folder: <small>[<a href="<?php echo site_url('/admin/images/folders'); ?>" onclick="return confirm('You will lose any unsaved changes.\n\nContinue anyway?')">update</a>]</small></label>
 		<?php
-			$options = '';		
+			$options = array();		
 			$options[0] = 'No Folder';
 			if ($folders):
 				foreach ($folders as $folderID):
@@ -203,9 +203,9 @@ $(function(){
 				echo '<td valign="top" align="center" width="'.floor(( 1 / $itemsPerRow) * 100).'%">';
 
 				$imageData = $this->uploads->load_image($image['imageRef']);
-				$imagePath = $imageData['src'];
+				$imagePath = ($imageData) ? $imageData['src'] : '';
 				$imageData = $this->uploads->load_image($image['imageRef'], true);				
-				$imageThumbPath = $imageData['src'];
+				$imageThumbPath = ($imageData) ? $imageData['src'] : '';
 		?>
 				<div class="buttons">
 					<?php echo anchor('/admin/images/edit/'.$image['imageID'].'/'.$this->core->encode($this->uri->uri_string()), '<img src="'.$this->config->item('staticPath').'/images/btn_edit.png" alt="Edit" />', 'class="edit"'); ?>				

@@ -20,10 +20,10 @@
 			<a href="#" class="halogycms_button halogycms_toggle" id="halogycms_toggle">Preview</a>				
 			<a href="<?php echo site_url('/admin'); ?>" class="halogycms_button halogycms_saveall">Admin</a>
 			<a href="<?php echo site_url('/admin/logout/'.$this->core->encode($this->uri->uri_string())); ?>" class="halogycms_button">Logout</a>
-			<?php echo (isset($postID) && @in_array('blog_edit', $this->permission->permissions)) ? anchor('/admin/blog/edit_post/'.$postID, 'Edit Post', 'class="halogycms_button green"') : ''; ?>
-			<?php echo (isset($productID) && @in_array('shop_edit', $this->permission->permissions)) ? anchor('/admin/shop/edit_product/'.$productID, 'Edit Product', 'class="halogycms_button green"') : ''; ?>	
-			<?php echo (isset($versionID) && @in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/edit/'.$pageID, 'Edit Page', 'class="halogycms_button halogycms_saveall green"') : ''; ?>
-			<?php echo (isset($versionID) && @in_array('pages_edit', $this->permission->permissions)) ? anchor('/admin/pages/publish/'.$pageID, 'Publish Page', 'class="halogycms_button halogycms_saveall orange"') : ''; ?>
+			<?php echo (isset($postID) && in_array('blog_edit', (array)$this->permission->permissions)) ? anchor('/admin/blog/edit_post/'.$postID, 'Edit Post', 'class="halogycms_button green"') : ''; ?>
+			<?php echo (isset($productID) && in_array('shop_edit', (array)$this->permission->permissions)) ? anchor('/admin/shop/edit_product/'.$productID, 'Edit Product', 'class="halogycms_button green"') : ''; ?>	
+			<?php echo (isset($versionID) && in_array('pages_edit', (array)$this->permission->permissions)) ? anchor('/admin/pages/edit/'.$pageID, 'Edit Page', 'class="halogycms_button halogycms_saveall green"') : ''; ?>
+			<?php echo (isset($versionID) && in_array('pages_edit', (array)$this->permission->permissions)) ? anchor('/admin/pages/publish/'.$pageID, 'Publish Page', 'class="halogycms_button halogycms_saveall orange"') : ''; ?>
 		</div>
 	</div>
 	<div id="halogycms_browser" class="loading"></div>

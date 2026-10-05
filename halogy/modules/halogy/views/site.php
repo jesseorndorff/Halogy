@@ -55,10 +55,10 @@ $(function(){
 <ul class="innernav clear">
 	<li class="selected"><a href="#siteconfig" class="showtab">Site</a></li>
 	<li><a href="#emailsconfig" class="showtab">Emails</a></li>
-<?php if (@in_array('shop', $this->permission->permissions)): ?>	
+<?php if (in_array('shop', (array)$this->permission->permissions)): ?>	
 	<li><a href="#shopconfig" class="showtab">Shop</a></li>
 <?php endif; ?>
-<?php if (@in_array('community', $this->permission->permissions)): ?>	
+<?php if (in_array('community', (array)$this->permission->permissions)): ?>	
 	<li><a href="#ceconfig" class="showtab">Community</a></li>
 <?php endif; ?>
 </ul>
@@ -94,7 +94,7 @@ $(function(){
 	<?php echo display_countries('siteCountry', $data['siteCountry'], 'id="siteCountry" class="formelement"'); ?>
 	<br class="clear" /><br />
 	
-<?php if (@in_array('emailer', $this->permission->permissions)): ?>
+<?php if (in_array('emailer', (array)$this->permission->permissions)): ?>
 	
 	<label for="emailerEmail">From Email:</label>
 	<?php echo @form_input('emailerEmail', set_value('emailerEmail', $data['emailerEmail']), 'id="emailerEmail" class="formelement"'); ?>
@@ -184,7 +184,7 @@ $(function(){
 	<span class="tip nolabel">Customise the email sent out for new tickets.</span>
 	<br class="clear" /><br />
 	
-	<?php if (@in_array('community', $this->permission->sitePermissions)): ?>
+	<?php if (in_array('community', (array)$this->permission->sitePermissions)): ?>
 	
 		<label for="emailAccount">New Account Email:</label>
 		<?php echo @form_textarea('emailAccount', set_value('emailAccount', $data['emailAccount']), 'id="emailAccount" class="formelement small"'); ?>
@@ -194,7 +194,7 @@ $(function(){
 	
 	<?php endif; ?>
 	
-	<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>
+	<?php if (in_array('shop', (array)$this->permission->sitePermissions)): ?>
 	
 		<label for="emailOrder">Shop Order Email:</label>
 		<?php echo @form_textarea('emailOrder', set_value('emailOrder', $data['emailOrder']), 'id="emailOrder" class="formelement small"'); ?>
@@ -224,7 +224,7 @@ $(function(){
 
 </div>
 
-<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>
+<?php if (in_array('shop', (array)$this->permission->sitePermissions)): ?>
 
 <div id="shopconfig" class="tab">
 
@@ -354,7 +354,7 @@ $(function(){
 
 <div id="ceconfig" class="tab">
 
-<?php if (@in_array('community', $this->permission->sitePermissions)): ?>
+<?php if (in_array('community', (array)$this->permission->sitePermissions)): ?>
 
 	<h2>Community Preferences</h2>
 

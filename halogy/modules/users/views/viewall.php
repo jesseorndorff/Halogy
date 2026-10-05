@@ -64,7 +64,7 @@ $(function(){
 <?php 
 	$class = '';
 	if ($user['groupID'] == $this->site->config['groupID'] || $user['groupID'] < 0) $class = 'class="blue"';
-	elseif (@in_array($user['groupID'], $adminGroups)) $class = 'class="orange"';
+	elseif (in_array($user['groupID'], (array)$adminGroups)) $class = 'class="orange"';
 
 	$username = ($user['username']) ? $user['username'] : '(not set)';
 	$userlink = (in_array('users_edit', $this->permission->permissions)) ? anchor('/admin/users/edit/'.$user['userID'], $username) : $username;
@@ -78,8 +78,8 @@ $(function(){
 		<td>
 			<?php
 				if ($user['groupID'] == $this->site->config['groupID'] || $user['groupID'] < 0) echo 'Administrator';
-				elseif (@in_array($user['groupID'], $adminGroups)) echo $userGroups[$user['groupID']];
-				elseif (@in_array($user['groupID'], $normalGroups)) echo $userGroups[$user['groupID']];
+				elseif (in_array($user['groupID'], (array)$adminGroups)) echo $userGroups[$user['groupID']];
+				elseif (in_array($user['groupID'], (array)$normalGroups)) echo $userGroups[$user['groupID']];
 			?>
 		</td>
 		<td class="tiny">

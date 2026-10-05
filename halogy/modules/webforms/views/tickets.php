@@ -48,7 +48,7 @@ $(function(){
 		<th><?php echo order_link('admin/webforms/tickets','subject','Subject'); ?></th>
 		<th><?php echo order_link('admin/webforms/tickets','dateCreated','Date'); ?></th>
 		<th><?php echo order_link('admin/webforms/tickets','formName','Web Form'); ?></th>		
-		<th><?php echo order_link('admin/webforms/tickets','status','Status'); ?></th>		
+		<th><?php echo order_link('admin/webforms/tickets','closed','Status'); ?></th>		
 		<th><?php echo order_link('admin/webforms/tickets','fullName','Name'); ?></th>
 		<th><?php echo order_link('admin/webforms/tickets','email','Email'); ?></th>
 		<th class="tiny">&nbsp;</th>

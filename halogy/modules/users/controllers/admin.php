@@ -88,6 +88,11 @@ class Admin extends MX_Controller {
 		// output users
 		$output = $this->core->viewall($this->table, $where);
 
+		// default group lists
+		$output['adminGroups'] = array();
+		$output['normalGroups'] = array();
+		$output['userGroups'] = array();
+
 		// get admin groups
 		if ($adminGroups = $this->permission->get_groups('admin'))
 		{
@@ -144,7 +149,7 @@ class Admin extends MX_Controller {
 		$this->core->set['dateCreated'] = date("Y-m-d H:i:s");
 
 		// check groupID is not being overridden
-		if (($this->input->post('groupID') && @!in_array('users_groups', $this->permission->permissions)) || ($this->input->post('groupID') < 0 && $this->session->userdata('groupID') >= 0))
+		if (($this->input->post('groupID') && !in_array('users_groups', (array)$this->permission->permissions)) || ($this->input->post('groupID') < 0 && $this->session->userdata('groupID') >= 0))
 		{
 			redirect('/admin/dashboard/permissions');
 			die();
@@ -222,7 +227,7 @@ class Admin extends MX_Controller {
 			$this->core->set['dateModified'] = date("Y-m-d H:i:s");
 	
 			// check groupID is not being overridden
-			if (($this->input->post('groupID') && @!in_array('users_groups', $this->permission->permissions)) || ($this->input->post('groupID') < 0 && $this->session->userdata('groupID') >= 0))
+			if (($this->input->post('groupID') && !in_array('users_groups', (array)$this->permission->permissions)) || ($this->input->post('groupID') < 0 && $this->session->userdata('groupID') >= 0))
 			{
 				redirect('/admin/dashboard/permissions');
 				die();
@@ -275,7 +280,7 @@ class Admin extends MX_Controller {
 			redirect('/admin/dashboard/permissions');
 		}
 				
-		$output = '';
+		$output = array();
 		if (isset($_FILES['csv']))
 		{
 			if ($numImported = $this->users->import_csv($_FILES['csv']))
@@ -318,14 +323,15 @@ class Admin extends MX_Controller {
 
 	function ac_users()
 	{	
-		$q = strtolower($_GET["q"]);
+		$q = strtolower((isset($_GET["q"])) ? $_GET["q"] : '');
         if (!$q) return;
 
         // form dropdown
         $results = $this->users->get_users($q);
 
         // go foreach
-        foreach((array)$results as $row)
+        $items = array();
+        foreach(($results) ? $results : array() as $row)
         {
             $items[$row['email']] = $row['firstName'].' '.$row['lastName'];
         }
@@ -453,7 +459,7 @@ class Admin extends MX_Controller {
 
 		// populate permissions
 		$perms = $this->permission->get_permission_map($groupID);
-		foreach ((array)$perms as $perm)
+		foreach(($perms) ? $perms : array() as $perm)
 		{
 			$output['data']['perm'.$perm['permissionID']] = 1;
 		}

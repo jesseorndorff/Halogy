@@ -27,7 +27,7 @@
 function bbcode($str = '', $max_images = 0)
 {
 	// convert to html entities
-	$str = htmlentities($str);
+	$str = htmlentities((string)$str);
 
 	$str = auto_link($str);
 	

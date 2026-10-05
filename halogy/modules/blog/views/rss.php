@@ -23,7 +23,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "
     <admin:generatorAgent rdf:resource="http://www.halogy.com/" />
     <atom:link href="<?php echo $feed_url; ?>/feed" rel="self" type="application/rss+xml" />
 
-    <?php foreach($posts as $entry): ?>
+    <?php foreach(($posts) ? $posts : array() as $entry): ?>
     
 	    <item>
 

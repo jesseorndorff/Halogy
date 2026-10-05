@@ -24,7 +24,7 @@
 		
 			<h2 class="underline">Body</h2>
 		
-			<p><?php echo nl2br(auto_link($data['body'])); ?></p>
+			<p><?php echo nl2br(auto_link((string)$data['body'])); ?></p>
 			
 		</div>
 		<div class="col2">

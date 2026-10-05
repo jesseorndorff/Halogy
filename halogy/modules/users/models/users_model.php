@@ -105,7 +105,7 @@ class Users_model extends CI_Model {
 		if ($handle)
 		{ 
 			$allowedExtensions = array("txt", "csv");
-			if (!in_array(end(explode(".", $file['name'])), $allowedExtensions))
+			if (!in_array(strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)), $allowedExtensions))
 			{
 				$this->form_validation->set_error('The file was not a CSV.');
 				
@@ -122,7 +122,7 @@ class Users_model extends CI_Model {
 					
 				foreach ($array as $row)
 				{
-					$data = explode(",", $row);
+					$data = array_pad(explode(",", $row), 3, '');
 					
 					if ($data[0] != '')
 					{	

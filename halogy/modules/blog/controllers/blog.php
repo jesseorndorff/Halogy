@@ -218,7 +218,7 @@ class Blog extends MX_Controller {
 							
 							// send email
 							$this->load->library('email');						
-							$this->email->from($this->site->config['siteEmail'], $this->site->config['siteName']);
+							$this->email->from((string)$this->site->config['siteEmail'], (string)$this->site->config['siteName']);
 							$this->email->to($user['email']);			
 							$this->email->subject('New Blog Comment on '.$this->site->config['siteName']);
 							$this->email->message($emailHeader."\n\nSomeone has just commented on your blog post titled \"".$post['postTitle']."\".\n\nYou can either approve or delete this comment by clicking on the following URL:\n\n".site_url('/admin/blog/comments')."\n\nThey said:\n\"".$this->input->post('comment')."\"\n\n".$emailFooter);
@@ -246,6 +246,12 @@ class Blog extends MX_Controller {
 			// get author details
 			$author = $this->blog->lookup_user($post['userID']);
 
+			// default author details
+			if (!$author)
+			{
+				$author = array('userID' => '', 'displayName' => '', 'firstName' => '', 'lastName' => '', 'email' => '', 'bio' => '');
+			}
+
 			// populate template
 			$output['post:title'] = $post['postTitle'];
 			$output['post:link'] = site_url('blog/'.dateFmt($post['dateCreated'], 'Y/m').'/'.$post['uri']);
@@ -259,7 +265,7 @@ class Blog extends MX_Controller {
 			$output['post:author'] = (($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']);
 			$output['post:author-id'] = $author['userID'];
 			$output['post:author-email'] = $author['email'];
-			$output['post:author-gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
+			$output['post:author-gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
 			$output['post:author-bio'] = $author['bio'];
 			$output['post:allow-comments'] = ($post['allowComments']) ? TRUE : FALSE;
 			$output['form:name'] = set_value('fullName', $this->session->userdata('firstName').' '.$this->session->userdata('lastName'));
@@ -303,10 +309,10 @@ class Blog extends MX_Controller {
 				{
 					$output['post:comments'][$i]['comment:class'] = ($i % 2) ? ' alt ' : '';
 					$output['post:comments'][$i]['comment:id'] = $comment['commentID'];
-					$output['post:comments'][$i]['comment:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($comment['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
+					$output['post:comments'][$i]['comment:gravatar'] = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$comment['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif'));
 					$output['post:comments'][$i]['comment:author'] = (!empty($comment['website'])) ? anchor(prep_url($comment['website']), $comment['fullName']) : $comment['fullName'];
 					$output['post:comments'][$i]['comment:date'] = dateFmt($comment['dateCreated'], ($this->site->config['dateOrder'] == 'MD') ? 'M jS Y' : 'jS M Y');
-					$output['post:comments'][$i]['comment:body'] = nl2br(auto_link(strip_tags($comment['comment'])));
+					$output['post:comments'][$i]['comment:body'] = nl2br(auto_link(strip_tags((string)$comment['comment'])));
 					
 					$i++;
 				}
@@ -509,7 +515,7 @@ class Blog extends MX_Controller {
 
 	function ac_search()
 	{
-		$tags = strtolower($_GET["q"]);
+		$tags = strtolower((isset($_GET["q"])) ? $_GET["q"] : '');
         if (!$tags)
         {
         	return FALSE;
@@ -563,6 +569,12 @@ class Blog extends MX_Controller {
 			{
 				// get author details
 				$author = $this->blog->lookup_user($post['userID']);				
+
+				// default author details
+				if (!$author)
+				{
+					$author = array('userID' => '', 'displayName' => '', 'firstName' => '', 'lastName' => '', 'email' => '', 'bio' => '');
+				}
 				
 				// populate template array
 				$data[$x] = array(
@@ -577,7 +589,7 @@ class Blog extends MX_Controller {
 					'post:author' => (($author['displayName']) ? $author['displayName'] : $author['firstName'].' '.$author['lastName']),
 					'post:author-id' => $author['userID'],
 					'post:author-email' => $author['email'],
-					'post:author-gravatar' => 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim($author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif')),
+					'post:author-gravatar' => 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(trim((string)$author['email'])).'&default='.urlencode(site_url('/static/uploads/avatars/noavatar.gif')),
 					'post:author-bio' => $author['bio'],
 					'post:comments-count' => $post['numComments']
 				);

@@ -24,7 +24,7 @@
 				 	Someone visited 
 				 <?php endif; ?>
 			 		<?php echo (strtotime($visit['date']) >= strtotime('-2 minutes')) ? '<em>just now</em>' : ''; ?> 
-			 		<?php echo ($visit['referer']) ? 'from '.anchor($visit['referer'], preg_replace('/http(s)?\:\/\/|www\.|\/(.*)$/i', '', htmlentities($visit['referer']))) : ''; ?>
+			 		<?php echo ($visit['referer']) ? 'from '.anchor($visit['referer'], preg_replace('/http(s)?\:\/\/|www\.|\/(.*)$/i', '', htmlentities((string)$visit['referer']))) : ''; ?>
 			 	 	and looked at <?php echo ($visit['views']+1); ?> <?php echo ($visit['views']) ? 'pages' : 'page'; ?>.
 			</li>
 			
@@ -50,7 +50,7 @@
 			 		<?php echo anchor('/admin/webforms/tickets', $userdata['firstName'].' '.$userdata['lastName']); ?>
 			 		<strong>submitted a web form</strong>
 			 	<?php endif; ?>
-			 	<?php echo ($visit['referer']) ? 'from '.anchor($visit['referer'], preg_replace('/http(s)?\:\/\/|www\.|\/(.*)$/i', '', htmlentities($visit['referer']))) : ''; ?> 	
+			 	<?php echo ($visit['referer']) ? 'from '.anchor($visit['referer'], preg_replace('/http(s)?\:\/\/|www\.|\/(.*)$/i', '', htmlentities((string)$visit['referer']))) : ''; ?> 	
 		 	<?php else: ?>
 			 	<?php echo $visit['guests'].' guest(s)'; ?> visited
 			<?php endif; ?>
@@ -84,7 +84,7 @@
 			 		<?php echo anchor('/admin/webforms/tickets', $userdata['firstName'].' '.$userdata['lastName']); ?>
 			 		<strong>submitted a web form</strong>
 			 	<?php endif; ?>
-			 	<?php echo ($visit['referer']) ? 'from '.anchor($visit['referer'], preg_replace('/http(s)?\:\/\/|www\.|\/(.*)$/i', '', htmlentities($visit['referer']))) : ''; ?> 	
+			 	<?php echo ($visit['referer']) ? 'from '.anchor($visit['referer'], preg_replace('/http(s)?\:\/\/|www\.|\/(.*)$/i', '', htmlentities((string)$visit['referer']))) : ''; ?> 	
 		 	<?php else: ?>
 			 	<?php echo $visit['guests'].' guest(s)'; ?> visited
 			<?php endif; ?>

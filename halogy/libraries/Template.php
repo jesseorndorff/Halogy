@@ -98,7 +98,7 @@ class Template {
 	function generate_template($pagedata, $file = false)
 	{	
 		// page data
-		@$this->template['page:title'] = (isset($pagedata['title'])) ? htmlentities($pagedata['title']) : htmlentities($this->CI->site->config['siteName']);
+		@$this->template['page:title'] = (isset($pagedata['title'])) ? htmlentities((string)$pagedata['title']) : htmlentities((string)$this->CI->site->config['siteName']);
 		@$this->template['page:keywords'] = (isset($pagedata['keywords'])) ? $pagedata['keywords'] : '';
 		@$this->template['page:description'] = (isset($pagedata['description'])) ? $pagedata['description'] : '';
 		@$this->template['page:date'] = (isset($pagedata['dateCreated'])) ? dateFmt($pagedata['dateCreated']) : '';
@@ -123,7 +123,8 @@ class Template {
 		$this->template['ajax'] = ((isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'))) ? TRUE : FALSE;
 
 		// find out if browser is iphone
-		$this->template['mobile'] = (strpos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || strpos($_SERVER['HTTP_USER_AGENT'], 'Android')) ? TRUE : FALSE;
+		$userAgent = (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '';
+		$this->template['mobile'] = (strpos($userAgent, 'iPhone') || strpos($userAgent, 'Android')) ? TRUE : FALSE;
 
 		// permissions
 		if ($this->CI->session->userdata('session_admin'))
@@ -165,6 +166,8 @@ class Template {
 
 	function parse_includes($body)
 	{
+		$body = (string)$body;
+
 		// get includes
 		preg_match_all('/include\:([a-z0-9\.-]+)/i', $body, $includes);
 
@@ -173,7 +176,10 @@ class Template {
 			$includeBody = '';
 			foreach($includes[1] as $include => $value)
 			{
-				$includeRow = $this->CI->core->get_include($value);
+				if (!$includeRow = $this->CI->core->get_include($value))
+				{
+					$includeRow = array('body' => '');
+				}
 
 				$includeBody = $this->parse_body($includeRow['body'], FALSE, NULL, FALSE);
 
@@ -304,7 +310,7 @@ class Template {
 			$currentNav == $this->CI->uri->segment(1) ||  
 			(($currentNav == '' || $currentNav == 'home' || $currentNav == '/') && 
 				($this->CI->uri->uri_string() == '' || $this->CI->uri->uri_string() == '/home' || $this->CI->uri->uri_string() == '/')) ||
-			@in_array(substr($this->CI->uri->uri_string(),1), $childs)
+			in_array(substr($this->CI->uri->uri_string(),1), (array)$childs)
 		)
 		{
 			$class .= 'active selected ';
@@ -341,7 +347,7 @@ class Template {
 		}
 
 		// output anchor with span in case of additional styling
-		$output .= trim($class).'" id="nav-'.trim($uri).'"><a href="'.site_url($href).'" class="'.trim($class).'"><span>'.htmlentities($name).'</span></a>';
+		$output .= trim($class).'" id="nav-'.trim($uri).'"><a href="'.site_url($href).'" class="'.trim($class).'"><span>'.htmlentities((string)$name).'</span></a>';
 
 		return $output;
 	}
@@ -444,6 +450,8 @@ class Template {
 
 	function parse_body($body, $condense = FALSE, $link = '', $mkdn = TRUE)
 	{		
+		$body = (string)$body;
+
 		// parse for images		
 		$body = $this->parse_images($body);
 
@@ -509,6 +517,8 @@ class Template {
 
 	function parse_modules($body, $template)
 	{
+		$body = (string)$body;
+
 		// get web forms
 		if (preg_match_all('/{webform:([A-Za-z0-9_\-]+)}/i', $body, $matches))
 		{
@@ -761,10 +771,10 @@ class Template {
 						if ($imageData = $this->get_image($galleryimage['imageRef']))
 						{
 							$imageHTML = display_image($imageData['src'], $imageData['imageName']);
-							$imageHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/images/'.$imageData['imageRef'].strtolower($imageData['ext'])).'"', $imageHTML);
+							$imageHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/images/'.$imageData['imageRef'].strtolower((string)$imageData['ext'])).'"', $imageHTML);
 							
 							$thumbHTML = display_image($imageData['src'], $imageData['imageName']);
-							$thumbHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/thumbs/'.$imageData['imageRef'].strtolower($imageData['ext'])).'" width="120px"', $imageHTML);									
+							$thumbHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/thumbs/'.$imageData['imageRef'].strtolower((string)$imageData['ext'])).'" width="120px"', $imageHTML);									
 							
 							$template[$headlineID][$i] = array(
 								'galleryimage:link' => site_url('images/'.$imageData['imageRef'].$imageData['ext']),
@@ -816,8 +826,8 @@ class Template {
 					foreach ($headlines as $headline)
 					{
 						// get body and excerpt
-						$headlineBody = (strlen($headline['description']) > 100) ? substr($headline['description'], 0, 100).'...' : $headline['description'];
-						$headlineExcerpt = nl2br($headline['excerpt']);
+						$headlineBody = (strlen((string)$headline['description']) > 100) ? substr($headline['description'], 0, 100).'...' : $headline['description'];
+						$headlineExcerpt = nl2br((string)$headline['excerpt']);
 	
 						// get images
 						if (!$headlineImage = $this->CI->uploads->load_image($headline['productID'], false, true))
@@ -873,8 +883,8 @@ class Template {
 					foreach ($headlines as $headline)
 					{
 						// get body and excerpt
-						$headlineBody = (strlen($headline['description']) > 100) ? substr($headline['description'], 0, 100).'...' : $headline['description'];
-						$headlineExcerpt = nl2br($headline['excerpt']);
+						$headlineBody = (strlen((string)$headline['description']) > 100) ? substr($headline['description'], 0, 100).'...' : $headline['description'];
+						$headlineExcerpt = nl2br((string)$headline['excerpt']);
 												
 						// get images
 						if (!$headlineImage = $this->CI->uploads->load_image($headline['productID'], false, true))
@@ -970,7 +980,7 @@ class Template {
 							{
 								$template['shop:categories'] .= 'last ';
 							}
-							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities($nav['catName'], ENT_COMPAT, 'UTF-8').'</a><ul class="subnav">';
+							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities((string)$nav['catName'], ENT_COMPAT, 'UTF-8').'</a><ul class="subnav">';
 							
 							foreach($children as $child)
 							{
@@ -979,7 +989,7 @@ class Template {
 								{
 									$template['shop:categories'] .= 'active selected';
 								}
-								$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'/'.$child['catSafe'].'">'.htmlentities($child['catName'], ENT_COMPAT, 'UTF-8').'</a></li>';
+								$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'/'.$child['catSafe'].'">'.htmlentities((string)$child['catName'], ENT_COMPAT, 'UTF-8').'</a></li>';
 							}
 							$template['shop:categories'] .= '</ul>';
 						}					
@@ -998,7 +1008,7 @@ class Template {
 							{
 								$template['shop:categories'] .= 'last ';
 							}
-							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities($nav['catName'], ENT_COMPAT, 'UTF-8').'</a>';
+							$template['shop:categories'] .= '"><a href="/shop/'.$nav['catSafe'].'">'.htmlentities((string)$nav['catName'], ENT_COMPAT, 'UTF-8').'</a>';
 						}
 						
 						$template['shop:categories'] .= '</li>';					
@@ -1023,6 +1033,8 @@ class Template {
 	
 	function parse_images($body)
 	{
+		$body = (string)$body;
+
 		// parse for images
 		preg_match_all('/image\:([a-z0-9\-_]+)/i', $body, $images);
 		if ($images)
@@ -1033,7 +1045,7 @@ class Template {
 				if ($imageData = $this->get_image($value))
 				{
 					$imageHTML = display_image($imageData['src'], $imageData['imageName'], $imageData['maxsize'], 'id="'.$this->CI->core->encode($this->CI->session->userdata('lastPage').'|'.$imageData['imageID']).'" class="pic '.$imageData['class'].'"');
-					$imageHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/images/'.$imageData['imageRef'].strtolower($imageData['ext'])).'"', $imageHTML);
+					$imageHTML = preg_replace('/src=("[^"]*")/i', 'src="'.site_url('/images/'.$imageData['imageRef'].strtolower((string)$imageData['ext'])).'"', $imageHTML);
 				}
 				elseif ($this->CI->session->userdata('session_admin'))
 				{
@@ -1053,7 +1065,7 @@ class Template {
 				if ($imageData = $this->get_image($value))
 				{
 					$imageHTML = display_image($imageData['thumbnail'], $imageData['imageName'], $imageData['maxsize'], 'id="'.$this->CI->core->encode($this->CI->session->userdata('lastPage').'|'.$imageData['imageID']).'" class="pic thumb '.$imageData['class'].'"');
-					$imageHTML = preg_replace('/src=("[^"]*")/i', 'src="/thumbs/'.$imageData['imageRef'].strtolower($imageData['ext']).'"', $imageHTML);
+					$imageHTML = preg_replace('/src=("[^"]*")/i', 'src="/thumbs/'.$imageData['imageRef'].strtolower((string)$imageData['ext']).'"', $imageHTML);
 				}
 				elseif ($this->CI->session->userdata('session_admin'))
 				{
@@ -1101,6 +1113,8 @@ class Template {
 
 	function parse_files($body)
 	{
+		$body = (string)$body;
+
 		// parse for files
 		preg_match_all('/file\:([a-z0-9\-_]+)/i', $body, $files);
 		if ($files)

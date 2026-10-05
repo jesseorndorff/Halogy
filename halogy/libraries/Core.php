@@ -565,7 +565,7 @@ class Core {
 		}
 
 		// optional captcha (deprecated - use javascript for captcha)
-		(@in_array('captcha', $requiredArray)) ? $this->CI->form_validation->set_rules('captcha', 'Captcha', 'required|callback__captcha_check') : '';
+		(in_array('captcha', (array)$requiredArray)) ? $this->CI->form_validation->set_rules('captcha', 'Captcha', 'required|callback__captcha_check') : '';
 
 		// get first and last name
 		if ($this->CI->input->post('firstName', TRUE))
@@ -809,7 +809,7 @@ class Core {
 
 			// send to recipient
 			$this->CI->email->to($this->CI->input->post('email', TRUE));
-			$this->CI->email->from($this->CI->site->config['siteEmail'], $this->CI->site->config['siteName']);
+			$this->CI->email->from((string)$this->CI->site->config['siteEmail'], (string)$this->CI->site->config['siteName']);
 			$this->CI->email->subject('[#'.$ticketID.']: ' . $subject);
 			$this->CI->email->message($body.$footerBody);
 			$this->CI->email->send();
@@ -818,7 +818,7 @@ class Core {
 
 			// send to CC or admin
 			$this->CI->email->to($outcomeEmails);
-			$this->CI->email->from($this->CI->input->post('email', TRUE));
+			$this->CI->email->from((string)$this->CI->input->post('email', TRUE));
 			$this->CI->email->subject('FW: [#'.$ticketID.']: ' . $this->CI->input->post('subject', TRUE));
 			$this->CI->email->message("A web form was submitted on ".$this->CI->site->config['siteName'].".\n\n---------------------------------------------\n\n".$body.$footerBody);
 			$this->CI->email->send();
@@ -847,11 +847,11 @@ class Core {
 
 		// set folder (making sure it's not an admin folder)
 		$permissionGroupsArray = $this->CI->permission->get_groups('admin');
-		foreach((array)$permissionGroupsArray as $group)
+		foreach(($permissionGroupsArray) ? $permissionGroupsArray : array() as $group)
 		{
 			$permissionGroups[$group['groupID']] = $group['groupName'];
 		}				
-		if ($this->CI->input->post('groupID') > 0 && !@in_array($this->CI->input->post('groupID'), $permissionGroups))
+		if ($this->CI->input->post('groupID') > 0 && !in_array($this->CI->input->post('groupID'), (array)$permissionGroups))
 		{
 			$this->CI->core->set['groupID'] = $this->CI->input->post('groupID');
 		}
@@ -1117,7 +1117,7 @@ class Core {
 		{
 			foreach($uriArray as $key => $value)
 			{
-				if ($key)
+				if ($key && in_array(strtolower((string)$value), array_map('strtolower', $fields)))
 				{
 					if ($key == 'orderasc')
 					{
@@ -1193,6 +1193,9 @@ class Core {
 		{
 			// get fields of this table
 			$fields = $this->CI->db->list_fields($table);
+
+			// default row
+			$row = FALSE;
 
 			// get data from database
 			if ($id)

@@ -21,7 +21,7 @@ echo '<?xml version="1.0" encoding="utf-8"?>' . "
     <dc:rights>Copyright <?php echo gmdate("Y", time()); ?></dc:rights>
     <admin:generatorAgent rdf:resource="http://www.halogy.com/" />
 
-    <?php foreach($events as $entry): ?>
+    <?php foreach(($events) ? $events : array() as $entry): ?>
     
 	    <item>
 

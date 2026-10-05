@@ -27,7 +27,7 @@
 						Guest
 					<?php endif; ?>
 				</td>
-				<td><?php echo ($visit['referer']) ? anchor($visit['referer'], htmlentities($visit['referer'])) : 'Direct (no referrer)'; ?></td>
+				<td><?php echo ($visit['referer']) ? anchor($visit['referer'], htmlentities((string)$visit['referer'])) : 'Direct (no referrer)'; ?></td>
 				<td><?php echo $visit['lastPage']; ?></td>
 				<td><?php echo $visit['views']+1; ?></td>
 			</tr>

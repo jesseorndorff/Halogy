@@ -244,12 +244,17 @@ class Events_Model extends CI_Model {
 	function get_events_by_tag($tag, $limit = 10)
 	{
 		// get rows based on this tag
-		$result = $this->tags->fetch_rows(array(
+		$tags = $this->tags->fetch_rows(array(
 			'table' => 'events',
 			'tags' => array(1, $tag),
 			'siteID' => $this->siteID
 		));
-		$tags = $result->result_array();
+		if (!$tags)
+		{
+			return FALSE;
+		}
+
+		$tagsArray = array();
 		foreach ($tags as $tag)
 		{
 			$tagsArray[] = $tag['row_id'];

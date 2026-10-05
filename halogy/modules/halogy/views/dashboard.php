@@ -48,7 +48,7 @@ $(function(){
 			<?php echo $activity; ?>
 		</div>
 
-		<?php if (@in_array('pages', $this->permission->permissions)): ?>
+		<?php if (in_array('pages', (array)$this->permission->permissions)): ?>
 
 			<div class="module">
 			
@@ -63,7 +63,7 @@ $(function(){
 		<?php endif; ?>
 
 		
-		<?php if (@in_array('pages_templates', $this->permission->permissions)): ?>
+		<?php if (in_array('pages_templates', (array)$this->permission->permissions)): ?>
 
 			<div class="module last">
 			
@@ -77,7 +77,7 @@ $(function(){
 			
 		<?php endif; ?>
 		
-		<?php if (@in_array('images', $this->permission->permissions)): ?>
+		<?php if (in_array('images', (array)$this->permission->permissions)): ?>
 
 			<div class="module">
 			
@@ -91,7 +91,7 @@ $(function(){
 			
 		<?php endif; ?>
 		
-		<?php if (@in_array('users', $this->permission->permissions)): ?>
+		<?php if (in_array('users', (array)$this->permission->permissions)): ?>
 		
 			<div class="module last">
 			
@@ -105,7 +105,7 @@ $(function(){
 
 		<?php endif; ?>
 
-		<?php if (@in_array('blog', $this->permission->permissions)): ?>
+		<?php if (in_array('blog', (array)$this->permission->permissions)): ?>
 
 			<div class="module">
 			
@@ -119,7 +119,7 @@ $(function(){
 			
 		<?php endif; ?>
 
-		<?php if (@in_array('shop', $this->permission->permissions)): ?>
+		<?php if (in_array('shop', (array)$this->permission->permissions)): ?>
 			<div class="module last">
 			
 				<h2><strong>Build Your Shop</strong></h2>
@@ -181,7 +181,7 @@ $(function(){
 				<th class="narrow">Pages:</th>
 				<td><?php echo $numPages; ?> <small>page<?php echo ($numPages != 1) ? 's' : ''; ?></small></td>
 			</tr>
-			<?php if (@in_array('blog', $this->permission->permissions)): ?>
+			<?php if (in_array('blog', (array)$this->permission->permissions)): ?>
 				<tr>
 					<th class="narrow">Blog posts:</th>
 					<td><?php echo $numBlogPosts ?> <small>post<?php echo ($numBlogPosts != 1) ? 's' : ''; ?></small></td>
@@ -250,7 +250,7 @@ $(function(){
 
 		<br />
 		
-<?php if (@in_array('blog', $this->permission->sitePermissions)): ?>
+<?php if (in_array('blog', (array)$this->permission->sitePermissions)): ?>
 
 		<h3>Most popular blog posts</h3>
 
@@ -268,7 +268,7 @@ $(function(){
 		
 <?php endif; ?>
 
-<?php if (@in_array('shop', $this->permission->sitePermissions)): ?>		
+<?php if (in_array('shop', (array)$this->permission->sitePermissions)): ?>		
 
 		<h3>Most popular shop products</h3>
 

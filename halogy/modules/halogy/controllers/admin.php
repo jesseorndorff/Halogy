@@ -79,7 +79,7 @@ class Admin extends MX_Controller {
 		}		
 
 		// get new orders
-		if (@in_array('shop', $this->permission->sitePermissions))
+		if (in_array('shop', (array)$this->permission->sitePermissions))
 		{
 			$this->load->model('shop/shop_model', 'shop');
 
@@ -434,7 +434,7 @@ class Admin extends MX_Controller {
 	
 		// Build the output
 		$output = '';
-		foreach ((array)$tables as $table)
+		foreach(($tables) ? $tables : array() as $table)
 		{
 			// Is the table in the "ignore" list?
 			if (in_array($table, (array)$ignore, TRUE))
@@ -476,7 +476,9 @@ class Admin extends MX_Controller {
 			}
 
 			// Grab all the data from the current table
-			$query = $this->db->query("SELECT * FROM $table WHERE siteID = ".$this->siteID);
+			// (some tables, e.g. ha_tags, have no siteID column)
+			$where = ($this->db->field_exists('siteID', $table)) ? ' WHERE siteID = '.(int)$this->siteID : '';
+			$query = $this->db->query("SELECT * FROM `$table`".$where);
 			
 			if ($query->num_rows() == 0)
 			{

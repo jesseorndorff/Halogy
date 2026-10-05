@@ -166,7 +166,7 @@ class Events extends MX_Controller {
 			
 			// output other stuff
 			$data['event'] = $event;
-			$data['tags'] = explode(' ', $event['tags']);	
+			$data['tags'] = explode(' ', (string)$event['tags']);	
 						
 			// display with cms layer
 			$this->pages->view('events_single', $output, TRUE);
@@ -297,7 +297,7 @@ class Events extends MX_Controller {
 
 	function ac_search()
 	{
-		$tags = strtolower($_POST["q"]);
+		$tags = strtolower((isset($_POST["q"])) ? $_POST["q"] : '');
         if (!$tags)
         {
         	return FALSE;
@@ -373,7 +373,7 @@ class Events extends MX_Controller {
 				// get tags
 				if ($event['tags'])
 				{
-					$tags = explode(' ', $event['tags']);
+					$tags = explode(' ', (string)$event['tags']);
 
 					$i = 0;
 					foreach ($tags as $tag)

@@ -584,7 +584,7 @@ class Pages_model extends CI_Model {
 
 		// filter body
 		$body = htmlentities(iconv('UTF-8', 'UTF-8//IGNORE', $body), ENT_COMPAT, 'UTF-8');
-		$body = html_entity_decode($body, ENT_COMPAT, 'UTF-8');
+		$body = html_entity_decode((string)$body, ENT_COMPAT, 'UTF-8');
 		
 		// check page
 		if (!$data = $this->get_template($templateID))
@@ -685,8 +685,8 @@ class Pages_model extends CI_Model {
 		$body = ($this->input->post('body')) ? $this->input->post('body') : $body;
 
 		// filter body
-		$body = htmlentities($body, ENT_COMPAT, 'UTF-8');
-		$body = html_entity_decode($body, ENT_COMPAT, 'UTF-8');
+		$body = htmlentities((string)$body, ENT_COMPAT, 'UTF-8');
+		$body = html_entity_decode((string)$body, ENT_COMPAT, 'UTF-8');
 		
 		// check page
 		if (!$data = $this->get_include(NULL, $includeID))

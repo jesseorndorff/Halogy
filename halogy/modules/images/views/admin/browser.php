@@ -15,9 +15,9 @@
 			<ul>
 				<?php foreach ($folder['images'] as $image):
 					$imageData = $this->uploads->load_image($image['imageRef']);
-					$imagePath = $imageData['src'];
+					$imagePath = ($imageData) ? $imageData['src'] : '';
 					$imageData = $this->uploads->load_image($image['imageRef'], true);				
-					$imageThumbPath = $imageData['src'];
+					$imageThumbPath = ($imageData) ? $imageData['src'] : '';
 				?>
 					<li class="fixed">
 						<div class="halogycms_thumb">
@@ -44,9 +44,9 @@
 	<ul>
 		<?php foreach ($images as $image):
 			$imageData = $this->uploads->load_image($image['imageRef']);
-			$imagePath = $imageData['src'];
+			$imagePath = ($imageData) ? $imageData['src'] : '';
 			$imageData = $this->uploads->load_image($image['imageRef'], true);				
-			$imageThumbPath = $imageData['src'];
+			$imageThumbPath = ($imageData) ? $imageData['src'] : '';
 		?>
 			<li class="fixed">
 				<div class="halogycms_thumb">
