@@ -223,8 +223,42 @@ $config['cache_path'] = '';
 | If you use the Encryption class or the Session class you
 | MUST set an encryption key.  See the user guide for info.
 |
+| The key is also used to sign the session and remember me cookies.
+| Set the HALOGY_ENCRYPTION_KEY environment variable, otherwise a random
+| key is generated once and stored in halogy/config/encryption_key.php.
+|
 */
-$config['encryption_key'] = '12a8c863c9f7effa92bca14bd3a9c055';
+$config['encryption_key'] = getenv('HALOGY_ENCRYPTION_KEY');
+
+if ( ! $config['encryption_key'])
+{
+	$keyFile = dirname(__FILE__).'/encryption_key.php';
+
+	if (is_file($keyFile))
+	{
+		$config['encryption_key'] = include $keyFile;
+	}
+	else
+	{
+		$config['encryption_key'] = bin2hex(random_bytes(32));
+
+		// write to a temp file first so a concurrent request never reads a partial key
+		$tmpFile = $keyFile.'.'.bin2hex(random_bytes(4)).'.tmp';
+		if (@file_put_contents($tmpFile, "<?php return '".$config['encryption_key']."';\n") !== FALSE)
+		{
+			@chmod($tmpFile, 0600);
+			if ( ! @rename($tmpFile, $keyFile))
+			{
+				@unlink($tmpFile);
+			}
+			elseif (is_file($keyFile))
+			{
+				// use whichever key won the race
+				$config['encryption_key'] = include $keyFile;
+			}
+		}
+	}
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -247,7 +281,7 @@ $config['encryption_key'] = '12a8c863c9f7effa92bca14bd3a9c055';
 $config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 14400;
 $config['sess_expire_on_close']	= FALSE;
-$config['sess_encrypt_cookie']	= TRUE;
+$config['sess_encrypt_cookie']	= FALSE;
 $config['sess_use_database']	= TRUE;
 $config['sess_table_name']		= 'ci_sessions';
 $config['sess_match_ip']		= FALSE;

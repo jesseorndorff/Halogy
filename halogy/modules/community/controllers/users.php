@@ -621,7 +621,7 @@ class Users extends MX_Controller {
 			if ($user = $this->users->get_user_by_email($this->input->post('email')))
 			{
 				// set key
-				$key = md5($user['userID'].time());
+				$key = $this->core->random_key();
 				$this->users->set_reset_key($user['userID'], $key);
 
 				// set header and footer

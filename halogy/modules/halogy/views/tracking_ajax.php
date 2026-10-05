@@ -16,7 +16,7 @@
 		?>
 		<?php
 			// get userdata
-			$userdata = @unserialize($visit['userdata']);
+			$userdata = @unserialize($visit['userdata'], ['allowed_classes' => false]);
 		?>
 			<tr class="<?php echo $class; ?>" style="<?php echo $style; ?>">
 				<td><small><?php echo dateFmt($visit['date'], '', '', TRUE); ?></small></td>

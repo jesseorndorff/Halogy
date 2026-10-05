@@ -28,6 +28,7 @@ class Core {
 	var $where = array();
 	var $set = array();
 	var $required = array();
+	var $generatedPassword = '';	// last password generated for a new user
 	
 	function __construct()
 	{	
@@ -605,11 +606,11 @@ class Core {
 				// require password confirm?
 				if (isset($_POST['confirmPassword']))
 				{
-					$this->form_validation->set_rules('password', 'Password', 'required|matches[confirmPassword]');
+					$this->CI->form_validation->set_rules('password', 'Password', 'required|matches[confirmPassword]');
 				}
 				else
 				{
-					$this->form_validation->set_rules('password', 'Password', 'required');
+					$this->CI->form_validation->set_rules('password', 'Password', 'required');
 				}
 			}
 		}
@@ -651,7 +652,7 @@ class Core {
 				{
 					$this->CI->load->library('auth');
 					$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->CI->input->post('email'));
-					$password = ($this->CI->input->post('password')) ? $this->CI->input->post('password', TRUE) : substr(md5(time()),0,6);
+					$password = ($this->CI->input->post('password')) ? $this->CI->input->post('password', TRUE) : $this->generatedPassword;
 
 					// login or get error message
 					if (!$this->CI->auth->login($username, $password, 'session_user', FALSE))
@@ -789,7 +790,7 @@ class Core {
 				$body .= "Your login details are below:\n";
 				$body .= "---------------------------------------------\n\n";
 				$body .= "Your email: \t".$this->CI->input->post('email')."\n";
-				$body .= "Your password: \t".(($this->CI->input->post('password', TRUE)) ? $this->CI->input->post('password', TRUE) : substr(md5(time()),0,6))."\n\n";
+				$body .= "Your password: \t".(($this->CI->input->post('password', TRUE)) ? $this->CI->input->post('password', TRUE) : $this->generatedPassword)."\n\n";
 				$body .= "---------------------------------------------\n\n";
 			}
 			
@@ -893,8 +894,9 @@ class Core {
 		// generate password
 		if (!$this->CI->input->post('password'))
 		{
-			$password = md5(substr(md5(time()),0,6));
-			$this->CI->core->set['password'] = $password;
+			$password = $this->random_password();
+			$this->generatedPassword = $password;
+			$this->CI->core->set['password'] = $this->hash_password($password);
 		}
 
 		// set manual activation
@@ -1024,7 +1026,7 @@ class Core {
 						{
 							if ($value != '')
 							{
-								$values[$field] = md5($value);
+								$values[$field] = $this->hash_password($value);
 							}
 						}
 		
@@ -1363,6 +1365,34 @@ class Core {
 	}	
 
 	// encode url
+	// hash a password for storage
+	function hash_password($password)
+	{
+		$this->CI->load->library('auth');
+
+		return $this->CI->auth->hash_password($password);
+	}
+
+	// random token for reset keys etc (32 hex chars)
+	function random_key()
+	{
+		return bin2hex(random_bytes(16));
+	}
+
+	// random human friendly password, no look-alike characters
+	function random_password($length = 10)
+	{
+		$alphabet = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+		$password = '';
+
+		for ($i = 0; $i < $length; $i++)
+		{
+			$password .= $alphabet[random_int(0, strlen($alphabet) - 1)];
+		}
+
+		return $password;
+	}
+
 	function encode($data)
 	{
 		return strtr(rtrim(base64_encode($data), '='), '+/', '-_');

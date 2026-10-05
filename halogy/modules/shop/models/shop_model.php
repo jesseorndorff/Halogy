@@ -1115,7 +1115,7 @@ class Shop_model extends CI_Model {
 	function unpack_item($key, $quantity)
 	{
 		// get the master array (unserialize) then get the info from db
-		$keys = unserialize($key);
+		$keys = unserialize($key, ['allowed_classes' => false]);
 		$product = $this->get_product($keys['productID']);
 
 		// product no longer exists
@@ -1546,7 +1546,7 @@ class Shop_model extends CI_Model {
 		// insert products ordered
 		foreach($cartSession as $key => $quantity)
 		{
-			$keys = unserialize($key);						
+			$keys = unserialize($key, ['allowed_classes' => false]);						
 			
 			$set = array(
 				'`dateCreated`' => date("Y-m-d H:i:s"),
