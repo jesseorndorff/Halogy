@@ -71,7 +71,9 @@ class Users extends MX_Controller {
 		}
 		else
 		{
-			$redirect = $this->core->decode($redirect);
+			// only a path on this site: a planted link must not send the user
+			// elsewhere, or straight into an action, after logging in
+			$redirect = $this->core->local_path($this->core->decode($redirect), $this->redirect);
 		}
 
 		if (!$this->session->userdata('session_user'))
@@ -128,7 +130,7 @@ class Users extends MX_Controller {
 		}
 		else
 		{
-			$redirect = $this->core->decode($redirect);
+			$redirect = $this->core->local_path($this->core->decode($redirect), '');
 		}
 		$this->auth->logout($redirect);
 	}
@@ -196,7 +198,7 @@ class Users extends MX_Controller {
 			if (!$this->site->config['activation'])
 			{
 				$this->load->library('auth');
-				$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->decode($redirect));
+				$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->local_path($this->core->decode($redirect), ''));
 			}
 			else
 			{
@@ -205,7 +207,7 @@ class Users extends MX_Controller {
 				$this->session->set_userdata('firstName', $this->input->post('firstName'));
 				$this->session->set_userdata('lastName', $this->input->post('lastName'));			
 				
-				redirect($this->core->decode($redirect));
+				redirect($this->core->local_path($this->core->decode($redirect), $this->redirect));
 			}
 		}
 

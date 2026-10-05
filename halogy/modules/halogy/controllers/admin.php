@@ -247,7 +247,9 @@ class Admin extends MX_Controller {
 				}
 				else
 				{
-					$redirect = $this->core->decode($redirect);
+					// only a path on this site: a planted link must not send the
+					// user elsewhere, or straight into an action, after logging in
+					$redirect = $this->core->local_path($this->core->decode($redirect), $this->redirect);
 				}
 				
 				// set admin session name, if given
@@ -300,7 +302,7 @@ class Admin extends MX_Controller {
 		}
 		else
 		{
-			$redirect = $this->core->decode($redirect);
+			$redirect = $this->core->local_path($this->core->decode($redirect), '');
 		}
 		$this->auth->logout($redirect);
 	}

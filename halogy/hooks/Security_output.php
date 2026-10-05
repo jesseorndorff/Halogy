@@ -3,14 +3,15 @@
  * Security output hooks
  *
  * - send_headers (pre_system): basic hardening response headers
- * - check_get_csrf (post_controller_constructor): state-changing GET links
- *   (decided by the routed controller method) must come from this site
+ * - check_action_csrf (post_controller_constructor): state-changing actions
+ *   (decided by the routed controller method) only run on a verified POST; a
+ *   GET to one shows the confirmation page, other verbs get 405
  * - csrf_meta (post_controller): adds the csrf-token meta tag right after the
  *   opening <head> tag, read by the jQuery ajax prefilter in the static JS
  *
- * Nothing else in the page is touched: request origin is verified from the
- * Sec-Fetch-Site / Origin / Referer headers (see CI_Security::_request_allowed),
- * so forms and links do not need a token any more.
+ * Nothing else in the page is touched: POSTs are verified from the
+ * Sec-Fetch-Site / Origin / Referer headers or the token (see
+ * CI_Security::_request_allowed), so forms do not need a token any more.
  */
 #[\AllowDynamicProperties]
 class Security_output {
@@ -27,7 +28,7 @@ class Security_output {
 		header('Referrer-Policy: strict-origin-when-cross-origin');
 	}
 
-	function check_get_csrf()
+	function check_action_csrf()
 	{
 		$CI =& get_instance();
 
@@ -36,7 +37,7 @@ class Security_output {
 			return;
 		}
 
-		$CI->security->csrf_verify_get($CI->router->fetch_method());
+		$CI->security->csrf_verify_action($CI->router->fetch_method());
 	}
 
 	// --------------------------------------------------------------------

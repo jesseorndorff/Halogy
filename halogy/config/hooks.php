@@ -18,10 +18,11 @@ $hook['pre_system'][] = array(
 	'filepath'	=> 'hooks'
 );
 
-// state-changing GET links (by routed method) must come from this site
+// state-changing actions (by routed method) only run on a verified POST;
+// a GET to one renders the confirmation page instead
 $hook['post_controller_constructor'][] = array(
 	'class'		=> 'Security_output',
-	'function'	=> 'check_get_csrf',
+	'function'	=> 'check_action_csrf',
 	'filename'	=> 'Security_output.php',
 	'filepath'	=> 'hooks'
 );

@@ -144,7 +144,7 @@ $(function(){
 	<label for="image">Image:</label>
 	<div class="uploadfile">
 		<?php if ($imagePath):?>
-			<a href="<?php echo $imageThumbPath; ?>" title="<?php echo set_value('productName', $data['productName']); ?>" class="lightbox"><img src="<?php echo $imagePath; ?>" alt="Product image" class="pic" /></a>
+			<a href="<?php echo $imageThumbPath; ?>" title="<?php echo html_escape($data['productName']); ?>" class="lightbox"><img src="<?php echo $imagePath; ?>" alt="Product image" class="pic" /></a>
 		<?php endif; ?>
 		<?php echo @form_upload('image',set_value('image', $data['image']), 'size="16" id="image"'); ?>
 	</div>

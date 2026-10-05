@@ -1454,5 +1454,33 @@ class Core {
 	{
 		return base64_decode(strtr($base64, '-_', '+/'));
 	}
+
+	/**
+	 * A redirect target from the URL (login/logout redirects) as a local path
+	 *
+	 * Only a path on this site is accepted: no scheme or host ("http://...",
+	 * "//evil.example.com", "/\evil.example.com", "evil.example.com:80"),
+	 * no backslashes or control characters. Anything else becomes $default.
+	 *
+	 * @param	string	the decoded redirect
+	 * @param	string	where to go instead
+	 * @return	string	a path starting with a single slash
+	 */
+	function local_path($path, $default = '/')
+	{
+		$path = (string) $path;
+
+		if ($path === '/')
+		{
+			return '/';
+		}
+
+		if (preg_match('#^/?[^/\\\\:?\#\s[:cntrl:]]+(?:[/?\#][^\\\\\s[:cntrl:]]*)?$#', $path) !== 1)
+		{
+			return $default;
+		}
+
+		return '/'.ltrim($path, '/');
+	}
 	
 }

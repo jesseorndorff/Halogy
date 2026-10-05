@@ -354,7 +354,7 @@ class Admin extends CI_Controller {
 					// if its not coming from ajax then just go to admin
 					if ($redirect && !$popup)
 					{						
-						$redirect = $this->core->decode($redirect);
+						$redirect = $this->core->local_path($this->core->decode($redirect), $this->redirect);
 					}
 					elseif (!$redirect && !$popup)
 					{						
@@ -390,7 +390,7 @@ class Admin extends CI_Controller {
 		
 		if ($this->core->delete($this->table, array($this->objectID => $objectID)));
 		{	
-			$redirect = ($redirect) ? $this->core->decode($redirect) : $this->redirect;
+			$redirect = ($redirect) ? $this->core->local_path($this->core->decode($redirect), $this->redirect) : $this->redirect;
 		
 			// where to redirect to
 			redirect($redirect);

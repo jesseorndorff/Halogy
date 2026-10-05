@@ -334,23 +334,43 @@ $config['global_xss_filtering'] = FALSE;
 |--------------------------------------------------------------------------
 | Cross Site Request Forgery
 |--------------------------------------------------------------------------
-| When TRUE, every request that is not GET/HEAD/OPTIONS, and every GET/HEAD
-| to a method matching 'csrf_protect_get_methods', must prove that it was made
-| from this site. A request is accepted when any of these holds:
+| When TRUE, every POST must prove that it was made from this site, and
+| state-changing actions reached by a link (methods matching
+| 'csrf_protect_get_methods') never run on a GET at all.
 |
-|	1. it carries a token matching the CSRF cookie: a POST field or an
-|	   X-CSRF-Token header (form_open() forms, the jQuery ajax prefilter in
-|	   the static JS reading <meta name="csrf-token">), or the query string
-|	   parameter for GET links. Scripts can keep using this.
-|	2. the browser sent Sec-Fetch-Site: same-origin (or "none", a navigation
-|	   the user started, for the protected GET links). Every other value
-|	   (cross-site, same-site) is refused.
-|	3. no Sec-Fetch-Site, and Origin names this exact scheme, host and port.
-|	4. neither, and Referer names this exact scheme, host and port.
+| POST verification, in this order:
 |
-| Pages are no longer rewritten to carry tokens: raw <form> tags in views and
-| DB templates and plain action links work because the browser identifies the
-| request origin. Requests with none of the headers and no token are refused.
+|	1. Sec-Fetch-Site present and not "same-origin" -> refused
+|	2. Origin present and "null" or not this scheme, host and port -> refused
+|	3. a token matching the CSRF cookie: POST field or X-CSRF-Token header
+|	   (form_open() forms, the confirmation page, the jQuery ajax prefilter in
+|	   the static JS reading <meta name="csrf-token">, scripts) -> accepted
+|	4. Sec-Fetch-Site: same-origin -> accepted
+|	5. Origin names this exact scheme, host and port -> accepted
+|	6. neither header, and Referer names this exact scheme, host and port
+|	   -> accepted
+|	7. anything else -> refused (403)
+|
+| The browser's own statement (1, 2) wins over a token, so a cookie planted by
+| a sibling subdomain or over plain http does not authorise a cross-site POST.
+| Over HTTPS the cookie is named with the __Host- prefix (Secure, Path=/, no
+| Domain), which browsers only accept from this exact host.
+|
+| Any other request method (OPTIONS, PUT, DELETE, PATCH, ...) is answered with
+| 405 before routing: the router would otherwise run the controller method for
+| any verb.
+|
+| Pages are not rewritten to carry tokens: raw <form> tags in views and DB
+| templates work because the browser identifies the request origin.
+|
+| HTTPS behind a proxy: the Origin/Referer comparison and the cookie prefix use
+| $_SERVER['HTTPS']. When TLS is terminated by a trusted proxy or load balancer,
+| PHP sees plain http and the comparison with an https Origin fails for the
+| browsers that do not send Sec-Fetch-Site. Set $_SERVER['HTTPS'] = 'on' in
+| index.php when the request carries the proxy's header, e.g.
+|	if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') $_SERVER['HTTPS'] = 'on';
+| and only do so when that header is set by your own proxy (strip it there for
+| requests coming from the outside), otherwise anyone can claim https.
 |
 | 'csrf_token_name' = The token name
 | 'csrf_cookie_name' = The cookie name
@@ -378,13 +398,25 @@ $config['csrf_exclude_uris'] = array(
 
 /*
 | 'csrf_protect_get_methods' = regular expression matched against the routed
-| controller method name. State-changing actions that are plain links (GET)
-| are verified like a POST (origin headers or ?csrf_test_name=... in the query
-| string) when their method matches. Name new state-changing GET actions so
-| they match, or use POST.
+| controller method name. State-changing actions that are plain links (delete,
+| publish, approve...) only run on a verified POST when their method matches.
+| A GET to them renders a confirmation page (halogy/errors/csrf_confirm.php)
+| whose form POSTs the token back to the same URL; no action is performed by
+| following the link, wherever it was planted (user content shown to an
+| admin, a mail, a login redirect). HEAD and other verbs get 405.
+| Name new state-changing GET actions so they match, or use POST.
 | Not matched on purpose: payment gateway return pages (shop/cancel, success).
+|
+| 'csrf_get_passthrough_methods' = regular expression for the protected methods
+| that may still run on a GET when the browser itself says the request is
+| same-origin (Sec-Fetch-Site: same-origin, or without it a same-origin Origin
+| or Referer). Only logout: a one-click logout link is expected, and the worst
+| a same-origin <img> planted in user content can do is log the viewer out.
+| Links from mail clients or typed URLs (Sec-Fetch-Site: none) still get the
+| confirmation page.
 */
 $config['csrf_protect_get_methods'] = '^(delete|approve|unapprove|publish|unpublish|revert|logout|remove|renew|activate|deactivate|subscribe|unsubscribe|lock|unlock|close|ban|unban|deletepost)(_|$)';
+$config['csrf_get_passthrough_methods'] = '^logout$';
 
 /*
 |--------------------------------------------------------------------------

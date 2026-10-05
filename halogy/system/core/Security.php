@@ -116,6 +116,14 @@ class CI_Security {
 			$this->_csrf_cookie_name = config_item('cookie_prefix').$this->_csrf_cookie_name;
 		}
 
+		// Over HTTPS the cookie gets the __Host- prefix: the browser then only
+		// accepts it from this exact host (no sibling subdomain, no plain http
+		// response can plant one), Secure, Path=/ and without Domain.
+		if ($this->_is_https())
+		{
+			$this->_csrf_cookie_name = '__Host-'.$this->_csrf_cookie_name;
+		}
+
 		// Set the CSRF hash
 		$this->_csrf_set_hash();
 
@@ -127,16 +135,23 @@ class CI_Security {
 	/**
 	 * Verify Cross Site Request Forgery Protection
 	 *
-	 * Every request that is not GET, HEAD or OPTIONS must prove that it was
-	 * made by this site: see _request_allowed() for the decision table.
+	 * Runs before routing, for every request:
+	 *
+	 *  - GET and HEAD only refresh the cookie (state-changing GET links are
+	 *    dealt with by csrf_verify_action() once the method is known)
+	 *  - POST must prove that it was made by this site: see _request_allowed()
+	 *  - any other verb (OPTIONS, PUT, DELETE, PATCH, ...) is answered with
+	 *    405: nothing in this application is meant to be reached that way, and
+	 *    the router would otherwise run the controller method regardless of
+	 *    the verb.
 	 *
 	 * @return	object
 	 */
 	public function csrf_verify()
 	{
-		// Safe methods never carry a state change: just make sure the cookie is set
-		$method = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
-		if (in_array($method, array('GET', 'HEAD', 'OPTIONS'), TRUE))
+		$method = $this->_request_method();
+
+		if ($method === 'GET' OR $method === 'HEAD')
 		{
 			// the cookie is re-sent with every page view, always carrying the
 			// same hash (sliding expiry, so forms left open stay valid); the
@@ -146,13 +161,18 @@ class CI_Security {
 			return $this;
 		}
 
+		if ($method !== 'POST')
+		{
+			$this->csrf_show_method_not_allowed('GET, HEAD, POST');
+		}
+
 		// Endpoints that are legitimately POSTed to by external servers
 		if ($this->_csrf_uri_excluded())
 		{
 			return $this;
 		}
 
-		if ( ! $this->_request_allowed(FALSE))
+		if ( ! $this->_request_allowed())
 		{
 			$this->csrf_show_error();
 		}
@@ -170,71 +190,117 @@ class CI_Security {
 	// --------------------------------------------------------------------
 
 	/**
-	 * Verify a state-changing GET request
+	 * Guard a state-changing action that is linked to (delete, publish, ...)
 	 *
-	 * Some actions are plain links (delete, approve, publish, logout...).
-	 * Once the router has resolved the controller method, requests that are
-	 * not POST but whose method name matches $config['csrf_protect_get_methods']
-	 * must prove they were made from this site, exactly like a POST, except
-	 * that a navigation the user started (Sec-Fetch-Site: none) is allowed too.
+	 * Called once the router has resolved the controller method. A method
+	 * matching $config['csrf_protect_get_methods'] only ever runs on a POST,
+	 * which csrf_verify() has already checked. A GET to it does not run the
+	 * action: it renders a confirmation page whose form POSTs to the same
+	 * URL with the token, so a link planted in user content, in a mail or
+	 * behind a login redirect can never change anything by being followed.
+	 * The only exception is $config['csrf_get_passthrough_methods'] (logout),
+	 * which a GET may run when the browser says the request is same-origin.
+	 * HEAD (and any other verb) to such a method is answered with 405.
 	 *
 	 * @param	string	the routed controller method
 	 * @return	void
 	 */
-	public function csrf_verify_get($method)
+	public function csrf_verify_action($method)
 	{
-		$request = isset($_SERVER['REQUEST_METHOD']) ? strtoupper($_SERVER['REQUEST_METHOD']) : 'GET';
-		if ( ! in_array($request, array('GET', 'HEAD'), TRUE) OR $this->_csrf_uri_excluded())
+		if ( ! $this->csrf_get_method_protected($method) OR $this->_csrf_uri_excluded())
 		{
 			return;
 		}
 
-		if ( ! $this->csrf_get_method_protected($method))
+		$request = $this->_request_method();
+
+		if ($request === 'POST')
 		{
 			return;
 		}
 
-		if ( ! $this->_request_allowed(TRUE))
+		if ($request !== 'GET')
 		{
-			$this->csrf_show_error();
+			$this->csrf_show_method_not_allowed('GET, POST');
 		}
+
+		if ($this->csrf_get_method_passthrough($method) && $this->_browser_says_same_origin())
+		{
+			return;
+		}
+
+		$this->csrf_show_confirm();
 	}
 
 	// --------------------------------------------------------------------
 
 	/**
-	 * Was this request made by this site?
+	 * Was this POST made by this site?
 	 *
-	 * The request passes if any of the following holds, tested in this order:
+	 * The browser's own statement about the request comes first, so a token
+	 * planted by a sibling subdomain or a plain http man in the middle does
+	 * not help a cross-site request:
 	 *
-	 *  1. a valid token is supplied: POST field or X-CSRF-Token header, or the
-	 *     query string parameter for GET/HEAD (form_open() forms, AJAX, scripts)
-	 *  2. Sec-Fetch-Site is present (every current browser sends it) and says
-	 *     "same-origin", or "none" for a navigation (typed URL, bookmark) when
-	 *     $navigation is TRUE. Any other value (cross-site, same-site) fails:
-	 *     the browser has already told us where the request came from.
-	 *  3. Sec-Fetch-Site is absent and Origin is present and names this exact
-	 *     scheme, host and port. "null" or another origin fails.
-	 *  4. Both are absent and Referer is present with this scheme, host and port.
+	 *  1. Sec-Fetch-Site present and not "same-origin" -> refused
+	 *  2. Origin present and "null" or another scheme/host/port -> refused
+	 *
+	 * Then the request passes when any of these holds:
+	 *
+	 *  3. a valid token: POST field or X-CSRF-Token header (form_open()
+	 *     forms, the confirmation page, AJAX, scripts)
+	 *  4. Sec-Fetch-Site: same-origin (every current browser sends it)
+	 *  5. Origin names this exact scheme, host and port
+	 *  6. neither header is present and Referer names this exact scheme,
+	 *     host and port
 	 *
 	 * Anything else fails: requests without any of these headers and without a
 	 * token can be forged, so they are refused.
 	 *
-	 * @param	bool	GET/HEAD navigation (TRUE) or a non-safe method (FALSE)
 	 * @return	bool
 	 */
-	protected function _request_allowed($navigation)
+	protected function _request_allowed()
 	{
-		if ($this->_token_valid($navigation))
+		$site = isset($_SERVER['HTTP_SEC_FETCH_SITE']) ? strtolower(trim((string) $_SERVER['HTTP_SEC_FETCH_SITE'])) : NULL;
+		if ($site !== NULL && $site !== 'same-origin')
+		{
+			return FALSE;
+		}
+
+		$origin = isset($_SERVER['HTTP_ORIGIN']) ? $this->_header_is_same_origin($_SERVER['HTTP_ORIGIN']) : NULL;
+		if ($origin === FALSE)
+		{
+			return FALSE;
+		}
+
+		if ($this->_token_valid() OR $site === 'same-origin' OR $origin === TRUE)
 		{
 			return TRUE;
 		}
 
+		if ($site === NULL && $origin === NULL && isset($_SERVER['HTTP_REFERER']))
+		{
+			return $this->_header_is_same_origin($_SERVER['HTTP_REFERER']);
+		}
+
+		return FALSE;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Does the browser itself say this request is same-origin?
+	 *
+	 * Sec-Fetch-Site when present (so "none", a navigation from outside the
+	 * browser, is not enough), otherwise Origin, otherwise Referer. Tokens
+	 * do not count. Used for the GET passthrough (logout).
+	 *
+	 * @return	bool
+	 */
+	protected function _browser_says_same_origin()
+	{
 		if (isset($_SERVER['HTTP_SEC_FETCH_SITE']))
 		{
-			$site = strtolower(trim((string) $_SERVER['HTTP_SEC_FETCH_SITE']));
-
-			return ($site === 'same-origin' OR ($navigation && $site === 'none'));
+			return (strtolower(trim((string) $_SERVER['HTTP_SEC_FETCH_SITE'])) === 'same-origin');
 		}
 
 		if (isset($_SERVER['HTTP_ORIGIN']))
@@ -255,24 +321,16 @@ class CI_Security {
 	/**
 	 * Does the request carry a token matching the CSRF cookie?
 	 *
-	 * @param	bool	read the token from the query string (GET) instead of
-	 *			the POST field / request header
+	 * The token is read from the POST field or the X-CSRF-Token header; a
+	 * query string parameter never counts.
+	 *
 	 * @return	bool
 	 */
-	protected function _token_valid($navigation)
+	protected function _token_valid()
 	{
 		$token = '';
 
-		if ($navigation)
-		{
-			$query = array();
-			parse_str(isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '', $query);
-			if (isset($query[$this->_csrf_token_name]) && is_string($query[$this->_csrf_token_name]))
-			{
-				$token = $query[$this->_csrf_token_name];
-			}
-		}
-		elseif (isset($_POST[$this->_csrf_token_name]) && is_string($_POST[$this->_csrf_token_name]))
+		if (isset($_POST[$this->_csrf_token_name]) && is_string($_POST[$this->_csrf_token_name]))
 		{
 			$token = $_POST[$this->_csrf_token_name];
 		}
@@ -287,6 +345,33 @@ class CI_Security {
 		}
 
 		return hash_equals($_COOKIE[$this->_csrf_cookie_name], $token);
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * The request method, upper case
+	 *
+	 * @return	string
+	 */
+	protected function _request_method()
+	{
+		return isset($_SERVER['REQUEST_METHOD']) ? strtoupper(trim((string) $_SERVER['REQUEST_METHOD'])) : 'GET';
+	}
+
+	/**
+	 * Was this request made over HTTPS?
+	 *
+	 * Behind a TLS-terminating proxy the deployer sets $_SERVER['HTTPS'] = 'on'
+	 * (see the CSRF notes in config.php): the cookie prefix and the Origin
+	 * comparison depend on it.
+	 *
+	 * @return	bool
+	 */
+	protected function _is_https()
+	{
+		return (( ! empty($_SERVER['HTTPS']) && strtolower((string) $_SERVER['HTTPS']) !== 'off')
+			|| (isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] === 443));
 	}
 
 	// --------------------------------------------------------------------
@@ -327,10 +412,7 @@ class CI_Security {
 			return FALSE;
 		}
 
-		$https = (( ! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-			|| (isset($_SERVER['SERVER_PORT']) && (int) $_SERVER['SERVER_PORT'] === 443));
-
-		return $this->_origin_parts(($https ? 'https' : 'http').'://'.trim((string) $_SERVER['HTTP_HOST']));
+		return $this->_origin_parts(($this->_is_https() ? 'https' : 'http').'://'.trim((string) $_SERVER['HTTP_HOST']));
 	}
 
 	/**
@@ -380,6 +462,19 @@ class CI_Security {
 		return (is_string($pattern) && $pattern !== '' && $method !== '' && preg_match('#'.str_replace('#', '\\#', $pattern).'#i', (string) $method) === 1);
 	}
 
+	/**
+	 * May this protected method still run on a GET the browser calls same-origin?
+	 *
+	 * @param	string
+	 * @return	bool
+	 */
+	public function csrf_get_method_passthrough($method)
+	{
+		$pattern = config_item('csrf_get_passthrough_methods');
+
+		return (is_string($pattern) && $pattern !== '' && $method !== '' && preg_match('#'.str_replace('#', '\\#', $pattern).'#i', (string) $method) === 1);
+	}
+
 	// --------------------------------------------------------------------
 
 	/**
@@ -420,7 +515,7 @@ class CI_Security {
 	 */
 	public function csrf_set_cookie()
 	{
-		$https = ( ! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
+		$https = $this->_is_https();
 		$secure_cookie = ($https OR config_item('cookie_secure') === TRUE);
 
 		if ($secure_cookie && ! $https)
@@ -456,10 +551,14 @@ class CI_Security {
 			header($header, FALSE);
 		}
 
+		// a __Host- cookie (HTTPS) is only accepted by the browser when it is
+		// Secure, has Path=/ and no Domain attribute
+		$host_prefixed = (strncmp($this->_csrf_cookie_name, '__Host-', 7) === 0);
+
 		setcookie($this->_csrf_cookie_name, $this->_csrf_hash, array(
 			'expires'	=> time() + $this->_csrf_expire,
-			'path'		=> config_item('cookie_path'),
-			'domain'	=> config_item('cookie_domain'),
+			'path'		=> $host_prefixed ? '/' : config_item('cookie_path'),
+			'domain'	=> $host_prefixed ? '' : config_item('cookie_domain'),
 			'secure'	=> $secure_cookie,
 			'httponly'	=> TRUE,
 			'samesite'	=> 'Lax'
@@ -511,6 +610,85 @@ class CI_Security {
 		// the error template forces a 404 header, so set the status afterwards
 		$html = load_class('Exceptions', 'core')->show_error('An Error Was Encountered', 'The action you have requested is not allowed.', 'error_general', 403);
 		set_status_header(403);
+		echo $html;
+		exit;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Refuse the request method
+	 *
+	 * @param	string	the Allow header value
+	 * @return	void
+	 */
+	public function csrf_show_method_not_allowed($allow)
+	{
+		$html = load_class('Exceptions', 'core')->show_error('An Error Was Encountered', 'The request method is not allowed for this address.', 'error_general', 405);
+		set_status_header(405);
+		header('Allow: '.$allow);
+		header('Cache-Control: no-store');
+		echo $html;
+		exit;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	 * Show the confirmation page for a state-changing action reached by GET
+	 *
+	 * A standalone page (halogy/errors/csrf_confirm.php) with one form that
+	 * POSTs the token to the very same URL, so the action runs through
+	 * csrf_verify() with the same URI segments, and a Cancel link back to
+	 * the page the user came from (same-origin Referer) or the site.
+	 *
+	 * @return	void
+	 */
+	public function csrf_show_confirm()
+	{
+		// the action URL: this request's path and query string without a token
+		$request_uri = isset($_SERVER['REQUEST_URI']) ? (string) $_SERVER['REQUEST_URI'] : '';
+		$path = (string) parse_url($request_uri, PHP_URL_PATH);
+		if ($path === '' OR $path[0] !== '/')
+		{
+			$path = '/'.ltrim(load_class('URI', 'core')->uri_string(), '/');
+		}
+
+		$query = array();
+		parse_str(isset($_SERVER['QUERY_STRING']) ? (string) $_SERVER['QUERY_STRING'] : '', $query);
+		unset($query[$this->_csrf_token_name]);
+		$action = $path.((count($query) > 0) ? '?'.http_build_query($query) : '');
+
+		// back to where the user came from, when that was this site
+		$cancel = (strncmp($path, '/admin', 6) === 0) ? '/admin' : '/';
+		if (isset($_SERVER['HTTP_REFERER']) && $this->_header_is_same_origin($_SERVER['HTTP_REFERER']))
+		{
+			$referer = @parse_url((string) $_SERVER['HTTP_REFERER']);
+			if (is_array($referer) && isset($referer['path']) && $referer['path'] !== '' && $referer['path'][0] === '/')
+			{
+				$cancel = $referer['path'].(isset($referer['query']) ? '?'.$referer['query'] : '');
+			}
+		}
+
+		$token_name = $this->_csrf_token_name;
+		$token = $this->_csrf_hash;
+		$heading = 'Confirm action';
+
+		// the token in the form must match the cookie the browser holds
+		$this->csrf_set_cookie();
+
+		while (ob_get_level() > 0)
+		{
+			ob_end_clean();
+		}
+		ob_start();
+		include(APPPATH.'errors/csrf_confirm.php');
+		$html = ob_get_contents();
+		ob_end_clean();
+
+		set_status_header(200);
+		header('Content-Type: text/html; charset='.config_item('charset'));
+		header('Cache-Control: no-store');
 		echo $html;
 		exit;
 	}

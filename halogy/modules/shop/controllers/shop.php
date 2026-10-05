@@ -1066,7 +1066,7 @@ class Shop extends MX_Controller {
 			$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 
 			// set admin session name, if given
-			if (!$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->decode($redirect)))
+			if (!$this->auth->login($username, $this->input->post('password'), 'session_user', $this->core->local_path($this->core->decode($redirect), '')))
 			{
 				$this->form_validation->set_error($this->auth->error);
 			}
@@ -1372,7 +1372,7 @@ class Shop extends MX_Controller {
 				$username = array('field' => 'email', 'label' => 'Email address', 'value' => $this->input->post('email'));
 			
 				// set admin session name, if given
-				if (!$this->auth->login($username, $this->input->post('password'), $sessionName, $this->core->decode($redirect)))
+				if (!$this->auth->login($username, $this->input->post('password'), $sessionName, $this->core->local_path($this->core->decode($redirect), '/shop/cart')))
 				{
 					$this->form_validation->set_error($this->auth->error);
 				}
@@ -1399,7 +1399,7 @@ class Shop extends MX_Controller {
 		}
 		else
 		{
-			redirect($this->core->decode($redirect));
+			redirect($this->core->local_path($this->core->decode($redirect), '/shop/cart'));
 		}
 
 		// load errors
